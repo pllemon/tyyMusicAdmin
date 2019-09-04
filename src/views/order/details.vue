@@ -1,5 +1,17 @@
 <template>
   <div>
+    <!-- 步骤条 -->
+    <el-steps :active="1" finish-status="success">
+      <el-step title="用户提交订单"></el-step>
+      <el-step title="后台审核订单"></el-step>
+      <el-step title="用户支付定金"></el-step>
+      <el-step title="后台发布订单"></el-step>
+      <el-step title="后台指派师傅"></el-step>
+      <el-step title="师傅上门施工"></el-step>
+      <el-step title="用户支付尾款"></el-step>
+      <el-step title="用户进行评价，师傅上传资料"></el-step>
+    </el-steps>
+
     <div class="section">
       <p class="section-title">订单基本信息</p>
       <ul class="order-mes">

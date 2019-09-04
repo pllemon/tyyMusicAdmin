@@ -54,7 +54,9 @@
         <template slot-scope="scope">
           <el-button type="text" @click="details(scope.$index)">详情</el-button>
           <el-button type="text" @click="examine(scope.$index)">审核</el-button>
-          <el-button type="text">派单</el-button>
+          <el-button type="text" @click="release(scope.$index)">发布</el-button>
+          <el-button type="text">指派</el-button>
+          <el-button type="text">取消</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -111,6 +113,18 @@ export default {
     // 审核订单
     examine(id) {
 
+    },
+
+    // 发布订单
+    release() {
+      this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '发布成功!'
+        });
+      })
     }
   },
   components: {
