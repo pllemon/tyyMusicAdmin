@@ -1,0 +1,14 @@
+表格相关操作
+1. 固定列
+    fixed
+
+    fixed="right"
+
+2. 多选
+    selectArr: []
+
+    @selection-change="selectionChange"
+
+    selectionChange(val) {
+        this.selectArr = val
+    },

@@ -1,28 +1,4 @@
-.el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-
-
+// 基础样式
 .font-bold{
   font-weight: bold;
 }
@@ -31,4 +7,68 @@
 }
 .m10{
   margin: 10px;
+}
+.w100{
+  width: 100%;
+}
+.h100{
+  height: 100%;
+}
+
+// 页面布局
+.list-layout{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .table-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title{
+      color: #303133;
+      position: relative;
+      padding-left: 10px;
+      font-size: 18px;
+      &:after{
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 16px;
+        background: #303133;
+        left: 0;
+        top: 2px;
+        border-radius: 2px;
+      }
+    }
+  }
+  .table-content{
+    width: 100%;
+    flex: 1;
+    margin: 10px 0;
+  }
+}
+
+// 图片上传
+.el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 }

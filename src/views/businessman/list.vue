@@ -4,15 +4,15 @@
     <el-form :inline="true" :model="queryMes">
       <el-form-item label="申请时间">
         <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date1" style="width: 100%;"></el-date-picker>
+          <el-date-picker v-model="queryMes.date1" type="date" placeholder="选择日期" style="width: 100%;" />
         </el-col>
         <el-col class="line text-center" :span="2">-</el-col>
         <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date2" style="width: 100%;"></el-date-picker>
+          <el-date-picker v-model="queryMes.date2" type="date" placeholder="选择日期" style="width: 100%;" />
         </el-col>
       </el-form-item>
       <el-form-item label="师傅名">
-        <el-input v-model="queryMes.user" placeholder="请输入"></el-input>
+        <el-input v-model="queryMes.user" placeholder="请输入" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="fetchData()">搜索</el-button>
@@ -28,12 +28,12 @@
       fit
       highlight-current-row
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column type="index" width="50"></el-table-column>
-      <el-table-column align="center" label="商家"></el-table-column>
-      <el-table-column align="center" label="联系方式"></el-table-column>
-      <el-table-column align="center" label="店铺地址"></el-table-column>
-      <el-table-column align="center" label="图片资料"></el-table-column>
+      <el-table-column type="selection" width="55" />
+      <el-table-column type="index" width="50" />
+      <el-table-column align="center" label="商家" />
+      <el-table-column align="center" label="联系方式" />
+      <el-table-column align="center" label="店铺地址" />
+      <el-table-column align="center" label="图片资料" />
       <el-table-column align="center" label="申请时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -50,7 +50,7 @@
 
     <!-- 弹窗 -->
     <el-dialog :title="dialogTitle" :visible="showDialog" width="1100px" :before-close="handleClose">
-      <component v-bind:is="currentComponent"></component>
+      <component :is="currentComponent" />
     </el-dialog>
   </div>
 </template>
@@ -60,6 +60,9 @@ import { getList } from '@/api/table'
 import Details from '@/views/order/details'
 
 export default {
+  components: {
+    Details
+  },
   data() {
     return {
       list: null,
@@ -105,9 +108,6 @@ export default {
     pass(id) {
       
     }
-  },
-  components: {
-    Details
   }
 }
 </script>

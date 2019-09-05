@@ -2,14 +2,14 @@
   <div>
     <!-- 步骤条 -->
     <el-steps :active="1" finish-status="success">
-      <el-step title="用户提交订单"></el-step>
-      <el-step title="后台审核订单"></el-step>
-      <el-step title="用户支付定金"></el-step>
-      <el-step title="后台发布订单"></el-step>
-      <el-step title="后台指派师傅"></el-step>
-      <el-step title="师傅上门施工"></el-step>
-      <el-step title="用户支付尾款"></el-step>
-      <el-step title="用户进行评价，师傅上传资料"></el-step>
+      <el-step title="用户提交订单" />
+      <el-step title="后台审核订单" />
+      <el-step title="用户支付定金" />
+      <el-step title="后台发布订单" />
+      <el-step title="后台指派师傅" />
+      <el-step title="师傅上门施工" />
+      <el-step title="用户支付尾款" />
+      <el-step title="用户进行评价，师傅上传资料" />
     </el-steps>
 
     <div class="section">
@@ -59,13 +59,13 @@
       <div class="flex" style="padding: 20px 0;">
         <el-form ref="examineForm" :model="examineForm" label-width="120px" style="width: 600px;margin-right: 50px">
           <el-form-item label="订单总价格：">
-            <el-input v-model="examineForm.name"></el-input>
+            <el-input v-model="examineForm.name" />
           </el-form-item>
           <el-form-item label="定金金额：">
-            <el-input v-model="examineForm.name"></el-input>
+            <el-input v-model="examineForm.name" />
           </el-form-item>
           <el-form-item label="师傅工资：">
-            <el-input v-model="examineForm.name"></el-input>
+            <el-input v-model="examineForm.name" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -78,9 +78,10 @@
             action="https://jsonplaceholder.typicode.com/posts/"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+            :before-upload="beforeAvatarUpload"
+          >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
           <p class="text-center m10 font-bold">请上传报价单</p>
         </div>
@@ -94,7 +95,7 @@
           <img src="">
           <div class="flex1">
             <p style="font-weight: bold">李师傅 NO3424</p>
-            <p><i class="el-icon-phone-outline"></i> 1343445345</p>
+            <p><i class="el-icon-phone-outline" /> 1343445345</p>
           </div>
           <el-button type="primary" size="mini">选择</el-button>
         </li>
@@ -109,7 +110,7 @@ import { getList } from '@/api/table'
 export default {
   data() {
     return {
-      list: [1,2,3,4,5],
+      list: [1, 2, 3, 4, 5],
       listLoading: true,
       examineForm: {}
     }
@@ -141,9 +142,6 @@ export default {
     margin-bottom: 15px;
     box-sizing: border-box;
     font-weight: bold;
-    &.w100{
-      width: 100%;
-    }
     label{
       margin-bottom: 5px;
       display: block;

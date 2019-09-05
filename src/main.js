@@ -33,6 +33,10 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
+// 全局注册分页组件
+import GdPagination from '@/components/Pagination'
+Vue.component('GdPagination', GdPagination)
+
 new Vue({
   el: '#app',
   router,

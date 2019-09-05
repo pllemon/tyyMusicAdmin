@@ -55,6 +55,23 @@ export const constantRoutes = [
     }]
   },
 
+  
+  {
+    path: '/master',
+    component: Layout,
+    redirect: '/master/list',
+    name: 'Master',
+    meta: { title: '师傅管理', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/master/list'),
+        meta: { title: '全部师傅', icon: 'form' }
+      }
+    ]
+  },
+
   {
     path: '/businessman',
     component: Layout,
@@ -71,21 +88,6 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/master',
-    component: Layout,
-    redirect: '/master/list',
-    name: 'Master',
-    meta: { title: '师傅管理', icon: 'form' },
-    children: [
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/master/list'),
-        meta: { title: '全部师傅', icon: 'form' }
-      }
-    ]
-  },
 
   {
     path: '/user',
@@ -174,8 +176,6 @@ export const constantRoutes = [
       },
     ]
   }
-  
-  
 ]
 
 /**
