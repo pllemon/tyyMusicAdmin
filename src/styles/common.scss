@@ -20,31 +20,45 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  background: #f2f2f2;
   .table-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 15px;
     .title{
       color: #303133;
       position: relative;
       padding-left: 10px;
-      font-size: 18px;
+      font-size: 20px;
       &:after{
         content: '';
         position: absolute;
         width: 3px;
-        height: 16px;
+        height: 18px;
         background: #303133;
         left: 0;
-        top: 2px;
+        top: 3px;
         border-radius: 2px;
       }
     }
   }
   .table-content{
-    width: 100%;
+    background: #fff;
+    padding: 20px;
     flex: 1;
-    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    .search-form{
+      .el-form-item{
+        margin-bottom: 10px;
+      }
+    }
+    .table-section{
+      width: 100%;
+      flex: 1;
+      margin-bottom: 10px;
+    }
   }
 }
 
