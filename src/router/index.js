@@ -55,7 +55,6 @@ export const constantRoutes = [
     }]
   },
 
-  
   {
     path: '/master',
     component: Layout,
@@ -68,6 +67,22 @@ export const constantRoutes = [
         name: 'List',
         component: () => import('@/views/master/list'),
         meta: { title: '全部师傅', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/list',
+    name: 'Order',
+    meta: { title: '订单管理', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/order/list'),
+        meta: { title: '全部订单', icon: 'form' }
       }
     ]
   },
@@ -101,22 +116,6 @@ export const constantRoutes = [
         name: 'List',
         component: () => import('@/views/user/list'),
         meta: { title: '全部会员', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/list',
-    name: 'Order',
-    meta: { title: '订单管理', icon: 'form' },
-    children: [
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/order/list'),
-        meta: { title: '全部订单', icon: 'form' }
       }
     ]
   },

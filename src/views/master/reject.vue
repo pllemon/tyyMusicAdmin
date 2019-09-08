@@ -5,7 +5,7 @@
       type="textarea"
       :autosize="{ minRows: 6}"
       placeholder="请输入"
-      v-model="rejectReason"
+      v-model="reject_reason"
     />
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取 消</el-button>
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      rejectReason: ''
+      reject_reason: ''
     }
   },
   methods: {

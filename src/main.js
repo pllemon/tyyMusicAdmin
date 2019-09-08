@@ -15,6 +15,9 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import common from './utils/common.js'
+Vue.prototype.common = common
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -36,6 +39,9 @@ Vue.config.productionTip = false
 // 全局注册分页组件
 import GdPagination from '@/components/Pagination'
 Vue.component('GdPagination', GdPagination)
+
+import GdUpload from '@/components/Upload'
+Vue.component('GdUpload', GdUpload)
 
 new Vue({
   el: '#app',

@@ -8,21 +8,32 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login'] // 不会重定向的白名单
+const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
-  // start progress bar
+  // 开始切换页面进度条
   NProgress.start()
 
-  // set page title
+  // 设置页面title
   document.title = getPageTitle(to.meta.title)
 
-  // determine whether the user has logged in
+  // 设置是否显示页面header
+  // if (defineView.indexOf(to.path) !== -1) {
+  //   await store.dispatch('permission/setHeader', false)
+  // } else {
+  //   await store.dispatch('permission/setHeader', true)
+  // }
+
+  // 获取全部字典
+  // await store.dispatch('dist/getAllDict');
+
+  // 是否登录
   const hasToken = getToken()
 
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+      // 如果已经登录并且跳往登陆页，重定向到首页
       next({ path: '/' })
       NProgress.done()
     } else {
@@ -32,21 +43,25 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          // get user info
+          // 获取用户信息
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
+          let { roles } = await store.dispatch('user/getInfo')
+          // 角色举例，删
+          roles = ['admin']
 
-          // generate accessible routes map based on roles
+          // 获取角色菜单, 改
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // const menuList = await store.dispatch('permission/getAuthMenu', roles)
+          // console.log(menuList)
 
-          // dynamically add accessible routes
+          // 把角色菜单添加至路由
           router.addRoutes(accessRoutes)
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (error) {
-          // remove token and go to login page to re-login
+          // 清除token并重定向到登录页，重新登录
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
@@ -55,13 +70,13 @@ router.beforeEach(async(to, from, next) => {
       }
     }
   } else {
-    /* has no token*/
+    // 没有token
 
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
+      // 白名单下继续跳转
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
+      // 其他页面重置到登录页
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
@@ -69,6 +84,6 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
-  // finish progress bar
+  // 结束切换页面进度条
   NProgress.done()
 })

@@ -1,39 +1,35 @@
 <template>
-  <div>
+  <el-dialog :title="title[dialogMes.type]" :visible="true" width="1000px" :before-close="handleClose">
     <div class="section">
-      <p class="section-title">师傅基本信息</p>
+      <p class="section-title">基本信息</p>
       <ul class="order-mes">
         <li>
           <label>工号：</label>
-          <p>2465653432435</p>
+          <p></p>
         </li>
         <li>
           <label>姓名：</label>
-          <p>李小花 13640534320</p>
+          <p>{{masterInfo.name}}</p>
         </li>
         <li>
           <label>身份证：</label>
-          <p>装修工匠-安装空调</p>
+          <p>{{masterInfo.sfz}}</p>
         </li>
         <li>
-          <label>联系方式：</label>
-          <p>广东广州天河龙洞街迎龙路3巷11号</p>
+          <label>联系手机：</label>
+          <p>{{masterInfo.phone}}</p>
+        </li>
+        <li>
+          <label>联系地址：</label>
+          <p>{{masterInfo.address}}</p>
         </li>
         <li>
           <label>个人简介：</label>
-          <p>1971-12-24 22:51:34</p>
+          <p>{{masterInfo.desc}}</p>
         </li>
         <li>
           <label>申请时间：</label>
-          <p>1971-12-24 22:51:34</p>
-        </li>
-        <li class="w100">
-          <label>工作证：</label>
-          <div class="img-list">
-            <img src="">
-            <img src="">
-            <img src="">
-          </div>
+          <p>{{masterInfo.create_time}}</p>
         </li>
       </ul>
     </div>
@@ -45,37 +41,21 @@
           <el-form-item label="师傅编号：">
             <el-input v-model="examineForm.name" />
           </el-form-item>
-          <el-form-item label="定金金额：">
-            <el-input v-model="examineForm.name" />
-          </el-form-item>
-          <el-form-item label="师傅工资：">
-            <el-input v-model="examineForm.name" />
+          <el-form-item label="师傅证件：">
+            <gd-upload @success="uploadSuccess"/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="submitExamine">提交</el-button>
+            <el-button @click="handleClose">取消</el-button>
           </el-form-item>
         </el-form>
-        <div>
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon" />
-          </el-upload>
-          <p class="text-center m10 font-bold">请上传师傅证件</p>
-        </div>
       </div>
     </div>
-  </div>
+  </el-dialog>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getDetails, craftsmanexamine } from '@/api/master'
 
 export default {
   props: {
@@ -86,29 +66,33 @@ export default {
   },
   data() {
     return {
-      examineForm: {}
+      title: ['师傅详情', '编辑师傅', '审核师傅'],
+      examineForm: {},
+      masterInfo: {}
     }
   },
-  methods() {
-    
+  created() {
+    let that = this
+    getDetails({
+      id: that.dialogMes.id
+    }).then(response => {
+      console.log(response)
+      that.masterInfo = response.data
+    })
+  },
+  methods: {
+    handleClose() {
+      this.$parent.currentComponent = ''
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.img-list img{
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f2f2f2;
-  margin-right: 20px;
-}
-
 .section{
   margin-bottom: 40px;
   .section-title{
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #409EFF;
+    margin-bottom: 15px;
   }
 }
 .order-mes{
