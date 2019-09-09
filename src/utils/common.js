@@ -13,16 +13,34 @@ function enableRecord(target, obj, callback) {
   } else {
     mes = `确定禁用${obj.mes}？`
   }
-  this.$confirm(mes, '提示', {
+  target.$confirm(mes, '提示', {
     type: 'warning'
   }).then(() => {
     callback(obj).then(() => {
-      this.$message({
+      target.$message({
         type: 'success',
         message: '设置成功!'
       })
       target.fetchData();
     })
+  }).cancel(() => {
+    console.log('取消')
+  })
+}
+
+function removeRecord(target, obj, callback) {
+  target.$confirm('确定删除该条记录？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    callback(obj).then(() => {
+      target.$message({
+        type: 'success',
+        message: '设置成功!'
+      })
+      target.fetchData();
+    })
+  }).cancel(() => {
+    console.log('取消')
   })
 }
 
@@ -30,4 +48,5 @@ function enableRecord(target, obj, callback) {
 export default{
   resetSearch, // 重置搜索表单
   enableRecord, // 启用和禁用
+  removeRecord // 删除
 }

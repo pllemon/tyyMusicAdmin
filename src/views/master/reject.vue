@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="驳回申请" :visible="true" width="500px" :before-close="handleClose">
+  <el-dialog title="驳回申请" :modal-append-to-body='false' :visible="true" width="500px" :before-close="handleClose">
     <p style="margin-bottom: 10px">确定驳回该申请？可填写驳回原因：</p>
     <el-input
       type="textarea"

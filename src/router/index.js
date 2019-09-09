@@ -177,8 +177,14 @@ export const constantRoutes = [
         path: 'account',
         name: 'Account',
         component: () => import('@/views/setting/account/list'),
-        meta: { title: '类目设置' }
+        meta: { title: '账号管理' }
       },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/setting/role/list'),
+        meta: { title: '角色管理' }
+      }
     ]
   }
 ]

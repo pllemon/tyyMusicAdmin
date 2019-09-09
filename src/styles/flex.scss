@@ -26,6 +26,12 @@
   justify-content: space-between;
 }
 
+.flex-center-start{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .flex1{
   flex: 1;
 }

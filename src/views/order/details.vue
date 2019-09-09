@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title[dialogMes.type]" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body='false' :title="title[dialogMes.type]" :visible="true" width="1200px" :before-close="handleClose">
     <!-- 步骤条 -->
     <el-steps :active="1" finish-status="success" style="margin-bottom: 50px">
       <el-step title="待审核" description="后台审核订单" />

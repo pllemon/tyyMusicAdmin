@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title[dialogMes.type]" :visible="true" width="1000px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body='false' :title="title[dialogMes.type]" :visible="true" width="1000px" :before-close="handleClose">
     <div class="section">
       <p class="section-title">基本信息</p>
       <ul class="order-mes">
