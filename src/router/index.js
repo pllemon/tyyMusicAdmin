@@ -173,6 +173,12 @@ export const constantRoutes = [
         component: () => import('@/views/setting/category/list'),
         meta: { title: '类目设置' }
       },
+      {
+        path: 'account',
+        name: 'Account',
+        component: () => import('@/views/setting/account/list'),
+        meta: { title: '类目设置' }
+      },
     ]
   }
 ]

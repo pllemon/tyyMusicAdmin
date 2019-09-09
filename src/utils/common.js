@@ -6,12 +6,28 @@ function resetSearch(target) {
   target.fetchData()
 }
 
-function closeDialog(target) {
-  console.log(444)
-  target.$parent.currentComponent = ''
+function enableRecord(target, obj, callback) {
+  let mes = ''
+  if (obj.type == 1) {
+    mes = `确定启用${obj.mes}？`
+  } else {
+    mes = `确定禁用${obj.mes}？`
+  }
+  this.$confirm(mes, '提示', {
+    type: 'warning'
+  }).then(() => {
+    callback(obj).then(() => {
+      this.$message({
+        type: 'success',
+        message: '设置成功!'
+      })
+      target.fetchData();
+    })
+  })
 }
+
 
 export default{
   resetSearch, // 重置搜索表单
-  closeDialog // 关闭弹窗
+  enableRecord, // 启用和禁用
 }
