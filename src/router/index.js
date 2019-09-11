@@ -60,6 +60,28 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/master/list',
     name: 'Master',
+    meta: { title: '财务管理', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/master/list'),
+        meta: { title: '订单收入明细', icon: 'form' }
+      },
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/master/list'),
+        meta: { title: '师傅工资结算', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/master',
+    component: Layout,
+    redirect: '/master/list',
+    name: 'Master',
     meta: { title: '师傅管理', icon: 'form' },
     children: [
       {
@@ -125,7 +147,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/system/advert',
     name: 'System',
-    meta: { title: '应用设置', icon: 'form' },
+    meta: { title: '小程序设置', icon: 'form' },
     children: [
       {
         path: 'advert',
