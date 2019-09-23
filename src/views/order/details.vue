@@ -1,18 +1,8 @@
 <template>
-  <el-dialog :modal-append-to-body='false' :title="title[dialogMes.type]" :visible="true" width="1200px" :before-close="handleClose">
-    <!-- 步骤条 -->
-    <el-steps :active="1" finish-status="success" style="margin-bottom: 50px">
-      <el-step title="待审核" description="后台审核订单" />
-      <el-step title="待支付" description="用户支付定金" />
-      <el-step title="待发布" description="后台发布订单" />
-      <el-step title="报名中" description="后台指派师傅" />
-      <el-step title="施工中" description="师傅上门施工" />
-      <el-step title="待支付" description="用户支付尾款" />
-      <el-step title="已完成" description="用户进行评价，师傅上传资料" />
-    </el-steps>
+  <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'订单'" :visible="true" width="1200px" :before-close="handleClose">
 
     <div class="section">
-      <p class="section-title">订单基本信息</p>
+      <p class="section-title small">订单基本信息</p>
       <ul class="order-mes">
         <li>
           <label>订单ID：</label>
@@ -49,8 +39,8 @@
       </ul>
     </div>
 
-    <div class="section">
-      <p class="section-title">审核资料上传</p>
+    <div class="section" v-if="orderInfo.status == 1">
+      <p class="section-title small">审核资料上传</p>
       <div class="flex" style="padding: 20px 0;">
         <el-form ref="examineForm" :model="examineForm" :rules="rules" label-width="120px" style="width: 600px;margin-right: 50px">
           <el-form-item label="订单总价格：" prop="total_price">
@@ -73,8 +63,8 @@
       </div>
     </div>
 
-    <div class="section">
-      <p class="section-title">师傅报名情况</p>
+    <div class="section" v-if="orderInfo.status == 4">
+      <p class="section-title small">师傅报名情况</p>
       <ul class="master-list">
         <li v-for="(item, index) in list" :key="index">
           <img src="">
@@ -90,6 +80,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getDetails, orderexamine } from '@/api/order'  
 
 export default {
@@ -101,7 +92,6 @@ export default {
   },
   data() {
     return {
-      title: ['订单详情', '审核订单', '指派订单'],
       list: [1, 2, 3, 4, 5],
       listLoading: true,
       examineForm: {
@@ -171,6 +161,12 @@ export default {
     beforeAvatarUpload() {
 
     }
+  },
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+      orderStatus: state => state.dict.orderStatus
+    })
   }
 }
 </script>

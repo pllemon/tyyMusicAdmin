@@ -64,9 +64,6 @@ export default {
       form: {}
     }
   },
-  created() {
-    
-  },
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''

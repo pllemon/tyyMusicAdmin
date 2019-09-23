@@ -12,6 +12,7 @@ const whiteList = ['/login'] // 不会重定向的白名单
 const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
+  console.log(to, from)
   // 开始切换页面进度条
   NProgress.start()
 
@@ -59,7 +60,9 @@ router.beforeEach(async(to, from, next) => {
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
+
+          // next({ ...to, replace: true })
+          next()
         } catch (error) {
           // 清除token并重定向到登录页，重新登录
           await store.dispatch('user/resetToken')

@@ -30,7 +30,7 @@ export default {
   methods: {
     handleAvatarSuccess(res, file) {
       if (res.success) {
-        this.imageUrl = 'http://192.168.1.104/uploads/orders/' + res.data.imgurl
+        this.imageUrl = 'http://47.106.100.144/uploads/orders/' + res.data.imgurl
         this.$emit('success', res.data.id)
       }
     }

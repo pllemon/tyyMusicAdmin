@@ -39,7 +39,7 @@
       <div class="flex" style="padding: 20px 0;">
         <el-form ref="examineForm" :model="examineForm" label-width="120px" style="width: 600px;margin-right: 50px">
           <el-form-item label="师傅编号：">
-            <el-input v-model="examineForm.name" />
+            <el-input v-model="examineForm.sn" />
           </el-form-item>
           <el-form-item label="师傅证件：">
             <gd-upload @success="uploadSuccess"/>
@@ -78,12 +78,35 @@ export default {
     }).then(response => {
       console.log(response)
       that.masterInfo = response.data
+      that.examineForm.craftsman_id = response.data.id
+      that.examineForm.user_id = response.data.user_id
     })
   },
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
-    }
+    },
+
+    uploadSuccess(id) {
+      this.examineForm.imglist = id
+    },
+
+    submitExamine() {
+      let that = this
+      that.$refs.examineForm.validate((valid) => {
+        if (valid) {
+          that.examineForm.status = 1;
+          craftsmanexamine(that.examineForm).then(response => {
+            that.$message({
+              message: response.message,
+              type: 'success'
+            })
+            that.$parent.fetchData()
+            that.$parent.currentComponent = ''
+          })
+        }
+      })
+    },
   }
 }
 </script>

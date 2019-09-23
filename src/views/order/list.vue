@@ -11,7 +11,7 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="下单时间">
+        <el-form-item label="预约时间">
            <el-date-picker
             v-model="value1"
             type="datetimerange"
@@ -21,12 +21,13 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="订单状态">
-          <el-input v-model="queryMes.user" placeholder="审批人" />
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="queryMes.region" placeholder="活动区域">
-            <el-option label="区域一" value="shanghai" />
-            <el-option label="区域二" value="beijing" />
+          <el-select v-model="queryMes.status" placeholder="请选择">
+            <el-option
+              v-for="(item, index) in orderStatus"
+              :key="index"
+              :label="item"
+              :value="index">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -49,32 +50,41 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="订单编号" width="100" prop="order_sn" />
-          <el-table-column label="下单用户" />
-          <el-table-column label="服务需求" prop="service_demand" width="200"/>
-          <el-table-column label="服务地址" prop="address" width="200"/>
-          <el-table-column label="预约时间" width="200">
+          <el-table-column label="订单编号"  width="120" prop="order_sn" />
+          <el-table-column label="订单状态" width="120">
+            <template slot-scope="scope">
+              {{orderStatus[scope.row.status]}}
+            </template>
+          </el-table-column>
+          <el-table-column label="服务需求" prop="service_demand" width="120"/>
+          <el-table-column label="下单客户" width="200">
+            <template slot-scope="scope">
+              {{scope.row.phone}}
+            </template>
+          </el-table-column>
+          <el-table-column label="服务地址" prop="address" width="160"/>
+          <el-table-column label="预约时间" width="120">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.appo_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" width="200">
+          <el-table-column label="创建时间" width="120">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.create_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="用户备注" prop="remark"/>
-          <el-table-column label="订单状态" />
-          <el-table-column label="承接师傅" />
+          <el-table-column label="用户备注" prop="remark" width="120" />
+          
+          <el-table-column label="承接师傅"  width="120"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
-              <el-button type="text" @click="details(scope.row.order_id, 1)">审核</el-button>
-              <el-button type="text" @click="release(scope.row.order_id)">发布</el-button>
-              <el-button type="text" @click="details(scope.row.order_id, 2)">指派</el-button>
-              <el-button type="text">取消</el-button>
+              <el-button type="text" v-show="scope.row.status == 1" @click="details(scope.row.order_id, 4)">审核通过</el-button>
+              <el-button type="text" v-show="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
+              <el-button type="text" v-show="scope.row.status == 4" @click="details(scope.row.order_id, 2)">指派</el-button>
+              <el-button type="text" v-show="scope.row.status == 1" @click="reject(scope.row.order_id)">取消</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -88,8 +98,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getList } from '@/api/order'
 import Details from '@/views/order/details'
+import Reject from '@/views/order/reject'
 
 export default {
   data() {
@@ -102,9 +114,7 @@ export default {
 
       total: 100,
       queryMes: {
-        user: '',
-        region: '',
-        page: 2,
+        page: 1,
         limit: 10
       },
       value1: [],
@@ -150,10 +160,24 @@ export default {
           message: '发布成功!'
         })
       })
-    }
+    },
+
+    // 取消订单
+    reject(id) {
+      this.dialogMes = {
+        id: id
+      }
+      this.currentComponent = 'Reject'
+    },
   },
   components: {
-    Details
+    Details,
+    Reject
+  },
+  computed: {
+    ...mapState({
+      orderStatus: state => state.dict.orderStatus
+    })
   }
 }
 </script>
