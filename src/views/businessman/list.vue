@@ -30,10 +30,12 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column type="index" width="50" />
-      <el-table-column align="center" label="商家" />
+      <el-table-column align="center" label="店铺名" />
       <el-table-column align="center" label="联系方式" />
       <el-table-column align="center" label="店铺地址" />
-      <el-table-column align="center" label="图片资料" />
+      <el-table-column align="center" label="门面图片" />
+      <el-table-column align="center" label="产品图片" />
+      <el-table-column align="center" label="营业执照" />
       <el-table-column align="center" label="申请时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -42,8 +44,8 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="text" @click="pass(scope.$index)">通过</el-button>
-          <el-button type="text" @click="nopass(scope.$index)">不通过</el-button>
+          <el-button type="text" @click="pass(scope.row.id)">通过</el-button>
+          <el-button type="text" @click="nopass(scope.row.id)">不通过</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +58,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/businessman'
 import Details from '@/views/order/details'
 
 export default {
@@ -65,7 +67,7 @@ export default {
   },
   data() {
     return {
-      list: null,
+      list: [],
       listLoading: true,
       queryMes: {
         user: '',
@@ -100,8 +102,7 @@ export default {
       this.currentComponent = 'Details'
     },
 
-    // 审核订单
-    examine(id) {
+    nopass(id) {
 
     },
 

@@ -7,10 +7,10 @@
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon" />
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" :style="{ width: width + 'px', height: height + 'px'}">
+      <i v-else class="el-icon-plus avatar-uploader-icon" :style="{ width: width + 'px', height: height + 'px', lineHeight: height + 'px' }"></i>
     </el-upload>
-    <p class="upload-tips">{{tip}}</p>
+    <p class="upload-tips" v-if="tip">{{tip}}</p>
   </div>
 </template>
 
@@ -20,6 +20,14 @@ export default {
     tip: {
       type: String,
       default: ''
+    },
+    width: {
+      type: [ Number, String ],
+      default: 150
+    },
+    height: {
+      type: [ Number, String ],
+      default: 150
     }
   },
   data() {
@@ -51,14 +59,9 @@ export default {
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
     display: block;
   }
 }

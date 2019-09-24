@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">广告列表</p>
+      <p class="section-title">会员列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -10,8 +10,17 @@
 
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes">
-        <el-form-item label="启用状态">
+      <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+        <el-form-item label="注册时间">
+          <el-col :span="11">
+            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date1" style="width: 100%;" />
+          </el-col>
+          <el-col class="line text-center" :span="2">-</el-col>
+          <el-col :span="11">
+            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date2" style="width: 100%;" />
+          </el-col>
+        </el-form-item>
+        <el-form-item label="用户名">
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
@@ -33,15 +42,24 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column align="center" label="展示图片" />
-          <el-table-column align="center" label="类别" />
-          <el-table-column align="center" label="排序" />
-          <el-table-column align="center" label="链接" />
-          <el-table-column align="center" label="操作" width="200" fixed="right">
+          <el-table-column align="center" label="用户头像" />
+          <el-table-column align="center" label="用户账号" prop="phone" width="120"/>
+          <el-table-column align="center" label="用户名" prop="username" width="120"/>
+          <el-table-column align="center" label="注册时间" width="200">
             <template slot-scope="scope">
-              <el-button type="text" @click="pass(scope.$index)">启用</el-button>
-              <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>
-              <el-button type="text" @click="details(scope.row.id, 1)">添加</el-button>
+              <i class="el-icon-time" />
+              <span>{{ scope.row.creattime }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="推荐人" />
+          <el-table-column align="center" label="是否师傅" />
+          <el-table-column align="center" label="是否商家" />
+          <el-table-column align="center" label="我的朋友" />
+          <el-table-column align="center" label="积分" />
+          <el-table-column align="center" label="下单情况" />
+          <el-table-column align="center" label="操作" width="100">
+            <template slot-scope="scope">
+              <el-button type="text" @click="details(scope.$index)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -55,8 +73,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/advert'
-import Details from '@/views/system/advert/details'
+import { getList } from '@/api/member'
+import Details from '@/views/order/details'
 
 export default {
   data() {
@@ -69,7 +87,9 @@ export default {
 
       total: 100,
       queryMes: {
-        page: 1,
+        user: '',
+        region: '',
+        page: 2,
         limit: 10
       },
 
@@ -89,8 +109,8 @@ export default {
       })
     },
 
-    selectionChange() {
-
+    selectionChange(val) {
+      this.selectArr = val
     },
 
     handleClose() {
@@ -105,21 +125,10 @@ export default {
       this.currentComponent = 'Details'
     },
 
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-    
+    // 审核订单
     examine(id) {
 
-    },
-
-    pass(id) {
-      
-    },
+    }
   },
   components: {
     Details

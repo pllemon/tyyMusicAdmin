@@ -106,16 +106,16 @@ export const constantRoutes = [
 
 
   {
-    path: '/user',
+    path: '/member',
     component: Layout,
-    redirect: '/user/list',
-    name: 'User',
+    redirect: '/member/list',
+    name: 'Member',
     meta: { title: '会员管理', icon: 'form' },
     children: [
       {
         path: 'list',
         name: 'List',
-        component: () => import('@/views/user/list'),
+        component: () => import('@/views/member/list'),
         meta: { title: '全部会员', icon: 'form' }
       }
     ]

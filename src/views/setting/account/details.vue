@@ -64,6 +64,12 @@ export default {
       form: {}
     }
   },
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+      enableState: state => state.dict.enableState
+    })
+  },
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
@@ -76,12 +82,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType,
-      enableState: state => state.dict.enableState,
-    })
   }
 }
 </script>
