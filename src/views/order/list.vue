@@ -99,7 +99,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/order'
+import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
 import Reject from '@/views/order/reject'
 
@@ -151,13 +151,18 @@ export default {
     },
 
     // 发布订单
-    release() {
+    release(id) {
       this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '发布成功!'
+        release({
+          order_id: id
+        }).then(response => {
+          this.$message({
+            type: 'success',
+            message: '发布成功!'
+          })
+          this.fetchData()
         })
       })
     },
