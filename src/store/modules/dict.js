@@ -1,5 +1,5 @@
 const state = {
-  changeType: ['查看', '添加', '编辑', '删除', '审核'],
+  changeType: ['查看', '添加', '编辑', '删除', '审核', '指派'],
   enableState: ['禁用', '启用'],
   orderStatus: {
     1: '待后台审核',

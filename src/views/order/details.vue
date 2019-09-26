@@ -37,6 +37,49 @@
           <p>待用户支付定金</p>
         </li>
       </ul>
+
+
+      <el-form>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="订单总价格：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="定金金额：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="师傅工资：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="订单总价格：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="定金金额：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="师傅工资：">
+              {{orderInfo.money}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-image
+          style="width: 200px; height: 100px"
+          :src="url"
+          fit="contain"
+        />
+      </el-form>
     </div>
 
     <div class="section" v-if="orderInfo.status == 1">
@@ -120,6 +163,7 @@ export default {
       orderInfo: {}
     }
   },
+
   created() {
     let that = this
     getDetails({
@@ -131,6 +175,7 @@ export default {
       that.examineForm.order_id = that.orderInfo.order_id
     })
   },
+
   methods: {
     uploadSuccess(id) {
       this.examineForm.imglist = id
@@ -154,12 +199,6 @@ export default {
           })
         }
       })
-    },
-    handleAvatarSuccess() {
-
-    },
-    beforeAvatarUpload() {
-
     }
   },
   computed: {

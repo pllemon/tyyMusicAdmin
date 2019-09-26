@@ -6,19 +6,28 @@
     </div>
 
     <div class="table-content">
+      <tinymce v-model="content" :height="300" />
+      <el-button @click="save">保存</el-button>
     </div>
   </div>
 </template>
 
 <script>
-
+import Tinymce from '@/components/Tinymce'
 export default {
+  components: {
+    Tinymce
+  },
   data() {
     return {
-     
+     content: ''
     }
   },
   created() {
+  },
+
+  save() {
+    console.log(this.content)
   }
 }
 </script>

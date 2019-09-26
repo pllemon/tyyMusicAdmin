@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 订单列表
 export function getList(data) {
   return request({
     url: '/admin/orderlist',
@@ -8,6 +9,7 @@ export function getList(data) {
   })
 }
 
+// 订单详情
 export function getDetails(data) {
   return request({
     url: '/admin/orderinfo',
@@ -16,6 +18,7 @@ export function getDetails(data) {
   })
 }
 
+// 订单审核
 export function orderexamine(data) {
   return request({
     url: '/admin/orderexamine',
@@ -24,6 +27,7 @@ export function orderexamine(data) {
   })
 }
 
+// 发布订单
 export function release(data){
   return request({
     url: '/admin/ordersrelease',

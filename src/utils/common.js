@@ -1,8 +1,15 @@
 /**
  * 页面共用js
  */
+function search(target) {
+  target.queryMes.page = 1
+  target.queryMes.limit = 10
+  target.fetchData()
+}
 function resetSearch(target) {
   target.$refs.searchForm.resetFields()
+  target.queryMes.page = 1
+  target.queryMes.limit = 10
   target.fetchData()
 }
 
@@ -46,6 +53,7 @@ function removeRecord(target, obj, callback) {
 
 
 export default{
+  search, // 搜索表单
   resetSearch, // 重置搜索表单
   enableRecord, // 启用和禁用
   removeRecord // 删除

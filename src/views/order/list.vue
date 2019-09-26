@@ -13,7 +13,7 @@
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
         <el-form-item label="预约时间">
            <el-date-picker
-            v-model="value1"
+            v-model="timeRange"
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -30,8 +30,11 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="下单账号">
+          <el-input type="text" placeholder="请输入"/>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
@@ -56,12 +59,12 @@
               {{orderStatus[scope.row.status]}}
             </template>
           </el-table-column>
-          <el-table-column label="服务需求" prop="service_demand" width="120"/>
           <el-table-column label="下单客户" width="200">
             <template slot-scope="scope">
               {{scope.row.phone}}
             </template>
           </el-table-column>
+          <el-table-column label="服务需求" prop="service_demand" width="120"/>
           <el-table-column label="服务地址" prop="address" width="160"/>
           <el-table-column label="预约时间" width="120">
             <template slot-scope="scope">
@@ -69,22 +72,21 @@
               <span>{{ scope.row.appo_time }}</span>
             </template>
           </el-table-column>
+          <el-table-column label="用户备注" prop="remark" width="120" />
+          <el-table-column label="承接师傅"  width="120"/>
           <el-table-column label="创建时间" width="120">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.create_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="用户备注" prop="remark" width="120" />
-          
-          <el-table-column label="承接师傅"  width="120"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
               <el-button type="text" v-show="scope.row.status == 1" @click="details(scope.row.order_id, 4)">审核通过</el-button>
+              <el-button type="text" v-show="scope.row.status == 1" @click="reject(scope.row.order_id)">取消订单</el-button>
               <el-button type="text" v-show="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
               <el-button type="text" v-show="scope.row.status == 4" @click="details(scope.row.order_id, 2)">指派</el-button>
-              <el-button type="text" v-show="scope.row.status == 1" @click="reject(scope.row.order_id)">取消</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -104,11 +106,15 @@ import Details from '@/views/order/details'
 import Reject from '@/views/order/reject'
 
 export default {
+  components: {
+    Details,
+    Reject
+  },
   data() {
     return {
       vm: null,
 
-      list: null,
+      list: [],
       listLoading: true,
       selectArr: [],
 
@@ -117,7 +123,7 @@ export default {
         page: 1,
         limit: 10
       },
-      value1: [],
+      timeRange: [],
 
       currentComponent: '',
       dialogMes: {}
@@ -174,10 +180,6 @@ export default {
       }
       this.currentComponent = 'Reject'
     },
-  },
-  components: {
-    Details,
-    Reject
   },
   computed: {
     ...mapState({
