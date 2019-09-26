@@ -1,96 +1,148 @@
 <template>
-  <div class="app-container">
-    <!-- 搜索 -->
-    <el-form :inline="true" :model="queryMes">
-      <el-form-item label="启用状态">
-        <el-input v-model="queryMes.user" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="fetchData()">搜索</el-button>
-        <el-button type="primary" @click="changeSingle()">添加</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="app-container list-layout">
+    <!-- 表头 -->
+    <div class="table-header">
+      <p class="section-title">网点管理</p>
+      <div class="action">
+        <el-button size="small" icon="el-icon-plus" round @click="details(1)">添加网点</el-button>
+      </div>
+    </div>
 
-    <!-- 表格&分页 -->
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
-    >
-      <el-table-column type="selection" width="55" />
-      <el-table-column type="index" width="50" />
-      <el-table-column align="center" label="一级网点" />
-      <el-table-column align="center" label="二级网点" />
-      <el-table-column align="center" label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button type="text" @click="pass(scope.$index)">编辑</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="table-content">
+      <!-- 搜索 -->
+      <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+        <el-form-item label="账号名">
+          <el-input v-model="queryMes.user" />
+        </el-form-item>
+        <el-form-item label="所属网点">
+          <el-select v-model="queryMes.region">
+            <el-option label="区域一" value="shanghai" />
+            <el-option label="区域二" value="beijing" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button @click="common.resetSearch(vm)">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+      <!-- 表格&分页 -->
+      <div class="table-section">
+        <el-table
+          v-loading="listLoading"
+          :data="list"
+          element-loading-text="Loading"
+          border
+          fit
+          highlight-current-row
+          height="100%"
+          @selection-change="selectionChange"
+        >
+          <el-table-column type="selection" width="55" fixed />
+          <el-table-column label="一级网点" />
+          <el-table-column label="二级网点" />
+          <el-table-column label="联系人" />
+          <el-table-column label="联系电话" />
+          <el-table-column label="网点地址" />
+          <el-table-column label="启用状态" width="100">
+            <template slot-scope="scope">
+              <i class="el-icon-time" />
+              <span>{{ scope.row.appo_time }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="网点备注" prop="remark"/>
+          <el-table-column label="操作" width="200" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
+              <el-button type="text" @click="details(2, scope.row.order_id)">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
+    </div>
 
     <!-- 弹窗 -->
-    <el-dialog :title="dialogTitle" :visible="showDialog" width="1100px" :before-close="handleClose">
-      <component v-bind:is="currentComponent" />
-    </el-dialog>
+    <component :is="currentComponent" :dialogMes="dialogMes"/>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
-import Details from '@/views/order/details'
+import { getList, enableRecord, removeRecord } from '@/api/order'
+import Details from '@/views/setting/account/details'
 
 export default {
   data() {
     return {
+      vm: null,
+
       list: null,
-      listLoading: true,
+      listLoading: false,
+      selectArr: [],
+
+      total: 100,
       queryMes: {
         user: '',
-        region: ''
+        region: '',
+        page: 2,
+        limit: 10
       },
+
       currentComponent: '',
-      showDialog: false,
-      dialogTitle: ''
+      dialogMes: {}
     }
   },
   created() {
-    this.fetchData()
+    this.vm = this
+   // this.fetchData()
+
+   this.list = [
+     {
+       name: '1',
+       child: '1-1'
+     },
+     {
+       name: '1',
+       child: '1-2'
+     },
+     {
+       name: '1',
+       child: '1-3'
+     }
+   ]
   },
   methods: {
-    changeSingle() {
-
-    },
-
     fetchData() {
       this.listLoading = true
       getList().then(response => {
-        this.list = response.data.items
+        this.list = response.data
+      }).finally(() => {
         this.listLoading = false
       })
     },
 
-    handleClose() {
-      this.showDialog = false
-      this.currentComponent = ''
+    selectionChange(val) {
+      this.selectArr = val
     },
 
-    // 订单详情
-    details(id) {
-      this.showDialog = true
-      this.dialogTitle = '订单详情'
+    details(type, id='') {
+      this.dialogMes = {
+        id: id,
+        type: type
+      }
       this.currentComponent = 'Details'
     },
 
-    // 审核订单
-    examine(id) {
-
+    enable(id, type) {
+      this.common.enableRecord(this.vm, {
+        id, 
+        type,
+        mes: '该账号'
+      }, enableRecord)
     },
 
-    pass(id) {
-      
+    remove(id) {
+      this.common.removeRecord(this.vm, {id}, removeRecord)
     }
   },
   components: {

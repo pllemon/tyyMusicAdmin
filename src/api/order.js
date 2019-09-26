@@ -23,3 +23,11 @@ export function orderexamine(data) {
     data
   })
 }
+
+export function release(data){
+  return request({
+    url: '/admin/ordersrelease',
+    method: 'post',
+    data
+  })
+}

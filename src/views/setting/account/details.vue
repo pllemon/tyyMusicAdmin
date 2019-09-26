@@ -64,8 +64,11 @@ export default {
       form: {}
     }
   },
-  created() {
-    
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+      enableState: state => state.dict.enableState
+    })
   },
   methods: {
     handleClose() {
@@ -79,12 +82,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType,
-      enableState: state => state.dict.enableState,
-    })
   }
 }
 </script>

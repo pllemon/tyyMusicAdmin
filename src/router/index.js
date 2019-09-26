@@ -56,27 +56,21 @@ export const constantRoutes = [
   },
 
   {
-    path: '/master',
+    path: '/order',
     component: Layout,
-    redirect: '/master/list',
-    name: 'Master',
-    meta: { title: '财务管理', icon: 'form' },
+    redirect: '/order/list',
+    name: 'Order',
+    meta: { title: '订单管理', icon: 'form' },
     children: [
       {
         path: 'list',
         name: 'List',
-        component: () => import('@/views/master/list'),
-        meta: { title: '订单收入明细', icon: 'form' }
-      },
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/master/list'),
-        meta: { title: '师傅工资结算', icon: 'form' }
+        component: () => import('@/views/order/list'),
+        meta: { title: '全部订单', icon: 'form' }
       }
     ]
   },
-
+  
   {
     path: '/master',
     component: Layout,
@@ -93,21 +87,6 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/list',
-    name: 'Order',
-    meta: { title: '订单管理', icon: 'form' },
-    children: [
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/order/list'),
-        meta: { title: '全部订单', icon: 'form' }
-      }
-    ]
-  },
 
   {
     path: '/businessman',
@@ -127,16 +106,16 @@ export const constantRoutes = [
 
 
   {
-    path: '/user',
+    path: '/member',
     component: Layout,
-    redirect: '/user/list',
-    name: 'User',
+    redirect: '/member/list',
+    name: 'Member',
     meta: { title: '会员管理', icon: 'form' },
     children: [
       {
         path: 'list',
         name: 'List',
-        component: () => import('@/views/user/list'),
+        component: () => import('@/views/member/list'),
         meta: { title: '全部会员', icon: 'form' }
       }
     ]
