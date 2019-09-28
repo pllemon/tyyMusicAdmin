@@ -1,24 +1,36 @@
 import request from '@/utils/request'
 
-export function getList(data) {
+export function bannerlist(data) {
   return request({
-    url: '/admin/userlist',
+    url: '/admin/bannerlist',
     method: 'post',
     data
   })
 }
 
-export function getDetails(params) {
+export function bannerinfo(params) {
   return request({
-    url: '/admin/craftsmaninfo',
+    url: '/admin/bannerinfo',
     method: 'get',
     params
   })
 }
 
-export function craftsmanexamine(data) {
+export function saveinfo(type, data) {
+  let url = '/admin/addbanner'
+  if (type == 2) {
+    url = '/admin/updatebannerinfo'
+  }
   return request({
-    url: '/admin/craftsmanexamine',
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
+export function updatebannerstatus(data) {
+  return request({
+    url: '/admin/updatebannerstatus',
     method: 'post',
     data
   })

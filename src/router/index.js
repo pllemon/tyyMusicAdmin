@@ -122,6 +122,22 @@ export const constantRoutes = [
   },
 
   {
+    path: '/show',
+    component: Layout,
+    redirect: '/show/list',
+    name: 'Show',
+    meta: { title: '工程秀管理', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/show/list'),
+        meta: { title: '所有工程秀', icon: 'form' }
+      }
+    ]
+  },
+
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/advert',

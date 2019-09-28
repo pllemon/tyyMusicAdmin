@@ -35,3 +35,21 @@ export function release(data){
     data
   })
 }
+
+// 获取订单报名列表
+export function ordercraftsmanlist(data){
+  return request({
+    url: '/admin/ordercraftsmanlist',
+    method: 'post',
+    data
+  })
+}
+
+// 选择某个师傅
+export function choosecraftsman(data){
+  return request({
+    url: '/admin/choosecraftsman',
+    method: 'post',
+    data
+  })
+}

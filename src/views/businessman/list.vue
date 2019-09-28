@@ -47,22 +47,22 @@
           <el-table-column align="center" label="店铺地址" prop="address" width="200"/>
           <el-table-column align="center" label="门面图片" width="120">
             <template slot-scope="scope">
-              <img :src="'http://47.106.100.144/uploads/business/' + scope.row.shopimg" style="width:100px"/>
+              <img :src="config.ip + scope.row.shopimg" style="width:100px"/>
             </template>
           </el-table-column>
           <el-table-column align="center" label="产品图片" width="120">
             <template slot-scope="scope">
-              <img :src="'http://47.106.100.144/uploads/business/' + scope.row.goodsimg" style="width:100px"/>
+              <img :src="config.ip + scope.row.goodsimg" style="width:100px"/>
             </template>
           </el-table-column>
           <el-table-column align="center" label="营业执照" width="120">
             <template slot-scope="scope">
-              <img :src="'http://47.106.100.144/uploads/business/' + scope.row.businessimg" style="width:100px"/>
+              <img :src="config.ip + scope.row.businessimg" style="width:100px"/>
             </template>
           </el-table-column>
           <el-table-column align="center" label="分享图片" width="120">
             <template slot-scope="scope">
-              <img :src="'http://47.106.100.144/uploads/business/' + scope.row.sharewximg" style="width:100px"/>
+              <img :src="config.ip + scope.row.sharewximg" style="width:100px"/>
             </template>
           </el-table-column>
           <el-table-column align="center" label="申请时间" width="200">
@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getList } from '@/api/businessman'
 import Details from '@/views/businessman/details'
 import Reject from '@/views/businessman/reject'
@@ -149,6 +150,11 @@ export default {
       }
       this.currentComponent = 'Reject'
     },
+  },
+  computed: {
+    ...mapState({
+      config: state => state.dict.config
+    })
   }
 }
 </script>

@@ -1,130 +1,169 @@
 <template>
   <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'订单'" :visible="true" width="1200px" :before-close="handleClose">
-
-    <div class="section">
-      <p class="section-title small">订单基本信息</p>
-      <ul class="order-mes">
-        <li>
-          <label>订单ID：</label>
-          <p>{{orderInfo.order_id}}</p>
-        </li>
-        <li>
-          <label>下单用户：</label>
-          <p>{{orderInfo.service_demand}}</p>
-        </li>
-        <li>
-          <label>服务需求：</label>
-          <p>{{orderInfo.service_demand}}</p>
-        </li>
-        <li>
-          <label>服务地址：</label>
-          <p>{{orderInfo.address}}</p>
-        </li>
-        <li>
-          <label>预约时间：</label>
-          <p>{{orderInfo.appo_time}}</p>
-        </li>
-        <li>
-          <label>创建时间：</label>
-          <p>{{orderInfo.create_time}}</p>
-        </li>
-        <li>
-          <label>用户备注：</label>
-          <p>{{orderInfo.remark}}</p>
-        </li>
-        <li>
-          <label>订单状态：</label>
-          <p>待用户支付定金</p>
-        </li>
-      </ul>
-
-
-      <el-form>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="订单总价格：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="定金金额：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="师傅工资：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="订单总价格：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="定金金额：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="师傅工资：">
-              {{orderInfo.money}}
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-image
-          style="width: 200px; height: 100px"
-          :src="url"
-          fit="contain"
-        />
-      </el-form>
-    </div>
-
-    <div class="section" v-if="orderInfo.status == 1">
-      <p class="section-title small">审核资料上传</p>
-      <div class="flex" style="padding: 20px 0;">
-        <el-form ref="examineForm" :model="examineForm" :rules="rules" label-width="120px" style="width: 600px;margin-right: 50px">
-          <el-form-item label="订单总价格：" prop="total_price">
-            <el-input v-model.number="examineForm.total_price" />
-          </el-form-item>
-          <el-form-item label="定金金额：" prop="earnest_price">
-            <el-input v-model.number="examineForm.earnest_price" />
-          </el-form-item>
-          <el-form-item label="师傅工资：" prop="crafts_man_price">
-            <el-input v-model.number="examineForm.crafts_man_price" />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitExamine">提交</el-button>
-            <el-button @click="handleClose">取消</el-button>
-          </el-form-item>
-        </el-form>
-        <div>
-          <gd-upload tip="请上传报价单" @success="uploadSuccess"/>
+    <div class="flex">
+      <div class="section" style="width:200px;margin-right: 20px">
+        <p class="section-title small">订单时间线</p>
+        <el-timeline style="margin-top:30px">
+          <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
+          <el-timeline-item :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
+          <el-timeline-item :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
+          <el-timeline-item :timestamp="message.pay.release_time">后台发布订单</el-timeline-item>
+          <el-timeline-item timestamp="">梁师傅承接订单</el-timeline-item>
+          <el-timeline-item :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
+          <el-timeline-item timestamp="">用户评价</el-timeline-item>
+          <el-timeline-item timestamp="">梁师傅上传师傅秀</el-timeline-item>
+        </el-timeline>
+      </div>
+      <div class="flex1" style="border-left: 1px solid #eee;padding-left: 20px">
+        <div class="section detail-form">
+          <p class="section-title small">订单信息</p>
+          <el-form label-width="100px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="订单编号:">
+                  {{message.info.order_sn}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="订单状态:">
+                  {{orderStatus[message.info.status]}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="下单客户:">
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="服务需求:">
+                  {{message.info.service_demand}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="预约时间:">
+                  {{message.info.appo_time}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="联系用户:">
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="服务地址:">
+                  {{message.info.address}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="用户备注:">
+                  {{message.info.remark}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="订单图片:">
+                  <template v-if="message.img.length">
+                    <el-image
+                      v-for="(item, index) in message.img"
+                      :key="index"
+                      :src="config.ip + item"
+                      fit="cover"
+                    />
+                  </template>
+                  <template v-else>
+                    无
+                  </template>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-divider></el-divider>
+          <p class="section-title small">报价&报名</p>
+          <el-form label-width="100px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="订单总价格:">
+                  {{message.pay.total_price}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="定金金额:">
+                  {{message.pay.earnest_price}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="尾款金额:">
+                  {{message.pay.tail_price}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="师傅工资:">
+                  {{message.pay.craftsman_price}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="承接师傅:">
+                  
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="联系师傅:">
+                  
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="报价单:">
+                  <el-image
+                    :src="url"
+                    fit="contain"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="报名情况:">
+                  <template v-if="message.img.length">
+                    <ul class="master-list">
+                      <li v-for="(item, index) in craftsmanlist" :key="index">
+                        <img src="">
+                        <div class="flex1">
+                          <p style="font-weight: bold">{{item.name}} {{item.sn}}</p>
+                          <p><i class="el-icon-phone-outline" /> {{item.phone}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </template>
+                  <template v-else>
+                    无
+                  </template>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-divider></el-divider>
+          <p class="section-title small">用户评价&师傅秀</p>
+          <el-form label-width="100px">
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="用户评价:">
+                 
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="师傅秀:">
+                  <el-image
+                    :src="url"
+                    fit="contain"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
         </div>
       </div>
-    </div>
-
-    <div class="section" v-if="orderInfo.status == 4">
-      <p class="section-title small">师傅报名情况</p>
-      <ul class="master-list">
-        <li v-for="(item, index) in list" :key="index">
-          <img src="">
-          <div class="flex1">
-            <p style="font-weight: bold">李师傅 NO3424</p>
-            <p><i class="el-icon-phone-outline" /> 1343445345</p>
-          </div>
-          <el-button type="primary" size="mini">选择</el-button>
-        </li>
-      </ul>
     </div>
   </el-dialog>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, orderexamine } from '@/api/order'  
+import { getDetails, ordercraftsmanlist } from '@/api/order'  
 
 export default {
   props: {
@@ -135,32 +174,8 @@ export default {
   },
   data() {
     return {
-      list: [1, 2, 3, 4, 5],
-      listLoading: true,
-      examineForm: {
-        total_price: '',
-        earnest_price: '',
-        crafts_man_price: '',
-        imglist: '',
-        order_sn: '',
-        user_id: '',
-        order_id: ''
-      },
-      rules: {
-        total_price: [
-          { required: true, message: '请输入订单总价格', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
-        ],
-        earnest_price: [
-          { required: true, message: '请输入定金金额', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
-        ],
-        crafts_man_price: [
-          { required: true, message: '请输入师傅工资', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
-        ],
-      },
-      orderInfo: {}
+      craftsmanlist: [],
+      message: {}
     }
   },
 
@@ -169,42 +184,26 @@ export default {
     getDetails({
       order_id: that.dialogMes.id
     }).then(response => {
-      that.orderInfo = response.data.info[0]
-      that.examineForm.order_sn = that.orderInfo.order_sn
-      that.examineForm.user_id = that.orderInfo.user_id
-      that.examineForm.order_id = that.orderInfo.order_id
+      that.message = response.data
+    })
+
+    ordercraftsmanlist({
+      order_id: that.dialogMes.id
+    }).then(response => {
+      that.craftsmanlist = response.data
     })
   },
 
   methods: {
-    uploadSuccess(id) {
-      this.examineForm.imglist = id
-    },
-
     handleClose() {
       this.$parent.currentComponent = ''
-    },
-
-    submitExamine() {
-      let that = this
-      that.$refs.examineForm.validate((valid) => {
-        if (valid) {
-          orderexamine(that.examineForm).then(response => {
-            that.$message({
-              message: response.message,
-              type: 'success'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
-          })
-        }
-      })
     }
   },
   computed: {
     ...mapState({
       changeType: state => state.dict.changeType,
-      orderStatus: state => state.dict.orderStatus
+      orderStatus: state => state.dict.orderStatus,
+      config: state => state.dict.config
     })
   }
 }
@@ -222,21 +221,6 @@ export default {
   margin-bottom: 40px;
   .section-title{
     margin-bottom: 15px;
-  }
-}
-.order-mes{
-  display: flex;
-  flex-wrap: wrap;
-  li{
-    width: 33.33%;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    font-weight: bold;
-    label{
-      margin-bottom: 5px;
-      display: block;
-      font-weight: normal;
-    }
   }
 }
 

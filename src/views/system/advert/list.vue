@@ -4,6 +4,7 @@
     <div class="table-header">
       <p class="section-title">广告列表</p>
       <div class="action">
+        <el-button size="small" icon="el-icon-plus" round @click="details(-1, 1)">添加广告</el-button>
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
     </div>
@@ -41,7 +42,7 @@
             <template slot-scope="scope">
               <el-button type="text" @click="pass(scope.$index)">启用</el-button>
               <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>
-              <el-button type="text" @click="details(scope.row.id, 1)">添加</el-button>
+              <el-button type="text" @click="details(scope.row.id, 2)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/advert'
+import { bannerlist } from '@/api/advert'
 import Details from '@/views/system/advert/details'
 
 export default {
@@ -83,7 +84,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
+      bannerlist().then(response => {
         this.list = response.data
         this.listLoading = false
       })
@@ -96,13 +97,6 @@ export default {
     handleClose() {
       this.showDialog = false
       this.currentComponent = ''
-    },
-
-    // 订单详情
-    details(id) {
-      this.showDialog = true
-      this.dialogTitle = '订单详情'
-      this.currentComponent = 'Details'
     },
 
     details(id, type) {

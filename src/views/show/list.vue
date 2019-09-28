@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/member'
+import { getList } from '@/api/show'
 import Details from '@/views/order/details'
 
 export default {
