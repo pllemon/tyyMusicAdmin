@@ -1,61 +1,70 @@
 <template>
-  <el-dialog :modal-append-to-body='false' :title="title[dialogMes.type]" :visible="true" width="1000px" :before-close="handleClose">
-    <div class="section">
-      <p class="section-title">基本信息</p>
-      <ul class="order-mes">
-        <li>
-          <label>工号：</label>
-          <p></p>
-        </li>
-        <li>
-          <label>姓名：</label>
-          <p>{{masterInfo.name}}</p>
-        </li>
-        <li>
-          <label>身份证：</label>
-          <p>{{masterInfo.sfz}}</p>
-        </li>
-        <li>
-          <label>联系手机：</label>
-          <p>{{masterInfo.phone}}</p>
-        </li>
-        <li>
-          <label>联系地址：</label>
-          <p>{{masterInfo.address}}</p>
-        </li>
-        <li>
-          <label>个人简介：</label>
-          <p>{{masterInfo.desc}}</p>
-        </li>
-        <li>
-          <label>申请时间：</label>
-          <p>{{masterInfo.create_time}}</p>
-        </li>
-      </ul>
-    </div>
-
-    <div class="section" v-if="dialogMes.type == 2">
-      <p class="section-title">审核资料上传</p>
-      <div class="flex" style="padding: 20px 0;">
-        <el-form ref="examineForm" :model="examineForm" label-width="120px" style="width: 600px;margin-right: 50px">
-          <el-form-item label="师傅编号：">
-            <el-input v-model="examineForm.sn" />
-          </el-form-item>
-          <el-form-item label="师傅证件：">
-            <gd-upload @success="uploadSuccess"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitExamine">提交</el-button>
-            <el-button @click="handleClose">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+  <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'商家'" :visible="true" width="1200px" :before-close="handleClose">
+    <div class="section detail-form">
+      <p class="section-title small">商家信息</p>
+      <el-form label-width="100px">
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="店铺名:">
+              {{message.name}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="联系方式:">
+              {{message.phone}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="申请时间:">
+              {{message.creattime}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="店铺地址:">
+              {{message.address}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="审核时间:">
+              {{message.examine}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="店铺状态:">
+              {{ recordStatus[message.status]}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="门面图片:">
+              <gd-image :src="message.shopimg"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="营业执照:">
+              <gd-image :src="message.goodsimg"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="产品图片:">
+              <gd-image :src="message.businessimg"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="分享图片:">
+              <gd-image :src="message.sharewximg"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </el-dialog>
 </template>
 
 <script>
-import { getDetails, craftsmanexamine } from '@/api/master'
+import { mapState } from 'vuex'
+import { businessinfo } from '@/api/businessman'  
 
 export default {
   props: {
@@ -66,71 +75,45 @@ export default {
   },
   data() {
     return {
-      title: ['师傅详情', '编辑师傅', '审核师傅'],
-      examineForm: {},
-      masterInfo: {}
+      message: {}
     }
   },
+
   created() {
     let that = this
-    getDetails({
-      id: that.dialogMes.id
+    businessinfo({
+      business_id: that.dialogMes.id
     }).then(response => {
-      console.log(response)
-      that.masterInfo = response.data
-      that.examineForm.craftsman_id = response.data.id
-      that.examineForm.user_id = response.data.user_id
+      that.message = response.data
     })
   },
+
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
-    },
-
-    uploadSuccess(id) {
-      this.examineForm.imglist = id
-    },
-
-    submitExamine() {
-      let that = this
-      that.$refs.examineForm.validate((valid) => {
-        if (valid) {
-          that.examineForm.status = 1;
-          craftsmanexamine(that.examineForm).then(response => {
-            that.$message({
-              message: response.message,
-              type: 'success'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
-          })
-        }
-      })
-    },
+    }
+  },
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+       recordStatus: state => state.dict. recordStatus
+    })
   }
 }
 </script>
 
 <style scoped lang="scss">
+.img-list img{
+  width: 300px;
+  height: 200px;
+  border: 1px solid #f2f2f2;
+  margin-right: 20px;
+}
+
 .section{
   margin-bottom: 40px;
   .section-title{
     margin-bottom: 15px;
-  }
-}
-.order-mes{
-  display: flex;
-  flex-wrap: wrap;
-  li{
-    width: 33.33%;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    font-weight: bold;
-    label{
-      margin-bottom: 5px;
-      display: block;
-      font-weight: normal;
-    }
   }
 }
 

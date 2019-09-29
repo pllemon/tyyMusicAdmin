@@ -8,17 +8,19 @@ export function getList(data) {
   })
 }
 
-export function getDetails(params) {
+
+export function businessinfo(params) {
   return request({
-    url: '/admin/craftsmaninfo',
+    url: '/admin/businessinfo',
     method: 'get',
     params
   })
 }
 
-export function craftsmanexamine(data) {
+
+export function businessexamine(data) {
   return request({
-    url: '/admin/craftsmanexamine',
+    url: '/admin/businessexamine',
     method: 'post',
     data
   })

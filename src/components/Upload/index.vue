@@ -2,7 +2,7 @@
   <div>
     <el-upload
       class="avatar-uploader"
-      action="/admin/uploadordersimg"
+      :action="action"
       accept="image/jpeg,image/jpg,image/png"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
@@ -17,6 +17,10 @@
 <script>
 export default {
   props: {
+    action: {
+      type: String,
+      default: '/admin/uploadordersimg'
+    },
     tip: {
       type: String,
       default: ''
@@ -38,7 +42,7 @@ export default {
   methods: {
     handleAvatarSuccess(res, file) {
       if (res.success) {
-        this.imageUrl = 'http://47.106.100.144/uploads/orders/' + res.data.imgurl
+        this.imageUrl = 'http://47.106.100.144/' + res.data.imgurl
         this.$emit('success', res.data.id)
       }
     }

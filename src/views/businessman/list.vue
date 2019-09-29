@@ -42,39 +42,50 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column align="center" label="店铺名" prop="name" width="120"/>
-          <el-table-column align="center" label="联系方式" prop="phone" width="120"/>
-          <el-table-column align="center" label="店铺地址" prop="address" width="200"/>
-          <el-table-column align="center" label="门面图片" width="120">
+          <el-table-column label="店铺名" prop="name" width="120"/>
+          <el-table-column label="联系方式" prop="phone" width="120"/>
+          <el-table-column label="店铺地址" prop="address" width="200"/>
+          <el-table-column label="门面图片" width="120">
             <template slot-scope="scope">
-              <img :src="config.ip + scope.row.shopimg" style="width:100px"/>
+              <gd-image :src="scope.row.shopimg" small/>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="产品图片" width="120">
+          <el-table-column label="产品图片" width="120">
             <template slot-scope="scope">
-              <img :src="config.ip + scope.row.goodsimg" style="width:100px"/>
+              <gd-image :src="scope.row.goodsimg" small/>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="营业执照" width="120">
+          <el-table-column label="营业执照" width="120">
             <template slot-scope="scope">
-              <img :src="config.ip + scope.row.businessimg" style="width:100px"/>
+              <gd-image :src="scope.row.businessimg" small/>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="分享图片" width="120">
+          <el-table-column label="分享图片" width="120">
             <template slot-scope="scope">
-              <img :src="config.ip + scope.row.sharewximg" style="width:100px"/>
+              <gd-image :src="scope.row.sharewximg" small/>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="申请时间" width="200">
+          <el-table-column label="申请时间" width="200">
             <template slot-scope="scope">
               <i class="el-icon-time" />
-              <span>{{ scope.row.display_time }}</span>
+              <span>{{ scope.row.creattime }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="操作" width="200" fixed="right">
+          <el-table-column label="状态" width="120">
             <template slot-scope="scope">
-              <el-button type="text" @click="pass(scope.row.id)">通过</el-button>
-              <el-button type="text" @click="nopass(scope.row.id)">不通过</el-button>
+              {{ recordStatus[scope.row.status] }}
+            </template>
+          </el-table-column>
+          <el-table-column label="审核时间" width="200">
+            <template slot-scope="scope">
+              <i class="el-icon-time" />
+              <span>{{ scope.row.examine }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="200" fixed="right">
+            <template slot-scope="scope">
+              <el-button type="text" @click="details(scope.row.id, 0)">商家详情</el-button>
+              <el-button type="text" @click="examine(scope.row.id)" v-if="scope.row.status == 2">审核商家</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -91,12 +102,12 @@
 import { mapState } from 'vuex'
 import { getList } from '@/api/businessman'
 import Details from '@/views/businessman/details'
-import Reject from '@/views/businessman/reject'
+import Examine from '@/views/businessman/examine'
 
 export default {
   components: {
     Details,
-    Reject
+    Examine
   },
   data() {
     return {
@@ -113,7 +124,6 @@ export default {
         page: 2,
         limit: 10
       },
-      statusOptions: ['未审核', '审核通过', '已驳回'],
 
       currentComponent: '',
       dialogMes: {}
@@ -123,6 +133,23 @@ export default {
     this.fetchData()
   },
   methods: {
+    // 详情
+    details(id, type) {
+      this.dialogMes = {
+        id: id,
+        type: type
+      }
+      this.currentComponent = 'Details'
+    },
+
+    // 审核
+    examine(id, type) {
+      this.dialogMes = {
+        id: id
+      }
+      this.currentComponent = 'Examine'
+    },
+
     fetchData() {
       this.listLoading = true
       getList().then(response => {
@@ -153,7 +180,7 @@ export default {
   },
   computed: {
     ...mapState({
-      config: state => state.dict.config
+      recordStatus: state => state.dict. recordStatus
     })
   }
 }

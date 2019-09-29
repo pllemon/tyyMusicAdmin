@@ -43,6 +43,9 @@ Vue.component('GdPagination', GdPagination)
 import GdUpload from '@/components/Upload'
 Vue.component('GdUpload', GdUpload)
 
+import GdImage from '@/components/Image'
+Vue.component('GdImage', GdImage)
+
 new Vue({
   el: '#app',
   router,

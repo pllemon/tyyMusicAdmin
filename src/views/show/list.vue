@@ -42,22 +42,22 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column align="center" label="用户头像" />
-          <el-table-column align="center" label="用户账号" prop="phone" width="120"/>
-          <el-table-column align="center" label="用户名" prop="username" width="120"/>
-          <el-table-column align="center" label="注册时间" width="200">
+          <el-table-column label="用户头像" />
+          <el-table-column label="用户账号" prop="phone" width="120"/>
+          <el-table-column label="用户名" prop="username" width="120"/>
+          <el-table-column label="注册时间" width="200">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.creattime }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="推荐人" />
-          <el-table-column align="center" label="是否师傅" prop="is_criaftsman"/>
-          <el-table-column align="center" label="是否商家" prop="is_business"/>
-          <el-table-column align="center" label="我的朋友" />
-          <el-table-column align="center" label="积分" />
-          <el-table-column align="center" label="下单情况" />
-          <el-table-column align="center" label="操作" width="100">
+          <el-table-column label="推荐人" />
+          <el-table-column label="是否师傅" prop="is_criaftsman"/>
+          <el-table-column label="是否商家" prop="is_business"/>
+          <el-table-column label="我的朋友" />
+          <el-table-column label="积分" />
+          <el-table-column label="下单情况" />
+          <el-table-column label="操作" width="100">
             <template slot-scope="scope">
               <el-button type="text" @click="details(scope.$index)">详情</el-button>
             </template>

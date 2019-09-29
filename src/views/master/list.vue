@@ -54,6 +54,7 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column type="index" label="序号" width="50" />
+          <el-table-column label="工号" prop="sn"/>
           <el-table-column label="姓名" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>
           <el-table-column label="手机号" prop="phone" width="120"/>
@@ -63,15 +64,24 @@
           <el-table-column label="申请时间" width="200">
             <template slot-scope="scope">
               <i class="el-icon-time" />
-              <span>{{ scope.row.display_time }}</span>
+              <span>{{ scope.row.create_time }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="状态" width="100">
+            <template slot-scope="scope">
+              {{ recordStatus[scope.row.status] }}
+            </template>
+          </el-table-column>
+          <el-table-column label="审核时间" width="200">
+            <template slot-scope="scope">
+              <i class="el-icon-time" />
+              <span>{{ scope.row.examine_time }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.id, 1)">详情</el-button>
-              <el-button type="text" @click="details(scope.row.id, 3)">编辑资料</el-button>
-              <el-button type="text" @click="details(scope.row.id, 2)">通过</el-button>
-              <el-button type="text" @click="reject(scope.$index)">驳回</el-button>
+              <el-button type="text" @click="details(scope.row.id, 0)">师傅详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 2" @click="examine(scope.row.id)">审核师傅</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -85,14 +95,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getList } from '@/api/master'
 import Details from '@/views/master/details'
-import Reject from '@/views/master/reject'
+import Examine from '@/views/master/examine'
 
 export default {
   components: {
     Details,
-    Reject
+    Examine
   },
   data() {
     return {
@@ -120,6 +131,14 @@ export default {
     this.fetchData()
   },
   methods: {
+    // 审核
+    examine(id, type) {
+      this.dialogMes = {
+        id: id
+      }
+      this.currentComponent = 'Examine'
+    },
+
     fetchData() {
       this.listLoading = true
       getList().then(response => {
@@ -148,6 +167,11 @@ export default {
       this.currentComponent = 'Reject'
     },
     
+  },
+  computed: {
+    ...mapState({
+      recordStatus: state => state.dict. recordStatus
+    })
   }
 }
 </script>

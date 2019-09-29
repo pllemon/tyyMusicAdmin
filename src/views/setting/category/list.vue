@@ -21,9 +21,9 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column type="index" width="50" />
-      <el-table-column align="center" label="展示图片" />
-      <el-table-column align="center" label="状态" />
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column label="展示图片" />
+      <el-table-column label="状态" />
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="text" @click="pass(scope.$index)">启用</el-button>
           <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>

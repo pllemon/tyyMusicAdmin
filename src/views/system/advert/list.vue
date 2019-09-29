@@ -34,11 +34,11 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column align="center" label="展示图片" />
-          <el-table-column align="center" label="类别" />
-          <el-table-column align="center" label="排序" />
-          <el-table-column align="center" label="链接" />
-          <el-table-column align="center" label="操作" width="200" fixed="right">
+          <el-table-column label="展示图片" />
+          <el-table-column label="类别" />
+          <el-table-column label="排序" />
+          <el-table-column label="链接" />
+          <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="pass(scope.$index)">启用</el-button>
               <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>
