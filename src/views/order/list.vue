@@ -82,10 +82,10 @@
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.order_id, 0)">订单详情</el-button>
-              <el-button type="text" v-show="scope.row.status == 1" @click="examine(scope.row.order_id)">审核订单</el-button>
-              <el-button type="text" v-show="scope.row.status == 3" @click="release(scope.row.order_id)">发布订单</el-button>
-              <el-button type="text" v-show="scope.row.status == 4" @click="appoint(scope.row.order_id)">指派师傅</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 1" @click="common.loadComponent(vm, 2, scope.row.order_id)">审核</el-button>
+              <el-button type="text" v-if="scope.row.status == 4" @click="common.loadComponent(vm, 3, scope.row.order_id)">指派</el-button>
+              <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -148,15 +148,6 @@ export default {
       this.selectArr = val
     },
 
-    // 订单详情
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
     // 发布订单
     release(id) {
       this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {
@@ -174,22 +165,6 @@ export default {
         })
       })
     },
-
-    // 审核订单
-    examine(id, type) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Examine'
-    },
-
-    // 指派订单
-    appoint(id, type) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Appoint'
-    }
   },
   computed: {
     ...mapState({

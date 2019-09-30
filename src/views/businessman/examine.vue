@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body='false' title="审核商家" :visible="true" width="800px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="审核商家" :visible="true" width="800px" :before-close="handleClose">
     <el-form ref="examineForm" :model="examineForm" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="examineForm.status">

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'商家'" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'商家'" :visible="true" width="1200px" :before-close="handleClose">
     <div class="section detail-form">
       <p class="section-title small">商家信息</p>
       <el-form label-width="100px">

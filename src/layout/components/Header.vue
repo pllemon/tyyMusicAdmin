@@ -2,7 +2,7 @@
   <div class="header flex-center-between">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="flex-center-start">
-      <p class="title">多师傅后台管理系统</p>
+      <!-- <p class="title">多师傅后台管理系统</p>
       <el-dropdown class="dropdown">
         <span class="el-dropdown-link">
           水口分网点1 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -11,7 +11,7 @@
           <el-dropdown-item>水口分网点1</el-dropdown-item>
           <el-dropdown-item>水口分网点2</el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
     <div>
       <el-dropdown>

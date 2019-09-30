@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'订单'" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="订单详情" :visible="true" width="1200px" :before-close="handleClose">
     <div class="flex">
       <div class="section" style="width:200px;margin-right: 20px">
         <p class="section-title small">订单时间线</p>
@@ -21,51 +21,48 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="订单编号:">
-                  {{message.info.order_sn}}
+                  {{ message.info.order_sn }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="订单状态:">
-                  {{orderStatus[message.info.status]}}
+                  {{ orderStatus[message.info.status] }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="下单客户:">
+                  {{ message.info.username }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="服务需求:">
-                  {{message.info.service_demand}}
+                  {{ message.info.service_demand }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="预约时间:">
-                  {{message.info.appo_time}}
+                  {{ message.info.appo_time }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="联系用户:">
+                  {{ message.info.phone }}
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="服务地址:">
-                  {{message.info.address}}
+                  {{ message.info.address }}
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="用户备注:">
-                  {{message.info.remark}}
+                  {{ message.info.remark }}
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="订单图片:">
-                  <template v-if="message.img.length">
-                    <el-image
-                      v-for="(item, index) in message.img"
-                      :key="index"
-                      :src="config.ip + item"
-                      fit="cover"
-                    />
+                  <template v-if="message.userimglist.length">
+                    <gd-image v-for="(item, index) in message.userimglist" :key="index" :src="item" />
                   </template>
                   <template v-else>
                     无
@@ -74,57 +71,56 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-divider></el-divider>
+          <el-divider />
+        </div>
+        <div class="section  detail-form">
           <p class="section-title small">报价&报名</p>
           <el-form label-width="100px">
             <el-row>
               <el-col :span="8">
                 <el-form-item label="订单总价格:">
-                  {{message.pay.total_price}}
+                  {{ message.pay.total_price }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="定金金额:">
-                  {{message.pay.earnest_price}}
+                  {{ message.pay.earnest_price }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="尾款金额:">
-                  {{message.pay.tail_price}}
+                  {{ message.pay.tail_price }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="师傅工资:">
-                  {{message.pay.craftsman_price}}
+                  {{ message.pay.craftsman_price }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="承接师傅:">
-                  
+                  {{ message.craftsmaninfo.name }} （{{ message.craftsmaninfo.sn }}）
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="联系师傅:">
-                  
+                  {{ message.craftsmaninfo.phone }}
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="报价单:">
-                  <el-image
-                    :src="url"
-                    fit="contain"
-                  />
+                  <gd-image :src="message.bjd.imgurl" />
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="报名情况:">
-                  <template v-if="message.img.length">
+                  <template v-if="message.userimglist.length">
                     <ul class="master-list">
                       <li v-for="(item, index) in craftsmanlist" :key="index">
                         <img src="">
                         <div class="flex1">
-                          <p style="font-weight: bold">{{item.name}} {{item.sn}}</p>
-                          <p><i class="el-icon-phone-outline" /> {{item.phone}}</p>
+                          <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
+                          <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
                         </div>
                       </li>
                     </ul>
@@ -136,7 +132,9 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-divider></el-divider>
+          <el-divider />
+        </div>
+        <div class="section  detail-form">
           <p class="section-title small">用户评价&师傅秀</p>
           <el-form label-width="100px">
             <el-row>
@@ -147,10 +145,7 @@
               </el-col>
               <el-col :span="24">
                 <el-form-item label="师傅秀:">
-                  <el-image
-                    :src="url"
-                    fit="contain"
-                  />
+                  <gd-image v-for="(item, index) in message.img" :key="index" :src="item" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -163,7 +158,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, ordercraftsmanlist } from '@/api/order'  
+import { getDetails, ordercraftsmanlist } from '@/api/order'
 
 export default {
   props: {
@@ -175,16 +170,34 @@ export default {
   data() {
     return {
       craftsmanlist: [],
-      message: {}
+      message: {
+        info: {},
+        comment: {},
+        bjd: {},
+        craftsmaninfo: {},
+        craftsmanlist: [],
+        ordersshow: {},
+        pay: {},
+        userimglist: []
+      }
     }
+  },
+  computed: {
+    ...mapState({
+      orderStatus: state => state.dict.orderStatus
+    })
   },
 
   created() {
-    let that = this
+    const that = this
     getDetails({
       order_id: that.dialogMes.id
     }).then(response => {
-      that.message = response.data
+      for (const i in response.data) {
+        if (response.data[i]) {
+          that.message[i] = response.data[i]
+        }
+      }
     })
 
     ordercraftsmanlist({
@@ -198,13 +211,6 @@ export default {
     handleClose() {
       this.$parent.currentComponent = ''
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType,
-      orderStatus: state => state.dict.orderStatus,
-      config: state => state.dict.config
-    })
   }
 }
 </script>
@@ -215,13 +221,6 @@ export default {
   height: 200px;
   border: 1px solid #f2f2f2;
   margin-right: 20px;
-}
-
-.section{
-  margin-bottom: 40px;
-  .section-title{
-    margin-bottom: 15px;
-  }
 }
 
 .master-list{

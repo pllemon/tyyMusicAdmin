@@ -2,8 +2,9 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">会员列表</p>
+      <p class="section-title">工程秀列表</p>
       <div class="action">
+        <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
     </div>
@@ -24,7 +25,7 @@
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
         </el-form-item>
       </el-form>
 
@@ -41,25 +42,17 @@
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column type="index" width="50" />
-          <el-table-column label="用户头像" />
-          <el-table-column label="用户账号" prop="phone" width="120"/>
-          <el-table-column label="用户名" prop="username" width="120"/>
-          <el-table-column label="注册时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.creattime }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="推荐人" />
-          <el-table-column label="是否师傅" prop="is_criaftsman"/>
-          <el-table-column label="是否商家" prop="is_business"/>
-          <el-table-column label="我的朋友" />
-          <el-table-column label="积分" />
-          <el-table-column label="下单情况" />
+          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="标题" />
+          <el-table-column label="描述" />
+          <el-table-column label="相关图片" />
+          <el-table-column label="记录来源" />
+          <el-table-column label="创建人"/>
+          <el-table-column label="创建时间" />
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.$index)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -74,21 +67,24 @@
 
 <script>
 import { getList } from '@/api/show'
-import Details from '@/views/order/details'
+import Details from '@/views/show/details'
+import Update from '@/views/show/update'
 
 export default {
+  components: {
+    Details,
+    Update
+  },
   data() {
     return {
       vm: null,
 
-      list: null,
+      list: [],
       listLoading: true,
       selectArr: [],
 
       total: 100,
       queryMes: {
-        user: '',
-        region: '',
         page: 2,
         limit: 10
       },
@@ -98,9 +94,11 @@ export default {
     }
   },
   created() {
+    this.vm = this
     this.fetchData()
   },
   methods: {
+    
     fetchData() {
       this.listLoading = true
       getList().then(response => {
@@ -111,27 +109,7 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
-    },
-
-    handleClose() {
-      this.showDialog = false
-      this.currentComponent = ''
-    },
-
-    // 订单详情
-    details(id) {
-      this.showDialog = true
-      this.dialogTitle = '订单详情'
-      this.currentComponent = 'Details'
-    },
-
-    // 审核订单
-    examine(id) {
-
     }
-  },
-  components: {
-    Details
   }
 }
 </script>

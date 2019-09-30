@@ -4,8 +4,7 @@
     <div class="table-header">
       <p class="section-title">广告列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="details(-1, 1)">添加广告</el-button>
-        <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+         <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
@@ -40,9 +39,8 @@
           <el-table-column label="链接" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="pass(scope.$index)">启用</el-button>
-              <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>
-              <el-button type="text" @click="details(scope.row.id, 2)">编辑</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -56,10 +54,15 @@
 </template>
 
 <script>
-import { bannerlist } from '@/api/advert'
+import { getList } from '@/api/advert'
 import Details from '@/views/system/advert/details'
+import Update from '@/views/system/advert/update'
 
 export default {
+  components: {
+    Details,
+    Update
+  },
   data() {
     return {
       vm: null,
@@ -79,12 +82,13 @@ export default {
     }
   },
   created() {
+    this.vm = this
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      bannerlist().then(response => {
+      getList().then(response => {
         this.list = response.data
         this.listLoading = false
       })
@@ -92,31 +96,7 @@ export default {
 
     selectionChange() {
 
-    },
-
-    handleClose() {
-      this.showDialog = false
-      this.currentComponent = ''
-    },
-
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-    
-    examine(id) {
-
-    },
-
-    pass(id) {
-      
-    },
-  },
-  components: {
-    Details
+    }
   }
 }
 </script>

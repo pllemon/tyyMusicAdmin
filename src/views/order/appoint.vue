@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body='false' title="指派师傅" :visible="true" width="1000px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="指派师傅" :visible="true" width="1000px" :before-close="handleClose">
     <div class="flex-center" style="height: 200px;" v-if="craftsmanlist.length == 0">
       还没有师傅进行报名哦～
     </div>
@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { ordercraftsmanlist, choosecraftsman } from '@/api/order'  
+import { ordercraftsmanlist, choosecraftsman } from '@/api/order'
 
 export default {
   props: {
@@ -35,9 +35,14 @@ export default {
       craftsmanlist: []
     }
   },
+  computed: {
+    ...mapState({
+      orderStatus: state => state.dict.orderStatus
+    })
+  },
 
   created() {
-    let that = this
+    const that = this
     ordercraftsmanlist({
       order_id: that.dialogMes.id
     }).then(response => {
@@ -68,11 +73,6 @@ export default {
         })
       }).catch(() => {})
     }
-  },
-  computed: {
-    ...mapState({
-      orderStatus: state => state.dict.orderStatus
-    })
   }
 }
 </script>

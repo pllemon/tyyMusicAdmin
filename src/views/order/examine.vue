@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body='false' title="审核订单" :visible="true" width="800px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="审核订单" :visible="true" width="800px" :before-close="handleClose">
     <el-form ref="examineForm" :model="examineForm" :rules="rules" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="examineForm.status">
@@ -66,15 +66,15 @@ export default {
       rules: {
         total_price: [
           { required: true, message: '请输入订单总价格', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
+          { type: 'number', message: '订单总价格必须为数字值'}
         ],
         earnest_price: [
           { required: true, message: '请输入定金金额', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
+          { type: 'number', message: '定金金额必须为数字值'}
         ],
         crafts_man_price: [
           { required: true, message: '请输入师傅工资', trigger: 'blur' },
-          { type: 'number', message: '年龄必须为数字值'}
+          { type: 'number', message: '师傅工资必须为数字值'}
         ]
       },
       orderInfo: {}

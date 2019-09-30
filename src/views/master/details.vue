@@ -1,57 +1,57 @@
 <template>
-  <el-dialog :modal-append-to-body='false' :title="changeType[dialogMes.type]+'师傅'" :visible="true" width="1000px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'师傅'" :visible="true" width="1000px" :before-close="handleClose">
     <div class="section detail-form">
       <p class="section-title small">师傅信息</p>
       <el-form label-width="100px">
         <el-row>
           <el-col :span="8">
             <el-form-item label="师傅工号:">
-              {{masterInfo.sn}}
+              {{ masterInfo.sn }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="师傅姓名:">
-              {{masterInfo.name}}
+              {{ masterInfo.name }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="身份证:">
-              {{masterInfo.sfz}}
+              {{ masterInfo.sfz }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系手机:">
-              {{masterInfo.phone}}
+              {{ masterInfo.phone }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="入行年份:">
-              {{masterInfo.enter_time}}
+              {{ masterInfo.enter_time }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="联系地址:">
-              {{masterInfo.address}}
+              {{ masterInfo.address }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="个人简介:">
-              {{masterInfo.desc}}
+              {{ masterInfo.desc }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请时间:">
-              {{masterInfo.create_time}}
+              {{ masterInfo.create_time }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="审核时间:">
-              {{masterInfo.examine_time}}
+              {{ masterInfo.examine_time }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="师傅状态:">
-              {{recordStatus[masterInfo.status]}}
+              {{ recordStatus[masterInfo.status] }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -76,8 +76,14 @@ export default {
       masterInfo: {}
     }
   },
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+      recordStatus: state => state.dict.recordStatus
+    })
+  },
   created() {
-    let that = this
+    const that = this
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
@@ -88,12 +94,6 @@ export default {
     handleClose() {
       this.$parent.currentComponent = ''
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType,
-      recordStatus: state => state.dict. recordStatus
-    })
   }
 }
 </script>

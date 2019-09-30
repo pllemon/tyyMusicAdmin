@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/admin/showlist',
+    url: '/admin/userlist',
     method: 'post',
     data
   })
@@ -10,20 +10,16 @@ export function getList(data) {
 
 export function getDetails(params) {
   return request({
-    url: '/admin/showinfo',
+    url: '/admin/craftsmaninfo',
     method: 'get',
     params
   })
 }
 
-export function updateRecord(data) {
+export function craftsmanexamine(data) {
   return request({
-    url: '/admin/addshow',
+    url: '/admin/craftsmanexamine',
     method: 'post',
     data
   })
-}
-
-export function uploadUrl() {
-  return '/admin/uploadordershow'
 }

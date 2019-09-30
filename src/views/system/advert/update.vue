@@ -5,10 +5,11 @@
         <el-upload
           action="#"
           list-type="picture-card"
-          :limit="1"
           :auto-upload="false"
+          :show-file-list="false"
           :on-change="fileChange">
-          <i slot="default" class="el-icon-plus"></i>
+          <img v-if="file.url" :src="file.url" class="avatar" style="width:100%;height:100%">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
       <el-form-item label="链接类型" prop="type">
@@ -43,19 +44,23 @@ export default {
   },
   data() {
     return {
-      file: [],
+      file: {},
       form: {
-
+        type: '0',
+        url: '',
+        orders: ''
       }
     }
   },
   created() {
-    this.getDetails()
+    if (this.dialogMes.id) {
+      this.getDetails()
+    }
   },
   methods: {
-    fileChange(file, fileList) {
+    fileChange(file) {
       console.log(file)
-      console.log(fileList)
+      this.file = file
     },
 
     getDetails() {
@@ -65,18 +70,22 @@ export default {
         console.log(response)
       })
     },
-
-    uploadSuccess(id) {
-      this.form.imglist = id
-    },
-
-    submitForm() {
-      console.log(this.form)
-    },
-
+    
     handleClose() {
       this.$parent.currentComponent = ''
     },
+
+    submitForm() {
+      let formData = new FormData()
+      formData.append('file', this.file.raw)
+      for (let i in this.form) {
+        formData.append(i, this.form[i])
+      }
+      updateRecord(formData).then(response => {
+        this.$common.closeComponent()
+      })
+    },
+
   },
   
   computed: {

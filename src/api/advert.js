@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function bannerlist(data) {
+export function getList(data) {
   return request({
     url: '/admin/bannerlist',
     method: 'post',
@@ -8,7 +8,7 @@ export function bannerlist(data) {
   })
 }
 
-export function bannerinfo(params) {
+export function getDetails(params) {
   return request({
     url: '/admin/bannerinfo',
     method: 'get',
@@ -16,9 +16,9 @@ export function bannerinfo(params) {
   })
 }
 
-export function saveinfo(type, data) {
+export function updateRecord(data) {
   let url = '/admin/addbanner'
-  if (type == 2) {
+  if (data.id) {
     url = '/admin/updatebannerinfo'
   }
   return request({

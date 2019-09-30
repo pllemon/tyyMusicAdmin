@@ -26,3 +26,34 @@
 问题：
     1. 富文本上传图片问题
     2. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+标准：show/list
+
+import Details from '@/views/show/details'
+import Update from '@/views/show/update'
+
+components: {
+    Details,
+    Update
+  },
+
+this.vm = this
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              
+        <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
+
+:title="dialogMes.id?'编辑':'新增'"

@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">网点管理</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="details(1)">添加网点</el-button>
+        <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
@@ -53,8 +53,8 @@
           <el-table-column label="网点备注" prop="remark"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
-              <el-button type="text" @click="details(2, scope.row.order_id)">编辑</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -68,10 +68,15 @@
 </template>
 
 <script>
-import { getList, enableRecord, removeRecord } from '@/api/order'
-import Details from '@/views/setting/account/details'
+import { getList, enableRecord, removeRecord } from '@/api/network'
+import Details from '@/views/setting/network/details'
+import Update from '@/views/setting/network/update'
 
 export default {
+  components: {
+    Details,
+    Update
+  },
   data() {
     return {
       vm: null,
@@ -94,22 +99,6 @@ export default {
   },
   created() {
     this.vm = this
-   // this.fetchData()
-
-   this.list = [
-     {
-       name: '1',
-       child: '1-1'
-     },
-     {
-       name: '1',
-       child: '1-2'
-     },
-     {
-       name: '1',
-       child: '1-3'
-     }
-   ]
   },
   methods: {
     fetchData() {
@@ -125,28 +114,9 @@ export default {
       this.selectArr = val
     },
 
-    details(type, id='') {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    enable(id, type) {
-      this.common.enableRecord(this.vm, {
-        id, 
-        type,
-        mes: '该账号'
-      }, enableRecord)
-    },
-
     remove(id) {
       this.common.removeRecord(this.vm, {id}, removeRecord)
     }
-  },
-  components: {
-    Details
   }
 }
 </script>

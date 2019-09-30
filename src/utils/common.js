@@ -6,6 +6,7 @@ function search(target) {
   target.queryMes.limit = 10
   target.fetchData()
 }
+
 function resetSearch(target) {
   target.$refs.searchForm.resetFields()
   target.queryMes.page = 1
@@ -51,10 +52,33 @@ function removeRecord(target, obj, callback) {
   })
 }
 
+function loadComponent(target, type, id = '') {
+  let typeList = ['Details', 'Update', 'Examine', 'Appoint']
+  target.dialogMes = {
+    id: id
+  }
+  target.currentComponent = typeList[type]
+}
+
+function closeComponent(target, callback) {
+  target.$notify({
+    title: '提示',
+    type: 'success',
+    message: '操作成功'
+  })
+  target.$parent.fetchData()
+  target.$parent.currentComponent = ''
+  
+  if (callback) {
+    callback()
+  }
+}
 
 export default{
   search, // 搜索表单
   resetSearch, // 重置搜索表单
   enableRecord, // 启用和禁用
-  removeRecord // 删除
+  removeRecord, // 删除
+  loadComponent, // 加载弹窗组件
+  closeComponent // 关闭弹窗组件
 }
