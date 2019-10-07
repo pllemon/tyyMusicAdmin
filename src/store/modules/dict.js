@@ -4,6 +4,10 @@ const state = {
   },
   changeType: ['查看', '添加', '编辑', '删除', '审核', '指派'],
   enableState: ['禁用', '启用'],
+  originType: {
+    1: '小程序',
+    2: '后台'
+  },
   orderStatus: {
     1: '待后台审核',
     2: '待客户支付定金',

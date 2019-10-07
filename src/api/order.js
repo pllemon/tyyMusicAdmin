@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 订单列表
 export function getList(data) {
   return request({
-    url: '/admin/orderlist',
+    url: `/admin/orderlist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })

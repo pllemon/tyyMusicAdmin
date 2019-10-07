@@ -30,8 +30,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="店铺状态:">
+            <el-form-item label="审核结果:">
               {{ recordStatus[message.status]}}
+              <span v-show="message.bhremark">{{ message.bhremark }}</span>
             </el-form-item>
           </el-col>
         </el-row>

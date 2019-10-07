@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">广告列表</p>
       <div class="action">
-         <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
+         <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
@@ -33,14 +33,30 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column label="展示图片" />
-          <el-table-column label="类别" />
-          <el-table-column label="排序" />
-          <el-table-column label="链接" />
+          <el-table-column label="展示图片" width="180">
+            <template slot-scope="scope">
+              <gd-image width="160" height="90" :src="scope.row.imgurl"/>
+            </template>
+          </el-table-column>
+          <el-table-column label="类别">
+            <template slot-scope="scope">
+              {{ linkType[scope.row.type] }}
+            </template>
+          </el-table-column>
+          <el-table-column label="链接" prop="url"/>
+          <el-table-column label="状态">
+            <template slot-scope="scope">
+              {{ scope.row.is_show == 1 ? "启用" : "停用" }}
+            </template>
+          </el-table-column>
+          <el-table-column label="排序" prop="orders"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <!-- <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button> -->
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -54,7 +70,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/advert'
+import { mapState } from 'vuex'
+import { getList, updatebannerstatus } from '@/api/advert'
 import Details from '@/views/system/advert/details'
 import Update from '@/views/system/advert/update'
 
@@ -85,6 +102,11 @@ export default {
     this.vm = this
     this.fetchData()
   },
+  computed: {
+    ...mapState({
+      linkType: state => state.dict.linkType
+    })
+  },
   methods: {
     fetchData() {
       this.listLoading = true
@@ -96,6 +118,13 @@ export default {
 
     selectionChange() {
 
+    },
+
+    updateRecord(id, type) {
+      this.common.updateRecord(type, this, {
+        banner_id: id,
+        is_show: type
+      }, updatebannerstatus)
     }
   }
 }

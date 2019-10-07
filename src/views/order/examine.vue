@@ -86,7 +86,7 @@ export default {
     getDetails({
       order_id: that.dialogMes.id
     }).then(response => {
-      that.orderInfo = response.data.info[0]
+      that.orderInfo = response.data.info
       that.examineForm.order_sn = that.orderInfo.order_sn
       that.examineForm.user_id = that.orderInfo.user_id
       that.examineForm.order_id = that.orderInfo.order_id
@@ -111,13 +111,7 @@ export default {
       that.$refs.examineForm.validate((valid) => {
         if (valid) {
           orderexamine(that.examineForm).then(response => {
-            this.$notify({
-              title: '提示',
-              type: 'success',
-              message: '操作成功'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
+            that.common.closeComponent(that)
           })
         }
       })

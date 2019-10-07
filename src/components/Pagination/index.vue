@@ -33,13 +33,13 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
-      const parent = this.$parent.query ? this.$parent : this.$parent.$parent
-      parent.query.limit = val
+      const parent = this.$parent.queryMes ? this.$parent : this.$parent.$parent
+      parent.queryMes.limit = val
       parent.fetchData()
     },
     handleCurrentChange(val) {
-      const parent = this.$parent.query ? this.$parent : this.$parent.$parent
-      parent.query.page = val
+      const parent = this.$parent.queryMes ? this.$parent : this.$parent.$parent
+      parent.queryMes.page = val
       parent.fetchData()
     }
   }

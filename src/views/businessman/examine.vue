@@ -57,13 +57,7 @@ export default {
       that.$refs.examineForm.validate((valid) => {
         if (valid) {
           businessexamine(that.examineForm).then(response => {
-            this.$notify({
-              title: '提示',
-              type: 'success',
-              message: '操作成功'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
+            that.common.closeComponent(that)
           })
         }
       })

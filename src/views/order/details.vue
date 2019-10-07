@@ -1,17 +1,22 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="订单详情" :visible="true" width="1200px" :before-close="handleClose">
-    <div class="flex">
+    <div class="flex" v-loading="loading">
       <div class="section" style="width:200px;margin-right: 20px">
         <p class="section-title small">订单时间线</p>
         <el-timeline style="margin-top:30px">
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
-          <el-timeline-item :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
-          <el-timeline-item :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
-          <el-timeline-item :timestamp="message.pay.release_time">后台发布订单</el-timeline-item>
-          <el-timeline-item timestamp="">梁师傅承接订单</el-timeline-item>
-          <el-timeline-item :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
-          <el-timeline-item timestamp="">用户评价</el-timeline-item>
-          <el-timeline-item timestamp="">梁师傅上传师傅秀</el-timeline-item>
+          <template v-if="message.info.status != 10">
+            <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4" timestamp="">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 7" :timestamp="message.ordersshow.time">{{ message.craftsmaninfo.name }}师傅上传师傅秀</el-timeline-item>
+          </template>
+          <template v-if="message.info.status == 10">
+            <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
+          </template>
         </el-timeline>
       </div>
       <div class="flex1" style="border-left: 1px solid #eee;padding-left: 20px">
@@ -71,50 +76,52 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-divider />
+          <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form">
+        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status != 10">
           <p class="section-title small">报价&报名</p>
           <el-form label-width="100px">
             <el-row>
               <el-col :span="8">
                 <el-form-item label="订单总价格:">
-                  {{ message.pay.total_price }}
+                  {{ message.pay.total_price }} 元
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="定金金额:">
-                  {{ message.pay.earnest_price }}
+                  {{ message.pay.earnest_price }} 元
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="尾款金额:">
-                  {{ message.pay.tail_price }}
+                  {{ message.pay.tail_price }} 元
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="师傅工资:">
-                  {{ message.pay.craftsman_price }}
+                  {{ message.pay.craftsman_price }} 元
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
-                <el-form-item label="承接师傅:">
-                  {{ message.craftsmaninfo.name }} （{{ message.craftsmaninfo.sn }}）
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="联系师傅:">
-                  {{ message.craftsmaninfo.phone }}
-                </el-form-item>
-              </el-col>
+              <template v-if="message.craftsmaninfo">
+                <el-col :span="8">
+                  <el-form-item label="承接师傅:">
+                    {{ message.craftsmaninfo.name }} （{{ message.craftsmaninfo.sn }}）
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="联系师傅:">
+                    {{ message.craftsmaninfo.phone }}
+                  </el-form-item>
+                </el-col>
+              </template>
               <el-col :span="24">
                 <el-form-item label="报价单:">
                   <gd-image :src="message.bjd.imgurl" />
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="24" v-if="message.info.status > 3">
                 <el-form-item label="报名情况:">
-                  <template v-if="message.userimglist.length">
+                  <template v-if="message.craftsmanlist.length">
                     <ul class="master-list">
                       <li v-for="(item, index) in craftsmanlist" :key="index">
                         <img src="">
@@ -132,20 +139,34 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-divider />
+          <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form">
+        <div class="section  detail-form" v-if="message.info.status > 6 && message.info.status != 10">
           <p class="section-title small">用户评价&师傅秀</p>
           <el-form label-width="100px">
             <el-row>
-              <el-col :span="8">
+              <el-col :span="24" v-if="message.comment">
                 <el-form-item label="用户评价:">
-                 
+                  <div class="flex-center-start">
+                    <el-rate
+                      v-model="message.comment.stars"
+                      disabled
+                      text-color="#ff9900"
+                      score-template="{value}">
+                    </el-rate>
+                    <p>{{ message.comment.comment }}</p>
+                  </div>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="24" v-if="message.ordersshow">
                 <el-form-item label="师傅秀:">
-                  <gd-image v-for="(item, index) in message.img" :key="index" :src="item" />
+                  <p>{{ message.ordersshow.title }}（{{ message.ordersshow.dec }}）</p>
+                  <div>
+                    <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
+                    <gd-image v-if="message.ordersshow.imgurl2" :src="message.ordersshow.imgurl2" />
+                    <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
+                    <gd-image v-if="message.ordersshow.imgurl4" :src="message.ordersshow.imgurl4" />
+                  </div>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -169,12 +190,13 @@ export default {
   },
   data() {
     return {
+      loading: true,
       craftsmanlist: [],
       message: {
         info: {},
         comment: {},
         bjd: {},
-        craftsmaninfo: {},
+        craftsmaninfo: null,
         craftsmanlist: [],
         ordersshow: {},
         pay: {},
@@ -193,6 +215,7 @@ export default {
     getDetails({
       order_id: that.dialogMes.id
     }).then(response => {
+      this.loading = false
       for (const i in response.data) {
         if (response.data[i]) {
           that.message[i] = response.data[i]

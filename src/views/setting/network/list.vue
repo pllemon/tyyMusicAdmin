@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">网点管理</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
+        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 

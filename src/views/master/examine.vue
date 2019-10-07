@@ -11,8 +11,12 @@
         <el-form-item label="师傅编号：">
           <el-input v-model="examineForm.sn" />
         </el-form-item>
-        <el-form-item label="师傅证件：">
-          <gd-upload action='admin/uploadcraftsmanimg' @success="uploadSuccess"/>
+        <el-form-item label="师傅头像：">
+          <gd-upload 
+            action='admin/uploadcraftsmanimg'
+            :file="file"  
+            @success="uploadSuccess"
+          />
         </el-form-item>
       </template>
       <template v-if="examineForm.status == '3'">
@@ -46,6 +50,7 @@ export default {
   },
   data() {
     return {
+      file: {},
       examineForm: {
         status: '1',
         sn: '',
@@ -61,8 +66,8 @@ export default {
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
-      that.examineForm.craftsman_id = response.data.id
-      that.examineForm.user_id = response.data.user_id
+      that.examineForm.craftsman_id = response.data.info.id
+      that.examineForm.user_id = response.data.info.user_id
     })
   },
   methods: {
@@ -80,13 +85,7 @@ export default {
         if (valid) {
           console.log(that.examineForm)
           craftsmanexamine(that.examineForm).then(response => {
-            this.$notify({
-              title: '提示',
-              type: 'success',
-              message: '操作成功'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
+            that.common.closeComponent(that)
           })
         }
       })

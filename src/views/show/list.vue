@@ -4,8 +4,7 @@
     <div class="table-header">
       <p class="section-title">工程秀列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
-        <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
@@ -43,16 +42,25 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="标题" />
-          <el-table-column label="描述" />
-          <el-table-column label="相关图片" />
-          <el-table-column label="记录来源" />
+          <el-table-column label="标题" prop="title"/>
+          <el-table-column label="描述" prop="dec"/>
+          <el-table-column label="记录来源">
+            <template slot-scope="scope">
+              {{originType[scope.row.type]}}
+            </template>
+          </el-table-column>
           <el-table-column label="创建人"/>
-          <el-table-column label="创建时间" />
-          <el-table-column label="操作" width="100">
+          <el-table-column label="创建时间" width="180">
+            <template slot-scope="scope" >
+              <i class="el-icon-time" />
+              <span>{{ scope.row.time }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,7 +74,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/show'
+import { mapState } from 'vuex'
+import { getList, updateRecordStatus } from '@/api/show'
 import Details from '@/views/show/details'
 import Update from '@/views/show/update'
 
@@ -109,7 +118,20 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
+    },
+
+    updateRecord(id, type) {
+      this.common.updateRecord(type, this, {
+        show_id: id,
+        savestatus: 1,
+        is_show: type
+      }, updateRecordStatus)
     }
+  },
+  computed: {
+    ...mapState({
+      originType: state => state.dict.originType
+    })
   }
 }
 </script>

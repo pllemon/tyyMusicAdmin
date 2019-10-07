@@ -25,6 +25,10 @@ export default {
     height: {
       type: [ Number, String ],
       default: 120
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -46,8 +50,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.el-image+.el-image{
+<style lang="scss">
+.el-image{
   margin-right: 10px;
+}
+.title{
+  margin-top: 6px;
+  font-size: 12px;
+  text-align: center;
 }
 </style>

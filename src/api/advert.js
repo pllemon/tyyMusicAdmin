@@ -16,9 +16,9 @@ export function getDetails(params) {
   })
 }
 
-export function updateRecord(data) {
+export function updateRecord(data, type) {
   let url = '/admin/addbanner'
-  if (data.id) {
+  if (type == 2) {
     url = '/admin/updatebannerinfo'
   }
   return request({

@@ -55,11 +55,7 @@ export default {
         type: 'lxwm',
         is_show: 1
       }).then(response => {
-        this.$notify({
-          title: '提示',
-          type: 'success',
-          message: '保存成功'
-        })
+        this.common.notify()
       }).finally(() => {
         this.loading = false
       })

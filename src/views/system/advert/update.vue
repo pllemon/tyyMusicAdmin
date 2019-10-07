@@ -1,16 +1,16 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="680px" :before-close="handleClose">
-    <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px">
+    <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
       <el-form-item label="展示图片" prop="img">
-        <el-upload
+        <gd-upload 
+          v-if="!loading"
+          :file="file" 
+          :autoUpload="false" 
+          width="320" 
+          height="180" 
           action="#"
-          list-type="picture-card"
-          :auto-upload="false"
-          :show-file-list="false"
-          :on-change="fileChange">
-          <img v-if="file.url" :src="file.url" class="avatar" style="width:100%;height:100%">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+          @change="changeFile"
+        />
       </el-form-item>
       <el-form-item label="链接类型" prop="type">
         <el-radio-group v-model="form.type">
@@ -44,6 +44,9 @@ export default {
   },
   data() {
     return {
+      vm: null,
+      loading: true,
+
       file: {},
       form: {
         type: '0',
@@ -53,21 +56,28 @@ export default {
     }
   },
   created() {
+    this.vm = this
     if (this.dialogMes.id) {
       this.getDetails()
+    } else {
+      this.loading = false
     }
   },
   methods: {
-    fileChange(file) {
-      console.log(file)
-      this.file = file
+    changeFile(fileList) {
+      this.file = fileList[0]
     },
 
     getDetails() {
       getDetails({
-        id: this.dialogMes.id
+        banner_id: this.dialogMes.id
       }).then(response => {
-        console.log(response)
+        let { data } = response
+        data.type = data.type.toString()
+        data.banner_id = data.id
+        this.file.url = this.common.ip + data.imgurl
+        this.form = data
+        this.loading = false
       })
     },
     
@@ -76,13 +86,20 @@ export default {
     },
 
     submitForm() {
-      let formData = new FormData()
-      formData.append('file', this.file.raw)
-      for (let i in this.form) {
-        formData.append(i, this.form[i])
+      let formData = null;
+      if (this.file.raw) {
+        formData = new FormData()
+        formData.append('file', this.file.raw)
+        for (let i in this.form) {
+          formData.append(i, this.form[i])
+        }
+      } else {
+        formData = this.form
       }
-      updateRecord(formData).then(response => {
-        this.$common.closeComponent()
+      
+      let type = this.form.id ? '2' : '1'
+      updateRecord(formData, type).then(response => {
+        this.common.closeComponent(this.vm)
       })
     },
 

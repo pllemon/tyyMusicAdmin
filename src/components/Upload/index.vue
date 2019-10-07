@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div class="gd-upload">
     <el-upload
       class="avatar-uploader"
+      list-type="picture-card"
       :action="action"
-      accept="image/jpeg,image/jpg,image/png"
+      :auto-upload="autoUpload"
+      accept="image/jpg,image/png"
       :show-file-list="false"
-      :on-success="handleAvatarSuccess"
+      :on-success="handleSuccess"
+      :on-change="handleChange"
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" :style="{ width: width + 'px', height: height + 'px'}">
       <i v-else class="el-icon-plus avatar-uploader-icon" :style="{ width: width + 'px', height: height + 'px', lineHeight: height + 'px' }"></i>
@@ -17,9 +20,17 @@
 <script>
 export default {
   props: {
+    file: {
+      type: Object,
+      default: () => {}
+    },
     action: {
       type: String,
       default: '/admin/uploadordersimg'
+    },
+    autoUpload: {
+      type: Boolean,
+      default: true
     },
     tip: {
       type: String,
@@ -39,10 +50,20 @@ export default {
       imageUrl: ''
     }
   },
+  created() {
+    this.imageUrl = this.file.url
+  },
   methods: {
-    handleAvatarSuccess(res, file) {
+    handleChange(file, fileList) {
+      console.log(file)
+      console.log(fileList)
+      this.imageUrl = file.url
+      this.$emit('change', fileList)
+    },
+
+    handleSuccess(res, file) {
       if (res.success) {
-        this.imageUrl = 'http://47.106.100.144/' + res.data.imgurl
+        // this.imageUrl = 'http://47.106.100.144/' + res.data.imgurl
         this.$emit('success', res.data.id)
       }
     }
@@ -51,24 +72,32 @@ export default {
 </script>
 
 <style lang="scss">
-.el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  &:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    text-align: center;
-  }
-  .avatar {
-    display: block;
+.gd-upload{
+  .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-top: 12px;
+    &:hover {
+      border-color: #409EFF;
+    }
+    &.el-upload--picture-card{
+      width: auto;
+      height: auto;
+    }
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      text-align: center;
+    }
+    .avatar {
+      display: block;
+    }
   }
 }
+
 .upload-tips{
   margin-top: 10px;
   text-align: center;

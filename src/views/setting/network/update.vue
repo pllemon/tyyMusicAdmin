@@ -71,13 +71,7 @@ export default {
       that.$refs.form.validate((valid) => {
         if (valid) {
           orderexamine(that.form).then(response => {
-            this.$notify({
-              title: '提示',
-              type: 'success',
-              message: '操作成功'
-            })
-            that.$parent.fetchData()
-            that.$parent.currentComponent = ''
+            that.common.closeComponent(that)
           })
         }
       })

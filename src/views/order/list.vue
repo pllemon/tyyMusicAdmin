@@ -20,7 +20,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="订单状态">
+        <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
               v-for="(item, index) in orderStatus"
@@ -30,8 +30,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="下单账号">
-          <el-input type="text" placeholder="请输入"/>
+        <el-form-item label="订单编号" prop="order_sn">
+          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -53,7 +53,7 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="订单编号"  width="120" prop="order_sn" />
+          <el-table-column label="订单编号"  width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
               {{orderStatus[scope.row.status]}}
@@ -64,9 +64,9 @@
               {{scope.row.phone}}
             </template>
           </el-table-column>
-          <el-table-column label="服务需求" prop="service_demand" width="120"/>
-          <el-table-column label="服务地址" prop="address" width="160"/>
-          <el-table-column label="预约时间" width="120">
+          <el-table-column label="服务需求" prop="service_demand" width="200"/>
+          <el-table-column label="服务地址" prop="address" width="200"/>
+          <el-table-column label="预约时间" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.appo_time }}</span>
@@ -74,7 +74,7 @@
           </el-table-column>
           <el-table-column label="用户备注" prop="remark" width="120" />
           <el-table-column label="承接师傅"  width="120"/>
-          <el-table-column label="创建时间" width="120">
+          <el-table-column label="创建时间" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.create_time }}</span>
@@ -119,10 +119,12 @@ export default {
       listLoading: true,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         page: 1,
-        limit: 10
+        limit: 10,
+        status: '',
+        order_sn: ''
       },
       timeRange: [],
 
@@ -137,8 +139,9 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })
@@ -156,11 +159,7 @@ export default {
         release({
           order_id: id
         }).then(response => {
-          this.$notify({
-            title: '提示',
-            type: 'success',
-            message: '发布成功'
-          })
+          this.common.notify()
           this.fetchData()
         })
       })

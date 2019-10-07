@@ -8,22 +8,30 @@ export function getList(data) {
   })
 }
 
-export function getDetails(params) {
+export function getDetails(data) {
   return request({
     url: '/admin/showinfo',
-    method: 'get',
-    params
-  })
-}
-
-export function updateRecord(data) {
-  return request({
-    url: '/admin/addshow',
     method: 'post',
     data
   })
 }
 
-export function uploadUrl() {
-  return '/admin/uploadordershow'
+export function updateRecord(data) {
+  let url = '/admin/addshow'
+  if (data.id) {
+    url = '/admin/saveshow'
+  }
+  return request({
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
+export function updateRecordStatus(data) {
+  return request({
+    url: '/admin/saveshow',
+    method: 'post',
+    data
+  })
 }

@@ -1,61 +1,65 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'师傅'" :visible="true" width="1000px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'师傅'" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form">
       <p class="section-title small">师傅信息</p>
-      <el-form label-width="100px">
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="师傅工号:">
-              {{ masterInfo.sn }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="师傅姓名:">
-              {{ masterInfo.name }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="身份证:">
-              {{ masterInfo.sfz }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="联系手机:">
-              {{ masterInfo.phone }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="入行年份:">
-              {{ masterInfo.enter_time }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="联系地址:">
-              {{ masterInfo.address }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="个人简介:">
-              {{ masterInfo.desc }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="申请时间:">
-              {{ masterInfo.create_time }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="审核时间:">
-              {{ masterInfo.examine_time }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="师傅状态:">
-              {{ recordStatus[masterInfo.status] }}
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+      <div class="flex-center">
+        <gd-image width="140" height="140" style="margin-left:20px"/>
+        <el-form class="flex1" label-width="100px" >
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="师傅工号:">
+                {{ masterInfo.sn }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="师傅姓名:">
+                {{ masterInfo.name }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="身份证:">
+                {{ masterInfo.sfz }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="联系手机:">
+                {{ masterInfo.phone }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="入行年份:">
+                {{ masterInfo.enter_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请时间:">
+                {{ masterInfo.create_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item label="联系地址:">
+                {{ masterInfo.address }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="24">
+              <el-form-item label="个人简介:">
+                {{ masterInfo.desc }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="审核时间:">
+                {{ masterInfo.examine_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item label="审核结果:">
+                {{ recordStatus[masterInfo.status] }}
+                <span v-show="masterInfo.reject_reason">（{{ masterInfo.reject_reason }}）</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
     </div>
   </el-dialog>
 </template>
