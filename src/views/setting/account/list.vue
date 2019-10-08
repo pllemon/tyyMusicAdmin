@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">账号管理</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="details(1)">添加账号</el-button>
+        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
@@ -59,11 +59,10 @@
           <el-table-column label="账号备注" prop="remark"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
-              <el-button type="text" @click="details(2, scope.row.order_id)">编辑</el-button>
-              <el-button type="text" @click="enable(scope.row.order_id, 1)">启用</el-button>
-              <el-button type="text" @click="enable(scope.row.order_id, 0)">禁用</el-button>
-              <el-button type="text" @click="remove(scope.row.order_id)">删除</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -77,8 +76,9 @@
 </template>
 
 <script>
-import { getList, enableRecord, removeRecord } from '@/api/order'
+import { getList, enableRecord, removeRecord, updateAccountstatus } from '@/api/order'
 import Details from '@/views/setting/account/details'
+import Update from '@/views/setting/account/update'
 
 export default {
   data() {
@@ -119,28 +119,16 @@ export default {
       this.selectArr = val
     },
 
-    details(type, id='') {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    enable(id, type) {
-      this.common.enableRecord(this.vm, {
-        id, 
-        type,
-        mes: '该账号'
-      }, enableRecord)
-    },
-
-    remove(id) {
-      this.common.removeRecord(this.vm, {id}, removeRecord)
+    updateRecord(id, type) {
+      this.common.updateRecord(type, this, {
+        account_id: id,
+        is_show: type
+      }, updateAccountstatus)
     }
   },
   components: {
-    Details
+    Details,
+    Update
   }
 }
 </script>
