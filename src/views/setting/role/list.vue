@@ -2,16 +2,16 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">账号管理</p>
+      <p class="section-title">角色管理</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="details(1)">添加账号</el-button>
+        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="账号名">
+        <el-form-item label="角色名称">
           <el-input v-model="queryMes.user" />
         </el-form-item>
         <el-form-item label="所属网点">
@@ -40,30 +40,15 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="账号名" width="100" prop="order_sn" />
-          <el-table-column label="所属网点" />
-          <el-table-column label="联系电话" width="100" prop="order_sn" />
-          <el-table-column label="账号角色" />
-          <el-table-column label="启用状态" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.appo_time }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="账号备注" prop="remark"/>
+          <el-table-column label="角色名称" />
+          <el-table-column label="角色说明" />
+          <el-table-column label="角色权限" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.order_id, 0)">详情</el-button>
-              <el-button type="text" @click="details(2, scope.row.order_id)">编辑</el-button>
-              <el-button type="text" @click="enable(scope.row.order_id, 1)">启用</el-button>
-              <el-button type="text" @click="enable(scope.row.order_id, 0)">禁用</el-button>
-              <el-button type="text" @click="remove(scope.row.order_id)">删除</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -72,13 +57,14 @@
     </div>
 
     <!-- 弹窗 -->
-    <component :is="currentComponent" :dialogMes="dialogMes"/>
+    <component :is="currentComponent" :dialogMes="dialogMes" />
   </div>
 </template>
 
 <script>
 import { getList, enableRecord, removeRecord } from '@/api/order'
-import Details from '@/views/setting/account/details'
+import Details from '@/views/setting/role/details'
+import Update from '@/views/setting/role/update'
 
 export default {
   data() {
@@ -108,8 +94,8 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
       }).finally(() => {
         this.listLoading = false
       })
@@ -119,28 +105,16 @@ export default {
       this.selectArr = val
     },
 
-    details(type, id='') {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    enable(id, type) {
-      this.common.enableRecord(this.vm, {
-        id, 
-        type,
-        mes: '该账号'
-      }, enableRecord)
-    },
-
-    remove(id) {
-      this.common.removeRecord(this.vm, {id}, removeRecord)
+    updateRecord(id, type) {
+      this.common.updateRecord(type, this, {
+        account_id: id,
+        is_show: type
+      }, updateAccountstatus)
     }
   },
   components: {
-    Details
+    Details,
+    Update
   }
 }
 </script>

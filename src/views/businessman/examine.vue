@@ -7,7 +7,7 @@
           <el-radio label="3">不通过</el-radio>
         </el-radio-group>
       </el-form-item>
-      <template v-if="examineForm.status == '1'">
+      <template v-if="examineForm.status == '3'">
         <el-form-item label="不通过原因：">
           <el-input
             type="textarea"
@@ -52,7 +52,7 @@ export default {
     },
 
     submitExamine() {
-      let that = this
+      const that = this
       that.examineForm.busines_id = that.dialogMes.id
       that.$refs.examineForm.validate((valid) => {
         if (valid) {

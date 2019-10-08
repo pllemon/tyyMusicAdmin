@@ -42,14 +42,14 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="标题" prop="title"/>
-          <el-table-column label="描述" prop="dec"/>
+          <el-table-column label="标题" prop="title" />
+          <el-table-column label="描述" prop="dec" />
           <el-table-column label="记录来源">
             <template slot-scope="scope">
-              {{originType[scope.row.type]}}
+              {{ originType[scope.row.type ]}}
             </template>
           </el-table-column>
-          <el-table-column label="创建人"/>
+          <el-table-column label="创建人" />
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope" >
               <i class="el-icon-time" />

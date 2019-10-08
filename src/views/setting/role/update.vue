@@ -1,27 +1,14 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="680px" :before-close="handleClose">
     <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
-      <el-form-item label="展示图片" prop="img">
-        <gd-upload 
-          v-if="!loading"
-          :file="file" 
-          :autoUpload="false" 
-          width="320" 
-          height="180" 
-          action="#"
-          @change="changeFile"
-        />
+      <el-form-item label="角色名称" prop="name">
+        <el-input v-model="form.name" placeholder="请输入" />
       </el-form-item>
-      <el-form-item label="链接类型" prop="type">
-        <el-radio-group v-model="form.type">
-          <el-radio v-for="(item,index) in linkType" :key="index" :label="index">{{ item }}</el-radio>
-        </el-radio-group>
+      <el-form-item label="角色说明" prop="dec">
+        <el-input v-model="form.dec" placeholder="请输入" type="textarea" :rows="4"/>
       </el-form-item>
-      <el-form-item label="链接url" prop="url">
-        <el-input v-model="form.url" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="排序" prop="orders">
-        <el-input v-model="form.orders" placeholder="请输入，数字越大越靠后" />
+      <el-form-item label="角色权限" prop="orders">
+        <el-input v-model="form.orders" placeholder="请输入" />
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -54,11 +41,6 @@ export default {
         orders: ''
       }
     }
-  },  
-  computed: {
-    ...mapState({
-      linkType: state => state.dict.linkType
-    })
   },
   created() {
     this.vm = this
@@ -106,7 +88,14 @@ export default {
       updateRecord(formData, type).then(response => {
         this.common.closeComponent(this.vm)
       })
-    }
+    },
+
+  },
+  
+  computed: {
+    ...mapState({
+      linkType: state => state.dict.linkType
+    })
   }
 }
 </script>

@@ -25,7 +25,7 @@
         <el-col span="24">
           <el-form-item label="启用状态" prop="enable">
             <el-radio-group v-model="form.enable">
-              <el-radio v-for="(item,index) in enableState" :key="index" :label="item" :value="index"></el-radio>
+              <el-radio v-for="(item,index) in enableState" :key="index" :label="item" :value="index" />
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -45,7 +45,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, orderexamine } from '@/api/order'  
+import { getDetails, orderexamine } from '@/api/order'
 
 export default {
   props: {
@@ -64,6 +64,12 @@ export default {
       form: {}
     }
   },
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType,
+      enableState: state => state.dict.enableState
+    })
+  },
   created() {
     
   },
@@ -79,12 +85,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType,
-      enableState: state => state.dict.enableState,
-    })
   }
 }
 </script>

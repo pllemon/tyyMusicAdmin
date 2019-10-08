@@ -3,8 +3,8 @@
     <div class="section detail-form">
       <p class="section-title small">师傅信息</p>
       <div class="flex-center">
-        <gd-image width="140" height="140" style="margin-left:20px"/>
-        <el-form class="flex1" label-width="100px" >
+        <gd-image width="140" height="140" style="margin-left:20px" />
+        <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
               <el-form-item label="师傅工号:">

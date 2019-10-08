@@ -10,8 +10,8 @@
           <li v-for="(item, index) in craftsmanlist" :key="index">
             <img src="">
             <div class="flex1">
-              <p style="font-weight: bold">{{item.name}} {{item.sn}}</p>
-              <p><i class="el-icon-phone-outline" /> {{item.phone}}</p>
+              <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
+              <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
             </div>
             <el-button type="primary" size="mini" @click="choose(item.id)">选择</el-button>
           </li>
