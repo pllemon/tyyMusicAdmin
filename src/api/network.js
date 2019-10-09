@@ -8,17 +8,17 @@ export function getList(data) {
   })
 }
 
-export function getDetails(params) {
+export function getDetails(data) {
   return request({
     url: '/admin/networkinfo',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 
 export function updateRecord(data) {
   let url = '/admin/addnetwork'
-  if (data.id) {
+  if (data.network_id) {
     url = '/admin/updatenetwork'
   }
   return request({

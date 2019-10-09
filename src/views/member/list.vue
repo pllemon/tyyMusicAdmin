@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">会员列表</p>
+      <p class="section-title">用户列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -45,6 +45,7 @@
           <el-table-column label="用户头像" />
           <el-table-column label="用户账号" prop="phone" width="120"/>
           <el-table-column label="用户名" prop="username" width="120"/>
+          <el-table-column label="积分" />
           <el-table-column label="注册时间" width="200">
             <template slot-scope="scope">
               <i class="el-icon-time" />
@@ -55,11 +56,11 @@
           <el-table-column label="是否师傅" prop="is_criaftsman"/>
           <el-table-column label="是否商家" prop="is_business"/>
           <el-table-column label="我的朋友" />
-          <el-table-column label="积分" />
           <el-table-column label="下单情况" />
-          <el-table-column label="操作" width="100">
+          <el-table-column label="操作" width="180" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">查看</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">积分详情</el-button>
             </template>
           </el-table-column>
         </el-table>

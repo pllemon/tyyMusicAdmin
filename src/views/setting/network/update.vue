@@ -36,7 +36,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getDetails, updateRecord } from '@/api/order'  
+import { getDetails, updateRecord } from '@/api/network'  
 
 export default {
   props: {
@@ -50,17 +50,29 @@ export default {
       form: {},
       rules: {
         name: [{ required: true, message: '请输入网点名称', trigger: 'blur' }],
-        region: [{ required: true, message: '请选择所属区域', trigger: 'change' }]
+        region: [{ required: true, message: '请选择所属区域', trigger: 'change' }],
+        author: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
+        phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入网点地址', trigger: 'blur' }],
+        desc: [{ required: true, message: '请输入网点描述', trigger: 'blur' }],
       },
       orderInfo: {}
     }
   },
 
   created() {
-  
+    this.getDetails()
   },
 
   methods: {
+    getDetails() {
+      getDetails({
+        network_id: this.dialogMes.id
+      }).then(response => {
+        this.form = response.data
+      })
+    },
+
     handleClose() {
       this.$parent.currentComponent = ''
     },

@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '数据统计', icon: 'dashboard' }
     }]
   },
 
@@ -60,12 +60,28 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/order/list',
     name: 'Order',
-    meta: { title: '订单管理', icon: 'form' },
+    meta: { title: '线上订单管理', icon: 'form' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/order/list'),
+        meta: { title: '全部订单', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/offline',
+    component: Layout,
+    redirect: '/offline/list',
+    name: 'Offline',
+    meta: { title: '线下订单管理', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/offline/list'),
         meta: { title: '全部订单', icon: 'form' }
       }
     ]
@@ -115,7 +131,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/member/list'),
-        meta: { title: '全部用户', icon: 'form' }
+        meta: { title: '全部用户'}
       },
       {
         path: 'feedback',
@@ -137,7 +153,7 @@ export const constantRoutes = [
         path: 'income',
         name: 'Income',
         component: () => import('@/views/finance/income'),
-        meta: { title: '收入记录', icon: 'form' }
+        meta: { title: '收入记录'}
       },
       {
         path: 'expend',
@@ -215,7 +231,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/setting/network',
     name: 'Setting',
-    meta: { title: '常规设置', icon: 'form' },
+    meta: { title: '后台设置', icon: 'form' },
     children: [
       {
         path: 'network',
@@ -223,12 +239,12 @@ export const constantRoutes = [
         component: () => import('@/views/setting/network/list'),
         meta: { title: '网点设置' }
       },
-      {
-        path: 'category',
-        name: 'Category',
-        component: () => import('@/views/setting/category/list'),
-        meta: { title: '类目设置' }
-      },
+      // {
+      //   path: 'category',
+      //   name: 'Category',
+      //   component: () => import('@/views/setting/category/list'),
+      //   meta: { title: '类目设置' }
+      // },
       {
         path: 'account',
         name: 'Account',

@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">线上订单列表</p>
+      <p class="section-title">线下订单列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -83,9 +83,6 @@
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
-              <el-button type="text" v-if="scope.row.status == 1" @click="common.loadComponent(vm, 2, scope.row.order_id)">审核</el-button>
-              <el-button type="text" v-if="scope.row.status == 4" @click="common.loadComponent(vm, 3, scope.row.order_id)">指派</el-button>
-              <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -102,14 +99,10 @@
 import { mapState } from 'vuex'
 import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
-import Examine from '@/views/order/examine'
-import Appoint from '@/views/order/appoint'
 
 export default {
   components: {
-    Details,
-    Examine,
-    Appoint
+    Details
   },
   data() {
     return {
@@ -149,21 +142,7 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
-    },
-
-    // 发布订单
-    release(id) {
-      this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {
-        type: 'warning'
-      }).then(() => {
-        release({
-          order_id: id
-        }).then(response => {
-          this.common.notify()
-          this.fetchData()
-        })
-      })
-    },
+    }
   },
   computed: {
     ...mapState({

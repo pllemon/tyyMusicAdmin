@@ -44,11 +44,10 @@
           <el-table-column label="负责人" prop="author"/>
           <el-table-column label="联系电话"  prop="phone"/>
           <el-table-column label="网点地址" prop="address"/>
-          <el-table-column label="网点描述" prop="remark"/>
-          <el-table-column label="启用状态" width="100">
+          <el-table-column label="网点描述" prop="desc"/>
+          <el-table-column label="状态">
             <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.appo_time }}</span>
+              {{ scope.row.is_show == 1 ? "启用" : "停用" }}
             </template>
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
@@ -101,6 +100,7 @@ export default {
   },
   created() {
     this.vm = this
+    this.fetchData()
   },
   methods: {
     fetchData() {
