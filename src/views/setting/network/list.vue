@@ -39,22 +39,24 @@
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="一级网点" />
-          <el-table-column label="二级网点" />
-          <el-table-column label="联系人" />
-          <el-table-column label="联系电话" />
-          <el-table-column label="网点地址" />
+          <el-table-column label="网点名称" prop="name"/>
+          <el-table-column label="所属区域" prop="region"/>
+          <el-table-column label="负责人" prop="author"/>
+          <el-table-column label="联系电话"  prop="phone"/>
+          <el-table-column label="网点地址" prop="address"/>
+          <el-table-column label="网点描述" prop="remark"/>
           <el-table-column label="启用状态" width="100">
             <template slot-scope="scope">
               <i class="el-icon-time" />
               <span>{{ scope.row.appo_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="网点备注" prop="remark"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -68,7 +70,7 @@
 </template>
 
 <script>
-import { getList, enableRecord, removeRecord } from '@/api/network'
+import { getList, updateRecord } from '@/api/network'
 import Details from '@/views/setting/network/details'
 import Update from '@/views/setting/network/update'
 
@@ -114,8 +116,12 @@ export default {
       this.selectArr = val
     },
 
-    remove(id) {
-      this.common.removeRecord(this.vm, {id}, removeRecord)
+    updateRecord(id, type) {
+      this.common.updateRecord(type, this, {
+        model: 'savestatus',
+        network_id: id,
+        is_show: type
+      }, updateRecord)
     }
   }
 }

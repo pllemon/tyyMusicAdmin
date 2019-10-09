@@ -23,3 +23,11 @@ export function craftsmanexamine(data) {
     data
   })
 }
+
+export function getFeedbackList(data) {
+  return request({
+    url: '/admin/feedbacklist',
+    method: 'post',
+    data
+  })
+}

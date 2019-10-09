@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/admin/userlist',
+    url: '/admin/networklist',
     method: 'post',
     data
   })
@@ -10,15 +10,19 @@ export function getList(data) {
 
 export function getDetails(params) {
   return request({
-    url: '/admin/craftsmaninfo',
+    url: '/admin/networkinfo',
     method: 'get',
     params
   })
 }
 
-export function craftsmanexamine(data) {
+export function updateRecord(data) {
+  let url = '/admin/addnetwork'
+  if (data.id) {
+    url = '/admin/updatenetwork'
+  }
   return request({
-    url: '/admin/craftsmanexamine',
+    url: url,
     method: 'post',
     data
   })

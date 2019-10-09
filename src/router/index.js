@@ -104,19 +104,46 @@ export const constantRoutes = [
     ]
   },
 
-
   {
     path: '/member',
     component: Layout,
     redirect: '/member/list',
     name: 'Member',
-    meta: { title: '会员管理', icon: 'form' },
+    meta: { title: '用户管理', icon: 'form' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/member/list'),
-        meta: { title: '全部会员', icon: 'form' }
+        meta: { title: '全部用户', icon: 'form' }
+      },
+      {
+        path: 'feedback',
+        name: 'Feedback',
+        component: () => import('@/views/member/feedback/list'),
+        meta: { title: '用户反馈' }
+      }
+    ]
+  },
+
+  {
+    path: '/finance',
+    component: Layout,
+    redirect: '/finance/income',
+    name: 'Finance',
+    meta: { title: '财务管理', icon: 'form' },
+    children: [
+      {
+        path: 'income',
+        name: 'Income',
+        component: () => import('@/views/finance/income'),
+        meta: { title: '收入记录', icon: 'form' }
+      },
+      {
+        path: 'expend',
+        name: 'Expend',
+        component: () => import('@/views/finance/expend'),
+        meta: { title: '支出记录' }
       }
     ]
   },
@@ -151,12 +178,6 @@ export const constantRoutes = [
         meta: { title: '首页广告' }
       },
       {
-        path: 'feedback',
-        name: 'Feedback',
-        component: () => import('@/views/system/feedback/list'),
-        meta: { title: '用户反馈' }
-      },
-      {
         path: 'about',
         name: 'About',
         component: () => import('@/views/system/about'),
@@ -167,6 +188,24 @@ export const constantRoutes = [
         name: 'Concat',
         component: () => import('@/views/system/concat'),
         meta: { title: '联系我们' }
+      },
+      {
+        path: 'userAgreement',
+        name: 'userAgreement',
+        component: () => import('@/views/system/userAgreement'),
+        meta: { title: '用户协议' }
+      },
+      {
+        path: 'masterAgreement',
+        name: 'masterAgreement',
+        component: () => import('@/views/system/masterAgreement'),
+        meta: { title: '师傅协议' }
+      },
+      {
+        path: 'businessAgreement',
+        name: 'businessAgreement',
+        component: () => import('@/views/system/businessAgreement'),
+        meta: { title: '商家协议' }
       }
     ]
   },

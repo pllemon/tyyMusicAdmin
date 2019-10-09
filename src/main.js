@@ -15,6 +15,11 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import $ from 'jquery'
+
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 import common from './utils/common.js'
 Vue.prototype.common = common
 

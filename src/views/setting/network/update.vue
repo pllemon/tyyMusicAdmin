@@ -10,8 +10,8 @@
           <el-option label="区域二" value="beijing" />
         </el-select>
       </el-form-item>
-      <el-form-item label="负责人：" prop="personal">
-        <el-input v-model="form.personal" />
+      <el-form-item label="负责人：" prop="author">
+        <el-input v-model="form.author" />
       </el-form-item>
       <el-form-item label="联系电话：" prop="phone">
         <el-input v-model="form.phone" />
@@ -19,9 +19,9 @@
       <el-form-item label="网点地址：" prop="address">
         <el-input v-model="form.address" />
       </el-form-item>
-      <el-form-item label="网点描述" prop="dec">
+      <el-form-item label="网点描述：" prop="desc">
         <el-input
-          v-model="form.dec"
+          v-model="form.desc"
           type="textarea"
           :autosize="{ minRows: 6}"
           placeholder="请输入"
@@ -30,14 +30,13 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取 消</el-button>
-      <el-button type="primary" @click="submitExamine">确 定</el-button>
+      <el-button type="primary" @click="submit">确 定</el-button>
     </span>
   </el-dialog>
 </template>
-
 <script>
 import { mapState } from 'vuex'
-import { getDetails, orderexamine } from '@/api/order'  
+import { getDetails, updateRecord } from '@/api/order'  
 
 export default {
   props: {
@@ -66,11 +65,15 @@ export default {
       this.$parent.currentComponent = ''
     },
 
-    submitExamine() {
+    submit() {
       let that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
-          orderexamine(that.form).then(response => {
+          if (that.form.id) {
+            that.form.model = 'saveinfo'
+            that.form.network_id = that.form.id
+          }
+          updateRecord(that.form).then(response => {
             that.common.closeComponent(that)
           })
         }

@@ -1,36 +1,25 @@
 <template>
-  <div style="height: 100%;position:absolute;top:0;left:0;width:100%">
-    <div class="flex card-list">
-      <el-card class="box-card flex1">
-        <div class="mes">
-          <p>本月订单</p>
-          <p>3454</p>
-        </div>
-      </el-card>
-      <el-card class="box-card flex1">
-        <div class="mes">
-          <p>本月订单</p>
-          <p>3454</p>
-        </div>
-      </el-card>
-      <el-card class="box-card flex1">
-        <div class="mes">
-          <p>本月订单</p>
-          <p>3454</p>
-        </div>
-      </el-card>
-      <el-card class="box-card flex1">
-        <div class="mes">
-          <p>本月订单</p>
-          <p>3454</p>
-        </div>
-      </el-card>
-    </div>
+  <div class="dashboard">
+    <el-card class="box-card">
+      <view>
+        
+      </view>
+      <ul class="charts-list">
+        <li>
+          <order-network />
+        </li>
+        <li>
+          <order-type />
+        </li>
+      </ul>
+    </el-card>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import OrderNetwork from '@/views/dashboard/order/network'
+import OrderType from '@/views/dashboard/order/type'
 
 export default {
   name: 'Dashboard',
@@ -39,23 +28,32 @@ export default {
       'name',
       'roles'
     ])
+  },
+  components: {
+    OrderNetwork,
+    OrderType
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.card-list{
-  .box-card{
-    margin: 20px 10px;
-    .mes{
-      p:nth-of-type(1){
-        color: #888;
-      }
-      p:nth-of-type(2){
-        font-size: 30px;
-        margin-top: 5px;
-      }
-    }
+.dashboard{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  display: block;
+  background: #f2f2f2;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.charts-list{
+  display: flex;
+  li{
+    flex: 1;
+    margin: 20px;
+    border: 1px solid red;
   }
 }
 </style>

@@ -2,25 +2,16 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">会员列表</p>
+      <p class="section-title">用户反馈</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+         <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
     </div>
 
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="注册时间">
-          <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date1" style="width: 100%;" />
-          </el-col>
-          <el-col class="line text-center" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date2" style="width: 100%;" />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="用户名">
+        <el-form-item label="启用状态">
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
@@ -42,24 +33,17 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
-          <el-table-column label="用户头像" />
-          <el-table-column label="用户账号" prop="phone" width="120"/>
-          <el-table-column label="用户名" prop="username" width="120"/>
-          <el-table-column label="注册时间" width="200">
+          <el-table-column label="反馈用户" prop="url"/>
+          <el-table-column label="反馈时间" prop="url"/>
+          <el-table-column label="反馈内容" prop="url"/>
+          <el-table-column label="状态">
             <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.creattime }}</span>
+              {{ scope.row.is_show == 1 ? "启用" : "停用" }}
             </template>
           </el-table-column>
-          <el-table-column label="推荐人" />
-          <el-table-column label="是否师傅" prop="is_criaftsman"/>
-          <el-table-column label="是否商家" prop="is_business"/>
-          <el-table-column label="我的朋友" />
-          <el-table-column label="积分" />
-          <el-table-column label="下单情况" />
-          <el-table-column label="操作" width="100">
+          <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)">处理</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -73,10 +57,14 @@
 </template>
 
 <script>
-import { getList } from '@/api/member'
-import Details from '@/views/member/details'
+import { mapState } from 'vuex'
+import { getFeedbackList } from '@/api/member'
+import Details from '@/views/system/advert/details'
 
 export default {
+  components: {
+    Details
+  },
   data() {
     return {
       vm: null,
@@ -87,9 +75,7 @@ export default {
 
       total: 100,
       queryMes: {
-        user: '',
-        region: '',
-        page: 2,
+        page: 1,
         limit: 10
       },
 
@@ -101,21 +87,23 @@ export default {
     this.vm = this
     this.fetchData()
   },
+  computed: {
+    ...mapState({
+      linkType: state => state.dict.linkType
+    })
+  },
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
+      getFeedbackList().then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
 
-    selectionChange(val) {
-      this.selectArr = val
+    selectionChange() {
+
     }
-  },
-  components: {
-    Details
   }
 }
 </script>
