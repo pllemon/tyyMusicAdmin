@@ -160,6 +160,12 @@ export const constantRoutes = [
         name: 'Expend',
         component: () => import('@/views/finance/expend'),
         meta: { title: '支出记录' }
+      },
+      {
+        path: 'expend',
+        name: 'Expend',
+        component: () => import('@/views/finance/expend'),
+        meta: { title: '积分记录' }
       }
     ]
   },
