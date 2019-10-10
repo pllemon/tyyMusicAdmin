@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="工程秀详情" :visible="true" width="1000px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="工程秀详情" :visible="true" width="1000px" :before-close="handleClose" >
     <div class="section detail-form">
       <!-- <p class="section-title small">工程秀信息</p> -->
       <el-form label-width="100px">
