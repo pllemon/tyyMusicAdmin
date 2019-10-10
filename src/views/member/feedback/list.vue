@@ -34,8 +34,9 @@
           <el-table-column type="selection" width="55" />
           <el-table-column type="index" width="50" />
           <el-table-column label="反馈用户" prop="url"/>
-          <el-table-column label="反馈时间" prop="url"/>
-          <el-table-column label="反馈内容" prop="url"/>
+          <el-table-column label="反馈时间" prop="time"/>
+          <el-table-column label="反馈标题" prop="title"/>
+          <el-table-column label="反馈内容" prop="feedback"/>
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ scope.row.is_show == 1 ? "启用" : "停用" }}
@@ -58,7 +59,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getFeedbackList } from '@/api/member'
+import { getList } from '@/api/feedback'
 import Details from '@/views/system/advert/details'
 
 export default {
@@ -95,7 +96,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getFeedbackList().then(response => {
+      getList().then(response => {
         this.list = response.data
         this.listLoading = false
       })
