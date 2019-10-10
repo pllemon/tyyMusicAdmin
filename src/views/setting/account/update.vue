@@ -1,27 +1,28 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="680px" :before-close="handleClose">
     <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
-      <el-form-item label="展示图片" prop="img">
-        <gd-upload 
-          v-if="!loading"
-          :file="file" 
-          :autoUpload="false" 
-          width="320" 
-          height="180" 
-          action="#"
-          @change="changeFile"
-        />
-      </el-form-item>
-      <el-form-item label="链接类型" prop="type">
-        <el-radio-group v-model="form.type">
-          <el-radio v-for="(item,index) in linkType" :key="index" :label="index">{{ item }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="链接url" prop="url">
+      <el-form-item label="账号名" prop="url">
         <el-input v-model="form.url" placeholder="请输入" />
       </el-form-item>
-      <el-form-item label="排序" prop="orders">
-        <el-input v-model="form.orders" placeholder="请输入，数字越大越靠后" />
+      <el-form-item label="账号密码" prop="url">
+        <el-input v-model="form.url" placeholder="请输入" />
+      </el-form-item>
+      <el-form-item label="联系电话" prop="orders">
+        <el-input v-model="form.orders" placeholder="请输入" />
+      </el-form-item>
+      <el-form-item label="所属网点" prop="orders">
+        <el-input v-model="form.orders" placeholder="请输入" />
+      </el-form-item>
+      <el-form-item label="账号角色" prop="orders">
+        <el-input v-model="form.orders" placeholder="请输入" />
+      </el-form-item>
+      <el-form-item label="账号备注" prop="orders">
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="请输入"
+          v-model="form.dec">
+        </el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

@@ -10,7 +10,6 @@
       :file-list="fileList"
       :auto-upload="false"
       :limit="limit"
-      :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-exceed="handleExceed"
       :on-change="handleChange"
@@ -26,7 +25,7 @@ export default {
   props: {
     action: {
       type: String,
-      default: 'https://jsonplaceholder.typicode.com/posts/'
+      default: ''
     },
     limit: {
       type: [ Number, String ],

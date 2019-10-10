@@ -13,7 +13,7 @@
         />
       </el-form-item>
       <el-form-item label="相关照片：" required>
-        <gd-upload-multiple ref="upload" action="/admin/uploadordershow" :limit="4" :fileList="fileList" @update="updateUpload" @change="changeUpload"/>
+        <gd-upload-multiple ref="upload" action="/admin/uploadordershow" :limit="3" :fileList="fileList" @update="updateUpload" @change="changeUpload"/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

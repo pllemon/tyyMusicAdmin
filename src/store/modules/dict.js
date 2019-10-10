@@ -38,6 +38,9 @@ const state = {
   expendType: {
     1: '师傅工资',
     2: '商家提现'
+  },
+  pointsType: {
+    1: '商家支付佣金'
   }
 }
 
