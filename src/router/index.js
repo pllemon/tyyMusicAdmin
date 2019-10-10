@@ -162,9 +162,9 @@ export const constantRoutes = [
         meta: { title: '支出记录' }
       },
       {
-        path: 'expend',
-        name: 'Expend',
-        component: () => import('@/views/finance/expend'),
+        path: 'points',
+        name: 'Points',
+        component: () => import('@/views/finance/points'),
         meta: { title: '积分记录' }
       }
     ]

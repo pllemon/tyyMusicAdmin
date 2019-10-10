@@ -93,7 +93,7 @@ export default {
       queryMes: {
         user: '',
         region: '',
-        page: 2,
+        page: 1,
         limit: 10
       },
 
@@ -108,8 +108,8 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
       }).finally(() => {
         this.listLoading = false
       })
