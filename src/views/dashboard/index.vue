@@ -53,7 +53,6 @@ export default {
   li{
     flex: 1;
     margin: 20px;
-    border: 1px solid red;
   }
 }
 </style>

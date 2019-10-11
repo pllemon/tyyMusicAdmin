@@ -1,8 +1,9 @@
 <template>
-  <div style="width:100%;height:200px" ref="chart"></div>
+  <div style="width:100%;height:300px" ref="chart"></div>
 </template>
 
 <script>
+let color = ['#8d7fec', '#5085f2', '#e75fc3', '#f87be2', '#f2719a', '#fca4bb', '#f59a8f', '#fdb301', '#57e7ec'];
 export default{
   data () {
     return {}
@@ -11,48 +12,23 @@ export default{
     initCharts () {
       let myChart = this.$echarts.init(this.$refs.chart);
       let option = {
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        color: color,
+        title : {
+            text: '人员类型',
+            subtext: '纯属虚构',
+            x:'left'
         },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed']
         },
-        series: [
-            {
-                name:'访问来源',
-                type:'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data:[
-                    {value:335, name:'直接访问'},
-                    {value:310, name:'邮件营销'},
-                    {value:234, name:'联盟广告'},
-                    {value:135, name:'视频广告'},
-                    {value:1548, name:'搜索引擎'}
-                ]
-            }
-        ]
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [120, 200, 150],
+            type: 'bar'
+        }]
       }
       myChart.setOption(option)
     }

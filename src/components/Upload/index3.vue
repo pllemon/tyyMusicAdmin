@@ -44,6 +44,7 @@ export default {
   methods: {
     handleError(err, file, fileList) {
       this.$message.error(file.name + '上传失败')
+      this.$emit('fail', file)
     },
     handleChange(file, fileList) {
       this.$emit('change', fileList)
@@ -53,11 +54,6 @@ export default {
     },
     handleRemove(file, fileList) {
       this.$emit('update', fileList)
-    },
-    handlePictureCardPreview(file) {
-      console.log(file)
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
     }
   }
 }

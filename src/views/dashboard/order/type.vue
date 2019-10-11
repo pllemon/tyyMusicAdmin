@@ -1,57 +1,102 @@
 <template>
-  <div style="width:100%;height:200px" ref="chart"></div>
+  <div style="width:100%;height:300px" ref="chart"></div>
 </template>
 
 <script>
+let color = ['#8d7fec', '#5085f2', '#e75fc3', '#f87be2', '#f2719a', '#fca4bb', '#f59a8f', '#fdb301', '#57e7ec'];
 export default{
   data () {
-    return {}
+    return {
+      record: [
+        {value:335, name:'直接访问'},
+        {value:310, name:'邮件营销啦啦'},
+        {value:234, name:'联告'},
+        {value:135, name:'视频广告'},
+        {value:500, name:'搜索引擎'},
+        {value:350, name:'搜索引擎1'},
+        {value:250, name:'搜索引擎2'},
+        {value:100, name:'搜索引擎3'},
+        {value:350, name:'搜索引擎4'},
+        {value:600, name:'搜索引擎5'}
+      ]
+    }
+  },
+  computed: {
+    legendRecord() {
+      let legendObj = {}
+      this.record.forEach(item => {
+        legendObj[item.name] = item.value
+      })
+      return legendObj
+    }
   },
   methods: {
     initCharts () {
-      let myChart = this.$echarts.init(this.$refs.chart);
+      let that = this
+      let myChart = this.$echarts.init(this.$refs.chart)
       let option = {
+        color: color,
+        title : [{
+            text: '同名数量统计',
+            subtext: '纯属虚构',
+            x:'left'
+        },
+        {
+            text: '合计',
+            subtext: 12312,
+            textStyle:{
+                fontSize: 14,
+                color:"#333"
+            },
+            subtextStyle: {
+                fontSize: 24,
+                color: '#333'
+            },
+            textAlign:"center",
+            x: '40%',
+            y: '38%',
+        }],
         tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+            formatter:function (parms){
+              var str = parms.marker+""+parms.data.name+"</br>"+
+                "数量："+ parms.data.value+"</br>"+
+                "占比："+ parms.percent+"%";
+              return  str ;
+            }
         },
         legend: {
+            type:"scroll",
             orient: 'vertical',
-            x: 'left',
-            data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            left:'70%',
+            align:'left',
+            top:'middle',
+            textStyle: {
+              color:'#8C8C8C'
+            },
+            height: 150,
+            formatter: function(name) {
+              return name + that.legendRecord[name]
+            },
         },
         series: [
-            {
-                name:'访问来源',
-                type:'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data:[
-                    {value:335, name:'直接访问'},
-                    {value:310, name:'邮件营销'},
-                    {value:234, name:'联盟广告'},
-                    {value:135, name:'视频广告'},
-                    {value:1548, name:'搜索引擎'}
-                ]
-            }
+          {
+            name:'状态统计',
+            type:'pie',
+            radius: ['50%', '70%'],
+            center: ['40%','50%'],
+            label: {
+              normal: {
+                show: false
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: that.record
+          }
         ]
       }
       myChart.setOption(option)
