@@ -42,6 +42,10 @@ const state = {
   },
   pointsType: {
     1: '商家支付佣金'
+  },
+  roleType: {
+    1: '总部管理员',
+    2: '分部管理员'
   }
 }
 

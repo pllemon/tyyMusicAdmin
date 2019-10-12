@@ -17,7 +17,7 @@
       <el-dropdown>
         <span class="el-dropdown-link">
           <i class="el-icon-user-solid"></i>
-          admin 
+          {{name}} 
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -42,7 +42,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {

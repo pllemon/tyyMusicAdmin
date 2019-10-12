@@ -5,8 +5,7 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  uniqueName: '',
-  roles: []
+  roles: null
 }
 
 const mutations = {
@@ -15,9 +14,6 @@ const mutations = {
   },
   SET_NAME: (state, name) => {
     state.name = name
-  },
-  SET_UNIQUENAME: (state, UNIQUENAME) => {
-    state.UNIQUENAME = UNIQUENAME
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
@@ -51,21 +47,17 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
+        console.log(data)
 
         if (!data) {
           reject('登录已过期，请重新登录')
         }
 
-        const { name, uniqueName } = data
+        data.roles = 1
 
-        // roles must be a non-empty array
-        // if (!roles || roles.length <= 0) {
-        //   reject('getInfo: roles must be a non-null array!')
-        // }
-
-        commit('SET_ROLES', ['admin'])
-        commit('SET_NAME', name)
-        commit('SET_UNIQUENAME', uniqueName)
+        // 改这role
+        commit('SET_ROLES', data.roles)
+        commit('SET_NAME', data.username)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -77,7 +69,7 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
+      commit('SET_ROLES', null)
       removeToken()
       resetRouter()
       resolve()
@@ -88,7 +80,7 @@ const actions = {
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
+      commit('SET_ROLES', null)
       removeToken()
       resolve()
     })
