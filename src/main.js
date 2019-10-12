@@ -20,6 +20,9 @@ import $ from 'jquery'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+import moment from 'moment'
+Vue.prototype.$moment = moment
+
 import common from './utils/common.js'
 Vue.prototype.common = common
 

@@ -1,5 +1,17 @@
 <template>
-  <div style="width:100%;height:300px" ref="chart"></div>
+  <div class="chart-content">
+    <div style="width:100%;height:300px" ref="chart"></div>
+    <div class="charts-select">
+      <el-select v-model="date" placeholder="请选择" size="mini" style="width:100px">
+        <el-option
+          v-for="item in dateSelect"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -7,8 +19,21 @@ let color = ['#8d7fec', '#5085f2', '#e75fc3', '#f87be2', '#f2719a', '#fca4bb', '
 export default{
   data () {
     return {
+      chart: null,
+      dateSelect: [{
+        value: '',
+        label: '全部'
+      },{
+        value: 1,
+        label: '选项一'
+      },{
+        value: 2,
+        label: '选项二'
+      }
+      ],
+      date: '',
       record: [
-        {value:335, name:'直接访问'},
+        {value:336, name:'直接访问'},
         {value:310, name:'邮件营销啦啦'},
         {value:234, name:'联告'},
         {value:135, name:'视频广告'},
@@ -28,12 +53,19 @@ export default{
         legendObj[item.name] = item.value
       })
       return legendObj
+    },
+    totalNum() {
+      let num = 0
+      this.record.forEach(item => {
+        num += item.value
+      })
+      return num
     }
   },
   methods: {
     initCharts () {
       let that = this
-      let myChart = this.$echarts.init(this.$refs.chart)
+      this.chart = this.$echarts.init(this.$refs.chart)
       let option = {
         color: color,
         title : [{
@@ -43,7 +75,7 @@ export default{
         },
         {
             text: '合计',
-            subtext: 12312,
+            subtext: this.totalNum,
             textStyle:{
                 fontSize: 14,
                 color:"#333"
@@ -76,7 +108,7 @@ export default{
             },
             height: 150,
             formatter: function(name) {
-              return name + that.legendRecord[name]
+              return name + ' ' + that.legendRecord[name]
             },
         },
         series: [
@@ -99,14 +131,19 @@ export default{
           }
         ]
       }
-      myChart.setOption(option)
+      this.chart.setOption(option)
     }
   },
   mounted () {
+    let that = this
     this.initCharts()
+    window.addEventListener("resize", () => {
+      setTimeout(() => {
+        that.chart.resize()
+      }, 50)
+    })
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+

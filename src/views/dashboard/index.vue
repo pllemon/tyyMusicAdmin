@@ -1,25 +1,43 @@
 <template>
   <div class="dashboard">
-    <el-card class="box-card">
-      <view>
-        
-      </view>
-      <ul class="charts-list">
-        <li>
-          <order-network />
-        </li>
-        <li>
+    111
+    <!-- <el-row :gutter="15">
+      <el-col :span="8">
+        <el-card class="box-card">
           <order-type />
-        </li>
-      </ul>
-    </el-card>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="box-card">
+          <order-network />
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="box-card">
+          <order-type />
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="30">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <finance-line />
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card">
+          <finance-line />
+        </el-card>
+      </el-col>
+    </el-row> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import OrderNetwork from '@/views/dashboard/order/network'
-import OrderType from '@/views/dashboard/order/type'
+import OrderNetwork from '@/views/dashboard/charts/network'
+import OrderType from '@/views/dashboard/charts/type'
+import FinanceLine from '@/views/dashboard/charts/financeLine'
 
 export default {
   name: 'Dashboard',
@@ -31,11 +49,22 @@ export default {
   },
   components: {
     OrderNetwork,
-    OrderType
+    OrderType,
+    FinanceLine
   }
 }
 </script>
 
+<style lang="scss">
+.chart-content{
+  position: relative;
+}
+.charts-select{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+</style>
 <style lang="scss" scoped>
 .dashboard{
   width: 100%;
@@ -46,13 +75,12 @@ export default {
   display: block;
   background: #f2f2f2;
   box-sizing: border-box;
-  padding: 20px;
-}
-.charts-list{
-  display: flex;
-  li{
-    flex: 1;
-    margin: 20px;
+  padding: 30px;
+  .el-card{
+    box-shadow: none;
   }
+}
+.el-row{
+  margin-bottom: 15px;
 }
 </style>

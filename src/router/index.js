@@ -269,7 +269,7 @@ export const constantRoutes = [
 
 /**
  * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * 根据不同的角色加载不同的路由
  */
 export const asyncRoutes = [
   { path: '*', redirect: '/404', hidden: true }
