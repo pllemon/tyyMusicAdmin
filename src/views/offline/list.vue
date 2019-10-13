@@ -97,7 +97,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList, release } from '@/api/order'
+import { getList, release } from '@/api/offline'
 import Details from '@/views/order/details'
 
 export default {

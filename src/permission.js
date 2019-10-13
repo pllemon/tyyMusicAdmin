@@ -12,22 +12,14 @@ const whiteList = ['/login'] // 不会重定向的白名单
 const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
+  console.log('----------------------------')
   console.log(to, from)
+  console.log('----------------------------')
   // 开始切换页面进度条
   NProgress.start()
 
   // 设置页面title
   document.title = getPageTitle(to.meta.title)
-
-  // 设置是否显示页面header
-  // if (defineView.indexOf(to.path) !== -1) {
-  //   await store.dispatch('permission/setHeader', false)
-  // } else {
-  //   await store.dispatch('permission/setHeader', true)
-  // }
-
-  // 获取全部字典
-  // await store.dispatch('dist/getAllDict');
 
   // 是否登录
   const hasToken = getToken()
@@ -43,20 +35,21 @@ router.beforeEach(async(to, from, next) => {
       if (hasRoles) {
         next()
       } else {
+        console.log(999999)
         try {
           // 获取用户信息
           let { roles } = await store.dispatch('user/getInfo')
           console.log(roles)
           // 改这role
-          roles = 2
+          roles = 1
 
           // 获取角色菜单, 改
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
           // 把角色菜单添加至路由
           router.addRoutes(accessRoutes)
-
-          next()
+          console.log(to)
+          next(to)
         } catch (error) {
           // 清除token并重定向到登录页，重新登录
           await store.dispatch('user/resetToken')

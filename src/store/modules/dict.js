@@ -46,6 +46,9 @@ const state = {
   roleType: {
     1: '总部管理员',
     2: '分部管理员'
+  },
+  areaData: {
+    
   }
 }
 

@@ -61,7 +61,9 @@ export default {
   },
 
   created() {
-    this.getDetails()
+    if (this.dialogMes.id) {
+      this.getDetails()
+    }
   },
 
   methods: {

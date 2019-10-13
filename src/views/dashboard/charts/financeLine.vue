@@ -3,8 +3,8 @@
     <div style="width:100%;height:400px" ref="chart"></div>
     <div class="charts-select">
       <el-select v-model="type" placeholder="请选择" size="mini" style="width:100px" @change="changeType">
-        <el-option :label="月" :value="1"></el-option>
-        <el-option :label="年" :value="2"></el-option>
+        <el-option label="月" :value="1"></el-option>
+        <el-option label="年" :value="2"></el-option>
       </el-select>
     </div>
   </div>
