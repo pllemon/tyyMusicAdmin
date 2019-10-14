@@ -61,7 +61,7 @@ export default {
     },
     uploadSuccess(res, file) {
       if (res.success) {
-        this.imageUrl = 'http://47.106.100.144/' + res.data.imgurl
+        this.imageUrl = this.common.ip + res.data.imgurl
         this.$emit('success', res.data.id)
       }
     }

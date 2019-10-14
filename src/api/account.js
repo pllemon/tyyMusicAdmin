@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getList(data) {
+export function getAccountList(data) {
   return request({
-    url: '/admin/userlist',
+    url: '/admin/adminlist',
     method: 'post',
     data
   })
@@ -10,15 +10,27 @@ export function getList(data) {
 
 export function getDetails(params) {
   return request({
-    url: '/admin/craftsmaninfo',
+    url: '/admin/adminuserinfo',
     method: 'get',
     params
   })
 }
 
-export function craftsmanexamine(data) {
+export function updateRecord(data) {
+  let url = '/admin/addadminuser'
+  if (data.id) {
+    url = '/admin/saveadminuser'
+  }
   return request({
-    url: '/admin/craftsmanexamine',
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
+export function updateStatus(data) {
+  return request({
+    url: '/admin/saveadminstatus',
     method: 'post',
     data
   })

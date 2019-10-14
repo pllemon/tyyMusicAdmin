@@ -2,7 +2,7 @@
   <el-image
     :src="ip + src"
     :style="{width: cWidth + 'px', height: cHeight + 'px'}"
-    :preview-src-list="[ip + src]"
+    :preview-src-list="[common.ip + src]"
     fit="cover"
   />
 </template>
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      ip: 'http://47.106.100.144/',
       cWidth: '',
       cHeight: ''
     }

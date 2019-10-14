@@ -12,7 +12,7 @@
         :on-success="handleSuccess"
         :before-upload="beforeUpload"
         class="editor-slide-upload"
-        action="https://httpbin.org/post"
+        action="admin/uploadrtimg"
         list-type="picture-card"
       >
         <el-button size="small" type="primary">
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-// import { getToken } from 'api/qiniu'
-
 export default {
   name: 'EditorSlideUpload',
   props: {
@@ -54,7 +52,7 @@ export default {
     handleSubmit() {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v])
       if (!this.checkAllSuccess()) {
-        this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
+        this.$message('请等待所有图片上传完成，如有网络问题导致无法上传，请刷新页面并重新上传')
         return
       }
       this.$emit('successCBK', arr)
@@ -63,11 +61,13 @@ export default {
       this.dialogVisible = false
     },
     handleSuccess(response, file) {
+      console.log(response)
+      console.log(file)
       const uid = file.uid
       const objKeyArr = Object.keys(this.listObj)
       for (let i = 0, len = objKeyArr.length; i < len; i++) {
         if (this.listObj[objKeyArr[i]].uid === uid) {
-          this.listObj[objKeyArr[i]].url = response.files.file
+          this.listObj[objKeyArr[i]].url = this.common.ip + response.data
           this.listObj[objKeyArr[i]].hasSuccess = true
           return
         }

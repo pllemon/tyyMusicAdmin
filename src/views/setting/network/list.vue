@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getList, updateRecord } from '@/api/network'
+import { getNetworkList, updateRecord } from '@/api/network'
 import Details from '@/views/setting/network/details'
 import Update from '@/views/setting/network/update'
 
@@ -90,7 +90,7 @@ export default {
       queryMes: {
         user: '',
         region: '',
-        page: 2,
+        page: 1,
         limit: 10
       },
 
@@ -105,8 +105,8 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getNetworkList(this.queryMes).then(response => {
+        this.list = response.data.data
       }).finally(() => {
         this.listLoading = false
       })

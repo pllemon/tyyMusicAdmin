@@ -1,40 +1,54 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="680px" :before-close="handleClose">
-    <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
-      <el-form-item label="账号名" prop="url">
-        <el-input v-model="form.url" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="账号密码" prop="url">
-        <el-input v-model="form.url" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="联系电话" prop="orders">
-        <el-input v-model="form.orders" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="所属网点" prop="orders">
-        <el-input v-model="form.orders" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="账号角色" prop="orders">
-        <el-input v-model="form.orders" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item label="账号备注" prop="orders">
-        <el-input
-          type="textarea"
-          :rows="4"
-          placeholder="请输入"
-          v-model="form.dec">
-        </el-input>
-      </el-form-item>
+  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="600px" :before-close="handleClose">
+    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="账号名" prop="username">
+            <el-input v-model="form.username" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="密码" prop="password" v-show="!dialogMes.id">
+            <el-input v-model="form.password" type="password"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="联系电话" prop="phone">
+            <el-input v-model="form.phone" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="所属网点" prop="network_id">
+            <el-select v-model="form.network_id" style="width:100%">
+              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="账号角色" prop="role">
+            <el-select v-model="form.role" style="width:100%">
+              <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
+          <el-form-item label="账号备注">
+            <el-input v-model="form.remark" />
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取消</el-button>
-      <el-button type="primary" @click="submitForm">确定</el-button>
+      <el-button @click="handleClose">取 消</el-button>
+      <el-button type="primary" @click="submit">确 定</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, updateRecord } from '@/api/advert'  
+import { getDetails, updateRecord } from '@/api/account'
+import { getNetworkList } from '@/api/network'
 
 export default {
   props: {
@@ -45,67 +59,65 @@ export default {
   },
   data() {
     return {
-      vm: null,
-      loading: true,
-
-      file: {},
-      form: {
-        type: '0',
-        url: '',
-        orders: ''
-      }
+      rules: {
+        username: [{ required: true, message: '请输入账号名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
+        network_id: [{ required: true, message: '请选择所属网点', trigger: 'change' }],
+        role: [{ required: true, message: '请选择账号角色', trigger: 'change' }],
+      },
+      form: {},
+      networkList: []
     }
-  },  
+  },
   computed: {
     ...mapState({
-      linkType: state => state.dict.linkType
+      roleType: state => state.dict.roleType
     })
   },
   created() {
-    this.vm = this
+    this.getNetwork()
     if (this.dialogMes.id) {
       this.getDetails()
-    } else {
-      this.loading = false
     }
   },
   methods: {
-    changeFile(fileList) {
-      this.file = fileList[0]
-    },
-
-    getDetails() {
-      getDetails({
-        banner_id: this.dialogMes.id
-      }).then(response => {
-        let { data } = response
-        data.type = data.type.toString()
-        data.banner_id = data.id
-        this.file.url = this.common.ip + data.imgurl
-        this.form = data
-        this.loading = false
-      })
-    },
-    
     handleClose() {
       this.$parent.currentComponent = ''
     },
 
-    submitForm() {
-      let formData = null;
-      if (this.file.raw) {
-        formData = new FormData()
-        formData.append('file', this.file.raw)
-        for (let i in this.form) {
-          formData.append(i, this.form[i])
+    getDetails() {
+      getDetails({
+        admin_id: this.dialogMes.id
+      }).then(response => {
+        let { data } = response
+        if (data.role) {
+          data.role = data.role.toString()
         }
-      } else {
-        formData = this.form
-      }
-      
-      let type = this.form.id ? '2' : '1'
-      updateRecord(formData, type).then(response => {
-        this.common.closeComponent(this.vm)
+        this.form = data
+      })
+    },
+
+    getNetwork() {
+      getNetworkList({
+        page: 1,
+        limit: 1000
+      }).then(response => {
+        this.networkList = response.data.data
+      })
+    },
+
+    submit() {
+      let that = this
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          if (that.dialogMes.id) {
+            that.form.password = ''
+          }
+          updateRecord(that.form).then(response => {
+            that.common.closeComponent(that)
+          })
+        }
       })
     }
   }
@@ -113,4 +125,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 </style>

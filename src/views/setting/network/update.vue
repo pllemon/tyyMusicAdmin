@@ -4,11 +4,14 @@
       <el-form-item label="网点名称：" prop="name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="所属区域：" prop="region">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai" />
-          <el-option label="区域二" value="beijing" />
-        </el-select>
+      <el-form-item label="所属区域：" prop="areaCode">
+        <el-cascader
+          ref="areaCascader"
+          v-model="form.areaCode"
+          style="width:100%"
+          :options="options"
+          @change="changeArea">
+        </el-cascader>
       </el-form-item>
       <el-form-item label="负责人：" prop="author">
         <el-input v-model="form.author" />
@@ -36,6 +39,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { areaJson } from '@/utils/area.js'
 import { getDetails, updateRecord } from '@/api/network'  
 
 export default {
@@ -47,10 +51,15 @@ export default {
   },
   data() {
     return {
-      form: {},
+      options: areaJson,
+
+      form: {
+        areaCode: ["440000", "440700", "440783"],
+        region: '广东省江门市开平市'
+      },
       rules: {
         name: [{ required: true, message: '请输入网点名称', trigger: 'blur' }],
-        region: [{ required: true, message: '请选择所属区域', trigger: 'change' }],
+        areaCode: [{ required: true, message: '请选择所属区域', trigger: 'change' }],
         author: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
         address: [{ required: true, message: '请输入网点地址', trigger: 'blur' }],
@@ -67,10 +76,20 @@ export default {
   },
 
   methods: {
+     changeArea(val) {
+      let nodes = this.$refs.areaCascader.getCheckedNodes()
+      let region = nodes[0].parent.parent.label + nodes[0].parent.label + nodes[0].label
+      this.form.areaCode = val
+      this.form.region = region
+      console.log(val, region)
+    },
+
     getDetails() {
       getDetails({
         network_id: this.dialogMes.id
       }).then(response => {
+        let { data } = response
+        data.areaCode = [data.province, data.city, data.district]
         this.form = response.data
       })
     },
@@ -83,6 +102,9 @@ export default {
       let that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
+          that.form.province = that.form.areaCode[0]
+          that.form.city = that.form.areaCode[1]
+          that.form.district = that.form.areaCode[2]
           if (that.form.id) {
             that.form.model = 'saveinfo'
             that.form.network_id = that.form.id

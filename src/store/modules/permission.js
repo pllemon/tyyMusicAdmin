@@ -1,5 +1,5 @@
 import { constantRoutes } from '@/router'
-import { mainAdminRoutes, branchAdminRoutes } from '@/utils/role'
+import { mainAdminRoutes, branchAdminRoutes, testAdminRoutes } from '@/utils/role'
 
 const state = {
   routes: [],
@@ -24,6 +24,8 @@ const actions = {
         accessedRoutes = mainAdminRoutes
       } else if (roles == 2) {
         accessedRoutes = branchAdminRoutes
+      } else if (roles == 3) {
+        accessedRoutes = testAdminRoutes
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

@@ -14,15 +14,15 @@
       </el-dropdown>
     </div> -->
     <div>
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <i class="el-icon-user-solid"></i>
           {{name}} 
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>账号信息</el-dropdown-item>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item command="1">账号信息</el-dropdown-item>
+          <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -47,12 +47,21 @@ export default {
     ])
   },
   methods: {
+    handleCommand(command) {
+      if (command == 2) {
+        this.$confirm('确定退出该账号？', '提示', {
+          type: 'warning'
+        }).then(() => {
+          this.logout()
+        }).catch()
+      }
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        await this.$store.dispatch('user/logout')
+        this.$router.push('/login')
     }
   }
 }

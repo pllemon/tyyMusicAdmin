@@ -1,177 +1,69 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="订单详情" :visible="true" width="1200px" :before-close="handleClose">
-    <div class="flex" v-loading="loading">
-      <div class="section" style="width:200px;margin-right: 20px">
-        <p class="section-title small">订单时间线</p>
-        <el-timeline style="margin-top:30px">
-          <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
-          <template v-if="message.info.status != 10">
-            <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" timestamp="">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 7" :timestamp="message.ordersshow.time">{{ message.craftsmaninfo.name }}师傅上传师傅秀</el-timeline-item>
-          </template>
-          <template v-if="message.info.status == 10">
-            <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
-          </template>
-        </el-timeline>
-      </div>
-      <div class="flex1" style="border-left: 1px solid #eee;padding-left: 20px">
-        <div class="section detail-form">
-          <p class="section-title small">订单信息</p>
-          <el-form label-width="100px">
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="订单编号:">
-                  {{ message.info.order_sn }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="订单状态:">
-                  {{ orderStatus[message.info.status] }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="下单客户:">
-                  {{ message.info.username }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="服务需求:">
-                  {{ message.info.service_demand }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="预约时间:">
-                  {{ message.info.appo_time }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="联系用户:">
-                  {{ message.info.phone }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="服务地址:">
-                  {{ message.info.address }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="用户备注:">
-                  {{ message.info.remark }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="订单图片:">
-                  <template v-if="message.userimglist.length">
-                    <gd-image v-for="(item, index) in message.userimglist" :key="index" :src="item" />
-                  </template>
-                  <template v-else>
-                    无
-                  </template>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <!-- <el-divider /> -->
-        </div>
-        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status != 10">
-          <p class="section-title small">报价&报名</p>
-          <el-form label-width="100px">
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="订单总价格:">
-                  {{ message.pay.total_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="定金金额:">
-                  {{ message.pay.earnest_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="尾款金额:">
-                  {{ message.pay.tail_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="师傅工资:">
-                  {{ message.pay.craftsman_price }} 元
-                </el-form-item>
-              </el-col>
-              <template v-if="message.craftsmaninfo">
-                <el-col :span="8">
-                  <el-form-item label="承接师傅:">
-                    {{ message.craftsmaninfo.name }} （{{ message.craftsmaninfo.sn }}）
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item label="联系师傅:">
-                    {{ message.craftsmaninfo.phone }}
-                  </el-form-item>
-                </el-col>
-              </template>
-              <el-col :span="24">
-                <el-form-item label="报价单:">
-                  <gd-image :src="message.bjd.imgurl" />
-                </el-form-item>
-              </el-col>
-              <el-col :span="24" v-if="message.info.status > 3">
-                <el-form-item label="报名情况:">
-                  <template v-if="message.craftsmanlist.length">
-                    <ul class="master-list">
-                      <li v-for="(item, index) in craftsmanlist" :key="index">
-                        <img src="">
-                        <div class="flex1">
-                          <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
-                          <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
-                        </div>
-                      </li>
-                    </ul>
-                  </template>
-                  <template v-else>
-                    无
-                  </template>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <!-- <el-divider /> -->
-        </div>
-        <div class="section  detail-form" v-if="message.info.status > 6 && message.info.status != 10">
-          <p class="section-title small">用户评价&师傅秀</p>
-          <el-form label-width="100px">
-            <el-row>
-              <el-col :span="24" v-if="message.comment">
-                <el-form-item label="用户评价:">
-                  <div class="flex-center-start">
-                    <el-rate
-                      v-model="message.comment.stars"
-                      disabled
-                      text-color="#ff9900"
-                      score-template="{value}">
-                    </el-rate>
-                    <p>{{ message.comment.comment }}</p>
-                  </div>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24" v-if="message.ordersshow">
-                <el-form-item label="师傅秀:">
-                  <p>{{ message.ordersshow.title }}（{{ message.ordersshow.dec }}）</p>
-                  <div>
-                    <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
-                    <gd-image v-if="message.ordersshow.imgurl2" :src="message.ordersshow.imgurl2" />
-                    <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
-                    <gd-image v-if="message.ordersshow.imgurl4" :src="message.ordersshow.imgurl4" />
-                  </div>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-        </div>
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
+    <div class="section detail-form">
+      <p class="section-title small">订单信息</p>
+      <div class="flex-center">
+        <gd-image width="140" height="140" style="margin-left:20px" />
+        <el-form class="flex1" label-width="100px">
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="订单编号:">
+                {{ info.sn }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="下单用户:">
+                {{ info.sfz }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="服务商家:">
+                {{ info.phone }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="总消费金额:">
+                {{ info.enter_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用户积分抵扣:">
+                {{ info.create_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="线下支付金额:">
+                {{ info.address }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="平台费:">
+                {{ info.desc }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="积分抵扣平台费:">
+                {{ info.desc }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用户积分返还:">
+                {{ info.examine_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="创建时间:">
+                {{ info.examine_time }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="订单状态:">
+                {{ offlineStatus[info.status] }}
+                <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
       </div>
     </div>
   </el-dialog>
@@ -179,7 +71,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, ordercraftsmanlist } from '@/api/order'
+import { getDetails } from '@/api/offline'
 
 export default {
   props: {
@@ -190,46 +82,22 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      craftsmanlist: [],
-      message: {
-        info: {},
-        comment: {},
-        bjd: {},
-        craftsmaninfo: null,
-        craftsmanlist: [],
-        ordersshow: {},
-        pay: {},
-        userimglist: []
-      }
+      info: {}
     }
   },
   computed: {
     ...mapState({
-      orderStatus: state => state.dict.orderStatus
+      offlineStatus: state => state.dict.offlineStatus
     })
   },
-
   created() {
     const that = this
     getDetails({
-      order_id: that.dialogMes.id
+      bo_id: that.dialogMes.id
     }).then(response => {
-      this.loading = false
-      for (const i in response.data) {
-        if (response.data[i]) {
-          that.message[i] = response.data[i]
-        }
-      }
-    })
-
-    ordercraftsmanlist({
-      order_id: that.dialogMes.id
-    }).then(response => {
-      that.craftsmanlist = response.data
+      that.info = response.data
     })
   },
-
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
@@ -239,11 +107,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.img-list img{
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f2f2f2;
-  margin-right: 20px;
+.section{
+  margin-bottom: 40px;
+  .section-title{
+    margin-bottom: 15px;
+  }
+}
+.order-mes{
+  display: flex;
+  flex-wrap: wrap;
+  li{
+    width: 33.33%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-weight: bold;
+    label{
+      margin-bottom: 5px;
+      display: block;
+      font-weight: normal;
+    }
+  }
 }
 
 .master-list{

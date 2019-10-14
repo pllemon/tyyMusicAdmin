@@ -63,7 +63,6 @@ export default {
 
     handleSuccess(res, file) {
       if (res.success) {
-        // this.imageUrl = 'http://47.106.100.144/' + res.data.imgurl
         this.$emit('success', res.data.id)
       }
     }

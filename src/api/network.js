@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getList(data) {
+export function getNetworkList(data) {
   return request({
-    url: '/admin/networklist',
+    url: `/admin/networklist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })

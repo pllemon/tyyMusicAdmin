@@ -2,14 +2,18 @@
   <div class="app-container list-layout" v-loading="loading">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">联系我们</p>
+      <p class="section-title">富文本测试</p>
       <div class="action">
         <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
       </div>
     </div>
 
     <div class="table-content" style="overflow: auto">
-      <tinymce v-model="content" :height="400" />
+      <tinymce 
+        v-model="content" 
+        :toolbar="[]"
+        :height="400" 
+      />
     </div>
   </div>
 </template>

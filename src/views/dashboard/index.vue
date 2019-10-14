@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <el-row :gutter="15">
+    <!-- <el-row :gutter="15">
       <el-col :span="8">
         <el-card class="box-card">
           <order-type />
@@ -28,7 +28,7 @@
           <finance-line />
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -40,12 +40,6 @@ import FinanceLine from '@/views/dashboard/charts/financeLine'
 
 export default {
   name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
-  },
   components: {
     OrderNetwork,
     OrderType,

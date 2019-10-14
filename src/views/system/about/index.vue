@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/account'
 import Details from '@/views/order/details'
 
 export default {

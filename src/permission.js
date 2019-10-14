@@ -30,25 +30,21 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
+      console.log(9999999)
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles
       if (hasRoles) {
         next()
       } else {
-        console.log(999999)
         try {
           // 获取用户信息
-          let { roles } = await store.dispatch('user/getInfo')
-          console.log(roles)
-          // 改这role
-          roles = 1
+          let { role } = await store.dispatch('user/getInfo')
 
-          // 获取角色菜单, 改
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // 获取角色菜单
+          const accessRoutes = await store.dispatch('permission/generateRoutes', role)
 
           // 把角色菜单添加至路由
           router.addRoutes(accessRoutes)
-          console.log(to)
           next(to)
         } catch (error) {
           // 清除token并重定向到登录页，重新登录

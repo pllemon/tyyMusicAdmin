@@ -1,22 +1,32 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
-
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return Cookies.get('dsf_token')
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  return Cookies.set('dsf_token', token)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove('dsf_token')
+}
+
+export function getAccountId() {
+  return Cookies.get('account_id')
+}
+
+export function setAccountId(id) {
+  return Cookies.set('account_id', id)
+}
+
+export function removeAccountId() {
+  return Cookies.remove('account_id')
 }
 
 export function getLoginStorage() {
-  const username = localStorage.getItem('gdkqUser') || 'dsfadmin'
-  const password = localStorage.getItem('gdkqPwd') || '1234567'
+  const username = localStorage.getItem('dsfUser') || 'dsfadmin'
+  const password = localStorage.getItem('dsfPwd') || '1234567'
   let remember = false
   if (username) {
     remember = true
@@ -29,11 +39,11 @@ export function getLoginStorage() {
 }
 
 export function setLoginStorage(mes) {
-  localStorage.setItem('gdkqUser', mes.username)
-  localStorage.setItem('gdkqPwd', mes.password)
+  localStorage.setItem('dsfUser', mes.username)
+  localStorage.setItem('dsfPwd', mes.password)
 }
 
 export function removeLoginStorage() {
-  localStorage.removeItem('gdkqUser')
-  localStorage.removeItem('gdkqPwd')
+  localStorage.removeItem('dsfUser')
+  localStorage.removeItem('dsfPwd')
 }

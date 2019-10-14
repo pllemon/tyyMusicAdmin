@@ -223,3 +223,45 @@ export const branchAdminRoutes = [
 
   { path: '*', redirect: '/404', hidden: true }
 ]
+
+
+export const testAdminRoutes = [
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/advert',
+    name: 'System',
+    meta: { title: '小程序设置', icon: 'form' },
+    children: [
+      {
+        path: 'concat',
+        name: 'Concat',
+        component: () => import('@/views/system/concat'),
+        meta: { title: '联系我们' }
+      }
+    ]
+  },
+  {
+    path: '/setting',
+    component: Layout,
+    redirect: '/setting/network',
+    name: 'Setting',
+    meta: { title: '后台设置', icon: 'form' },
+    children: [
+      {
+        path: 'network',
+        name: 'Network',
+        component: () => import('@/views/setting/network/list'),
+        meta: { title: '网点设置' }
+      },
+      {
+        path: 'account',
+        name: 'Account',
+        component: () => import('@/views/setting/account/list'),
+        meta: { title: '账号管理' }
+      }
+    ]
+  },
+  
+  { path: '*', redirect: '/404', hidden: true }
+]

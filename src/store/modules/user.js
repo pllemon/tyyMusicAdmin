@@ -1,11 +1,13 @@
-import { login, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, setLoginStorage, removeLoginStorage } from '@/utils/auth'
+import { login } from '@/api/user'
+import { getDetails } from '@/api/account'
+import { getToken, setToken, removeToken, setLoginStorage, removeLoginStorage, setAccountId, getAccountId, removeAccountId } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
   name: '',
-  roles: null
+  roles: null,
+  userInfo: null
 }
 
 const mutations = {
@@ -17,6 +19,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_USERINFO: (state, info) => {
+    state.userInfo = info
   }
 }
 
@@ -24,17 +29,21 @@ const actions = {
   // 登录
   login({ commit }, userInfo) {
     const { username, password, remember } = userInfo
-    console.log(userInfo)
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data)
-        setToken(data)
+        // 记住密码
         if (remember) {
           setLoginStorage(userInfo)
         } else {
           removeLoginStorage()
         }
+
+        // 保存token和账号id
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        setAccountId(data.admininfo.id)
+
         resolve()
       }).catch(error => {
         reject(error)
@@ -45,7 +54,9 @@ const actions = {
   // 个人信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getDetails({
+        admin_id: getAccountId()
+      }).then(response => {
         const { data } = response
         console.log(data)
 
@@ -53,10 +64,7 @@ const actions = {
           reject('登录已过期，请重新登录')
         }
 
-        data.roles = 1
-
-        // 改这role
-        commit('SET_ROLES', data.roles)
+        commit('SET_ROLES', data.role)
         commit('SET_NAME', data.username)
         resolve(data)
       }).catch(error => {
@@ -71,6 +79,7 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', null)
       removeToken()
+      removeAccountId()
       resetRouter()
       resolve()
     })
@@ -82,6 +91,7 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', null)
       removeToken()
+      removeAccountId()
       resolve()
     })
   }

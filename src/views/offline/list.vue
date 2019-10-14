@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">线下订单列表</p>
+      <p class="section-title">列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -23,7 +23,7 @@
         <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
-              v-for="(item, index) in orderStatus"
+              v-for="(item, index) in offlineStatus"
               :key="index"
               :label="item"
               :value="index">
@@ -31,7 +31,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="订单编号" prop="order_sn">
-          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
+          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -49,40 +49,44 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="序号" type="index" width="50" />
-          <el-table-column label="订单编号"  width="160" prop="order_sn" />
+          <el-table-column label="序号" type="index" width="50" fixed />
+          <el-table-column label="订单编号" width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
-              {{orderStatus[scope.row.status]}}
+              {{ offlineStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="下单客户" width="200">
+          <el-table-column label="下单用户" width="200">
             <template slot-scope="scope">
-              {{scope.row.phone}}
+              <p>{{ scope.row.user_name }} {{ scope.row.user_phone }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="服务需求" prop="service_demand" width="200"/>
-          <el-table-column label="服务地址" prop="address" width="200"/>
-          <el-table-column label="预约时间" width="180">
+          <el-table-column label="服务商家" width="220">
             <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.appo_time }}</span>
+              <p>{{ scope.row.business_name }} {{ scope.row.business_phone }}</p>
+              <p>{{ scope.row.business_address }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="用户备注" prop="remark" width="120" />
-          <el-table-column label="承接师傅"  width="120"/>
+          <el-table-column label="总消费金额" prop="money" width="120" />
+          <el-table-column label="用户积分抵扣" prop="integral" width="120" />
+          <el-table-column label="线下支付金额" width="120">
+            <template slot-scope="scope">
+              {{ scope.row.money - scope.row.integral }}
+            </template>
+          </el-table-column>
+          <el-table-column label="平台费" prop="pay_money" width="120" />
+          <el-table-column label="积分抵扣平台费" prop="use_integral" width="120" />
+          <el-table-column label="用户积分返还" prop="return_integral" width="120" />
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
+              <span>{{ scope.row.creat_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -97,8 +101,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList, release } from '@/api/offline'
-import Details from '@/views/order/details'
+import { getList } from '@/api/offline'
+import Details from '@/views/offline/details'
 
 export default {
   components: {
@@ -138,15 +142,11 @@ export default {
       }).finally(() => {
         this.listLoading = false
       })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
     }
   },
   computed: {
     ...mapState({
-      orderStatus: state => state.dict.orderStatus
+      offlineStatus: state => state.dict.offlineStatus
     })
   }
 }

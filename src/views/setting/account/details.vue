@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'账号'" :visible="true" width="600px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="查看" :visible="true" width="600px" :before-close="handleClose">
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
       <el-row>
         <el-col span="24">
@@ -45,7 +45,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, orderexamine } from '@/api/order'
+import { getDetails, updateRecord } from '@/api/order'
+import { getNetworkList } from '@/api/network'
 
 export default {
   props: {
@@ -66,13 +67,16 @@ export default {
   },
   computed: {
     ...mapState({
-      changeType: state => state.dict.changeType,
-      enableState: state => state.dict.enableState
+      roleType: state => state.dict.roleType
     })
   },
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
+    },
+
+    getNetwork() {
+
     },
 
     submit() {
