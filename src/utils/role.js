@@ -7,13 +7,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/order/list',
     name: 'Order',
-    meta: { title: '线上订单管理', icon: 'form' },
+    meta: { title: '线上订单管理', icon: 'affiliations_li' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/order/list'),
-        meta: { title: '全部订单', icon: 'setting' }
+        meta: { title: '全部订单', icon: 'affiliations_li' }
       }
     ]
   },
@@ -23,13 +23,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/offline/list',
     name: 'Offline',
-    meta: { title: '线下订单管理', icon: 'form' },
+    meta: { title: '线下订单管理', icon: 'exchange' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/offline/list'),
-        meta: { title: '全部订单', icon: 'form' }
+        meta: { title: '全部订单', icon: 'exchange' }
       }
     ]
   },
@@ -39,7 +39,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/master/list',
     name: 'Master',
-    meta: { title: '师傅管理', icon: 'form' },
+    meta: { title: '师傅管理', icon: 'namecard' },
     children: [
       {
         path: 'list',
@@ -62,7 +62,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/businessman/list',
     name: 'Businessman',
-    meta: { title: '商家管理', icon: 'form' },
+    meta: { title: '商家管理', icon: 'boss' },
     children: [
       {
         path: 'list',
@@ -84,7 +84,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/member/list',
     name: 'Member',
-    meta: { title: '用户管理', icon: 'form' },
+    meta: { title: '用户管理', icon: 'group' },
     children: [
       {
         path: 'list',
@@ -106,7 +106,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/finance/income',
     name: 'Finance',
-    meta: { title: '财务管理', icon: 'form' },
+    meta: { title: '财务管理', icon: 'coinpurse_line' },
     children: [
       {
         path: 'income',
@@ -134,13 +134,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/show/list',
     name: 'Show',
-    meta: { title: '工程秀管理', icon: 'form' },
+    meta: { title: '工程秀管理', icon: 'attestation' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/show/list'),
-        meta: { title: '全部工程秀', icon: 'form' }
+        meta: { title: '全部工程秀', icon: 'attestation' }
       }
     ]
   },
@@ -150,7 +150,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/system/advert',
     name: 'System',
-    meta: { title: '小程序设置', icon: 'form' },
+    meta: { title: '小程序设置', icon: 'setting' },
     children: [
       {
         path: 'advert',
@@ -196,7 +196,7 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/setting/network',
     name: 'Setting',
-    meta: { title: '后台设置', icon: 'form' },
+    meta: { title: '后台设置', icon: 'cloud_history' },
     children: [
       {
         path: 'network',

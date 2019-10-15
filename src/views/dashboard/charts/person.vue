@@ -12,9 +12,9 @@ export default {
       chart: null,
       status: {
         1: '正常',
-        2: '禁用',
-        3: '待审核',
-        4: '已驳回'
+        2: '待审核',
+        3: '已驳回',
+        4: '禁用'
       }
     }
   },
@@ -82,7 +82,7 @@ export default {
           containLabel: true
         },
         legend: {
-          data: ['正常', '禁用', '待审核', '已驳回'],
+          data: ['正常', '待审核', '已驳回', '禁用'],
           selectedMode: false,
           right: 10,
           top: 10,

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <!-- <el-row :gutter="15">
+    <el-row :gutter="15">
       <el-col :span="8">
         <el-card class="box-card">
           <order />
@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card">
-          <order-network />
+          <person />
         </el-card>
       </el-col>
       <el-col :span="8">
@@ -17,7 +17,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="30">
+    <!-- <el-row :gutter="30">
       <el-col :span="12">
         <el-card class="box-card">
           <finance-line />
@@ -34,9 +34,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import OrderNetwork from '@/views/dashboard/charts/network'
 import Order from '@/views/dashboard/charts/order'
 import Offline from '@/views/dashboard/charts/offline'
+import Person from '@/views/dashboard/charts/person'
 import FinanceLine from '@/views/dashboard/charts/financeLine'
 
 export default {
@@ -44,7 +44,7 @@ export default {
   components: {
     Order,
     Offline,
-    OrderNetwork,
+    Person,
     FinanceLine
   }
 }

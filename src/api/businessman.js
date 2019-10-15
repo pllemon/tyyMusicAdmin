@@ -27,7 +27,15 @@ export function businessexamine(data) {
 
 export function businesscashinlist(data) {
   return request({
-    url: '/admin/businesscashinlist',
+    url: `/admin/businesscashinlist?page=${data.page}&limit=${data.limit}`,
+    method: 'post',
+    data
+  })
+}
+
+export function savebusinessdstatus(data) {
+  return request({
+    url: '/admin/savebusinessdstatus',
     method: 'post',
     data
   })

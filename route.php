@@ -159,3 +159,5 @@ busiintegrallist 这个接口
 
 businesscashinlist//商家提现列表 1申请中，2驳回3取消4通过
 admin/businesscashinlist 后台商家提现列表
+
+admin/savcashinstatus //修改商家提现状态

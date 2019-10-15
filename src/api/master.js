@@ -26,7 +26,15 @@ export function craftsmanexamine(data) {
 
 export function craftsmansettlementlist(data) {
   return request({
-    url: '/admin/craftsmansettlementlist',
+    url: `/admin/craftsmansettlementlist?page=${data.page}&limit=${data.limit}`,
+    method: 'post',
+    data
+  })
+}
+
+export function craftsmansettlement(data) {
+  return request({
+    url: '/admin/craftsmansettlement',
     method: 'post',
     data
   })

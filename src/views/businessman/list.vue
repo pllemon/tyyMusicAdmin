@@ -84,8 +84,8 @@
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.id, 0)">商家详情</el-button>
-              <el-button type="text" @click="examine(scope.row.id)" v-if="scope.row.status == 2">审核商家</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 2" @click="common.loadComponent(vm, 2, scope.row.id)">审核</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -133,23 +133,6 @@ export default {
     this.fetchData()
   },
   methods: {
-    // 详情
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    // 审核
-    examine(id, type) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Examine'
-    },
-
     fetchData() {
       this.listLoading = true
       getList(this.queryMes).then(response => {
@@ -162,26 +145,12 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
-    },
-
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    reject(id) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Reject'
-    },
+    }
   },
   computed: {
     ...mapState({
-      recordStatus: state => state.dict. recordStatus
+      recordStatus: state => state.dict. recordStatus,
+      enableType: state => state.dict. enableType
     })
   }
 }

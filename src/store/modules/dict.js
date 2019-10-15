@@ -1,8 +1,12 @@
 const state = {
   changeType: ['查看', '添加', '编辑', '删除', '审核', '指派'],
   showType: {
+    1: '显示',
+    2: '隐藏'
+  },
+  enableType: {
     1: '启用',
-    2: '禁用'
+    4: '禁用'
   },
   originType: {
     1: '小程序',

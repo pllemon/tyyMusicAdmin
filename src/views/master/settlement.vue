@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">师傅列表</p>
+      <p class="section-title">师傅月结工资</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -15,6 +15,8 @@
           <el-date-picker
             v-model="queryMes.month"
             type="month"
+            format="yyyy-MM"
+            value-format="yyyy-MM"
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
@@ -35,8 +37,8 @@
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button @click="resetSearch()">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -58,30 +60,23 @@
           <el-table-column label="姓名" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>
           <el-table-column label="手机号" prop="phone" width="120"/>
-          <el-table-column label="入行年份" prop="enter_time" width="100"/>
-          <el-table-column label="联系地址" prop="address" width="200"/>
-          <el-table-column label="个人简介" prop="desc"/>
-          <el-table-column label="申请时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="结算月份" prop="enter_time" width="100"/>
+          <el-table-column label="完成订单数" prop="enter_time" width="100"/>
+          <el-table-column label="应发工资" prop="address" width="200"/>
           <el-table-column label="状态" width="100">
             <template slot-scope="scope">
               {{ recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="审核时间" width="200">
+          <el-table-column label="结算日期" width="200">
             <template slot-scope="scope">
               <i class="el-icon-time" />
-              <span>{{ scope.row.examine_time }}</span>
+              <span>{{ scope.row.create_time }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.id, 0)">师傅详情</el-button>
-              <el-button type="text" v-if="scope.row.status == 2" @click="examine(scope.row.id)">审核师傅</el-button>
+              <el-button type="text" @click="surePay(scope.row.id, 0)">确定已发</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -96,7 +91,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/master'
+import { craftsmansettlementlist, craftsmansettlement } from '@/api/master'
 import Details from '@/views/master/details'
 import Examine from '@/views/master/examine'
 
@@ -115,6 +110,7 @@ export default {
 
       total: 0,
       queryMes: {
+        month: '',
         page: 1,
         limit: 10
       },
@@ -126,20 +122,31 @@ export default {
   },
   created() {
     this.vm = this
+    this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
     this.fetchData()
   },
   methods: {
-    // 审核
-    examine(id, type) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Examine'
+    search() {
+      this.queryMes.page = 1
+      this.queryMes.limit = 10
+      this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
+      this.fetchData()
+    },
+    resetSearch() {
+      this.$refs.searchForm.resetFields()
+      this.queryMes.page = 1
+      this.queryMes.limit = 10
+      this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
+      this.fetchData()
+    },
+
+    surePay() {
+
     },
 
     fetchData() {
       this.listLoading = true
-      getList(this.queryMes).then(response => {
+      craftsmansettlementlist(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
       }).finally(() => {
@@ -149,23 +156,7 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
-    },
-
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    reject(id) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Reject'
-    },
-    
+    }
   },
   computed: {
     ...mapState({
