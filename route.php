@@ -161,3 +161,4 @@ businesscashinlist//商家提现列表 1申请中，2驳回3取消4通过
 admin/businesscashinlist 后台商家提现列表
 
 admin/savcashinstatus //修改商家提现状态
+status 状态，bcl_id 列表的id，remark 操作描述

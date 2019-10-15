@@ -85,8 +85,8 @@ export default {
       const option = {
         color: color,
         title: [{
-          text: '同名数量统计',
-          subtext: '纯属虚构',
+          text: '线上订单统计',
+          subtext: '不同状态的数量统计',
           x: 'left'
         },
         {

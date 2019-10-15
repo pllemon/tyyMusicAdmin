@@ -64,8 +64,8 @@ export default {
       const option = {
         color: color,
         title: {
-          text: '人员类型',
-          subtext: '纯属虚构',
+          text: '人员类型统计',
+          subtext: '不同身份各种状态的数量统计',
           x: 'left'
         },
         tooltip: {
@@ -114,7 +114,7 @@ export default {
               color: '#606266'
             }
           },
-          data: ['人员1', '人员2', '人员3']
+          data: ['用户', '师傅', '商家']
         },
         series: series
       }
