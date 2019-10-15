@@ -156,3 +156,6 @@ admin/saveadminuser 修改后台用户信息 post.network_id post.phone,role，r
 
 businesscashin //商家申请提现 post.cashinmoney
 busiintegrallist 这个接口
+
+businesscashinlist//商家提现列表 1申请中，2驳回3取消4通过
+admin/businesscashinlist 后台商家提现列表

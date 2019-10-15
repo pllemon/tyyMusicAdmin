@@ -17,10 +17,17 @@ export function businessinfo(params) {
   })
 }
 
-
 export function businessexamine(data) {
   return request({
     url: '/admin/businessexamine',
+    method: 'post',
+    data
+  })
+}
+
+export function businesscashinlist(data) {
+  return request({
+    url: '/admin/businesscashinlist',
     method: 'post',
     data
   })

@@ -84,8 +84,6 @@
           </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="details(scope.row.id, 0)">商家详情</el-button>
-              <el-button type="text" @click="examine(scope.row.id)" v-if="scope.row.status == 2">审核商家</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -100,7 +98,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/businessman'
+import { businesscashinlist } from '@/api/businessman'
 import Details from '@/views/businessman/details'
 import Examine from '@/views/businessman/examine'
 
@@ -119,8 +117,6 @@ export default {
 
       total: 0,
       queryMes: {
-        user: '',
-        region: '',
         page: 1,
         limit: 10
       },
@@ -133,26 +129,9 @@ export default {
     this.fetchData()
   },
   methods: {
-    // 详情
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    // 审核
-    examine(id, type) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Examine'
-    },
-
     fetchData() {
       this.listLoading = true
-      getList(this.queryMes).then(response => {
+      businesscashinlist(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
       }).finally(() => {
@@ -162,22 +141,7 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
-    },
-
-    details(id, type) {
-      this.dialogMes = {
-        id: id,
-        type: type
-      }
-      this.currentComponent = 'Details'
-    },
-
-    reject(id) {
-      this.dialogMes = {
-        id: id
-      }
-      this.currentComponent = 'Reject'
-    },
+    }
   },
   computed: {
     ...mapState({
