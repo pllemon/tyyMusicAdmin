@@ -93,3 +93,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.menu-wrapper{
+  .el-submenu{
+    .el-submenu__title{
+      display: flex;
+      align-items: center;
+    }
+  }
+  .el-menu-item{
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
