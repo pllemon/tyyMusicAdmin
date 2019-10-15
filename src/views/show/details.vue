@@ -6,32 +6,32 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="标题:">
-              {{masterInfo.sn}}
+              {{ masterInfo.sn }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="描述:">
-              {{masterInfo.name}}
+              {{ masterInfo.name }}
             </el-form-item>
           </el-col> 
           <el-col :span="8">
             <el-form-item label="相关图片:">
-              {{masterInfo.sfz}}
+              {{ masterInfo.sfz }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="记录来源:">
-              {{masterInfo.sfz}}
+              {{ masterInfo.sfz }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="创建人:">
-              {{masterInfo.phone}}
+              {{ masterInfo.phone }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="创建时间:">
-              {{masterInfo.enter_time}}
+              {{ masterInfo.enter_time }}
             </el-form-item>
           </el-col>
         </el-row>

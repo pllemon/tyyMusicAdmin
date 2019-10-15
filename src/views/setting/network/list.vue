@@ -21,7 +21,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
@@ -36,15 +36,14 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="网点名称" prop="name"/>
-          <el-table-column label="所属区域" prop="region"/>
-          <el-table-column label="负责人" prop="author"/>
-          <el-table-column label="联系电话"  prop="phone"/>
-          <el-table-column label="网点地址" prop="address"/>
-          <el-table-column label="网点描述" prop="desc"/>
+          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="网点名称" prop="name" width="150" />
+          <el-table-column label="所属区域" prop="region" width="200" />
+          <el-table-column label="负责人" prop="author" />
+          <el-table-column label="联系电话"  prop="phone" width="150" />
+          <el-table-column label="网点地址" prop="address" width="200" />
+          <el-table-column label="网点描述" prop="desc" width="200" />
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ scope.row.is_show == 1 ? "启用" : "停用" }}
@@ -86,7 +85,7 @@ export default {
       listLoading: false,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         user: '',
         region: '',
@@ -111,10 +110,6 @@ export default {
       }).finally(() => {
         this.listLoading = false
       })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
     },
 
     updateRecord(id, type) {

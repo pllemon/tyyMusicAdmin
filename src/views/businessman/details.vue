@@ -6,27 +6,27 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="店铺名:">
-              {{message.name}}
+              {{ message.name }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系方式:">
-              {{message.phone}}
+              {{ message.phone }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请时间:">
-              {{message.creattime}}
+              {{ message.creattime }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="店铺地址:">
-              {{message.address}}
+              {{ message.address }}
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="审核时间:">
-              {{message.examine}}
+              {{ message.examine }}
             </el-form-item>
           </el-col>
           <el-col :span="8">

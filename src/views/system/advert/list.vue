@@ -13,12 +13,12 @@
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
         <el-form-item label="链接类型" prop="type">
           <el-select v-model="queryMes.type" placeholder="请选择">
-            <el-option v-for="(item, index) in linkType" :key="index" :label="item" :value="index"></el-option>
+            <el-option v-for="(item, index) in linkType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="is_show">
           <el-select v-model="queryMes.is_show" placeholder="请选择">
-            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index"></el-option>
+            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item>
