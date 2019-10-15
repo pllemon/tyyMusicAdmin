@@ -81,7 +81,7 @@ export default {
   },
 
   created() {
-    let that = this
+    const that = this
     businessinfo({
       business_id: that.dialogMes.id
     }).then(response => {

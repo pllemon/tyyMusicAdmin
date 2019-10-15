@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/admin/craftsmanlist',
+    url: `/admin/craftsmanlist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })
@@ -19,6 +19,14 @@ export function getDetails(params) {
 export function craftsmanexamine(data) {
   return request({
     url: '/admin/craftsmanexamine',
+    method: 'post',
+    data
+  })
+}
+
+export function craftsmansettlementlist(data) {
+  return request({
+    url: '/admin/craftsmansettlementlist',
     method: 'post',
     data
   })

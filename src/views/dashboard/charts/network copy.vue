@@ -17,8 +17,8 @@ let colorArray = [
     bottom: 'rgba(231, 95, 195,.3)'
   }
 ];
-export default{
-  data () {
+export default {
+  data() {
     return {}
   },
   methods: {
@@ -90,7 +90,7 @@ export default{
       myChart.setOption(option)
     }
   },
-  mounted () {
+  mounted() {
     this.initCharts()
   }
 }

@@ -62,7 +62,7 @@ export default {
     }
   },
   created() {
-    let that = this
+    const that = this
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
@@ -80,7 +80,7 @@ export default {
     },
 
     submitExamine() {
-      let that = this
+      const that = this
       that.$refs.examineForm.validate((valid) => {
         if (valid) {
           console.log(that.examineForm)

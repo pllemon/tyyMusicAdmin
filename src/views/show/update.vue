@@ -78,11 +78,11 @@ export default {
     },
 
     getDetails() {
-      let that = this
+      const that = this
       getDetails({
         show_id: that.dialogMes.id
       }).then(response => {
-        let { data } = response
+        const { data } = response
         let fileList = []
         if (data.imgurl1) {
           fileList.push({
@@ -150,7 +150,7 @@ export default {
     },
 
     submitForm() {
-      let that = this
+      const that = this
       let imglist = ''
       that.fileList.forEach((item, index) => {
         if (index == this.fileList.length - 1) {

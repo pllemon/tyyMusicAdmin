@@ -1,25 +1,72 @@
 <template>
-  <div style="width:100%;height:300px;" ref="chart"></div>
+  <div ref="chart" style="width:100%;height:300px;" />
 </template>
 
 <script>
-let color = ['#8d7fec', '#5085f2', '#e75fc3', '#57e7ec']
+import { rolestatistics } from '@/api/statistics'
 
-export default{
-  data () {
+const color = ['#8d7fec', '#5085f2', '#e75fc3', '#57e7ec']
+export default {
+  data() {
     return {
-      chart: null
+      chart: null,
+      status: {
+        1: '正常',
+        2: '禁用',
+        3: '待审核',
+        4: '已驳回'
+      }
     }
   },
+  mounted() {
+    const that = this
+    that.getChartData()
+    this.initCharts()
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        that.chart.resize()
+      }, 50)
+    })
+  },
   methods: {
-    initCharts () {
-      this.chart = this.$echarts.init(this.$refs.chart);
-      let option = {
+    getChartData() {
+      const that = this
+      rolestatistics().then(response => {
+        const { data } = response
+        const series = []
+        console.log(data)
+        for (var i in that.status) {
+          series.push({
+            name: that.status[i],
+            type: 'bar',
+            barWidth: 10,
+            barGap: '80%',
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            itemStyle: {
+              normal: {
+                barBorderRadius: 14
+              }
+            },
+            data: [data.user[i] || 0, data.crafts_man[i] || 0, data.business[i] || 0]
+          })
+        }
+        console.log(series)
+        that.initCharts(series)
+      })
+    },
+    initCharts(series = []) {
+      this.chart = this.$echarts.init(this.$refs.chart)
+      const option = {
         color: color,
-        title : {
-            text: '人员类型',
-            subtext: '纯属虚构',
-            x:'left'
+        title: {
+          text: '人员类型',
+          subtext: '纯属虚构',
+          x: 'left'
         },
         tooltip: {
           trigger: 'axis',
@@ -35,7 +82,7 @@ export default{
           containLabel: true
         },
         legend: {
-          data: ['状态1', '状态2', '状态3', '状态4'],
+          data: ['正常', '禁用', '待审核', '已驳回'],
           selectedMode: false,
           right: 10,
           top: 10,
@@ -43,113 +90,36 @@ export default{
           itemHeight: 10
         },
         yAxis: {
-            type: 'value',
-            axisLabel: {
-              show: false,
-              fontSize: 14,
-              color: '#606266'
-            },
-            axisLine: {
-              show: false,
-              lineStyle: {
-                color: '#fff'
-              }
+          type: 'value',
+          axisLabel: {
+            show: false,
+            fontSize: 14,
+            color: '#606266'
+          },
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: '#fff'
             }
+          }
         },
         xAxis: {
-            type: 'category',
-            axisLabel: {
-              fontSize: 14,
+          type: 'category',
+          axisLabel: {
+            fontSize: 14,
+            color: '#606266'
+          },
+          axisLine: {
+            lineStyle: {
               color: '#606266'
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#606266'
-              }
-            },
-            data: ['类型1', '类型2', '类型3']
+            }
+          },
+          data: ['人员1', '人员2', '人员3']
         },
-        series: [ {
-            name: '状态1',
-            type: 'bar',
-            barWidth: 10,
-            barGap: '80%',
-            label: {
-              normal: {
-                show: true,
-                position: 'top'
-              }
-            },
-            itemStyle: {
-              normal: {
-                barBorderRadius: 14
-              }
-            },
-            data: [1, 2, 3]
-        }, {
-            name: '状态2',
-            type: 'bar',
-            barWidth: 10,
-            barGap: '80%',
-            label: {
-              normal: {
-                show: true,
-                position: 'top'
-              }
-            },
-            itemStyle: {
-              normal: {
-                barBorderRadius: 14
-              }
-            },
-            data: [4, 5, 6]
-        }, {
-            name: '状态3',
-            type: 'bar',
-            barWidth: 10,
-            barGap: '80%',
-            label: {
-              normal: {
-                show: true,
-                position: 'top'
-              }
-            },
-            itemStyle: {
-              normal: {
-                barBorderRadius: 14
-              }
-            },
-            data: [7, 8, 9]
-        },{
-            name: '状态4',
-            type: 'bar',
-            barWidth: 10,
-            barGap: '80%',
-            label: {
-              normal: {
-                show: true,
-                position: 'top'
-              }
-            },
-            itemStyle: {
-              normal: {
-                barBorderRadius: 14
-              }
-            },
-            data: [7, 8, 9]
-        },]
+        series: series
       }
       this.chart.setOption(option)
     }
-  },
-  mounted () {
-    let that = this
-    this.initCharts()
-    window.addEventListener("resize", () => {
-      setTimeout(() => {
-        that.chart.resize()
-      }, 50)
-    })
   }
 }
 </script>

@@ -5,8 +5,8 @@
 <script>
 import echarts from 'echarts';
 let color = ['#8d7fec', '#5085f2', '#e75fc3', '#f87be2', '#f2719a', '#fca4bb', '#f59a8f', '#fdb301', '#57e7ec'];
-export default{
-  data () {
+export default {
+  data() {
     return {
       chart: null,
       chartMes: {
@@ -135,10 +135,10 @@ export default{
       })
     }
   },
-  mounted () {
-    let that = this
+  mounted() {
+    const that = this
     this.initChart()
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       setTimeout(() => {
         that.chart.resize()
       }, 50)

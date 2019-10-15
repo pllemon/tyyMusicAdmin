@@ -3,7 +3,7 @@
     <!-- <el-row :gutter="15">
       <el-col :span="8">
         <el-card class="box-card">
-          <order-type />
+          <order />
         </el-card>
       </el-col>
       <el-col :span="8">
@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card">
-          <order-type />
+          <Offline />
         </el-card>
       </el-col>
     </el-row>
@@ -35,14 +35,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import OrderNetwork from '@/views/dashboard/charts/network'
-import OrderType from '@/views/dashboard/charts/type'
+import Order from '@/views/dashboard/charts/order'
+import Offline from '@/views/dashboard/charts/offline'
 import FinanceLine from '@/views/dashboard/charts/financeLine'
 
 export default {
   name: 'Dashboard',
   components: {
+    Order,
+    Offline,
     OrderNetwork,
-    OrderType,
     FinanceLine
   }
 }

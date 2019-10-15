@@ -107,6 +107,7 @@ export default {
       this.listLoading = true
       getNetworkList(this.queryMes).then(response => {
         this.list = response.data.data
+        this.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })

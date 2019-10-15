@@ -152,3 +152,7 @@ admin/adminuserinfo 后台用户信息 get.admin_id
 admin/saveadminstatus 修改后台用户状态 post.admin_id post.status 1 开启2禁用3删除
 
 admin/saveadminuser 修改后台用户信息 post.network_id post.phone,role，remark，password（password需要改密码的时候传过来 要不然传个空值）
+
+
+businesscashin //商家申请提现 post.cashinmoney
+busiintegrallist 这个接口

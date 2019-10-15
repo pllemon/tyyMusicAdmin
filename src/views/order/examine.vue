@@ -82,7 +82,7 @@ export default {
   },
 
   created() {
-    let that = this
+    const that = this
     getDetails({
       order_id: that.dialogMes.id
     }).then(response => {
@@ -103,7 +103,7 @@ export default {
     },
 
     submitExamine() {
-      let that = this
+      const that = this
       if (that.examineForm.status == 'TG' && !that.examineForm.imglist) {
         this.$message.error('请上传报价单');
         return false;

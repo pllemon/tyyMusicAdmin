@@ -10,8 +10,8 @@
           v-model="form.areaCode"
           style="width:100%"
           :options="options"
-          @change="changeArea">
-        </el-cascader>
+          @change="changeArea"
+        />
       </el-form-item>
       <el-form-item label="负责人：" prop="author">
         <el-input v-model="form.author" />
@@ -40,7 +40,7 @@
 <script>
 import { mapState } from 'vuex'
 import { areaJson } from '@/utils/area.js'
-import { getDetails, updateRecord } from '@/api/network'  
+import { getDetails, updateRecord } from '@/api/network'
 
 export default {
   props: {
@@ -54,7 +54,7 @@ export default {
       options: areaJson,
 
       form: {
-        areaCode: ["440000", "440700", "440783"],
+        areaCode: ['440000', '440700', '440783'],
         region: '广东省江门市开平市'
       },
       rules: {
@@ -63,10 +63,16 @@ export default {
         author: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
         address: [{ required: true, message: '请输入网点地址', trigger: 'blur' }],
-        desc: [{ required: true, message: '请输入网点描述', trigger: 'blur' }],
+        desc: [{ required: true, message: '请输入网点描述', trigger: 'blur' }]
       },
       orderInfo: {}
     }
+  },
+
+  computed: {
+    ...mapState({
+      changeType: state => state.dict.changeType
+    })
   },
 
   created() {
@@ -76,9 +82,9 @@ export default {
   },
 
   methods: {
-     changeArea(val) {
-      let nodes = this.$refs.areaCascader.getCheckedNodes()
-      let region = nodes[0].parent.parent.label + nodes[0].parent.label + nodes[0].label
+    changeArea(val) {
+      const nodes = this.$refs.areaCascader.getCheckedNodes()
+      const region = nodes[0].parent.parent.label + nodes[0].parent.label + nodes[0].label
       this.form.areaCode = val
       this.form.region = region
       console.log(val, region)
@@ -88,7 +94,7 @@ export default {
       getDetails({
         network_id: this.dialogMes.id
       }).then(response => {
-        let { data } = response
+        const { data } = response
         data.areaCode = [data.province, data.city, data.district]
         this.form = response.data
       })
@@ -99,7 +105,7 @@ export default {
     },
 
     submit() {
-      let that = this
+      const that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
           that.form.province = that.form.areaCode[0]
@@ -115,11 +121,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapState({
-      changeType: state => state.dict.changeType
-    })
   }
 }
 </script>

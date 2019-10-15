@@ -1,96 +1,69 @@
 <template>
-  <div class="app-container">
-    <!-- 搜索 -->
-    <el-form :inline="true" :model="queryMes">
-      <el-form-item label="启用状态">
-        <el-input v-model="queryMes.user" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="fetchData()">搜索</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="app-container list-layout" v-loading="loading">
+    <!-- 表头 -->
+    <div class="table-header">
+      <p class="section-title">富文本测试</p>
+      <div class="action">
+        <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
+      </div>
+    </div>
 
-    <!-- 表格&分页 -->
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
-    >
-      <el-table-column type="selection" width="55" />
-      <el-table-column type="index" width="50" />
-      <el-table-column label="展示图片" />
-      <el-table-column label="状态" />
-      <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button type="text" @click="pass(scope.$index)">启用</el-button>
-          <el-button type="text" @click="nopass(scope.$index)">禁用</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <!-- 弹窗 -->
-    <el-dialog :title="dialogTitle" :visible="showDialog" width="1100px" :before-close="handleClose">
-      <component v-bind:is="currentComponent" />
-    </el-dialog>
+    <div class="table-content" style="overflow: auto">
+      <tinymce 
+        v-model="content" 
+        :toolbar="[]"
+        :height="400" 
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/account'
-import Details from '@/views/order/details'
-
+import Tinymce from '@/components/Tinymce'
+import { setdoc, getdoc } from '@/api/setting'
 export default {
+  components: {
+    Tinymce
+  },
   data() {
     return {
-      list: null,
-      listLoading: true,
-      queryMes: {
-        user: '',
-        region: ''
-      },
-      currentComponent: '',
-      showDialog: false,
-      dialogTitle: ''
+      loading: true,
+      model: 'add',
+      content: '',
+      id: ''
     }
   },
   created() {
-    this.fetchData()
+    getdoc({type: 'about'}).then(response => {
+      const { data } = response
+      if (data && data.id) {
+        this.content = data.dec
+        this.model = 'save'
+        this.id = data.id
+      }
+    }).finally(() => {
+      this.loading = false
+    })
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+    saveForm() {
+      if (this.content == '') {
+        this.$message.error('请输入内容');
+        return false
+      }
+      this.loading = true
+      setdoc({
+        model: this.model,
+        dec: this.content,
+        id: this.id,
+        type: 'about',
+        is_show: 1
+      }).then(response => {
+        this.common.notify()
+      }).finally(() => {
+        this.loading = false
       })
-    },
-
-    handleClose() {
-      this.showDialog = false
-      this.currentComponent = ''
-    },
-
-    // 订单详情
-    details(id) {
-      this.showDialog = true
-      this.dialogTitle = '订单详情'
-      this.currentComponent = 'Details'
-    },
-
-    // 审核订单
-    examine(id) {
-
-    },
-
-    pass(id) {
-      
     }
-  },
-  components: {
-    Details
   }
 }
 </script>

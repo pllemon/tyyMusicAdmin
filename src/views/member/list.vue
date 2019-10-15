@@ -86,11 +86,11 @@ export default {
       listLoading: true,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         user: '',
         region: '',
-        page: 2,
+        page: 1,
         limit: 10
       },
 
@@ -105,8 +105,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
+      }).finally(() => {
         this.listLoading = false
       })
     },

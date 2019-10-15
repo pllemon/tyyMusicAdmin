@@ -1,6 +1,9 @@
 const state = {
   changeType: ['查看', '添加', '编辑', '删除', '审核', '指派'],
-  enableState: ['禁用', '启用'],
+  showType: {
+    1: '启用',
+    2: '禁用'
+  },
   originType: {
     1: '小程序',
     2: '后台'
@@ -17,10 +20,9 @@ const state = {
     10: '已取消'
   },
   offlineStatus: {
-    1: '待商家确认',
-    2: '已完成',
-    3: '已取消',
-    4: '已删除'
+    waitconfirm: '待商家确认',
+    success: '已完成',
+    cancel: '已取消'
   },
   linkType: {
     0: '没链接',

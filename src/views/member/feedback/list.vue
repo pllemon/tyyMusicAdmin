@@ -42,7 +42,7 @@
               {{ scope.row.is_show == 1 ? "启用" : "停用" }}
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="updateRecord(scope.row.id, 3)">处理</el-button>
             </template>
@@ -60,7 +60,7 @@
 <script>
 import { mapState } from 'vuex'
 import { getList } from '@/api/feedback'
-import Details from '@/views/system/advert/details'
+import Details from '@/views/order/details'
 
 export default {
   components: {
@@ -74,7 +74,7 @@ export default {
       listLoading: true,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         page: 1,
         limit: 10
@@ -96,8 +96,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
+      }).finally(() => {
         this.listLoading = false
       })
     },

@@ -121,7 +121,8 @@ export default {
         body_class: 'panel-body ',
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
-        menubar: this.menubar,
+        // menubar: this.menubar,
+        menubar: false, // 隐藏菜单栏
         plugins: plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
@@ -233,5 +234,10 @@ export default {
 }
 .editor-upload-btn {
   display: inline-block;
+}
+</style>
+<style>
+.mce-listbox button{
+  border: 1px solid #ddd;
 }
 </style>

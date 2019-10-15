@@ -35,7 +35,7 @@ export default {
   },
   created() {
     getdoc({type: 'lxwm'}).then(response => {
-      let { data } = response
+      const { data } = response
       if (data && data.id) {
         this.content = data.dec
         this.model = 'save'

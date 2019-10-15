@@ -20,6 +20,9 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
+        <el-form-item label="订单编号" prop="order_sn">
+          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
+        </el-form-item>
         <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
@@ -30,8 +33,10 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="订单编号" prop="order_sn">
-          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
+        <el-form-item label="所属网点">
+          <el-select v-model="queryMes.network_id">
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -73,6 +78,7 @@
             </template>
           </el-table-column>
           <el-table-column label="用户备注" prop="remark" width="120" />
+          <el-table-column label="服务网点"  width="120"/>
           <el-table-column label="承接师傅"  width="120"/>
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope">
@@ -129,12 +135,17 @@ export default {
       timeRange: [],
 
       currentComponent: '',
-      dialogMes: {}
+      dialogMes: {},
+
+      networkList: []
     }
   },
   created() {
+    const that = this
     this.vm = this
-    this.fetchData()
+    this.common.getAllNetwork(this.vm, function(){
+      that.fetchData()
+    })
   },
   methods: {
     fetchData() {

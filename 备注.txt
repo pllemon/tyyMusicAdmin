@@ -57,3 +57,35 @@ this.vm = this
         <el-button size="small" icon="el-icon-upload2" round @click="common.loadComponent(vm, 1)">添加</el-button>
 
 :title="dialogMes.id?'编辑':'新增'"
+
+
+分页：
+getList(this.queryMes).then(response => {
+    this.list = response.data.data
+    this.total = response.data.total
+}).finally(() => {
+    this.listLoading = false
+})
+
+url: `/admin/bannerlist?page=${data.page}&limit=${data.limit}`,
+
+ <el-form-item label="状态" prop="is_show">
+    <el-select v-model="queryMes.is_show" placeholder="请选择">
+    <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index"></el-option>
+    </el-select>
+</el-form-item>
+
+
+网点
+const that = this
+    this.vm = this
+    this.common.getAllNetwork(this.vm, function(){
+      that.fetchData()
+    })
+
+
+    <el-form-item label="所属网点">
+          <el-select v-model="queryMes.network_id">
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>

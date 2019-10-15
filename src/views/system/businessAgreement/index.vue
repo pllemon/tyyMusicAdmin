@@ -2,14 +2,18 @@
   <div class="app-container list-layout" v-loading="loading">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">商家协议</p>
+      <p class="section-title">富文本测试</p>
       <div class="action">
         <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
       </div>
     </div>
 
     <div class="table-content" style="overflow: auto">
-      <tinymce v-model="content" :height="400" />
+      <tinymce 
+        v-model="content" 
+        :toolbar="[]"
+        :height="400" 
+      />
     </div>
   </div>
 </template>
@@ -30,8 +34,8 @@ export default {
     }
   },
   created() {
-    getdoc({type: 'lxwm'}).then(response => {
-      let { data } = response
+    getdoc({type: 'sjxy'}).then(response => {
+      const { data } = response
       if (data && data.id) {
         this.content = data.dec
         this.model = 'save'
@@ -52,7 +56,7 @@ export default {
         model: this.model,
         dec: this.content,
         id: this.id,
-        type: 'lxwm',
+        type: 'sjxy',
         is_show: 1
       }).then(response => {
         this.common.notify()

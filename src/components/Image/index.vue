@@ -1,6 +1,6 @@
 <template>
   <el-image
-    :src="ip + src"
+    :src="common.ip + src"
     :style="{width: cWidth + 'px', height: cHeight + 'px'}"
     :preview-src-list="[common.ip + src]"
     fit="cover"

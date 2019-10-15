@@ -48,7 +48,7 @@
           <el-table-column label="联系电话" width="150" prop="phone" />
           <el-table-column label="所属网点" width="150">
             <template slot-scope="scope">
-              {{networkArr[scope.row.network_id]}}
+              {{scope.row.network_id}}
             </template>
           </el-table-column>
           <el-table-column label="账号角色" width="150">
@@ -89,7 +89,6 @@
 <script>
 import { mapState } from 'vuex'
 import { getAccountList, updateStatus } from '@/api/account'
-import { getNetworkList } from '@/api/network'
 import Details from '@/views/setting/account/details'
 import Update from '@/views/setting/account/update'
 
@@ -102,7 +101,7 @@ export default {
       listLoading: true,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         user: '',
         region: '',
@@ -117,24 +116,18 @@ export default {
     }
   },
   created() {
+    const that = this
     this.vm = this
-    this.getNetwork()
+    this.common.getAllNetwork(this.vm, function(){
+      that.fetchData()
+    })
   },
   methods: {
-    getNetwork() {
-      getNetworkList({
-        page: 1,
-        limit: 1000
-      }).then(response => {
-        this.networkList = response.data.data
-        this.fetchData()
-      })
-    },
-
     fetchData() {
       this.listLoading = true
       getAccountList(this.queryMes).then(response => {
         this.list = response.data.data
+        this.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })

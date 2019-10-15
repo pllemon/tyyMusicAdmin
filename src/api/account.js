@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getAccountList(data) {
   return request({
-    url: '/admin/adminlist',
+    url: `/admin/adminlist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })

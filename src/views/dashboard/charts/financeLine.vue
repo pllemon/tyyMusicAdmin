@@ -12,8 +12,8 @@
 
 <script>
 let color = ['#5085f2', '#e75fc3',  '#f59a8f'];
-export default{
-  data () {
+export default {
+  data() {
     return {
       chart: null,
       type: 1,
@@ -35,6 +35,15 @@ export default{
       }
       return arr
     }
+  },
+  mounted() {
+    const that = this
+    this.initCharts()
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        that.chart.resize()
+      }, 50)
+    })
   },
   methods: {
     changeType(val) {
@@ -125,15 +134,6 @@ export default{
       
       this.chart.setOption(option)
     }
-  },
-  mounted () {
-    let that = this
-    this.initCharts()
-    window.addEventListener("resize", () => {
-      setTimeout(() => {
-        that.chart.resize()
-      }, 50)
-    })
   }
 }
 </script>

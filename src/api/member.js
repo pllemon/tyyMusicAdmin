@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/admin/userlist',
+    url: `/admin/userlist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })

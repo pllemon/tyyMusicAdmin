@@ -57,7 +57,7 @@ export default {
     }
   },
   created() {
-    let that = this
+    const that = this
     getDetails({
       id: that.dialogMes.id
     }).then(response => {

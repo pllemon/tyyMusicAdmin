@@ -1,6 +1,6 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="680px" :before-close="handleClose">
-    <el-form ref="form" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
+    <el-form ref="form" :rules="rules" :model="form" label-width="80px" style="margin: 0 40px" v-loading="loading">
       <el-form-item label="展示图片" prop="img">
         <gd-upload 
           v-if="!loading"
@@ -17,7 +17,7 @@
           <el-radio v-for="(item,index) in linkType" :key="index" :label="index">{{ item }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="链接url" prop="url">
+      <el-form-item label="链接url" prop="url" v-if="form.type != 0">
         <el-input v-model="form.url" placeholder="请输入" />
       </el-form-item>
       <el-form-item label="排序" prop="orders">
@@ -52,6 +52,10 @@ export default {
         type: '0',
         url: '',
         orders: ''
+      },
+      rules: {
+        type: [{ required: true, message: '请选择链接类型', trigger: 'change' }],
+        url: [{ required: true, message: '请输入链接url', trigger: 'blur' }]
       }
     }
   },
@@ -72,7 +76,7 @@ export default {
       getDetails({
         banner_id: this.dialogMes.id
       }).then(response => {
-        let { data } = response
+        const { data } = response
         data.type = data.type.toString()
         data.banner_id = data.id
         this.file.url = this.common.ip + data.imgurl
@@ -86,20 +90,27 @@ export default {
     },
 
     submitForm() {
-      let formData = null;
-      if (this.file.raw) {
-        formData = new FormData()
-        formData.append('file', this.file.raw)
-        for (let i in this.form) {
-          formData.append(i, this.form[i])
+      const that = this
+      this.$refs.form.validate((valid) => {
+        let formData = null;
+        if (this.file.raw) {
+          formData = new FormData()
+          formData.append('file', this.file.raw)
+          if (this.form.type == 0) {
+            this.form.url = ''
+          }
+          for (let i in this.form) {
+            formData.append(i, this.form[i])
+          }
+        } else {
+          this.$message.error('请上传图片')
+          return false
         }
-      } else {
-        formData = this.form
-      }
-      
-      let type = this.form.id ? '2' : '1'
-      updateRecord(formData, type).then(response => {
-        this.common.closeComponent(this.vm)
+        
+        let type = this.form.id ? '2' : '1'
+        updateRecord(formData, type).then(response => {
+          this.common.closeComponent(this.vm)
+        })
       })
     },
 

@@ -11,11 +11,19 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="启用状态">
-          <el-input v-model="queryMes.user" placeholder="请输入" />
+        <el-form-item label="链接类型" prop="type">
+          <el-select v-model="queryMes.type" placeholder="请选择">
+            <el-option v-for="(item, index) in linkType" :key="index" :label="item" :value="index"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态" prop="is_show">
+          <el-select v-model="queryMes.is_show" placeholder="请选择">
+            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -38,12 +46,12 @@
               <gd-image width="160" height="90" :src="scope.row.imgurl"/>
             </template>
           </el-table-column>
-          <el-table-column label="类别">
+          <el-table-column label="链接类型">
             <template slot-scope="scope">
               {{ linkType[scope.row.type] }}
             </template>
           </el-table-column>
-          <el-table-column label="链接" prop="url"/>
+          <el-table-column label="链接url" prop="url"/>
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ scope.row.is_show == 1 ? "启用" : "停用" }}
@@ -52,7 +60,6 @@
           <el-table-column label="排序" prop="orders"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <!-- <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button> -->
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
               <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
               <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
@@ -72,12 +79,10 @@
 <script>
 import { mapState } from 'vuex'
 import { getList, updatebannerstatus } from '@/api/advert'
-import Details from '@/views/system/advert/details'
 import Update from '@/views/system/advert/update'
 
 export default {
   components: {
-    Details,
     Update
   },
   data() {
@@ -88,7 +93,7 @@ export default {
       listLoading: true,
       selectArr: [],
 
-      total: 100,
+      total: 0,
       queryMes: {
         page: 1,
         limit: 10
@@ -104,14 +109,16 @@ export default {
   },
   computed: {
     ...mapState({
-      linkType: state => state.dict.linkType
+      linkType: state => state.dict.linkType,
+      showType: state => state.dict.showType
     })
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getList(this.queryMes).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
         this.listLoading = false
       })
     },

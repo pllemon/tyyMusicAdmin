@@ -3,6 +3,7 @@
  */
 import { Notification } from 'element-ui';
 import { MessageBox } from 'element-ui';
+import { getNetworkList } from '@/api/network'
 
 function search(target) {
   target.queryMes.page = 1
@@ -58,7 +59,19 @@ function notify() {
   })
 }
 
-export default{
+function getAllNetwork(target, callback) {
+  getNetworkList({
+    page: 1,
+    limit: 1000
+  }).then(response => {
+    target.networkList = response.data.data
+    if (callback) {
+      callback(response.data.data)
+    }
+  })
+}
+
+export default {
   ip: 'http://47.106.100.144/',
   search, // 搜索表单
   resetSearch, // 重置搜索表单
@@ -66,4 +79,5 @@ export default{
   loadComponent, // 加载弹窗组件
   closeComponent, // 关闭弹窗组件
   notify, // 提示
+  getAllNetwork // 获取全部网点
 }

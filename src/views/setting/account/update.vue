@@ -90,7 +90,7 @@ export default {
       getDetails({
         admin_id: this.dialogMes.id
       }).then(response => {
-        let { data } = response
+        const { data } = response
         if (data.role) {
           data.role = data.role.toString()
         }
@@ -108,7 +108,7 @@ export default {
     },
 
     submit() {
-      let that = this
+      const that = this
       this.$refs.form.validate((valid) => {
         if (valid) {
           if (that.dialogMes.id) {

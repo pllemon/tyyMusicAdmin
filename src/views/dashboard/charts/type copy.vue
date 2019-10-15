@@ -16,8 +16,8 @@
 
 <script>
 let color = ['#8d7fec', '#5085f2', '#e75fc3', '#f87be2', '#f2719a', '#fca4bb', '#f59a8f', '#fdb301', '#57e7ec'];
-export default{
-  data () {
+export default {
+  data() {
     return {
       chart: null,
       dateSelect: [{
@@ -64,7 +64,7 @@ export default{
   },
   methods: {
     initCharts () {
-      let that = this
+      const that = this
       this.chart = this.$echarts.init(this.$refs.chart)
       let option = {
         color: color,
@@ -134,10 +134,10 @@ export default{
       this.chart.setOption(option)
     }
   },
-  mounted () {
-    let that = this
+  mounted() {
+    const that = this
     this.initCharts()
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       setTimeout(() => {
         that.chart.resize()
       }, 50)
