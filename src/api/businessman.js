@@ -32,9 +32,9 @@ export function businesscashinlist(data) {
   })
 }
 
-export function savebusinessdstatus(data) {
+export function savebusinessstatus(data) {
   return request({
-    url: '/admin/savebusinessdstatus',
+    url: '/admin/savebusinessstatus',
     method: 'post',
     data
   })

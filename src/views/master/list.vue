@@ -18,16 +18,6 @@
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="审核状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option
-              v-for="(item, index) in statusOptions"
-              :key="index"
-              :label="item"
-              :value="index"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item label="师傅名">
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
@@ -35,7 +25,7 @@
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
@@ -118,7 +108,6 @@ export default {
         page: 1,
         limit: 10
       },
-      statusOptions: ['未审核', '审核通过', '已驳回'],
 
       currentComponent: '',
       dialogMes: {}

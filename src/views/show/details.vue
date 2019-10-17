@@ -33,13 +33,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="订单ID:">
-              {{ message.order_id }}
+            <el-form-item label="订单编号:">
+              {{ message.order_sn }}
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="相关师傅:">
-              {{ message.craftsman_name }}
+              {{ message.crafts_man_name }}
             </el-form-item>
           </el-col>
         </el-row>

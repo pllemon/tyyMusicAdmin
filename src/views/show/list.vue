@@ -19,11 +19,11 @@
               <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
-        <el-form-item label="相关师傅" prop="title">
-          <el-input v-model="queryMes.title" placeholder="请输入" />
+        <el-form-item label="相关师傅" prop="crafts_man_name">
+          <el-input v-model="queryMes.crafts_man_name" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="订单ID" prop="title">
-          <el-input v-model="queryMes.title" placeholder="请输入" />
+        <el-form-item label="订单ID" prop="order_sn">
+          <el-input v-model="queryMes.order_sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -50,8 +50,8 @@
               {{ originType[scope.row.type ]}}
             </template>
           </el-table-column>
-          <el-table-column label="相关师傅" />
-          <el-table-column label="订单ID" />
+          <el-table-column label="相关师傅" prop="crafts_man_name"/>
+          <el-table-column label="订单编号" prop="order_sn"/>
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope" >
               <i class="el-icon-time" />
@@ -98,6 +98,8 @@ export default {
       queryMes: {
         title: '',
         type: '',
+        order_sn: '',
+        crafts_man_name: '',
         page: 1,
         limit: 10
       },

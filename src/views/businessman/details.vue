@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'商家'" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1200px" :before-close="handleClose">
     <div class="section detail-form">
       <p class="section-title small">商家信息</p>
       <el-form label-width="100px">
@@ -15,24 +15,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="申请时间:">
-              {{ message.creattime }}
+            <el-form-item label="状态:">
+              {{ recordStatus[message.status]}}
+              <span v-show="message.bhremark">{{ message.bhremark }}</span>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="店铺地址:">
               {{ message.address }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="审核时间:">
-              {{ message.examine }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="审核结果:">
-              {{ recordStatus[message.status]}}
-              <span v-show="message.bhremark">{{ message.bhremark }}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -55,6 +45,16 @@
           <el-col :span="8">
             <el-form-item label="分享图片:">
               <gd-image :src="message.sharewximg"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="申请时间:">
+              {{ message.creattime }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="审核时间:">
+              {{ message.examine }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -97,7 +97,7 @@ export default {
   computed: {
     ...mapState({
       changeType: state => state.dict.changeType,
-       recordStatus: state => state.dict. recordStatus
+      recordStatus: state => state.dict.recordStatus
     })
   }
 }

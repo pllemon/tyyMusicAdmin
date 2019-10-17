@@ -73,7 +73,7 @@
           </el-table-column>
           <el-table-column label="申请时间" width="200" prop="creattime" />
           <el-table-column label="审核时间" width="200" prop="examine" />
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="common.loadComponent(vm, 2, scope.row.id)">审核</el-button>
@@ -92,7 +92,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList, savebusinessdstatus } from '@/api/businessman'
+import { getList, savebusinessstatus } from '@/api/businessman'
 import Details from '@/views/businessman/details'
 import Examine from '@/views/businessman/examine'
 
@@ -124,6 +124,7 @@ export default {
     }
   },
   created() {
+    this.vm = this
     this.fetchData()
   },
   methods: {
@@ -142,7 +143,7 @@ export default {
       this.common.updateRecord(ctype, this, {
         busines_id: id,
         status: type
-      }, savebusinessdstatus)
+      }, savebusinessstatus)
     }
   },
   computed: {
