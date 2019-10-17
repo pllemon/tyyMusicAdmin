@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
@@ -37,10 +37,8 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" />
-          <el-table-column type="index" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="展示图片" width="180">
             <template slot-scope="scope">
               <gd-image width="160" height="90" :src="scope.row.imgurl"/>
@@ -54,7 +52,7 @@
           <el-table-column label="链接url" prop="url"/>
           <el-table-column label="状态">
             <template slot-scope="scope">
-              {{ scope.row.is_show == 1 ? "启用" : "停用" }}
+              {{ showType[scope.row.is_show] }}
             </template>
           </el-table-column>
           <el-table-column label="排序" prop="orders"/>
@@ -62,7 +60,7 @@
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
               <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
-              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">禁用</el-button>
               <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
@@ -95,6 +93,8 @@ export default {
 
       total: 0,
       queryMes: {
+        type: '',
+        is_show: '',
         page: 1,
         limit: 10
       },
@@ -121,10 +121,6 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
-    },
-
-    selectionChange() {
-
     },
 
     updateRecord(id, type) {

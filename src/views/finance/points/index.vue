@@ -50,7 +50,7 @@
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="流水号"  width="160" prop="order_sn" />
           <el-table-column label="金额" prop="service_demand" width="200"/> 
           <el-table-column label="类型" prop="service_demand" width="200"/> 

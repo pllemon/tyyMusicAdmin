@@ -55,7 +55,7 @@
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="55" fixed />
-          <el-table-column type="index" label="序号" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="工号" prop="sn"/>
           <el-table-column label="姓名" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>

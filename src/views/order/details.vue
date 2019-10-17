@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="订单详情" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1200px" :before-close="handleClose">
     <div class="flex" v-loading="loading">
       <div class="section" style="width:200px;margin-right: 20px">
         <p class="section-title small">订单时间线</p>

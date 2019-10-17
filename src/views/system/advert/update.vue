@@ -81,6 +81,7 @@ export default {
         data.banner_id = data.id
         this.file.url = this.common.ip + data.imgurl
         this.form = data
+      }).finally(() => {
         this.loading = false
       })
     },
@@ -108,8 +109,11 @@ export default {
         }
         
         let type = this.form.id ? '2' : '1'
+        this.loading = true
         updateRecord(formData, type).then(response => {
           this.common.closeComponent(this.vm)
+        }).finally(() => {
+          this.loading = false
         })
       })
     },

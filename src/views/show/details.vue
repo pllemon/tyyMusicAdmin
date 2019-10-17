@@ -1,37 +1,45 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="工程秀详情" :visible="true" width="1000px" :before-close="handleClose" >
-    <div class="section detail-form">
-      <!-- <p class="section-title small">工程秀信息</p> -->
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="800px" :before-close="handleClose" >
+    <div class="section detail-form" v-loading="loading">
+      <p class="section-title small">工程秀信息</p>
       <el-form label-width="100px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="标题:">
-              {{ masterInfo.sn }}
+              {{ message.title }}
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="描述:">
-              {{ masterInfo.name }}
+              {{ message.dec }}
             </el-form-item>
           </el-col> 
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="相关图片:">
-              {{ masterInfo.sfz }}
+              <gd-image v-if="message.imgurl1" :src="message.imgurl1"/>
+              <gd-image v-if="message.imgurl2" :src="message.imgurl2"/>
+              <gd-image v-if="message.imgurl3" :src="message.imgurl3"/>
+              <gd-image v-if="message.imgurl4" :src="message.imgurl4"/>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="记录来源:">
-              {{ masterInfo.sfz }}
+              {{ originType[message.type ]}}
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item label="创建人:">
-              {{ masterInfo.phone }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="创建时间:">
-              {{ masterInfo.enter_time }}
+              {{ message.time }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="订单ID:">
+              {{ message.order_id }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="相关师傅:">
+              {{ message.craftsman_name }}
             </el-form-item>
           </el-col>
         </el-row>
@@ -53,15 +61,18 @@ export default {
   },
   data() {
     return {
+      loading: true,
       message: {}
     }
   },
   created() {
     const that = this
     getDetails({
-      id: that.dialogMes.id
+      show_id: that.dialogMes.id
     }).then(response => {
-      that.message = response.data.info
+      that.message = response.data
+    }).finally(() => {
+      that.loading = false
     })
   },
   methods: {
@@ -71,6 +82,7 @@ export default {
   },
   computed: {
     ...mapState({
+      originType: state => state.dict.originType
     })
   }
 }

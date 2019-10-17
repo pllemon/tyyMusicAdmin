@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <el-row :gutter="15">
+    <!-- <el-row :gutter="15">
       <el-col :span="8">
         <el-card class="box-card">
           <order />
@@ -17,7 +17,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <!-- <el-row :gutter="30">
+    <el-row :gutter="30">
       <el-col :span="12">
         <el-card class="box-card">
           <finance-line />

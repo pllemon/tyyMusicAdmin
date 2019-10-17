@@ -40,8 +40,8 @@
           height="100%"
           @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" />
-          <el-table-column type="index" width="50" />
+          <el-table-column type="selection" width="55" fixed/>
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="店铺名" prop="name" width="120"/>
           <el-table-column label="联系方式" prop="phone" width="120"/>
           <el-table-column label="店铺地址" prop="address" width="200"/>

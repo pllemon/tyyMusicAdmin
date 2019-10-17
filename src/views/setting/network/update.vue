@@ -1,6 +1,6 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="800px" :before-close="handleClose">
-    <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px" v-loading="loading">
       <el-form-item label="网点名称：" prop="name">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -51,19 +51,20 @@ export default {
   },
   data() {
     return {
+      loading: true,
       options: areaJson,
 
       form: {
         areaCode: ['440000', '440700', '440783'],
-        region: '广东省江门市开平市'
+        region: '广东省江门市开平市',
+        desc: ''
       },
       rules: {
         name: [{ required: true, message: '请输入网点名称', trigger: 'blur' }],
         areaCode: [{ required: true, message: '请选择所属区域', trigger: 'change' }],
         author: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-        address: [{ required: true, message: '请输入网点地址', trigger: 'blur' }],
-        desc: [{ required: true, message: '请输入网点描述', trigger: 'blur' }]
+        address: [{ required: true, message: '请输入网点地址', trigger: 'blur' }]
       },
       orderInfo: {}
     }
@@ -78,6 +79,8 @@ export default {
   created() {
     if (this.dialogMes.id) {
       this.getDetails()
+    } else {
+      this.loading = false
     }
   },
 
@@ -97,6 +100,8 @@ export default {
         const { data } = response
         data.areaCode = [data.province, data.city, data.district]
         this.form = response.data
+      }).finally(() => {
+        this.loading = false
       })
     },
 
@@ -115,8 +120,11 @@ export default {
             that.form.model = 'saveinfo'
             that.form.network_id = that.form.id
           }
+          that.loading = true
           updateRecord(that.form).then(response => {
             that.common.closeComponent(that)
+          }).finally(() => {
+            that.loading = false
           })
         }
       })

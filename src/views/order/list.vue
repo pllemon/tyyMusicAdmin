@@ -57,7 +57,7 @@
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="订单编号"  width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">

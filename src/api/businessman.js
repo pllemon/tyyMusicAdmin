@@ -8,7 +8,6 @@ export function getList(data) {
   })
 }
 
-
 export function businessinfo(params) {
   return request({
     url: '/admin/businessinfo',

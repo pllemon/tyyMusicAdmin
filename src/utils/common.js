@@ -19,7 +19,7 @@ function resetSearch(target) {
 }
 
 function updateRecord(type, target, obj, callback) {
-  let typeArr = ['全部', '启用', '停用', '删除']
+  let typeArr = ['全部', '启用', '禁用', '删除']
   MessageBox.confirm(`确定${typeArr[type]}该条记录？`, '提示', {
     type: 'warning'
   }).then(() => {
@@ -61,6 +61,10 @@ function notify() {
 
 function getAllNetwork(target, callback) {
   getNetworkList({
+    name: '',
+    region: '',
+    author: '',
+    is_show: '',
     page: 1,
     limit: 1000
   }).then(response => {

@@ -1,14 +1,14 @@
 <template>
   <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="600px" :before-close="handleClose">
-    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+    <el-form ref="form" :rules="rules" :model="form" label-width="80px" v-loading="loading">
       <el-row>
         <el-col :span="24">
           <el-form-item label="账号名" prop="username">
-            <el-input v-model="form.username" />
+            <el-input v-model="form.username" :disabled="dialogMes.id"/>
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="密码" prop="password" v-show="!dialogMes.id">
+          <el-form-item label="密码" prop="password" v-if="!dialogMes.id">
             <el-input v-model="form.password" type="password"/>
           </el-form-item>
         </el-col>
@@ -59,6 +59,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       rules: {
         username: [{ required: true, message: '请输入账号名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
@@ -79,6 +80,8 @@ export default {
     this.getNetwork()
     if (this.dialogMes.id) {
       this.getDetails()
+    } else {
+      this.loading = false
     }
   },
   methods: {
@@ -95,6 +98,8 @@ export default {
           data.role = data.role.toString()
         }
         this.form = data
+      }).finally(() => {
+        this.loading = false
       })
     },
 
@@ -113,9 +118,13 @@ export default {
         if (valid) {
           if (that.dialogMes.id) {
             that.form.password = ''
+            that.form.admin_id = that.form.id
           }
+          that.loading = true
           updateRecord(that.form).then(response => {
             that.common.closeComponent(that)
+          }).finally(() => {
+            that.loading = false
           })
         }
       })

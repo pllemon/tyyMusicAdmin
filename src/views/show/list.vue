@@ -11,20 +11,23 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="注册时间">
-          <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date1" style="width: 100%;" />
-          </el-col>
-          <el-col class="line text-center" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-date-picker type="date" placeholder="选择日期" v-model="queryMes.date2" style="width: 100%;" />
-          </el-col>
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="queryMes.title" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="用户名">
-          <el-input v-model="queryMes.user" placeholder="请输入" />
+        <el-form-item label="记录来源" prop="type">
+          <el-select v-model="queryMes.type" placeholder="请选择">
+              <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="相关师傅" prop="title">
+          <el-input v-model="queryMes.title" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="订单ID" prop="title">
+          <el-input v-model="queryMes.title" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
+          <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -38,10 +41,8 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" />
-          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="标题" prop="title" />
           <el-table-column label="描述" prop="dec" />
           <el-table-column label="记录来源">
@@ -49,7 +50,8 @@
               {{ originType[scope.row.type ]}}
             </template>
           </el-table-column>
-          <el-table-column label="创建人" />
+          <el-table-column label="相关师傅" />
+          <el-table-column label="订单ID" />
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope" >
               <i class="el-icon-time" />
@@ -94,6 +96,8 @@ export default {
 
       total: 0,
       queryMes: {
+        title: '',
+        type: '',
         page: 1,
         limit: 10
       },
@@ -107,7 +111,6 @@ export default {
     this.fetchData()
   },
   methods: {
-    
     fetchData() {
       this.listLoading = true
       getList(this.queryMes).then(response => {
@@ -116,10 +119,6 @@ export default {
       }).finally(() => {
         this.listLoading = false
       })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
     },
 
     updateRecord(id, type) {

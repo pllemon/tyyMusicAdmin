@@ -11,21 +11,26 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="账号名">
+        <el-form-item label="账号名" prop="username">
           <el-input v-model="queryMes.username" />
         </el-form-item>
-        <el-form-item label="所属网点">
+        <el-form-item label="所属网点" prop="network_id">
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="账号角色">
+        <el-form-item label="账号角色" prop="role">
           <el-select v-model="queryMes.role">
             <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="queryMes.status" placeholder="请选择">
+            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchData()">搜索</el-button>
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
@@ -40,15 +45,13 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
-          <el-table-column label="序号" type="index" width="50" />
+          <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="账号名" width="100" prop="username" />
           <el-table-column label="联系电话" width="150" prop="phone" />
           <el-table-column label="所属网点" width="150">
             <template slot-scope="scope">
-              {{scope.row.network_id}}
+              {{scope.row.network_name}}
             </template>
           </el-table-column>
           <el-table-column label="账号角色" width="150">
@@ -59,7 +62,7 @@
           <el-table-column label="账号备注" prop="remark" width="150"/>
           <el-table-column label="状态">
             <template slot-scope="scope">
-              {{ scope.row.status == 1 ? "启用" : "停用" }}
+              {{ showType[scope.row.is_show] }}
             </template>
           </el-table-column>
           <el-table-column label="创建时间" width="200">
@@ -72,7 +75,7 @@
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
-              <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 2)">停用</el-button>
+              <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 2)">禁用</el-button>
               <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
@@ -89,7 +92,6 @@
 <script>
 import { mapState } from 'vuex'
 import { getAccountList, updateStatus } from '@/api/account'
-import Details from '@/views/setting/account/details'
 import Update from '@/views/setting/account/update'
 
 export default {
@@ -103,8 +105,10 @@ export default {
 
       total: 0,
       queryMes: {
-        user: '',
-        region: '',
+        username: '',
+        network_id: '',
+        role: '',
+        status: '',
         page: 1,
         limit: 10
       },
@@ -133,10 +137,6 @@ export default {
       })
     },
 
-    selectionChange(val) {
-      this.selectArr = val
-    },
-
     updateRecord(id, type) {
       this.common.updateRecord(type, this, {
         admin_id: id,
@@ -145,12 +145,12 @@ export default {
     }
   },
   components: {
-    Details,
     Update
   },
   computed: {
     ...mapState({
-      roleType: state => state.dict.roleType
+      roleType: state => state.dict.roleType,
+      showType: state => state.dict.showType
     }),
     networkArr() {
       let networkObj = {}

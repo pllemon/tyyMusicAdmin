@@ -89,3 +89,26 @@ const that = this
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
+
+
+
+<el-form-item label="状态" prop="is_show">
+    <el-select v-model="queryMes.is_show" placeholder="请选择">
+        <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
+    </el-select>
+</el-form-item>
+
+{{ showType[scope.row.is_show] }}
+
+
+import { mapState } from 'vuex'
+
+computed: {
+    ...mapState({
+      showType: state => state.dict.showType
+    })
+},
+
+
+          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
+          <el-button @click="common.resetSearch(vm)">重置</el-button>

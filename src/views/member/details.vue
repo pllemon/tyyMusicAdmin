@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="查看" :visible="true" width="1100px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form">
       <p class="section-title small">用户信息</p>
       <div class="flex-center">
