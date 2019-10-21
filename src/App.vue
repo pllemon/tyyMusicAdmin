@@ -5,11 +5,12 @@
 </template>
 
 <script>
+import { workbind } from '@/api/user'
 export default {
   name: 'App',
   data() {
     return {
-      websocket: null,
+      websocket: null
     }
   },
   created(){
@@ -36,15 +37,33 @@ export default {
       console.log("WebSocket连接发生错误");
     },
     websocketonmessage(e){ //数据接收 
-      const redata = JSON.parse(e.data);
+      console.log(e)
+      const res = JSON.parse(e.data);
       // 接收数据
-      console.log(redata.value); 
+      console.log('----------------------')
+      console.log(res); 
+      console.log('----------------------')
+
+      if (res.type == 'init') {
+        workbind({
+          client_id: res.client_id
+        }).then(() => {}).catch(() => {})
+      } else if (res.type == 'ping') {
+
+      } else {
+        this.$notify({
+          title: '收到一条信息',
+          message: res.message
+        })
+      }
     },
     websocketsend(agentData){//数据发送 
       this.websock.send(agentData); 
     }, 
     websocketclose(e){ //关闭 
-      console.log("connection closed (" + e.code + ")"); 
+      console.log("connection closed")
+      console.log('重连websocket')
+      this.initWebSocket()
     }
   }
 }

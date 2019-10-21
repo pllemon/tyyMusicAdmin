@@ -12,9 +12,7 @@ const whiteList = ['/login'] // 不会重定向的白名单
 const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
-  console.log('----------------------------')
   console.log(to, from)
-  console.log('----------------------------')
   // 开始切换页面进度条
   NProgress.start()
 
@@ -30,7 +28,6 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      console.log(9999999)
       // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles
       if (hasRoles) {

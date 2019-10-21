@@ -22,3 +22,19 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function workbind(data) {
+  return request({
+    url: '/admin/workbind',
+    method: 'post',
+    data: data
+  })
+}
+
+export function worksend(data) {
+  return request({
+    url: '/admin/worksend',
+    method: 'post',
+    data: data
+  })
+}

@@ -17,7 +17,7 @@
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <i class="el-icon-user-solid"></i>
-          {{name}} 
+          {{ name }} 
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -25,7 +25,24 @@
           <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-badge :value="5" class="item" style="margin: 0 10px;cursor:pointer">
+        <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
+      </el-badge>
+      <p @click="sendNews()">发送</p>
     </div>
+
+     <!-- 全局消息弹窗 -->
+    <el-dialog
+      title="提示"
+      :modal-append-to-body="false"
+      :visible.sync="showNews"
+      width="500px"
+      :before-close="closeNews">
+      <ul>
+        <li>1111</li>
+      </ul>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -33,11 +50,17 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { worksend } from '@/api/user'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger
+  },
+  data() {
+    return {
+      showNews: false
+    }
   },
   computed: {
     ...mapGetters([
@@ -47,6 +70,18 @@ export default {
     ])
   },
   methods: {
+    closeNews() {
+      this.showNews = false;
+    },
+    sendNews() {
+      worksend({
+        group: 1,
+        message: '这是我发的消息啦啦啦啦啦啦啦啦啦啦'
+      }).then(res => {
+        console.log(res)
+      })
+    },
+
     handleCommand(command) {
       if (command == 2) {
         this.$confirm('确定退出该账号？', '提示', {
@@ -60,8 +95,8 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-        await this.$store.dispatch('user/logout')
-        this.$router.push('/login')
+      await this.$store.dispatch('user/logout')
+      this.$router.push('/login')
     }
   }
 }
