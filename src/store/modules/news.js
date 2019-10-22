@@ -1,10 +1,13 @@
 const state = {
-  list: []
+  list: [1,2,3]
 }
 
 const mutations = {
-  UPDATE_LIST: (state, list) => {
-    state.list = list
+  ADD_NEWS: (state, news) => {
+    state.list.push(news)
+  },
+  REMOVE_NEWS: (state, idx) => {
+    state.list.splice(idx, 1)
   }
 }
 

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <audio ref="audio" autoplay hidden muted id="audio" src="/static/audio/130808.wav"/>
   </div>
 </template>
 
@@ -36,8 +37,7 @@ export default {
     websocketonerror(e) { //错误
       console.log("WebSocket连接发生错误");
     },
-    websocketonmessage(e){ //数据接收 
-      console.log(e)
+    websocketonmessage(e){ //数据接收
       const res = JSON.parse(e.data);
       // 接收数据
       console.log('----------------------')
@@ -53,8 +53,12 @@ export default {
       } else {
         this.$notify({
           title: '收到一条信息',
-          message: res.message
+          message: res.message,
+          duration: 1000
         })
+        this.$store.commit('news/ADD_NEWS', res)
+        this.$refs.audio.muted = false
+        this.$refs.audio.play()
       }
     },
     websocketsend(agentData){//数据发送 
@@ -62,8 +66,8 @@ export default {
     }, 
     websocketclose(e){ //关闭 
       console.log("connection closed")
-      console.log('重连websocket')
-      this.initWebSocket()
+      // console.log('重连websocket')
+      // this.initWebSocket()
     }
   }
 }

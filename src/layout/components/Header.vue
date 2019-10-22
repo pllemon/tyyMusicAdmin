@@ -13,7 +13,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div> -->
-    <div>
+    <div class="flex-center">
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <i class="el-icon-user-solid"></i>
@@ -25,9 +25,11 @@
           <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-badge :value="5" class="item" style="margin: 0 10px;cursor:pointer">
-        <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
-      </el-badge>
+      <p @click="showNews()" style="padding: 0 20px;cursor:pointer">
+        <el-badge :value="5" class="item">
+          <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
+        </el-badge>
+      <p>
       <p @click="sendNews()">发送</p>
     </div>
 
@@ -35,11 +37,17 @@
     <el-dialog
       title="提示"
       :modal-append-to-body="false"
-      :visible.sync="showNews"
-      width="500px"
+      :visible.sync="showNewsDialog"
+      width="700px"
       :before-close="closeNews">
-      <ul>
-        <li>1111</li>
+      <ul class="news-list">
+        <li v-for="(item, index) in newList" :key="index" @click="goOrder" class="flex-center-start">
+          <svg-icon icon-class="affiliations_li" />
+          <div class="news-mes">
+            <p class="news-title">叮叮叮~有新订单啦~</p>
+            <p class="news-dec">用户 里昂米尼（13650965856）下了个新订单，赶紧处理吧！</p>
+          </div>
+        </li>
       </ul>
     </el-dialog>
 
@@ -59,27 +67,34 @@ export default {
   },
   data() {
     return {
-      showNews: false
+      showNewsDialog: false
     }
   },
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'name'
+      'name',
+      'newList'
     ])
   },
   methods: {
+    goOrder() {
+      this.showNewsDialog = false
+      this.$router.push('/order/list')
+    },
+
+    showNews() {
+      this.showNewsDialog = true;
+    },
     closeNews() {
-      this.showNews = false;
+      this.showNewsDialog = false;
     },
     sendNews() {
       worksend({
         group: 1,
-        message: '这是我发的消息啦啦啦啦啦啦啦啦啦啦'
-      }).then(res => {
-        console.log(res)
-      })
+        message: '{order_id:26}'
+      }).then(res => {})
     },
 
     handleCommand(command) {
@@ -124,5 +139,29 @@ export default {
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px !important;
+}
+
+.news-list{
+  li{
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    margin-bottom: 10px;
+    .svg-icon{
+      font-size: 18px;
+      color: #888;
+    }
+    .news-mes{
+      margin-left: 10px;
+      .news-title{
+        font-size: 15px;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      .news-dec{
+        font-size: 12px;
+        color: #888;
+      }
+    }
+  }
 }
 </style>

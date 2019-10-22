@@ -13,7 +13,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/order/list'),
-        meta: { title: '全部订单', icon: 'affiliations_li' }
+        meta: { title: '线上订单', icon: 'affiliations_li' }
       }
     ]
   },
@@ -29,7 +29,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/offline/list'),
-        meta: { title: '全部订单', icon: 'exchange' }
+        meta: { title: '线下订单', icon: 'exchange' }
       }
     ]
   },

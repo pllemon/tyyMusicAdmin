@@ -54,7 +54,9 @@
           <el-table-column label="订单编号" width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
-              {{ offlineStatus[scope.row.status] }}
+              <span v-if="scope.row.pay_status == 0">待商家确认</span>
+              <span v-if="scope.row.pay_status == 1">已完成</span>
+              <span v-if="scope.row.status == 2">已取消</span>
             </template>
           </el-table-column>
           <el-table-column label="下单用户" width="200">
@@ -69,15 +71,31 @@
             </template>
           </el-table-column>
           <el-table-column label="总消费金额" prop="money" width="120" />
-          <el-table-column label="用户积分抵扣" prop="integral" width="120" />
-          <el-table-column label="线下支付金额" width="120">
+          <el-table-column label="用户积分抵扣" prop="integral" width="120">
             <template slot-scope="scope">
-              {{ scope.row.money - scope.row.integral }}
+              {{ scope.row.integral | normNumber }}
             </template>
           </el-table-column>
-          <el-table-column label="平台费" prop="pay_money" width="120" />
-          <el-table-column label="积分抵扣平台费" prop="use_integral" width="120" />
-          <el-table-column label="用户积分返还" prop="return_integral" width="120" />
+          <el-table-column label="线下支付金额" width="120">
+            <template slot-scope="scope">
+              {{ (scope.row.money - scope.row.integral) | normNumber }}
+            </template>
+          </el-table-column>
+          <el-table-column label="平台费" prop="pay_money" width="120">
+            <template slot-scope="scope">
+              {{ scope.row.pay_money | normNumber }}
+            </template>
+          </el-table-column>
+          <el-table-column label="积分抵扣平台费" prop="use_integral" width="120">
+            <template slot-scope="scope">
+              {{ scope.row.use_integral | normNumber }}
+            </template>
+          </el-table-column>
+          <el-table-column label="用户积分返还" prop="return_integral" width="120">
+            <template slot-scope="scope">
+              {{ scope.row.return_integral | normNumber }}
+            </template>
+          </el-table-column>
           <el-table-column label="创建时间" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time" />

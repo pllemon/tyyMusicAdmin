@@ -27,25 +27,11 @@ Vue.prototype.$moment = moment
 import common from './utils/common.js'
 Vue.prototype.common = common
 
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online! ! !
- */
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
-
-// set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-// 全局注册分页组件
+// 全局注册组件
 import GdPagination from '@/components/Pagination'
 Vue.component('GdPagination', GdPagination)
 
@@ -54,6 +40,12 @@ Vue.component('GdUpload', GdUpload)
 
 import GdImage from '@/components/Image'
 Vue.component('GdImage', GdImage)
+
+
+Vue.filter('normNumber', function (value, unit) {
+  return parseFloat(value).toFixed(2) + (unit ? unit : '')
+})
+
 
 new Vue({
   el: '#app',

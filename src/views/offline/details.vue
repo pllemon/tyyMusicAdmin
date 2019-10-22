@@ -1,70 +1,72 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
-    <div class="section detail-form">
+    <div class="section detail-form" v-loading="loading">
       <p class="section-title small">订单信息</p>
-      <div class="flex-center">
-        <gd-image width="140" height="140" style="margin-left:20px" />
-        <el-form class="flex1" label-width="100px">
-          <el-row>
-            <el-col :span="8">
-              <el-form-item label="订单编号:">
-                {{ info.sn }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="下单用户:">
-                {{ info.sfz }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="服务商家:">
-                {{ info.phone }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="总消费金额:">
-                {{ info.enter_time }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="用户积分抵扣:">
-                {{ info.create_time }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="线下支付金额:">
-                {{ info.address }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="平台费:">
-                {{ info.desc }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="积分抵扣平台费:">
-                {{ info.desc }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="用户积分返还:">
-                {{ info.examine_time }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="创建时间:">
-                {{ info.examine_time }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="订单状态:">
-                {{ offlineStatus[info.status] }}
-                <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
+      <el-form class="flex1" label-width="120px">
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="订单编号:">
+              {{ info.order_sn }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="订单状态:">
+              {{ offlineStatus[info.status] }}
+              <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="下单用户:">
+              {{ info.user_name }} {{ info.user_phone }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="服务商家:">
+              {{ info.business_name }} {{ info.business_phone }} ( {{ info.business_address }} )
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="总消费金额:">
+              {{ info.money | normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="用户积分抵扣:">
+              {{ info.integral | normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="线下支付金额:">
+              {{ (info.money - info.integral) | normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="平台费:">
+              {{ info.pay_money| normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="积分抵扣平台费:">
+              {{ info.use_integral| normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="用户积分返还:">
+              {{ info.return_integral| normNumber }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="创建时间:">
+              {{ info.creat_time }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="商家确认时间:">
+              {{ info.creat_time }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </el-dialog>
 </template>
@@ -82,6 +84,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       info: {}
     }
   },
@@ -96,6 +99,8 @@ export default {
       bo_id: that.dialogMes.id
     }).then(response => {
       that.info = response.data
+    }).finally(() => {
+      this.loading = false
     })
   },
   methods: {
