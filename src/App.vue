@@ -54,7 +54,8 @@ export default {
         this.$notify({
           title: '收到一条信息',
           message: res.message,
-          duration: 1000
+          duration: 1000,
+          offset: 50
         })
         this.$store.commit('news/ADD_NEWS', res)
         this.$refs.audio.muted = false
@@ -66,8 +67,6 @@ export default {
     }, 
     websocketclose(e){ //关闭 
       console.log("connection closed")
-      // console.log('重连websocket')
-      // this.initWebSocket()
     }
   }
 }

@@ -12,7 +12,6 @@ const whiteList = ['/login'] // 不会重定向的白名单
 const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
-  console.log(to, from)
   // 开始切换页面进度条
   NProgress.start()
 

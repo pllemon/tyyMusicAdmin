@@ -25,8 +25,8 @@
           <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <p @click="showNews()" style="padding: 0 20px;cursor:pointer">
-        <el-badge :value="5" class="item">
+      <p @click="showNews()" style="padding: 0 20px;cursor:pointer" v-show="newsLength">
+        <el-badge :value="newsLength" class="item">
           <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
         </el-badge>
       <p>
@@ -35,22 +35,62 @@
 
      <!-- 全局消息弹窗 -->
     <el-dialog
-      title="提示"
+      title="消息中心"
       :modal-append-to-body="false"
       :visible.sync="showNewsDialog"
       width="700px"
       :before-close="closeNews">
       <ul class="news-list">
-        <li v-for="(item, index) in newList" :key="index" @click="goOrder" class="flex-center-start">
-          <svg-icon icon-class="affiliations_li" />
+        <li @click="goOrder(1)" class="flex">
+          <el-badge :value="1" class="item">
+            <svg-icon icon-class="affiliations_li" />
+          </el-badge>
           <div class="news-mes">
-            <p class="news-title">叮叮叮~有新订单啦~</p>
-            <p class="news-dec">用户 里昂米尼（13650965856）下了个新订单，赶紧处理吧！</p>
+            <p class="news-title">叮叮叮~来新订单啦~</p>
+            <p class="news-dec">用户 里昂米尼（13650965856）下了个新订单，赶紧接单吧！</p>
+            <p class="news-dec">用户 西西米（13695896542）下了个新订单，赶紧接单吧！</p>
+          </div>
+        </li>
+        <li @click="goOrder(3)" class="flex">
+          <el-badge :value="1" class="item">
+            <svg-icon icon-class="coinpurse_line" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">用户已支付定金~</p>
+            <p class="news-dec">订单编号 24354523 ，用户已支付定金，赶紧为TA发布订单吧！</p>
+          </div>
+        </li>
+        <li @click="goOrder(8)" class="flex">
+          <el-badge :value="1" class="item">
+            <svg-icon icon-class="attestation" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">用户已支付尾款~</p>
+            <p class="news-dec">订单编号 24354523 ，用户已支付尾款，订单已完成！</p>
+          </div>
+        </li>
+        <li @click="goMaster()" class="flex">
+          <el-badge :value="1" class="item">
+            <svg-icon icon-class="namecard" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">有新师傅申请加入啦~</p>
+            <p class="news-dec">用户 里昂米尼（13650965856）申请成为师傅，赶紧处理吧！</p>
+            <p class="news-dec">用户 西西米（13695896542）申请成为师傅，赶紧处理吧！</p>
+          </div>
+        </li>
+        <li @click="goBusinessman()" class="flex">
+          <el-badge :value="1" class="item">
+            <svg-icon icon-class="boss" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">有新商家申请入驻啦~</p>
+            <p class="news-dec">用户 里昂米尼（13650965856）申请成为商家，赶紧处理吧！</p>
+            <p class="news-dec">用户 西西米（13695896542）申请成为商家，赶紧处理吧！</p>
           </div>
         </li>
       </ul>
     </el-dialog>
-
   </div>
 </template>
 
@@ -76,12 +116,30 @@ export default {
       'avatar',
       'name',
       'newList'
-    ])
+    ]),
+    newsLength() {
+      let newsSum = 0
+      for (let i in this.newList) {
+        newsSum += this.newList[i].length
+      }
+      return newsSum
+    }
   },
   methods: {
-    goOrder() {
+    goOrder(type, status) {
+      this.$store.commit('news/REMOVE_NEWS', type)
       this.showNewsDialog = false
-      this.$router.push('/order/list')
+      this.$router.push('/order/list?status=' + status)
+    },
+    goMaster() {
+      this.$store.commit('news/REMOVE_NEWS', 'newMaster')
+      this.showNewsDialog = false
+      this.$router.push('/master/list?status=1')
+    },
+    goBusinessman(type) {
+      this.$store.commit('news/REMOVE_NEWS', 'newBusiness')
+      this.showNewsDialog = false
+      this.$router.push('/businessman/list?status=1')
     },
 
     showNews() {
@@ -146,15 +204,21 @@ export default {
     border: 1px solid #dcdcdc;
     padding: 10px;
     margin-bottom: 10px;
+    line-height: 1.5;
+    cursor: pointer;
+    &:hover{
+      border-color: #409EFF;
+    }
     .svg-icon{
-      font-size: 18px;
+      font-size: 16px;
       color: #888;
     }
     .news-mes{
-      margin-left: 10px;
+      margin-left: 15px;
       .news-title{
         font-size: 15px;
         margin-bottom: 5px;
+        margin-top: 1px;
         color: #333;
       }
       .news-dec{

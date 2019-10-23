@@ -134,13 +134,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/show/list',
     name: 'Show',
-    meta: { title: '工程秀管理', icon: 'attestation' },
+    meta: { title: '工程秀管理', icon: 'certificate_fil' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/show/list'),
-        meta: { title: '全部工程秀', icon: 'attestation' }
+        meta: { title: '工程秀管理', icon: 'certificate_fil' }
       }
     ]
   },

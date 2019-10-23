@@ -140,14 +140,34 @@ export default {
       networkList: []
     }
   },
+  watch: {
+    '$route'(to, from) {
+      this.againFetch()
+    }
+  },
   created() {
     const that = this
     this.vm = this
     this.common.getAllNetwork(this.vm, function(){
-      that.fetchData()
+      that.againFetch()
     })
   },
   methods: {
+    againFetch() {
+      let that = this
+      that.queryMes =  {
+        page: 1,
+        limit: 10,
+        status: '',
+        order_sn: ''
+      }
+      const status = that.$route.query.status
+      if (status) {
+        that.queryMes.status = status
+      }
+      that.fetchData()
+    },
+
     fetchData() {
       this.listLoading = true
       getList(this.queryMes).then(response => {

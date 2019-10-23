@@ -145,7 +145,7 @@
           <p class="section-title small">用户评价&师傅秀</p>
           <el-form label-width="100px">
             <el-row>
-              <el-col :span="24" v-if="message.comment">
+              <el-col :span="24" v-if="message.comment.id">
                 <el-form-item label="用户评价:">
                   <div class="flex-center-start">
                     <el-rate
@@ -158,7 +158,7 @@
                   </div>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="message.ordersshow">
+              <el-col :span="24" v-if="message.ordersshow.title">
                 <el-form-item label="师傅秀:">
                   <p>{{ message.ordersshow.title }}（{{ message.ordersshow.dec }}）</p>
                   <div>
