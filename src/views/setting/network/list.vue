@@ -83,7 +83,7 @@ export default {
   },
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: null,
       listLoading: false,
@@ -104,7 +104,6 @@ export default {
     }
   },
   created() {
-    this.vm = this
     this.fetchData()
   },
   computed: {

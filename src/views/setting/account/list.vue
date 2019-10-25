@@ -59,18 +59,13 @@
               {{roleType[scope.row.role]}}
             </template>
           </el-table-column>
-          <el-table-column label="账号备注" prop="remark" width="150"/>
+          <el-table-column label="账号备注" prop="remark" width="150" />
           <el-table-column label="状态">
             <template slot-scope="scope">
-              {{ showType[scope.row.is_show] }}
+              {{ showType[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="创建时间" width="200" prop="create_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
@@ -97,7 +92,7 @@ import Update from '@/views/setting/account/update'
 export default {
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: null,
       listLoading: true,
@@ -121,8 +116,7 @@ export default {
   },
   created() {
     const that = this
-    this.vm = this
-    this.common.getAllNetwork(this.vm, function(){
+    this.common.getAllNetwork(this, function(){
       that.fetchData()
     })
   },

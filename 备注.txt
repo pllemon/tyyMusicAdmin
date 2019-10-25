@@ -112,3 +112,19 @@ computed: {
 
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
+
+
+
+
+
+
+
+
+
+
+
+1025
+账号管理 ok
+网点管理 ok
+文档协议 ok
+首页广告 ok

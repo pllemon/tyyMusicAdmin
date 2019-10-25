@@ -102,7 +102,7 @@ export default {
   },
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: null,
       listLoading: true,
@@ -121,7 +121,6 @@ export default {
     }
   },
   created() {
-    this.vm = this
     this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
     this.fetchData()
   },

@@ -119,7 +119,7 @@ export default {
   },
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: [],
       listLoading: true,
@@ -147,8 +147,7 @@ export default {
   },
   created() {
     const that = this
-    this.vm = this
-    this.common.getAllNetwork(this.vm, function(){
+    this.common.getAllNetwork(this, function(){
       that.againFetch()
     })
   },

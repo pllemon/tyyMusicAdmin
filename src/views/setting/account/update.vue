@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="账号名" prop="username">
-            <el-input v-model="form.username" :disabled="dialogMes.id"/>
+            <el-input v-model="form.username" :disabled="dialogMes.id !== ''"/>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -59,6 +59,7 @@ export default {
   },
   data() {
     return {
+      vm: this,
       loading: true,
       rules: {
         username: [{ required: true, message: '请输入账号名', trigger: 'blur' }],
@@ -67,7 +68,9 @@ export default {
         network_id: [{ required: true, message: '请选择所属网点', trigger: 'change' }],
         role: [{ required: true, message: '请选择账号角色', trigger: 'change' }],
       },
-      form: {},
+      form: {
+        remark: ''
+      },
       networkList: []
     }
   },
@@ -77,7 +80,7 @@ export default {
     })
   },
   created() {
-    this.getNetwork()
+    this.common.getAllNetwork(this)
     if (this.dialogMes.id) {
       this.getDetails()
     } else {
@@ -100,15 +103,6 @@ export default {
         this.form = data
       }).finally(() => {
         this.loading = false
-      })
-    },
-
-    getNetwork() {
-      getNetworkList({
-        page: 1,
-        limit: 1000
-      }).then(response => {
-        this.networkList = response.data.data
       })
     },
 

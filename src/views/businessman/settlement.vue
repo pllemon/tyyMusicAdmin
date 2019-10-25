@@ -109,7 +109,7 @@ export default {
   },
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: null,
       listLoading: true,

@@ -57,7 +57,7 @@ import { getList } from '@/api/feedback'
 export default {
   data() {
     return {
-      vm: null,
+      vm: this,
 
       list: null,
       listLoading: true,
@@ -75,7 +75,6 @@ export default {
     }
   },
   created() {
-    this.vm = this
     this.fetchData()
   },
   computed: {
