@@ -21,9 +21,9 @@
           <el-input v-model="queryMes.address" placeholder="请输入" />
         </el-form-item>  
         <el-form-item label="状态" prop="status">
-            <el-select v-model="queryMes.status" placeholder="请选择">
-                <el-option v-for="(item, index) in recordStatus" :key="index" :label="item" :value="index" />
-            </el-select>
+          <el-select v-model="queryMes.status" placeholder="请选择">
+            <el-option v-for="(item, index) in recordStatus" :key="index" :label="item" :value="index" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>

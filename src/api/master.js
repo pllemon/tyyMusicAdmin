@@ -39,3 +39,11 @@ export function craftsmansettlement(data) {
     data
   })
 }
+
+export function savecraftsmanstatus(data) {
+  return request({
+    url: '/admin/savecraftsmanstatus',
+    method: 'post',
+    data
+  })
+}

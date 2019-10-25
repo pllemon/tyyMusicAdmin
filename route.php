@@ -138,7 +138,6 @@ Route::rule('admin/updatenetwork', 'admin/Network/updatenetwork'); //修改网�
 admin/saveadminuser 修改后台用户信息 post.network_id post.phone,role，remark，password（password需要改密码的时候传过来 要不然传个空值）
 admin/saveadminstatus 修改后台用户状态 post.admin_id post.status 1 开启2禁用3删除
 
-businessorderlist 没有分页
 线下状态改为 4种，待商家确认（type=confirm）、已完成(type=success)、已取消(type = cancel)
 
 savebusinessdstatus   status = 1 || 4 更改商家状态

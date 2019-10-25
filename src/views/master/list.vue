@@ -24,6 +24,11 @@
         <el-form-item label="师傅编号">
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="queryMes.status" placeholder="请选择">
+            <el-option v-for="(item, index) in recordStatus" :key="index" :label="item" :value="index" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
@@ -51,27 +56,19 @@
           <el-table-column label="入行年份" prop="enter_time" width="100"/>
           <el-table-column label="联系地址" prop="address" width="200"/>
           <el-table-column label="个人简介" prop="desc"/>
-          <el-table-column label="申请时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="申请时间" width="200" prop="create_time" />
           <el-table-column label="状态" width="100">
             <template slot-scope="scope">
               {{ recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="审核时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.examine_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="审核时间" width="200" prop="examine_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="common.loadComponent(vm, 2, scope.row.id)">审核</el-button>
+              <el-button type="text" v-if="scope.row.status == 4" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 4)">禁用</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -86,7 +83,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/master'
+import { getList, savecraftsmanstatus } from '@/api/master'
 import Details from '@/views/master/details'
 import Examine from '@/views/master/examine'
 
@@ -129,6 +126,14 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
+    },
+
+    updateRecord(id, type) {
+      let ctype = type == 4 ? 2 : 1;
+      this.common.updateRecord(ctype, this, {
+        craftsman_id: id,
+        status: type
+      }, savecraftsmanstatus)
     }
   },
   computed: {

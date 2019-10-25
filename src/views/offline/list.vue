@@ -96,12 +96,7 @@
               {{ scope.row.return_integral | normNumber }}
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" width="180">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.creat_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="创建时间" width="180" prop="creat_time" />
           <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>

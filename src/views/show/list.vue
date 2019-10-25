@@ -52,12 +52,7 @@
           </el-table-column>
           <el-table-column label="相关师傅" prop="crafts_man_name"/>
           <el-table-column label="订单编号" prop="order_sn"/>
-          <el-table-column label="创建时间" width="180">
-            <template slot-scope="scope" >
-              <i class="el-icon-time" />
-              <span>{{ scope.row.time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="创建时间" width="180" prop="time" />
           <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>

@@ -18,27 +18,17 @@
             placeholder="请选择">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="收入类型" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option
-              v-for="(item, index) in incomeType"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="流水号" prop="order_sn">
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="所属网点" prop="status">
+        <el-form-item label="收入类型" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option
-              v-for="(item, index) in incomeType"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
+            <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属网点" prop="network_id">
+          <el-select v-model="queryMes.network_id">
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -62,15 +52,10 @@
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="流水号"  width="160" prop="order_sn" />
-          <el-table-column label="金额" prop="service_demand" width="200"/> 
-          <el-table-column label="类型" prop="service_demand" width="200"/> 
-          <el-table-column label="流水时间" width="180">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.appo_time }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="来源用户" prop="service_demand" width="200"/> 
+          <el-table-column label="收入金额" prop="service_demand" width="200"/> 
+          <el-table-column label="收入类型" prop="service_demand" width="200"/> 
+          <el-table-column label="流水时间" width="180" prop="appo_time" />
+          <el-table-column label="来源用户/商家" prop="service_demand" width="200"/> 
           <el-table-column label="订单编号" prop="remark" width="120" />
           <el-table-column label="所属网点" prop="remark" width="120" />
         </el-table>
@@ -106,11 +91,16 @@ export default {
       timeRange: [],
 
       currentComponent: '',
-      dialogMes: {}
+      dialogMes: {},
+
+      networkList: []
     }
   },
   created() {
-    this.fetchData()
+    const that = this
+    this.common.getAllNetwork(this, function(){
+      that.fetchData()
+    })
   },
   methods: {
     fetchData() {

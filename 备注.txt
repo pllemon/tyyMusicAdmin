@@ -128,3 +128,12 @@ computed: {
 网点管理 ok
 文档协议 ok
 首页广告 ok
+
+工程秀 admin/showlist 报错
+
+师傅 admin/savecraftsmanstatus 改状态报错
+
+用户 缺用户详情接口
+列表信息补充、搜索条件补充
+
+用户反馈 去掉标题title，加上搜索条件

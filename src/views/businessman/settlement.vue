@@ -65,23 +65,13 @@
               <gd-image :src="scope.row.sharewximg" small/>
             </template>
           </el-table-column>
-          <el-table-column label="申请时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.creattime }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="申请时间" width="200" prop="creattime" />
           <el-table-column label="状态" width="120">
             <template slot-scope="scope">
               {{ recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="审核时间" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.examine }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="审核时间" width="200" prop="examine" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
             </template>

@@ -95,7 +95,7 @@ export const mainAdminRoutes = [
       {
         path: 'feedback',
         name: 'Feedback',
-        component: () => import('@/views/member/feedback/list'),
+        component: () => import('@/views/member/feedback'),
         meta: { title: '用户反馈' }
       }
     ]

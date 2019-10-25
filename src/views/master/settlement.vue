@@ -68,12 +68,7 @@
               {{ recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="结算日期" width="200">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="结算日期" width="200" prop="create_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="surePay(scope.row.id, 0)">确定已发</el-button>

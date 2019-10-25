@@ -11,7 +11,7 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="反馈用户" prop="phone">
+        <el-form-item label="反馈账号" prop="phone">
           <el-input v-model="queryMes.phone" placeholder="请输入手机号" />
         </el-form-item>
         <el-form-item>
@@ -37,7 +37,6 @@
               {{scope.row.username}} {{scope.row.phone}}
             </template>
           </el-table-column>
-          <el-table-column label="反馈标题" prop="title" />
           <el-table-column label="反馈内容" prop="feedback" />
           <el-table-column label="反馈时间" prop="time" />
         </el-table>

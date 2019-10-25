@@ -71,21 +71,11 @@
           </el-table-column>
           <el-table-column label="服务需求" prop="service_demand" width="200"/>
           <el-table-column label="服务地址" prop="address" width="200"/>
-          <el-table-column label="预约时间" width="180">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.appo_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="预约时间" width="180" prop="appo_time" />
           <el-table-column label="用户备注" prop="remark" width="120" />
           <el-table-column label="服务网点"  width="120"/>
           <el-table-column label="承接师傅"  width="120"/>
-          <el-table-column label="创建时间" width="180">
-            <template slot-scope="scope">
-              <i class="el-icon-time" />
-              <span>{{ scope.row.create_time }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column label="创建时间" width="180" prop="create_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
