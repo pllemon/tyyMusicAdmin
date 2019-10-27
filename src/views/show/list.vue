@@ -19,8 +19,8 @@
               <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
-        <el-form-item label="相关师傅" prop="crafts_man_name">
-          <el-input v-model="queryMes.crafts_man_name" placeholder="请输入" />
+        <el-form-item label="相关师傅" prop="name">
+          <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="订单ID" prop="order_sn">
           <el-input v-model="queryMes.order_sn" placeholder="请输入" />
@@ -94,7 +94,7 @@ export default {
         title: '',
         type: '',
         order_sn: '',
-        crafts_man_name: '',
+        name: '',
         page: 1,
         limit: 10
       },
