@@ -54,8 +54,8 @@
           <el-table-column label="订单编号" width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
-              <span v-if="scope.row.pay_status == 0">待商家确认</span>
-              <span v-if="scope.row.pay_status == 1">已完成</span>
+              <span v-if="scope.row.status == 1 && scope.row.pay_status == 0">待商家确认</span>
+              <span v-if="scope.row.status == 1 && scope.row.pay_status == 1">已完成</span>
               <span v-if="scope.row.status == 2">已取消</span>
             </template>
           </el-table-column>

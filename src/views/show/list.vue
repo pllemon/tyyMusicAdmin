@@ -94,6 +94,7 @@ export default {
         title: '',
         type: '',
         order_sn: '',
+        crafts_man_name: '',
         name: '',
         page: 1,
         limit: 10

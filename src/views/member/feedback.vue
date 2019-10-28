@@ -3,9 +3,6 @@
     <!-- 表头 -->
     <div class="table-header">
       <p class="section-title">用户反馈</p>
-      <div class="action">
-         <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
-      </div>
     </div>
 
     <div class="table-content">

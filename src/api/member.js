@@ -8,11 +8,11 @@ export function getList(data) {
   })
 }
 
-export function getDetails(params) {
+export function getDetails(data) {
   return request({
-    url: '/admin/craftsmaninfo',
-    method: 'get',
-    params
+    url: '/admin/userinfo',
+    method: 'post',
+    data
   })
 }
 

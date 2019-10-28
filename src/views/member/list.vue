@@ -51,9 +51,9 @@
           <el-table-column label="用户头像" />
           <el-table-column label="用户账号" prop="phone" width="150"/>
           <el-table-column label="用户名" prop="username" width="120"/>
-          <el-table-column label="推荐码" />
-          <el-table-column label="上级推荐人" width="120"/>
-          <el-table-column label="下级推荐数" width="120"/>
+          <el-table-column label="推荐码" prop="invitation_code" width="120"/>
+          <el-table-column label="上级推荐人" width="120" prop="friend_name"/>
+          <el-table-column label="下级推荐数" width="120" prop="friend_sum"/>
           <el-table-column label="下单数" />
           <el-table-column label="总积分" />
           <el-table-column label="师傅状态">
@@ -69,8 +69,8 @@
           <el-table-column label="注册时间" width="200" prop="creattime" />
           <el-table-column label="操作" width="180" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">积分详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">积分详情</el-button>
             </template>
           </el-table-column>
         </el-table>
