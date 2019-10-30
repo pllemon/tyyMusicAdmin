@@ -1,14 +1,14 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="changeType[dialogMes.type]+'师傅'" :visible="true" width="1100px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="师傅详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form">
-      <p class="section-title small">师傅信息</p>
+      <!-- <p class="section-title small">师傅信息</p> -->
       <div class="flex-center">
         <gd-image width="140" height="140" style="margin-left:20px" />
         <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
               <el-form-item label="师傅工号:">
-                {{ masterInfo.sn }}
+                {{ masterInfo.sn ? masterInfo.sn : '无' }}
               </el-form-item>
             </el-col>
             <el-col :span="8">

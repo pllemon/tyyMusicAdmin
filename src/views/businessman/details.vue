@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1200px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="商家详情" :visible="true" width="1200px" :before-close="handleClose">
     <div class="section detail-form">
-      <p class="section-title small">商家信息</p>
+      <!-- <p class="section-title small">商家信息</p> -->
       <el-form label-width="100px">
         <el-row>
           <el-col :span="8">

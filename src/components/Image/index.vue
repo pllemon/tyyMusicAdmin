@@ -4,7 +4,12 @@
     :style="{width: cWidth + 'px', height: cHeight + 'px'}"
     :preview-src-list="[common.ip + src]"
     fit="cover"
-  />
+  >
+    <div slot="error" class="el-image__error">
+      <span v-if="src">加载失败</span>
+      <span v-else>无图片</span>
+    </div>
+  </el-image>
 </template>
 
 <script>
