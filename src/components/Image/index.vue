@@ -3,11 +3,13 @@
     :src="common.ip + src"
     :style="{width: cWidth + 'px', height: cHeight + 'px'}"
     :preview-src-list="[common.ip + src]"
+    :class="{'headUrl': headUrl}"
     fit="cover"
   >
     <div slot="error" class="el-image__error">
-      <span v-if="src">加载失败</span>
-      <span v-else>无图片</span>
+      <span v-if="!src && !headUrl">无图片</span>
+      <img v-if="!src && headUrl" src="@/assets/image/plac.png" style="width:100%"/>
+      <span v-if="src && !headUrl">加载失败</span>
     </div>
   </el-image>
 </template>
@@ -20,6 +22,10 @@ export default {
       default: ''
     },
     small: {
+      type: Boolean,
+      default: false
+    },
+    headUrl: {
       type: Boolean,
       default: false
     },
@@ -54,7 +60,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .el-image{
   margin-right: 10px;
 }
@@ -62,5 +68,9 @@ export default {
   margin-top: 6px;
   font-size: 12px;
   text-align: center;
+}
+.headUrl{
+  border-radius: 50%;
+  margin-right: 0;
 }
 </style>

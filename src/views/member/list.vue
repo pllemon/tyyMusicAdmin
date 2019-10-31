@@ -48,7 +48,11 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="用户头像" />
+          <el-table-column label="用户头像" align="center">
+            <template slot-scope="scope">
+              <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
+            </template>
+          </el-table-column>
           <el-table-column label="用户账号" prop="phone" width="150"/>
           <el-table-column label="用户名" prop="username" width="120"/>
           <el-table-column label="推荐码" prop="invitation_code" width="120"/>

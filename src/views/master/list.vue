@@ -49,6 +49,11 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
+          <el-table-column label="师傅头像" align="center">
+            <template slot-scope="scope">
+              <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
+            </template>
+          </el-table-column>
           <el-table-column label="工号" prop="sn"/>
           <el-table-column label="姓名" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>
@@ -66,6 +71,7 @@
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 1" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="common.loadComponent(vm, 2, scope.row.id)">审核</el-button>
               <el-button type="text" v-if="scope.row.status == 4" @click="updateRecord(scope.row.id, 1)">启用</el-button>
               <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 4)">禁用</el-button>
@@ -86,11 +92,13 @@ import { mapState } from 'vuex'
 import { getList, savecraftsmanstatus } from '@/api/master'
 import Details from '@/views/master/details'
 import Examine from '@/views/master/examine'
+import Update from '@/views/master/update'
 
 export default {
   components: {
     Details,
-    Examine
+    Examine,
+    Update
   },
   data() {
     return {

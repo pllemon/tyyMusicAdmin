@@ -1,9 +1,8 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="师傅详情" :visible="true" width="1100px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form">
-      <!-- <p class="section-title small">师傅信息</p> -->
       <div class="flex-center">
-        <gd-image width="140" height="140" style="margin-left:20px" />
+        <gd-image :src="masterInfo.headerurl" headUrl width="100" height="100"/>
         <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
