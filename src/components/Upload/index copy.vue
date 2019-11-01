@@ -1,4 +1,3 @@
-<!-- 上传单张图片 -->
 <template>
   <div class="gd-upload">
     <el-upload
@@ -27,7 +26,7 @@ export default {
     },
     action: {
       type: String,
-      default: ''
+      default: '/admin/uploadordersimg'
     },
     autoUpload: {
       type: Boolean,
@@ -55,18 +54,16 @@ export default {
     this.imageUrl = this.file.url
   },
   methods: {
-    clearImg() {
-      this.imageUrl = ''
-    },
-
     handleChange(file, fileList) {
+      console.log(file)
+      console.log(fileList)
       this.imageUrl = file.url
-      this.$emit('change', file)
+      this.$emit('change', fileList)
     },
 
     handleSuccess(res, file) {
       if (res.success) {
-        this.$emit('success', res.data)
+        this.$emit('success', res.data.id)
       }
     }
   }

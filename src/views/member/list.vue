@@ -17,8 +17,8 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="queryMes.username" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="推荐人" prop="username">
-          <el-input v-model="queryMes.phone" placeholder="请输入" />
+        <el-form-item label="推荐人" prop="friend_name">
+          <el-input v-model="queryMes.friend_name" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="师傅状态" prop="is_criaftsman">
           <el-select v-model="queryMes.is_criaftsman" placeholder="请选择">
@@ -60,6 +60,11 @@
           <el-table-column label="下级推荐数" width="120" prop="friend_sum"/>
           <el-table-column label="下单数" />
           <el-table-column label="总积分" />
+          <el-table-column label="账号状态">
+            <template slot-scope="scope">
+              {{ identityType[scope.row.status] }}
+            </template>
+          </el-table-column>
           <el-table-column label="师傅状态">
             <template slot-scope="scope">
               {{ identityType[scope.row.is_criaftsman] }}
@@ -73,7 +78,7 @@
           <el-table-column label="注册时间" width="200" prop="creattime" />
           <el-table-column label="操作" width="180" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">基本资料</el-button>
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">积分详情</el-button>
             </template>
           </el-table-column>
@@ -105,6 +110,7 @@ export default {
       queryMes: {
         phone: '',
         username: '',
+        friend_name: '',
         is_criaftsman: '',
         is_business: '',
         page: 1,

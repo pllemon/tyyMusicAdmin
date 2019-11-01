@@ -2,58 +2,58 @@
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form">
       <div class="flex-center">
-        <gd-image :src="masterInfo.headerurl" headUrl width="100" height="100"/>
+        <gd-image :src="info.headerurl" headUrl width="100" height="100"/>
         <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
               <el-form-item label="师傅工号:">
-                {{ masterInfo.sn ? masterInfo.sn : '无' }}
+                {{ info.sn ? info.sn : '无' }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="师傅姓名:">
-                {{ masterInfo.name }}
+                {{ info.name }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="身份证:">
-                {{ masterInfo.sfz }}
+                {{ info.sfz }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="联系手机:">
-                {{ masterInfo.phone }}
+                {{ info.phone }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="入行年份:">
-                {{ masterInfo.enter_time }}
+                {{ info.enter_time }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="申请时间:">
-                {{ masterInfo.create_time }}
+                {{ info.create_time }}
               </el-form-item>
             </el-col>
             <el-col :span="24">
               <el-form-item label="联系地址:">
-                {{ masterInfo.address }}
+                {{ info.address }}
               </el-form-item>
             </el-col>
             <el-col :span="24">
               <el-form-item label="个人简介:">
-                {{ masterInfo.desc }}
+                {{ info.desc }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="审核时间:">
-                {{ masterInfo.examine_time }}
+                {{ info.examine_time }}
               </el-form-item>
             </el-col>
             <el-col :span="16">
               <el-form-item label="审核结果:">
-                {{ recordStatus[masterInfo.status] }}
-                <span v-show="masterInfo.reject_reason">（{{ masterInfo.reject_reason }}）</span>
+                {{ recordStatus[info.status] }}
+                <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -76,7 +76,7 @@ export default {
   },
   data() {
     return {
-      masterInfo: {}
+      info: {}
     }
   },
   computed: {
@@ -90,7 +90,7 @@ export default {
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
-      that.masterInfo = response.data.info
+      that.info = response.data.info
     })
   },
   methods: {

@@ -4,36 +4,41 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="师傅头像:">
-            <gd-image :src="form.headerurl" headUrl width="100" height="100"/>
+            <gd-upload 
+              v-if="!loading"
+              action='admin/uploadcmauthorurl'
+              :file="file"  
+              @success="uploadSuccess"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="师傅工号:">
+          <el-form-item label="师傅工号:" prop="sn">
             <el-input type="text" v-model="form.sn" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="师傅姓名:">
+          <el-form-item label="师傅姓名:" prop="name">
             <el-input type="text" v-model="form.name" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="身份证:">
+          <el-form-item label="身份证:" prop="sfz">
             <el-input type="text" v-model="form.sfz" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="联系手机:">
+          <el-form-item label="联系手机:" prop="phone">
             <el-input type="text" v-model="form.phone" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="入行年份:">
+          <el-form-item label="入行年份:" prop="enter_time">
             <el-input type="text" v-model="form.enter_time" />
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="联系地址:">
+          <el-form-item label="联系地址:" prop="address">
             <el-input type="text" v-model="form.address" />
           </el-form-item>
         </el-col>
@@ -44,12 +49,16 @@
         </el-col>
       </el-row>
     </el-form>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="handleClose">取消</el-button>
+      <el-button type="primary" @click="submitForm">确定</el-button>
+    </span>
   </el-dialog>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails } from '@/api/master'
+import { getDetails, savecraftsmaninfo } from '@/api/master'
 
 export default {
   props: {
@@ -60,8 +69,17 @@ export default {
   },
   data() {
     return {
+      file: {},
       loading: true,
-      form: {}
+      form: {},
+      rules: {
+        sn: [{ required: true, message: '请填写师傅工号', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写师傅姓名', trigger: 'blur' }],
+        sfz: [{ required: true, message: '请填写身份证', trigger: 'blur' }],
+        phone: [{ required: true, message: '请填写联系手机', trigger: 'blur' }],
+        enter_time: [{ required: true, message: '请填写入行年份', trigger: 'blur' }],
+        address: [{ required: true, message: '请填写联系地址', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -75,14 +93,38 @@ export default {
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
-      that.form = response.data.info
+      const { data } = response
+      if (data.info.headerurl) {
+        that.$set(that.file, 'url', this.common.ip + data.info.headerurl)
+      } else {
+        that.$set(that.file, 'url', require('@/assets/image/plac.png'))
+      }
+      that.form = data.info
     }).finally(() => {
       that.loading = false
     })
   },
   methods: {
+    uploadSuccess(data) {
+      this.form.headerurl = data
+    },
+
     handleClose() {
       this.$parent.currentComponent = ''
+    },
+
+    submitForm() {
+      const that = this
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          that.loading = true
+          savecraftsmaninfo(that.form).then(response => {
+            that.common.closeComponent(this)
+          }).finally(() => {
+            that.loading = false
+          })
+        }
+      })
     }
   }
 }

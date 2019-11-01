@@ -39,11 +39,8 @@ export default {
     },
     websocketonmessage(e){ //数据接收
       const res = JSON.parse(e.data);
+        console.log(res)
       // 接收数据
-      console.log('----------------------')
-      console.log(res); 
-      console.log('----------------------')
-
       if (res.type == 'init') {
         workbind({
           client_id: res.client_id

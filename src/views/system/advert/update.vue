@@ -75,8 +75,8 @@ export default {
     }
   },
   methods: {
-    changeFile(fileList) {
-      this.file = fileList[0]
+    changeFile(file) {
+      this.file = file
     },
 
     getDetails() {

@@ -47,3 +47,12 @@ export function savecraftsmanstatus(data) {
     data
   })
 }
+
+
+export function savecraftsmaninfo(data) {
+  return request({
+    url: '/admin/savecraftsmaninfo',
+    method: 'post',
+    data
+  })
+}

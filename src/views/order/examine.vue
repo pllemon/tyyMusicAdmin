@@ -18,7 +18,12 @@
           <el-input v-model.number="examineForm.crafts_man_price" />
         </el-form-item>
         <el-form-item label="报价单照片：" required>
-          <gd-upload width="260" height="180" @success="uploadSuccess"/>
+          <gd-upload 
+            width="260" 
+            height="180" 
+            action='admin/uploadordersimg'
+            @success="uploadSuccess"
+          />
         </el-form-item>
       </template>
       <template v-if="examineForm.status == 'BH'">
@@ -94,8 +99,8 @@ export default {
   },
 
   methods: {
-    uploadSuccess(id) {
-      this.examineForm.imglist = id
+    uploadSuccess(data) {
+      this.examineForm.imglist = data.id
     },
 
     handleClose() {

@@ -50,7 +50,7 @@ export default {
       this.$emit('change', fileList)
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`最多上传 ${this.limit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      this.$message.warning(`最多上传 ${this.limit} 张图片`);
     },
     handleRemove(file, fileList) {
       this.$emit('update', fileList)
