@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     changeStatus(val) {
-      this.fomr.headerurl = ''
+      this.form.headerurl = ''
       this.$refs.upload.clearImg()
       this.$refs.form.resetFields()
       this.file.url = ''

@@ -52,7 +52,9 @@ export default {
     }
   },
   created() {
-    this.imageUrl = this.file.url
+    if (this.file && this.file.url) {
+      this.imageUrl = this.file.url
+    }
   },
   methods: {
     clearImg() {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <audio ref="audio" autoplay hidden muted id="audio" src="/static/audio/130808.wav"/>
+    <audio ref="audio" muted controls id="audio" src="http://downsc.chinaz.net/Files/DownLoad/sound1/201706/8855.wav" style="position:fixed;top:0;left:0;display:none"/>
   </div>
 </template>
 
@@ -17,19 +17,24 @@ export default {
   created(){
     this.initWebSocket()
   },
+  mounted() {
+    $(document).click(() => {
+      this.$refs.audio.muted = false
+    })
+  },
   destroyed: function() {
     this.websocketclose();
   },
   methods: { 
     initWebSocket(){
-      const wsUrl = 'ws://47.106.100.144:2346';
+      const wsUrl = 'ws://47.106.100.144:2346'
       this.websocket = new WebSocket(wsUrl); 
-      this.websocket.onopen = this.websocketonopen;
+      this.websocket.onopen = this.websocketonopen
 
-      this.websocket.onerror = this.websocketonerror;
+      this.websocket.onerror = this.websocketonerror
 
-      this.websocket.onmessage = this.websocketonmessage; 
-      this.websocket.onclose = this.websocketclose;
+      this.websocket.onmessage = this.websocketonmessage
+      this.websocket.onclose = this.websocketclose
     },
     websocketonopen() {
         console.log("WebSocket连接成功");
@@ -39,8 +44,6 @@ export default {
     },
     websocketonmessage(e){ //数据接收
       const res = JSON.parse(e.data);
-        console.log(res)
-      // 接收数据
       if (res.type == 'init') {
         workbind({
           client_id: res.client_id
@@ -48,14 +51,54 @@ export default {
       } else if (res.type == 'ping') {
 
       } else {
-        this.$notify({
-          title: '收到一条信息',
-          message: res.message,
-          duration: 1000,
-          offset: 50
-        })
+        console.log(res)
+        let message = JSON.parse(res.message)
+        if (res.type == 'makeOrder') {
+          this.$notify({
+            title: '叮叮叮~来新订单啦~',
+            message: `用户 ${message.name}（${message.phone}）下了个新订单，赶紧接单吧！`,
+            duration: 5000,
+            offset: 50
+          })
+        } else if (res.type == 'payEarnest') {
+          this.$notify({
+            title: '用户已支付定金~',
+            message: `订单编号 ${message.orderSn} ，用户已支付定金，赶紧为TA发布订单吧！`,
+            duration: 5000,
+            offset: 50
+          })
+        } else if (res.type == 'payTail') {
+          this.$notify({
+            title: '用户已支付尾款~',
+            message: `订单编号 ${message.orderSn} ，用户已支付尾款，订单已完成！`,
+            duration: 5000,
+            offset: 50
+          })
+        } else if (res.type == 'newMaster') {
+          this.$notify({
+            title: '有新师傅申请加入啦~',
+            message: `用户 ${message.name}（${message.phone}）申请成为师傅，赶紧处理吧！`,
+            duration: 5000,
+            offset: 50
+          })
+        } else if (res.type == 'newBusiness') {
+          this.$notify({
+            title: '有新商家申请入驻啦~',
+            message: `用户 ${message.name}（${message.phone}）申请成为商家，赶紧处理吧！`,
+            duration: 5000,
+            offset: 50
+          })
+        } else {
+          this.$notify({
+            title: '收到一条信息',
+            message: res.message,
+            duration: 5000,
+            offset: 50
+          })
+        }
+        
         this.$store.commit('news/ADD_NEWS', res)
-        this.$refs.audio.muted = false
+        
         this.$refs.audio.play()
       }
     },

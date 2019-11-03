@@ -1,6 +1,6 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
-    <div class="section detail-form">
+    <div class="section detail-form" v-loading="loading">
       <div class="flex-center">
         <gd-image :src="info.headerurl" headUrl width="100" height="100"/>
         <el-form class="flex1" label-width="100px">
@@ -76,7 +76,8 @@ export default {
   },
   data() {
     return {
-      info: {}
+      info: {},
+      loading: true
     }
   },
   computed: {
@@ -87,10 +88,13 @@ export default {
   },
   created() {
     const that = this
+    that.loading = true
     getDetails({
       id: that.dialogMes.id
     }).then(response => {
       that.info = response.data.info
+    }).finally(() => {
+      that.loading = false
     })
   },
   methods: {

@@ -41,52 +41,59 @@
       width="700px"
       :before-close="closeNews">
       <ul class="news-list">
-        <li @click="goOrder(1)" class="flex">
-          <el-badge :value="1" class="item">
+        <li @click="goOrder('newOrder', 1)" class="flex" v-if="newList.newOrder">
+          <el-badge :value="newList.newOrder.length" class="item">
             <svg-icon icon-class="affiliations_li" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">叮叮叮~来新订单啦~</p>
-            <p class="news-dec">用户 里昂米尼（13650965856）下了个新订单，赶紧接单吧！</p>
-            <p class="news-dec">用户 西西米（13695896542）下了个新订单，赶紧接单吧！</p>
+            <p class="news-dec" v-for="(item,index) in newList.newOrder" :key="index">
+              用户 {{item.name}}（{{item.phone}}）下了个新订单，赶紧接单吧！
+            </p>
           </div>
         </li>
-        <li @click="goOrder(3)" class="flex">
-          <el-badge :value="1" class="item">
+        <li @click="goOrder(3)" class="flex" v-if="newList.payEarnest">
+          <el-badge :value="newList.payEarnest.length" class="item">
             <svg-icon icon-class="coinpurse_line" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">用户已支付定金~</p>
-            <p class="news-dec">订单编号 24354523 ，用户已支付定金，赶紧为TA发布订单吧！</p>
+            <p class="news-dec" v-for="(item,index) in newList.payEarnest" :key="index">
+              订单编号 {{item.orderSn}} ，用户已支付定金，赶紧为TA发布订单吧！
+            </p>
           </div>
         </li>
-        <li @click="goOrder(8)" class="flex">
-          <el-badge :value="1" class="item">
+        <li @click="goOrder(8)" class="flex" v-if="newList.payTail">
+          <el-badge :value="newList.payTail.length" class="item">
             <svg-icon icon-class="attestation" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">用户已支付尾款~</p>
-            <p class="news-dec">订单编号 24354523 ，用户已支付尾款，订单已完成！</p>
+            <p class="news-dec" v-for="(item,index) in newList.payTail" :key="index">
+              订单编号 {{item.orderSn}} ，用户已支付尾款，订单已完成！
+            </p>
           </div>
         </li>
-        <li @click="goMaster()" class="flex">
-          <el-badge :value="1" class="item">
+        <li @click="goMaster()" class="flex" v-if="newList.newMaster">
+          <el-badge :value="newList.newMaster.length" class="item">
             <svg-icon icon-class="namecard" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">有新师傅申请加入啦~</p>
-            <p class="news-dec">用户 里昂米尼（13650965856）申请成为师傅，赶紧处理吧！</p>
-            <p class="news-dec">用户 西西米（13695896542）申请成为师傅，赶紧处理吧！</p>
+            <p class="news-dec" v-for="(item,index) in newList.newMaster" :key="index">
+              用户 {{item.name}}（{{item.phone}}）申请成为师傅，赶紧处理吧！
+            </p>
           </div>
         </li>
-        <li @click="goBusinessman()" class="flex">
-          <el-badge :value="1" class="item">
+        <li @click="goBusinessman()" class="flex" v-if="newList.newBusiness">
+          <el-badge :value="newList.newBusiness.length" class="item">
             <svg-icon icon-class="boss" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">有新商家申请入驻啦~</p>
-            <p class="news-dec">用户 里昂米尼（13650965856）申请成为商家，赶紧处理吧！</p>
-            <p class="news-dec">用户 西西米（13695896542）申请成为商家，赶紧处理吧！</p>
+            <p class="news-dec" v-for="(item,index) in newList.newBusiness" :key="index">
+              用户 {{item.name}}（{{item.phone}}）申请成为商家，赶紧处理吧！
+            </p>
           </div>
         </li>
       </ul>

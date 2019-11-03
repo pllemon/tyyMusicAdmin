@@ -19,7 +19,7 @@ const mutations = {
     if (!state.list[type]) {
       Vue.set(state.list, type, [])
     }
-    state.list[type].push(news)
+    state.list[type].push(JSON.parse(news.message))
     sessionStorage.setItem('dsfNews', JSON.stringify(state.list))
   },
   REMOVE_NEWS: (state, type) => {

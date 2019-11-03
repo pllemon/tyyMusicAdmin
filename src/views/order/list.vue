@@ -33,14 +33,14 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属网点">
+        <el-form-item label="所属网点" prop="network_id">
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -54,9 +54,7 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="订单编号"  width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
@@ -76,7 +74,7 @@
           <el-table-column label="服务网点"  width="120"/>
           <el-table-column label="承接师傅"  width="120"/>
           <el-table-column label="创建时间" width="180" prop="create_time" />
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
               <el-button type="text" v-if="scope.row.status == 1" @click="common.loadComponent(vm, 2, scope.row.order_id)">审核</el-button>
@@ -113,14 +111,13 @@ export default {
 
       list: [],
       listLoading: true,
-      selectArr: [],
 
       total: 0,
       queryMes: {
         page: 1,
         limit: 10,
         status: '',
-        order_sn: ''
+        order_sn: '',
       },
       timeRange: [],
 
@@ -148,8 +145,11 @@ export default {
         page: 1,
         limit: 10,
         status: '',
-        order_sn: ''
+        order_sn: '',
+        startTime: '',
+        endTime: ''
       }
+      that.timeRange = []
       const status = that.$route.query.status
       if (status) {
         that.queryMes.status = status
@@ -159,16 +159,19 @@ export default {
 
     fetchData() {
       this.listLoading = true
+      if (this.timeRange.length) {
+        this.queryMes.startTime = this.timeRange[0]
+        this.queryMes.endTime = this.timeRange[1]
+      } else {
+        this.queryMes.startTime = ''
+        this.queryMes.endTime = ''
+      }
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
     },
 
     // 发布订单
