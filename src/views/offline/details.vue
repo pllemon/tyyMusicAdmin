@@ -61,7 +61,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="商家确认时间:">
+            <el-form-item label="完成时间:">
               {{ info.creat_time }}
             </el-form-item>
           </el-col>

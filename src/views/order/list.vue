@@ -17,7 +17,8 @@
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期"
+            :picker-options="common.timePickerOptions">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="订单编号" prop="order_sn">

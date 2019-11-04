@@ -1,6 +1,7 @@
 /**
  * 页面共用js
  */
+import moment from 'moment'
 import { Notification } from 'element-ui';
 import { MessageBox } from 'element-ui';
 import { getNetworkList } from '@/api/network'
@@ -75,6 +76,35 @@ function getAllNetwork(target, callback) {
   })
 }
 
+function timePickerOptions() {
+  let options = {
+    shortcuts: [{
+      text: '今日',
+      onClick(picker) {
+        const start = moment().startOf('days').format('YYYY-MM-DD HH:mm:ss')
+        const end = moment().endOf('days').format('YYYY-MM-DD HH:mm:ss')
+        picker.$emit('pick', [start, end])
+      }
+    }, {
+      text: '本周',
+      onClick(picker) {
+        const start = moment().startOf('week').format('YYYY-MM-DD HH:mm:ss')
+        const end = moment().endOf('week').format('YYYY-MM-DD HH:mm:ss')
+        picker.$emit('pick', [start, end])
+      }
+    }, {
+      text: '本月',
+      onClick(picker) {
+        const start = moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
+        const end = moment().endOf('month').format('YYYY-MM-DD HH:mm:ss')
+        picker.$emit('pick', [start, end])
+      }
+    }]
+  }
+
+  return options
+}
+
 export default {
   ip: 'http://47.106.100.144/',
   search, // 搜索表单
@@ -83,5 +113,6 @@ export default {
   loadComponent, // 加载弹窗组件
   closeComponent, // 关闭弹窗组件
   notify, // 提示
-  getAllNetwork // 获取全部网点
+  getAllNetwork, // 获取全部网点
+  timePickerOptions // 快捷时间选项
 }
