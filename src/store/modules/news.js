@@ -15,7 +15,6 @@ const state = {
 const mutations = {
   ADD_NEWS: (state, news) => {
     let type = news.type
-    type = 'newOrder'
     if (!state.list[type]) {
       Vue.set(state.list, type, [])
     }

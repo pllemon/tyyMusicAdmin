@@ -29,8 +29,7 @@
         <el-badge :value="newsLength" class="item">
           <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
         </el-badge>
-      <p>
-      <p @click="sendNews()">发送</p>
+      </p>
     </div>
 
      <!-- 全局消息弹窗 -->
@@ -41,18 +40,18 @@
       width="700px"
       :before-close="closeNews">
       <ul class="news-list">
-        <li @click="goOrder('newOrder', 1)" class="flex" v-if="newList.newOrder">
-          <el-badge :value="newList.newOrder.length" class="item">
+        <li @click="goOrder('makeOrder', 1)" class="flex" v-if="newList.makeOrder && newList.makeOrder.length">
+          <el-badge :value="newList.makeOrder.length" class="item">
             <svg-icon icon-class="affiliations_li" />
           </el-badge>
           <div class="news-mes">
             <p class="news-title">叮叮叮~来新订单啦~</p>
-            <p class="news-dec" v-for="(item,index) in newList.newOrder" :key="index">
+            <p class="news-dec" v-for="(item,index) in newList.makeOrder" :key="index">
               用户 {{item.name}}（{{item.phone}}）下了个新订单，赶紧接单吧！
             </p>
           </div>
         </li>
-        <li @click="goOrder(3)" class="flex" v-if="newList.payEarnest">
+        <li @click="goOrder('payEarnest', 3)" class="flex" v-if="newList.payEarnest && newList.payEarnest.length">
           <el-badge :value="newList.payEarnest.length" class="item">
             <svg-icon icon-class="coinpurse_line" />
           </el-badge>
@@ -63,7 +62,7 @@
             </p>
           </div>
         </li>
-        <li @click="goOrder(8)" class="flex" v-if="newList.payTail">
+        <li @click="goOrder('payTail', 8)" class="flex" v-if="newList.payTail && newList.payTail.length">
           <el-badge :value="newList.payTail.length" class="item">
             <svg-icon icon-class="attestation" />
           </el-badge>
@@ -74,7 +73,7 @@
             </p>
           </div>
         </li>
-        <li @click="goMaster()" class="flex" v-if="newList.newMaster">
+        <li @click="goMaster()" class="flex" v-if="newList.newMaster && newList.newMaster.length">
           <el-badge :value="newList.newMaster.length" class="item">
             <svg-icon icon-class="namecard" />
           </el-badge>
@@ -85,7 +84,7 @@
             </p>
           </div>
         </li>
-        <li @click="goBusinessman()" class="flex" v-if="newList.newBusiness">
+        <li @click="goBusinessman()" class="flex" v-if="newList.newBusiness && newList.newBusiness.length">
           <el-badge :value="newList.newBusiness.length" class="item">
             <svg-icon icon-class="boss" />
           </el-badge>
@@ -154,12 +153,6 @@ export default {
     },
     closeNews() {
       this.showNewsDialog = false;
-    },
-    sendNews() {
-      worksend({
-        group: 1,
-        message: '{order_id:26}'
-      }).then(res => {})
     },
 
     handleCommand(command) {
