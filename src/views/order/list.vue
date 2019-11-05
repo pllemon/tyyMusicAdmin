@@ -16,9 +16,10 @@
             v-model="timeRange"
             type="datetimerange"
             range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="common.timePickerOptions">
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="订单编号" prop="order_sn">
@@ -38,6 +39,12 @@
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
+        </el-form-item>
+        <el-form-item label="下单用户号码" prop="phone">
+          <el-input type="text" v-model="queryMes.phone" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="接单师傅号码" prop="cmphone">
+          <el-input type="text" v-model="queryMes.cmphone" placeholder="请输入"/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -65,16 +72,22 @@
           </el-table-column>
           <el-table-column label="下单客户" width="200">
             <template slot-scope="scope">
-              {{scope.row.phone}}
+              <p>{{scope.row.username}}</p> 
+              <p>{{scope.row.phone}}</p>
             </template>
           </el-table-column>
           <el-table-column label="服务需求" prop="service_demand" width="200"/>
           <el-table-column label="服务地址" prop="address" width="200"/>
-          <el-table-column label="预约时间" width="180" prop="appo_time" />
+          <el-table-column label="预约时间"  prop="appo_time" width="180" />
           <el-table-column label="用户备注" prop="remark" width="120" />
-          <el-table-column label="服务网点"  width="120"/>
-          <el-table-column label="承接师傅"  width="120"/>
-          <el-table-column label="创建时间" width="180" prop="create_time" />
+          <el-table-column label="服务网点" prop="networkname" width="120" />
+          <el-table-column label="承接师傅"  width="200">
+            <template slot-scope="scope">
+              <p>{{scope.row.cmname}}</p> 
+              <p>{{scope.row.cmphone}}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="创建时间" prop="create_time" width="180" />
           <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
@@ -119,6 +132,11 @@ export default {
         limit: 10,
         status: '',
         order_sn: '',
+        start_time: '',
+        end_time: '',
+        network_id: '',
+        phone: '',
+        cmphone: ''
       },
       timeRange: [],
 
@@ -147,8 +165,11 @@ export default {
         limit: 10,
         status: '',
         order_sn: '',
-        startTime: '',
-        endTime: ''
+        start_time: '',
+        end_time: '',
+        network_id: '',
+        phone: '',
+        cmphone: ''
       }
       that.timeRange = []
       const status = that.$route.query.status
@@ -161,11 +182,11 @@ export default {
     fetchData() {
       this.listLoading = true
       if (this.timeRange.length) {
-        this.queryMes.startTime = this.timeRange[0]
-        this.queryMes.endTime = this.timeRange[1]
+        this.queryMes.start_time = this.timeRange[0]
+        this.queryMes.end_time = this.timeRange[1]
       } else {
-        this.queryMes.startTime = ''
-        this.queryMes.endTime = ''
+        this.queryMes.start_time = ''
+        this.queryMes.end_time = ''
       }
       getList(this.queryMes).then(response => {
         this.list = response.data.data

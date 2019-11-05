@@ -62,11 +62,11 @@
     </div>
     <div class="section detail-form">
       <p class="section-title small">积分记录</p>
-      <integral-list />
+      <integral-list :id="dialogMes.id" />
     </div>
     <div class="section detail-form">
       <p class="section-title small">推荐记录</p>
-      <recommend-list />
+      <recommend-list :id="dialogMes.id" />
     </div>
   </el-dialog>
 </template>

@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">积分记录</p>
+      <p class="section-title">积分支出记录</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -21,7 +21,7 @@
         <el-form-item label="积分类型" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
-              v-for="(item, index) in pointsType"
+              v-for="(item, index) in pointsExpendType"
               :key="index"
               :label="item"
               :value="index">
@@ -51,12 +51,11 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="流水号"  width="160" prop="order_sn" />
-          <el-table-column label="金额" prop="service_demand" width="200"/> 
+          <el-table-column label="积分数" prop="service_demand" width="200"/> 
           <el-table-column label="类型" prop="service_demand" width="200"/> 
-          <el-table-column label="流水时间" width="180" prop="appo_time" />
-          <el-table-column label="积分对象" prop="service_demand" width="200"/>
-          <el-table-column label="申请编号" prop="service_demand" width="200"/>
+          <el-table-column label="记录时间" width="180" prop="appo_time" />
+          <el-table-column label="相关用户/商家" prop="service_demand" width="200"/>
+          <el-table-column label="订单号" prop="service_demand" width="200"/>
         </el-table>
       </div>
       <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -113,7 +112,7 @@ export default {
   },
   computed: {
     ...mapState({
-      pointsType: state => state.dict.pointsType
+      pointsExpendType: state => state.dict.pointsExpendType
     })
   }
 }

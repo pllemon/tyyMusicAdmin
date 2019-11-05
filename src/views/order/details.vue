@@ -121,11 +121,11 @@
               </el-col>
               <el-col :span="24" v-if="message.info.status > 3">
                 <el-form-item label="报名情况:">
-                  <template v-if="message.craftsmanlist.length">
+                  <template v-if="craftsmanlist.length">
                     <ul class="master-list">
                       <li v-for="(item, index) in craftsmanlist" :key="index">
-                        <img src="">
-                        <div class="flex1">
+                        <gd-image :src="item.headerurl" headUrl width="40" height="40" style="margin-top:0"/>
+                        <div class="flex1" style="margin-left: 10px">
                           <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
                           <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
                         </div>

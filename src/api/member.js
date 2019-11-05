@@ -31,3 +31,13 @@ export function getFeedbackList(data) {
     data
   })
 }
+
+
+export function userintegrallist(data) {
+  return request({
+    url: '/admin/userintegrallist',
+    method: 'post',
+    data
+  })
+}
+

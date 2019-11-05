@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">收入记录</p>
+      <p class="section-title">积分收入记录</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -18,18 +18,18 @@
             placeholder="请选择">
           </el-date-picker>
         </el-form-item>
+        <el-form-item label="积分类型" prop="status">
+          <el-select v-model="queryMes.status" placeholder="请选择">
+            <el-option
+              v-for="(item, index) in pointsIncomeType"
+              :key="index"
+              :label="item"
+              :value="index">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="流水号" prop="order_sn">
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="收入类型" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属网点" prop="network_id">
-          <el-select v-model="queryMes.network_id">
-            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
-          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
@@ -51,13 +51,11 @@
         >
           <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="流水号"  width="160" prop="order_sn" />
-          <el-table-column label="金额" prop="service_demand"/> 
+          <el-table-column label="积分数" prop="service_demand" width="200"/> 
           <el-table-column label="类型" prop="service_demand" width="200"/> 
           <el-table-column label="记录时间" width="180" prop="appo_time" />
           <el-table-column label="相关用户/商家" prop="service_demand" width="200"/>
-          <el-table-column label="订单编号" prop="remark" width="120" />
-          <el-table-column label="所属网点" prop="remark" />
+          <el-table-column label="订单号/提现号" prop="service_demand" width="200"/>
         </el-table>
       </div>
       <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -91,16 +89,11 @@ export default {
       timeRange: [],
 
       currentComponent: '',
-      dialogMes: {},
-
-      networkList: []
+      dialogMes: {}
     }
   },
   created() {
-    const that = this
-    this.common.getAllNetwork(this, function(){
-      that.fetchData()
-    })
+    this.fetchData()
   },
   methods: {
     fetchData() {
@@ -119,7 +112,7 @@ export default {
   },
   computed: {
     ...mapState({
-      incomeType: state => state.dict.incomeType
+      pointsIncomeType: state => state.dict.pointsIncomeType
     })
   }
 }

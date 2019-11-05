@@ -72,5 +72,6 @@ export default {
 .headUrl{
   border-radius: 50%;
   margin-right: 0;
+  background: #fff;
 }
 </style>

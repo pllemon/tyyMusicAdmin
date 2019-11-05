@@ -8,8 +8,8 @@
         <p style="margin-bottom: 10px">请选择一个师傅，该订单将派发给该师傅负责</p>
         <ul class="master-list">
           <li v-for="(item, index) in craftsmanlist" :key="index">
-            <img src="">
-            <div class="flex1">
+            <gd-image :src="item.headerurl" headUrl width="40" height="40"/>
+            <div class="flex1" style="margin-left: 10px">
               <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
               <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
             </div>
@@ -91,13 +91,6 @@ export default {
     box-sizing: border-box;
     &:nth-of-type(3n){
       margin-right: 0;
-    }
-    img{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 10px;
-      background: #f2f2f2;
     }
   }
 }

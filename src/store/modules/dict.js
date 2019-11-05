@@ -54,8 +54,13 @@ const state = {
     1: '师傅工资',
     2: '商家提现'
   },
-  pointsType: {
-    1: '商家支付佣金'
+  pointsIncomeType: {
+    1: '平台佣金抵扣',
+    2: '商家提现',
+  },
+  pointsExpendType: {
+    1: '注册派发',
+    2: '下级下单奖励'
   },
   roleType: {
     1: '总部管理员',

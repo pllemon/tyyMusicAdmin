@@ -11,10 +11,9 @@
         height="300px"
       >
         <el-table-column label="序号" type="index" width="50" fixed/>
-        <el-table-column label="收入/支出类型" prop="phone"/>
-        <el-table-column label="积分数" prop="phone"/>
-        <el-table-column label="记录时间" prop="username"/>
-        <el-table-column label="补充说明" prop="username"/>
+        <el-table-column label="积分数" prop="integral"/>
+        <el-table-column label="记录时间" prop="time"/>
+        <el-table-column label="记录说明" prop="remark"/>
       </el-table>
     </div>
     <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -23,9 +22,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/member'
+import { userintegrallist } from '@/api/member'
 
 export default {
+  props: {
+    id: {
+      type: Number,
+      default: ''
+    }
+  },
   data() {
     return {
       vm: this,
@@ -36,17 +41,10 @@ export default {
 
       total: 0,
       queryMes: {
-        phone: '',
-        username: '',
-        friend_name: '',
-        is_criaftsman: '',
-        is_business: '',
+        user_id: '',
         page: 1,
         limit: 10
-      },
-
-      currentComponent: '',
-      dialogMes: {}
+      }
     }
   },
   computed: {
@@ -55,12 +53,13 @@ export default {
     })
   },
   created() {
+    this.queryMes.user_id = this.id
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.queryMes).then(response => {
+      userintegrallist(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
       }).finally(() => {

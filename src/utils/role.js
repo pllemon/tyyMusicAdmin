@@ -121,10 +121,16 @@ export const mainAdminRoutes = [
         meta: { title: '支出记录' }
       },
       {
-        path: 'points',
-        name: 'Points',
-        component: () => import('@/views/finance/points'),
-        meta: { title: '积分记录' }
+        path: 'pointsIncome',
+        name: 'PointsIncome',
+        component: () => import('@/views/finance/pointsIncome'),
+        meta: { title: '积分收入记录' }
+      },
+      {
+        path: 'pointsExpend',
+        name: 'PointsExpend',
+        component: () => import('@/views/finance/pointsExpend'),
+        meta: { title: '积分支出记录' }
       }
     ]
   },

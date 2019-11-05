@@ -54,8 +54,8 @@
           <el-table-column label="流水号"  width="160" prop="order_sn" />
           <el-table-column label="金额" prop="service_demand" width="200"/> 
           <el-table-column label="类型" prop="service_demand" width="200"/> 
-          <el-table-column label="流水时间" width="180" prop="appo_time" />
-          <el-table-column label="支出对象" prop="service_demand" width="200"/>
+          <el-table-column label="记录时间" width="180" prop="appo_time" />
+          <el-table-column label="相关师傅/商家" prop="service_demand" width="200"/>
           <el-table-column label="申请编号" prop="service_demand" width="200"/>
         </el-table>
       </div>
