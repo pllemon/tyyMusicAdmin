@@ -1,7 +1,6 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form" v-loading="loading">
-      <p class="section-title small">订单信息</p>
       <el-form class="flex1" label-width="120px">
         <el-row>
           <el-col :span="8">
@@ -11,8 +10,9 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="订单状态:">
-              {{ offlineStatus[info.status] }}
-              <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
+              <span v-if="info.status == 1 && info.pay_status == 0">待商家确认</span>
+              <span v-if="info.status == 1 && info.pay_status == 1">已完成</span>
+              <span v-if="info.status == 2">已取消</span>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -60,9 +60,14 @@
               {{ info.creat_time }}
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" v-if="info.status == 1 && info.pay_status == 1">
             <el-form-item label="完成时间:">
               {{ info.creat_time }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" v-if="info.status == 2">
+            <el-form-item label="取消时间:">
+              {{ info.cancel_time }}
             </el-form-item>
           </el-col>
         </el-row>

@@ -11,15 +11,19 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="预约时间">
+        <el-form-item label="下单时间">
            <el-date-picker
             v-model="timeRange"
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
-            :picker-options="common.timePickerOptions">
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="订单编号" prop="order_sn">
+          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
@@ -31,12 +35,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="订单编号" prop="order_sn">
-          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入" />
+        <el-form-item label="用户号码" prop="user_phone">
+          <el-input type="text" v-model="queryMes.user_phone" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="商家名称" prop="business_name">
+          <el-input type="text" v-model="queryMes.business_name" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -135,7 +142,11 @@ export default {
         page: 1,
         limit: 10,
         status: '',
-        order_sn: ''
+        order_sn: '',
+        user_phone: '',
+        business_name: '',
+        start_time: '',
+        end_time: ''
       },
       timeRange: [],
 
@@ -149,6 +160,13 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
+      if (this.timeRange.length) {
+        this.queryMes.start_time = this.timeRange[0]
+        this.queryMes.end_time = this.timeRange[1]
+      } else {
+        this.queryMes.start_time = ''
+        this.queryMes.end_time = ''
+      }
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total

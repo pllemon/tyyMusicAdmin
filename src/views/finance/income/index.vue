@@ -70,7 +70,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList } from '@/api/order'
+import { transactionlog } from '@/api/finance'
 
 export default {
   data() {
@@ -105,7 +105,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.queryMes).then(response => {
+      transactionlog(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
       }).finally(() => {
