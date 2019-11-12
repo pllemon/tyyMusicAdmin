@@ -105,6 +105,18 @@ function timePickerOptions() {
   return options
 }
 
+function exportExcel(target) {
+  $(target.$refs.exportForm).find('div').html('')
+  for (let i in target.queryMes) {
+    if (target.queryMes[i] != '' && i != 'page' && i != 'limit') {
+     $(target.$refs.exportForm).find('div').append(
+       `<input type="text" name="${i}" value="${target.queryMes[i]}"/>`
+     ) 
+    }
+  }
+  $(target.$refs.exportForm).submit()
+}
+
 export default {
   ip: 'http://47.106.100.144/',
   search, // 搜索表单
@@ -114,5 +126,6 @@ export default {
   closeComponent, // 关闭弹窗组件
   notify, // 提示
   getAllNetwork, // 获取全部网点
-  timePickerOptions // 快捷时间选项
+  timePickerOptions, // 快捷时间选项,
+  exportExcel: exportExcel // 导出excel
 }

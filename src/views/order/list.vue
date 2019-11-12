@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">线上订单列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+        <el-button size="small" icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button>
       </div>
     </div>
 
@@ -103,6 +103,14 @@
 
     <!-- 弹窗 -->
     <component :is="currentComponent" :dialogMes="dialogMes"/>
+
+    <!-- 导出 -->
+    <form ref="exportForm" action="/admin/orderlist" method="post" style="display:none">
+      <input name="model" value="exportToExcel" />
+      <input v-if="this.timeRange" name="start_time" :value="this.timeRange[0]" />
+      <input v-if="this.timeRange" name="end_time" :value="this.timeRange[1]" />
+      <div></div>
+    </form>
   </div>
 </template>
 

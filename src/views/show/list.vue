@@ -19,11 +19,11 @@
               <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
+        <el-form-item label="相关订单" prop="order_sn">
+          <el-input v-model="queryMes.order_sn" placeholder="请输入" />
+        </el-form-item>
         <el-form-item label="相关师傅" prop="name">
           <el-input v-model="queryMes.name" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="订单ID" prop="order_sn">
-          <el-input v-model="queryMes.order_sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
