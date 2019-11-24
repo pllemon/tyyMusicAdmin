@@ -1,18 +1,9 @@
 <template>
   <div class="header flex-center-between">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <!-- <div class="flex-center-start">
+    <div class="flex-center-start">
       <p class="title">多师傅后台管理系统</p>
-      <el-dropdown class="dropdown">
-        <span class="el-dropdown-link">
-          水口分网点1 <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>水口分网点1</el-dropdown-item>
-          <el-dropdown-item>水口分网点2</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div> -->
+    </div>
     <div class="flex-center">
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
