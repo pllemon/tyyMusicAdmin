@@ -19,7 +19,8 @@
             start-placeholder="开始时间"
             end-placeholder="结束时间"
             format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss">
+            value-format="yyyy-MM-dd HH:mm:ss"
+            :picker-options="common.timePickerOptions()">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="订单编号" prop="order_sn">

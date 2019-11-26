@@ -4,7 +4,7 @@
       <el-form-item label="网点名称：" prop="name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="所属区域：" prop="areaCode">
+      <el-form-item label="所属区域：" prop="areaCode" v-if="!loading">
         <el-cascader
           ref="areaCascader"
           v-model="form.areaCode"
@@ -99,7 +99,7 @@ export default {
       }).then(response => {
         const { data } = response
         data.areaCode = [data.province, data.city, data.district]
-        this.form = response.data
+        this.form = data
       }).finally(() => {
         this.loading = false
       })

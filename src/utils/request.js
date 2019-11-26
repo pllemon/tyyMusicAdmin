@@ -52,7 +52,7 @@ service.interceptors.response.use(
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code == 4042) {
+      if (res.code == 404) {
         store.dispatch('user/logout').then(() => {
           location.reload()
         })
