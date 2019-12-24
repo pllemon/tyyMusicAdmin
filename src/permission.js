@@ -36,11 +36,10 @@ router.beforeEach(async(to, from, next) => {
           // 获取用户信息
           let { role } = await store.dispatch('user/getInfo')
 
-          // 获取角色菜单
+          // 获取角色菜单，把角色菜单添加至路由
           const accessRoutes = await store.dispatch('permission/generateRoutes', role)
-
-          // 把角色菜单添加至路由
           router.addRoutes(accessRoutes)
+          
           next(to)
         } catch (error) {
           // 清除token并重定向到登录页，重新登录

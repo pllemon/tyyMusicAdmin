@@ -8,7 +8,7 @@
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <i class="el-icon-user-solid"></i>
-          {{ name }} 
+          {{ userInfo.username }} 
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -110,8 +110,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
-      'name',
+      'userInfo',
       'newList'
     ]),
     newsLength() {

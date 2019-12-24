@@ -54,16 +54,7 @@ export const constantRoutes = [
   }
 ]
 
-/**
- * asyncRoutes
- * 根据不同的角色加载不同的路由
- */
-export const asyncRoutes = [
-  
-]
-
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

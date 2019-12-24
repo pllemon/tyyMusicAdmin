@@ -15,16 +15,13 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
-    console.log('______')
-    console.log(roles)
-    console.log('______')
     return new Promise(resolve => {
       let accessedRoutes = []
-      if (roles == 1) {
+      if (roles == 1) { // 总部管理员
         accessedRoutes = mainAdminRoutes
-      } else if (roles == 2) {
+      } else if (roles == 2) { // 分部管理员
         accessedRoutes = branchAdminRoutes
-      } else if (roles == 3) {
+      } else if (roles == 3) { // 测试账号
         accessedRoutes = testAdminRoutes
       }
       commit('SET_ROUTES', accessedRoutes)

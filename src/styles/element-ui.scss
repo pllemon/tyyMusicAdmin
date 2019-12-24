@@ -64,3 +64,12 @@
 .el-image-viewer__close{
   color: #fff;
 }
+
+.el-form{
+  .el-select{
+    width: 100%;
+  }
+  .el-form-item__label{
+    font-weight: normal;
+  }
+}

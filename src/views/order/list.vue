@@ -27,7 +27,7 @@
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="订单状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
+          <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option
               v-for="(item, index) in orderStatus"
               :key="index"
@@ -36,7 +36,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属网点" prop="network_id">
+        <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
@@ -117,6 +117,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
 import Examine from '@/views/order/examine'
@@ -197,6 +198,9 @@ export default {
         this.queryMes.start_time = ''
         this.queryMes.end_time = ''
       }
+      if (this.userInfo.network_id) {
+        this.queryMes.network_id = this.userInfo.network_id
+      }
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
@@ -221,8 +225,9 @@ export default {
   },
   computed: {
     ...mapState({
-      orderStatus: state => state.dict.orderStatus
-    })
+      orderStatus: state => state.dict.orderStatus,
+    }),
+    ...mapGetters(['userInfo'])
   }
 }
 </script>

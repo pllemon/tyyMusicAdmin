@@ -92,7 +92,16 @@
     flex-direction: column;
     .search-form{
       .el-form-item{
-        margin-bottom: 10px;
+        margin-bottom: 6px;
+        .el-input__inner{
+          width: 140px;
+        }
+        .el-range-editor.el-input__inner{
+          width: auto;
+        }
+        .el-form-item__label{
+          font-weight: normal;
+        }
       }
     }
     .table-section{

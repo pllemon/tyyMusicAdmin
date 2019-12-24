@@ -18,16 +18,16 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="所属网点" prop="network_id">
-            <el-select v-model="form.network_id" style="width:100%">
-              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          <el-form-item label="账号角色" prop="role">
+            <el-select v-model="form.role" @change="changeRole">
+              <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="24">
-          <el-form-item label="账号角色" prop="role">
-            <el-select v-model="form.role" style="width:100%">
-              <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
+        <el-col :span="24" v-if="form.role == 2">
+          <el-form-item label="所属网点" prop="network_id">
+            <el-select v-model="form.network_id">
+              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -69,6 +69,7 @@ export default {
         role: [{ required: true, message: '请选择账号角色', trigger: 'change' }],
       },
       form: {
+        network_id: '',
         remark: ''
       },
       networkList: []
@@ -90,6 +91,12 @@ export default {
   methods: {
     handleClose() {
       this.$parent.currentComponent = ''
+    },
+
+    changeRole(val) {
+      if (val != 2) {
+        this.form.network_id = ''
+      }
     },
 
     getDetails() {

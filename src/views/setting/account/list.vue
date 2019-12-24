@@ -12,20 +12,20 @@
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
         <el-form-item label="账号名" prop="username">
-          <el-input v-model="queryMes.username" />
-        </el-form-item>
-        <el-form-item label="所属网点" prop="network_id">
-          <el-select v-model="queryMes.network_id">
-            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
-          </el-select>
+          <el-input v-model="queryMes.username" clearable/>
         </el-form-item>
         <el-form-item label="账号角色" prop="role">
-          <el-select v-model="queryMes.role">
+          <el-select v-model="queryMes.role" clearable>
             <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
+        <el-form-item label="所属网点" prop="network_id">
+          <el-select v-model="queryMes.network_id" clearable>
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
+          <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
@@ -49,14 +49,14 @@
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="账号名" width="100" prop="username" />
           <el-table-column label="联系电话" width="150" prop="phone" />
-          <el-table-column label="所属网点" width="150">
-            <template slot-scope="scope">
-              {{scope.row.network_name}}
-            </template>
-          </el-table-column>
           <el-table-column label="账号角色" width="150">
             <template slot-scope="scope">
               {{roleType[scope.row.role]}}
+            </template>
+          </el-table-column>
+          <el-table-column label="所属网点" width="150">
+            <template slot-scope="scope">
+              {{scope.row.network_name}}
             </template>
           </el-table-column>
           <el-table-column label="账号备注" prop="remark" width="150" />
