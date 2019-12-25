@@ -9,7 +9,7 @@
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" timestamp="">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.craftsmaninfo.choose_time">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 7" :timestamp="message.ordersshow.time">{{ message.craftsmaninfo.name }}师傅上传师傅秀</el-timeline-item>
@@ -31,7 +31,13 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="订单状态:">
-                  {{ orderStatus[message.info.status] }}
+                  <span>{{ orderStatus[message.info.status] }}</span>
+                  <span v-if="message.info.qxremark">, {{ message.info.qxremark }}</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="承接网点:">
+                  {{ message.info.networkname }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -61,7 +67,7 @@
               </el-col>
               <el-col :span="24">
                 <el-form-item label="用户备注:">
-                  {{ message.info.remark }}
+                  {{ message.info.remark || '无'}}
                 </el-form-item>
               </el-col>
               <el-col :span="24">

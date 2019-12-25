@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="审核商家" :visible="true" width="800px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="审核商家" :visible="true" width="800px" :before-close="handleClose" :close-on-click-modal="false">
     <el-form ref="examineForm" :model="examineForm" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
-        <el-radio-group v-model="examineForm.status">
+        <el-radio-group v-model="examineForm.status" @change="changeStatus">
           <el-radio label="1">通过</el-radio>
           <el-radio label="3">不通过</el-radio>
         </el-radio-group>
@@ -47,6 +47,13 @@ export default {
   },
 
   methods: {
+    changeStatus(val) {
+      if (val == '1') {
+        this.examineForm.bhremark = ''
+      }
+      this.$refs.examineForm.clearValidate() 
+    },
+
     handleClose() {
       this.$parent.currentComponent = ''
     },

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="860px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="860px" :before-close="handleClose" :close-on-click-modal="false">
     <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px" v-loading="loading">
       <el-form-item label="标题：" prop="title">
         <el-input v-model="form.title" />

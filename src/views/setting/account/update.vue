@@ -1,31 +1,31 @@
 <template>
-  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="600px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" :title="dialogMes.id?'编辑':'新增'" :visible="true" width="600px" :before-close="handleClose" :close-on-click-modal="false">
     <el-form ref="form" :rules="rules" :model="form" label-width="80px" v-loading="loading">
       <el-row>
         <el-col :span="24">
           <el-form-item label="账号名" prop="username">
-            <el-input v-model="form.username" :disabled="dialogMes.id !== ''"/>
+            <el-input v-model="form.username" :disabled="dialogMes.id !== ''" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="密码" prop="password" v-if="!dialogMes.id">
-            <el-input v-model="form.password" type="password"/>
+            <el-input v-model="form.password" type="password" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="联系电话" prop="phone">
-            <el-input v-model="form.phone" />
+            <el-input v-model="form.phone" clearable />
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="账号角色" prop="role">
-            <el-select v-model="form.role" @change="changeRole">
+            <el-select v-model="form.role" @change="changeRole" clearable>
               <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="24" v-if="form.role == 2">
-          <el-form-item label="所属网点" prop="network_id">
+          <el-form-item label="所属网点" prop="network_id" clearable>
             <el-select v-model="form.network_id">
               <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
@@ -33,7 +33,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="账号备注">
-            <el-input v-model="form.remark" />
+            <el-input v-model="form.remark" type="textarea" :rows="2" clearable />
           </el-form-item>
         </el-col>
       </el-row>

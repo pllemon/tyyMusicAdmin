@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="审核师傅" :visible="true" width="600px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="审核师傅" :visible="true" width="600px" :before-close="handleClose" :close-on-click-modal="false">
     <el-form ref="form" :model="form" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="form.status" @change="changeStatus">
@@ -70,10 +70,16 @@ export default {
   },
   methods: {
     changeStatus(val) {
-      this.form.headerurl = ''
-      this.$refs.upload.clearImg()
+      if (val == 1) {
+        this.form.reject_reason = ''
+      } else {
+        this.form.sn = ''
+        this.form.headerurl = ''
+        this.$refs.upload.clearImg()
+        this.file.url = ''
+      }
       this.$refs.form.resetFields()
-      this.file.url = ''
+      this.$refs.form.clearValidate() 
     },
 
     uploadSuccess(data) {

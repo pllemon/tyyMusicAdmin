@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="审核订单" :visible="true" width="800px" :before-close="handleClose">
+  <el-dialog :modal-append-to-body="false" title="审核订单" :visible="true" width="800px" :before-close="handleClose"  :close-on-click-modal="false">
     <el-form ref="examineForm" :model="examineForm" :rules="rules" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
-        <el-radio-group v-model="examineForm.status">
+        <el-radio-group v-model="examineForm.status" @change="changeStatus">
           <el-radio label="TG">通过</el-radio>
           <el-radio label="BH">不通过</el-radio>
         </el-radio-group>
@@ -99,6 +99,17 @@ export default {
   },
 
   methods: {
+    changeStatus(val) {
+      if (val == 'TG') {
+        this.examineForm.qxremark = ''
+      } else {
+        this.examineForm.total_price = ''
+        this.examineForm.earnest_price = ''
+        this.examineForm.crafts_man_price = ''
+      }
+      this.$refs.examineForm.clearValidate() 
+    },
+
     uploadSuccess(data) {
       this.examineForm.imglist = data.id
     },
