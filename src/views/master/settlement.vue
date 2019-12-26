@@ -105,7 +105,7 @@ export default {
 
       total: 0,
       queryMes: {
-        month: '',
+        // month: '',
         page: 1,
         limit: 10
       },
@@ -116,21 +116,19 @@ export default {
     }
   },
   created() {
-    this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
+    // this.queryMes.month = this.$moment().format("YYYY-MM")
     this.fetchData()
   },
   methods: {
     search() {
       this.queryMes.page = 1
-      this.queryMes.limit = 10
-      this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
       this.fetchData()
     },
     resetSearch() {
       this.$refs.searchForm.resetFields()
       this.queryMes.page = 1
       this.queryMes.limit = 10
-      this.queryMes.month = this.$moment(new Date(), "YYYY-MM")
+      this.queryMes.month = this.$moment().format("YYYY-MM")
       this.fetchData()
     },
 
