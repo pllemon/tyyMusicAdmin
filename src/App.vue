@@ -25,10 +25,10 @@ export default {
   destroyed: function() {
     this.websocketclose();
   },
-  methods: { 
+  methods: {
     initWebSocket(){
       const wsUrl = 'ws://47.106.100.144:2346'
-      this.websocket = new WebSocket(wsUrl); 
+      this.websocket = new WebSocket(wsUrl);
       this.websocket.onopen = this.websocketonopen
 
       this.websocket.onerror = this.websocketonerror
@@ -96,17 +96,18 @@ export default {
             offset: 50
           })
         }
-        
+
         this.$store.commit('news/ADD_NEWS', res)
-        
+
         this.$refs.audio.play()
       }
     },
-    websocketsend(agentData){//数据发送 
-      this.websock.send(agentData); 
-    }, 
-    websocketclose(e){ //关闭 
+    websocketsend(agentData){//数据发送
+      this.websock.send(agentData);
+    },
+    websocketclose(e){ //关闭
       console.log("connection closed")
+      this.initWebSocket()
     }
   }
 }

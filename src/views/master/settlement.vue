@@ -58,17 +58,18 @@
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="工号" prop="sn"/>
           <el-table-column label="姓名" prop="name"/>
+          <el-table-column label="头像" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>
           <el-table-column label="手机号" prop="phone" width="120"/>
           <el-table-column label="结算月份" prop="enter_time" width="100"/>
           <el-table-column label="完成订单数" prop="enter_time" width="100"/>
-          <el-table-column label="应发工资" prop="address" width="200"/>
-          <el-table-column label="状态" width="100">
+          <el-table-column label="应发工资" prop="money" width="200"/>
+          <el-table-column label="结算状态" width="100">
             <template slot-scope="scope">
               {{ recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="结算日期" width="200" prop="create_time" />
+          <el-table-column label="结算日期" width="200" prop="pay_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="surePay(scope.row.id, 0)">确定已发</el-button>
@@ -152,7 +153,7 @@ export default {
   },
   computed: {
     ...mapState({
-      recordStatus: state => state.dict. recordStatus
+      recordStatus: state => state.dict.recordStatus
     })
   }
 }
