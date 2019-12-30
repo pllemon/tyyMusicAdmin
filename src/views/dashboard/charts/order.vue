@@ -7,12 +7,18 @@
           <el-select v-model="network_id" placeholder="请选择" size="mini" style="width:150px" @change="getChartData()">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
+          <el-select v-model="time_id" placeholder="请选择" size="mini" style="width:150px" @change="getChartData()">
+            <el-option v-for="(item, index) in timeList" :key="index" :label="item.name" :value="index" />
+          </el-select>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="12"> 
         <ul class="order-ul">
           <li v-for="(item, index) in record" :key="index">
-            <p class="value">{{item.value ? item.value : 0}}</p>
+            <div>
+              <img src="@/assets/qp.png" v-if="item.value && (index==0 || index == 2 || index==3)"/>
+              <p class="value">{{item.value ? item.value : 0}}</p>
+            </div>
             <p class="name">{{item.name}}</p>
           </li>
         </ul>
@@ -22,6 +28,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapState } from 'vuex'
 import { orderstatistics } from '@/api/statistics'
 
@@ -33,7 +40,15 @@ export default {
       record: [],
 
       networkList: [],
-      network_id: ''
+      network_id: '',
+
+      timeList: [
+        { name: '全部时间', start: '', end: '' },
+        { name: '今日订单', start: moment().startOf('days').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('days').format('YYYY-MM-DD HH:mm:ss') },
+        { name: '本周订单', start: moment().startOf('week').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('week').format('YYYY-MM-DD HH:mm:ss') },
+        { name: '本月订单', start: moment().startOf('month').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('month').format('YYYY-MM-DD HH:mm:ss') }
+      ],
+      time_id: 0
     }
   },
   computed: {
@@ -61,7 +76,7 @@ export default {
     this.common.getAllNetwork(this, function(res) {
       that.networkList.unshift({
         id: '',
-        name: '全部'
+        name: '全部网点'
       })
     })
 
@@ -77,7 +92,9 @@ export default {
     getChartData() {
       const that = this
       orderstatistics({
-        network_id: that.network_id
+        network_id: that.network_id,
+        startTime: that.timeList[this.time_id].start,
+        endTime: that.timeList[this.time_id].end
       }).then(response => {
         const { data } = response
         const recordArr = []
@@ -153,11 +170,24 @@ export default {
   margin-top: 70px;
   li{
     width: 33.33%;
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    div{
+      position: relative;
+      min-width: 30px;
+      text-align: center;
+    }
+    img{
+      position: absolute;
+      width: 40px;
+      right: -45px;
+      top: -10px;
+    }
     .value{
       font-size: 22px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #666;
     }
     .name{
