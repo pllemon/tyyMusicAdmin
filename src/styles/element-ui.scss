@@ -37,6 +37,18 @@
   }
 }
 
+.el-table{
+  th, td{
+    padding: 10px 0;
+  }
+  th {
+    background: #f0f2f5;
+    font-size: 14px;
+    color: #666666;
+    font-weight: normal;
+  }
+}
+
 // dropdown
 .el-dropdown-menu {
   a {
@@ -72,4 +84,8 @@
   .el-form-item__label{
     font-weight: normal;
   }
+}
+
+.el-image__error, .el-image__placeholder{
+  background: #eee;
 }

@@ -76,10 +76,9 @@
             </template>
           </el-table-column>
           <el-table-column label="注册时间" width="200" prop="creattime" />
-          <el-table-column label="操作" width="180" fixed="right">
+          <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">基本资料</el-button>
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">积分详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>

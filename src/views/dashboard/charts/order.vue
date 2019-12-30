@@ -1,11 +1,23 @@
 <template>
   <div class="chart-content">
-    <div ref="chart" style="width:100%;height:300px" />
-    <div class="charts-select">
-      <el-select v-model="network_id" placeholder="请选择" size="mini" style="width:100px" @change="getChartData()">
-        <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
-      </el-select>
-    </div>
+    <el-row>
+      <el-col :span="12">
+        <div ref="chart" style="width:100%;height:300px" />
+        <div class="charts-select">
+          <el-select v-model="network_id" placeholder="请选择" size="mini" style="width:150px" @change="getChartData()">
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <ul class="order-ul">
+          <li v-for="(item, index) in record" :key="index">
+            <p class="value">{{item.value ? item.value : 0}}</p>
+            <p class="name">{{item.name}}</p>
+          </li>
+        </ul>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -76,6 +88,7 @@ export default {
           })
         }
         that.record = recordArr
+        console.log(recordArr)
         that.initCharts()
       })
     },
@@ -133,3 +146,24 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+.order-ul{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 70px;
+  li{
+    width: 33.33%;
+    text-align: center;
+    margin-bottom: 20px;
+    .value{
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #666;
+    }
+    .name{
+      font-size: 12px;
+      color: rgba(0,0,0,.45);
+    }
+  }
+}
+</style>

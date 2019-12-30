@@ -12,15 +12,15 @@
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
         <el-form-item label="申请时间">
-          <el-col :span="11">
-            <el-date-picker v-model="queryMes.date1" type="date" placeholder="选择日期" style="width: 100%;" />
-          </el-col>
-          <el-col class="line text-center" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-date-picker v-model="queryMes.date2" type="date" placeholder="选择日期" style="width: 100%;" />
-          </el-col>
+          <el-date-picker
+            v-model="queryMes.date"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
         </el-form-item>
-        <el-form-item label="师傅名">
+        <el-form-item label="处理状态">
           <el-input v-model="queryMes.user" placeholder="请输入" />
         </el-form-item>
         <el-form-item>

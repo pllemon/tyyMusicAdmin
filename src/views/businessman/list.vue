@@ -11,6 +11,18 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+        <el-form-item label="申请时间">
+           <el-date-picker
+            v-model="timeRange"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            :picker-options="common.timePickerOptions()">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item label="店铺名" prop="name">
           <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>
@@ -27,7 +39,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -43,29 +55,14 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="店铺名" prop="name" width="120"/>
-          <el-table-column label="联系方式" prop="phone" width="120"/>
-          <el-table-column label="店铺地址" prop="address" width="200"/>
-          <el-table-column label="门面图片" width="120">
+          <el-table-column label="店铺门面" width="120">
             <template slot-scope="scope">
               <gd-image :src="scope.row.shopimg" small/>
             </template>
           </el-table-column>
-          <el-table-column label="产品图片" width="120">
-            <template slot-scope="scope">
-              <gd-image :src="scope.row.goodsimg" small/>
-            </template>
-          </el-table-column>
-          <el-table-column label="营业执照" width="120">
-            <template slot-scope="scope">
-              <gd-image :src="scope.row.businessimg" small/>
-            </template>
-          </el-table-column>
-          <el-table-column label="分享图片" width="120">
-            <template slot-scope="scope">
-              <gd-image :src="scope.row.sharewximg" small/>
-            </template>
-          </el-table-column>
+          <el-table-column label="店铺名" prop="name" width="120" />
+          <el-table-column label="联系方式" prop="phone" width="120" />
+          <el-table-column label="店铺地址" prop="address" />
           <el-table-column label="状态" width="120">
             <template slot-scope="scope">
               {{ recordStatus[scope.row.status] }}
@@ -91,6 +88,8 @@
     <!-- 导出 -->
     <form ref="exportForm" action="/admin/businesslist" method="post" style="display:none">
       <input name="model" value="exportToExcel" />
+      <input v-if="this.timeRange" name="start_time" :value="this.timeRange[0]" />
+      <input v-if="this.timeRange" name="end_time" :value="this.timeRange[1]" />
       <div></div>
     </form>
   </div>
@@ -122,8 +121,11 @@ export default {
         address: '',
         status: '',
         page: 1,
-        limit: 10
+        limit: 10,
+        start_time: '',
+        end_time: '',
       },
+      timeRange: [],
 
       currentComponent: '',
       dialogMes: {}
@@ -135,6 +137,13 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
+      if (this.timeRange.length) {
+        this.queryMes.start_time = this.timeRange[0]
+        this.queryMes.end_time = this.timeRange[1]
+      } else {
+        this.queryMes.start_time = ''
+        this.queryMes.end_time = ''
+      }
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total

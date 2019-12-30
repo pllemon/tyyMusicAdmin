@@ -1,73 +1,73 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
-    <div class="section detail-form">
-      <p class="section-title small">基本信息</p>
-      <div class="flex-center">
-        <gd-image :src="info.headerurl" headUrl width="100" height="100"/>
-        <el-form class="flex1" label-width="100px">
-          <el-row> 
-            <el-col :span="8">
-              <el-form-item label="用户账号:">
-                {{ info.phone }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="用户名:">
-                {{ info.username }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="注册时间:">
-                {{ info.creattime }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="推荐码:">
-                {{ info.invitation_code }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="上级推荐人:">
-                {{ info.friend_name }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="下级推荐数:">
-                {{ info.friend_sum }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="账号状态:">
-                {{ identityType[info.status] }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="师傅状态:">
-                {{ identityType[info.is_criaftsman] }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="商家状态:">
-                {{ identityType[info.is_business] }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="总积分:">
-                {{ info.creattime }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-    </div>
-    <div class="section detail-form">
-      <p class="section-title small">积分记录</p>
-      <integral-list :id="dialogMes.id" />
-    </div>
-    <div class="section detail-form">
-      <p class="section-title small">推荐记录</p>
-      <recommend-list :id="dialogMes.id" />
-    </div>
+    
+    <el-tabs tab-position="top">
+      <el-tab-pane label="基本信息" style="min-height: 400px;">
+        <div class="flex-center">
+          <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
+          <el-form class="flex1" label-width="100px">
+            <el-row> 
+              <el-col :span="8">
+                <el-form-item label="用户账号:">
+                  {{ info.phone }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="用户名:">
+                  {{ info.username }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="注册时间:">
+                  {{ info.creattime }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="推荐码:">
+                  {{ info.invitation_code }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="上级推荐人:">
+                  {{ info.friend_name }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="下级推荐数:">
+                  {{ info.friend_sum }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="账号状态:">
+                  {{ identityType[info.status] }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="师傅状态:">
+                  {{ identityType[info.is_criaftsman] }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="商家状态:">
+                  {{ identityType[info.is_business] }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="总积分:">
+                  {{ info.creattime }}
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="积分记录">
+        <integral-list :id="dialogMes.id" />
+      </el-tab-pane>
+      <el-tab-pane label="推荐记录">
+        <recommend-list :id="dialogMes.id" />
+      </el-tab-pane>
+    </el-tabs>
   </el-dialog>
 </template>
 
@@ -120,5 +120,9 @@ export default {
   .section-title{
     margin-bottom: 15px;
   }
+}
+
+.el-form-item{
+  margin-bottom: 0;
 }
 </style>

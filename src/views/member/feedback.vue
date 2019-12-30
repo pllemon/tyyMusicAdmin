@@ -29,11 +29,8 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="反馈用户">
-            <template slot-scope="scope">
-              {{scope.row.username}} {{scope.row.phone}}
-            </template>
-          </el-table-column>
+          <el-table-column label="反馈账号" prop="phone" />
+          <el-table-column label="用户名" prop="username" />
           <el-table-column label="反馈内容" prop="feedback" />
           <el-table-column label="反馈时间" prop="time" />
         </el-table>

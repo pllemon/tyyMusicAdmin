@@ -8,7 +8,7 @@
         border
         fit
         highlight-current-row
-        height="300px"
+        height="360px"
       >
         <el-table-column label="序号" type="index" width="50" fixed/>
         <el-table-column label="积分数" prop="integral"/>

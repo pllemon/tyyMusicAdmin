@@ -72,7 +72,9 @@
           <el-table-column label="结算日期" width="200" prop="pay_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="surePay(scope.row.id, 0)">确定已发</el-button>
+              <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
+              <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button>
+              <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -88,13 +90,11 @@
 <script>
 import { mapState } from 'vuex'
 import { craftsmansettlementlist, craftsmansettlement } from '@/api/master'
-import Details from '@/views/master/details'
-import Examine from '@/views/master/examine'
+import Orders from '@/views/master/orders'
 
 export default {
   components: {
-    Details,
-    Examine
+    Orders
   },
   data() {
     return {
@@ -133,8 +133,12 @@ export default {
       this.fetchData()
     },
 
-    surePay() {
+    surePay(id, status) {
+      
+    },
 
+    showOrder(row) {
+      this.currentComponent = 'Orders'
     },
 
     fetchData() {

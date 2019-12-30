@@ -2,7 +2,7 @@
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form" v-loading="loading">
       <div class="flex-center">
-        <gd-image :src="info.headerurl" headUrl width="100" height="100"/>
+        <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
         <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
