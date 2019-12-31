@@ -1,8 +1,16 @@
 <template>
-  <div ref="chart" style="width:100%;height:300px" />
+  <div class="chart-content">
+    <div ref="chart" style="width:100%;height:300px" />
+    <div class="charts-select">
+      <el-select v-model="time_id" placeholder="请选择" size="mini" style="width:150px" @change="getChartData()">
+        <el-option v-for="(item, index) in timeList" :key="index" :label="item.name" :value="index" />
+      </el-select>
+    </div>
+  </div>
 </template>
 
 <script>
+import moment from 'moment'
 import { mapState } from 'vuex'
 import { unlinkorderstatistics } from '@/api/statistics'
 
@@ -11,7 +19,15 @@ export default {
   data() {
     return {
       chart: null,
-      record: []
+      record: [],
+
+      timeList: [
+        { name: '全部时间', start: '', end: '' },
+        { name: '今日订单', start: moment().startOf('days').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('days').format('YYYY-MM-DD HH:mm:ss') },
+        { name: '本周订单', start: moment().startOf('week').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('week').format('YYYY-MM-DD HH:mm:ss') },
+        { name: '本月订单', start: moment().startOf('month').format('YYYY-MM-DD HH:mm:ss'), end: moment().endOf('month').format('YYYY-MM-DD HH:mm:ss') }
+      ],
+      time_id: 0
     }
   },
   computed: {
@@ -46,7 +62,10 @@ export default {
   methods: {
     getChartData() {
       const that = this
-      unlinkorderstatistics().then(response => {
+      unlinkorderstatistics({
+        start_time: that.timeList[this.time_id].start,
+        end_time: that.timeList[this.time_id].end
+      }).then(response => {
         const { data } = response
         const recordArr = []
         for (var i in that.offlineStatus) {
@@ -97,7 +116,7 @@ export default {
           {
             name: '状态统计',
             type: 'pie',
-            radius: ['36%', '56%'],
+            radius: ['40%', '56%'],
             center: ['50%', '55%'],
             labelLine: {
               normal: {

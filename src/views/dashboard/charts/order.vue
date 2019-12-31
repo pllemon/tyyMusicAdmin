@@ -93,8 +93,8 @@ export default {
       const that = this
       orderstatistics({
         network_id: that.network_id,
-        startTime: that.timeList[this.time_id].start,
-        endTime: that.timeList[this.time_id].end
+        start_time: that.timeList[this.time_id].start,
+        end_time: that.timeList[this.time_id].end
       }).then(response => {
         const { data } = response
         const recordArr = []
@@ -148,7 +148,7 @@ export default {
           {
             name: '状态统计',
             type: 'pie',
-            radius: ['36%', '56%'],
+            radius: ['40%', '56%'],
             center: ['50%', '55%'],
             labelLine: {
               normal: {
@@ -204,8 +204,8 @@ export default {
     }
     img{
       position: absolute;
-      width: 40px;
-      right: -45px;
+      width: 35px;
+      right: -35px;
       top: -10px;
     }
     .value{

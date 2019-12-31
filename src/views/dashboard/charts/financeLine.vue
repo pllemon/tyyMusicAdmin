@@ -2,22 +2,32 @@
   <div class="chart-content">
     <div ref="chart" style="width:100%;height:400px" />
     <div class="charts-select">
-      <el-select v-model="type" placeholder="请选择" size="mini" style="width:100px" @change="changeType">
-        <el-option label="月" :value="1" />
-        <el-option label="年" :value="2" />
-      </el-select>
+      <el-date-picker
+        v-model="year"
+        type="year"
+        size="mini"
+        placeholder="选择年份"
+        :clearable="false"
+        :editable="false"
+        style="width:150px">
+      </el-date-picker>
     </div>
   </div>
 </template>
 
 <script>
-const color = ['#5085f2', '#e75fc3', '#f59a8f']
+const color = ['#8d7fec', '#f2719a', '#5085f2', '#57e7ec', '#e75fc3', '#f87be2', '#fca4bb', '#f59a8f', '#fdb301']
 export default {
   data() {
     return {
       chart: null,
-      type: 1
+      type: 1,
+
+      year: this.$moment().format('YYYY')
     }
+  },
+  created() {
+    console.log(this.year)
   },
   computed: {
     monthArr() {
@@ -59,16 +69,23 @@ export default {
       this.chart = this.$echarts.init(this.$refs.chart)
       const option = {
         color: color,
-        title: {
-          text: '同名数量统计',
+        title: [{
+          text: '数量统计',
           subtext: '纯属虚构',
           x: 'left'
-        },
+        }, {
+          text: '占比分析',
+          x: '75%'
+        }, {
+          text: '占比分析2',
+          x: '75%',
+          y: '50%'
+        }],
         grid: {
           left: '2%',
-          right: '2%',
-          top: '25%',
-          bottom: '5%',
+          right: '30%',
+          top: '22%',
+          bottom: '2%',
           containLabel: true
         },
         tooltip: {
@@ -81,13 +98,13 @@ export default {
           }
         },
         legend: {
-          x: 'center',
+          x: '25%',
           top: '2%',
           selectedMode: false,
           textStyle: {
             color: '#90979c'
           },
-          data: ['type1', 'type2', 'type3', '总数']
+          data: ['label1', 'label2', 'label3', 'label4']
         },
         xAxis: [{
           type: 'category',
@@ -97,38 +114,58 @@ export default {
           type: 'value'
         }],
         series: [{
-          name: 'type1',
-          type: 'bar',
-          barMaxWidth: '40%',
-          stack: '总量',
-          data: [50, 20, 30, 40, 43, 13, 70, 80, 90, 100, 110]
-        }, {
-          name: 'type2',
-          type: 'bar',
-          stack: '总量',
-          data: [10, 20, 30, 8, 20, 15, 70, 80, 90, 34, 60]
-        }, {
-          name: 'type3',
-          type: 'bar',
-          stack: '总量',
-          data: [10, 20, 30, 80, 50, 10, 50, 80, 90, 50, 110]
-        }, {
-          name: '总数',
+          name: 'label1',
           type: 'line',
-          stack: '总量',
-          itemStyle: {
-            normal: {
-              color: '#8d7fec',
-              label: {
-                show: true,
-                position: 'top',
-                formatter: function(p) {
-                  return p.value > 0 ? (p.value) : ''
-                }
-              }
-            }
-          },
-          data: [30, 60, 90, 120, 150, 180, 210, 80, 90, 100, 300]
+          smooth: true,
+          data: [30, 60, 90, 120, 150, 180, 210, 80, 90, 100, 300, 50]
+        }, {
+          name: 'label2',
+          type: 'line',
+          smooth: true,
+          data: [220, 500, 450, 120, 250, 280, 600, 450, 300, 500, 380, 250]
+        }, {
+          name: 'label3',
+          type: 'line',
+          smooth: true,
+          data: [130, 60, 90, 50, 150, 130, 100, 80, 90, 250, 150, 180]
+        }, {
+          name: 'label4',
+          type: 'line',
+          smooth: true,
+          data: [289, 500, 200, 433, 150, 270, 321, 80, 150, 176, 264, 444]
+        }, {
+          type: 'pie',
+          center: ['87%', '30%'],
+          radius: ['0%', '28%'],
+          roseType: 'radius',
+          data: [{
+            value: 644,
+            name: 'label1'
+          }, {
+            value: 100,
+            name: 'label2'
+          }, {
+            value: 200,
+            name: 'label3'
+          }]
+        }, {
+          type: 'pie',
+          center: ['87%', '80%'],
+          radius: ['0%', '28%'],
+          roseType: 'radius',
+          data: [{
+            value: 200,
+            name: 'label1'
+          }, {
+            value: 366,
+            name: 'label2'
+          }, {
+            value: 100,
+            name: 'label3'
+          }, {
+            value: 245,
+            name: 'label4'
+          }]
         }]
       }
       this.chart.setOption(option)
@@ -136,14 +173,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.chart-content{
-  position: relative;
-}
-.charts-select{
-  position: absolute;
-  top: 6px;
-  right: 6px;
-}
-</style>
