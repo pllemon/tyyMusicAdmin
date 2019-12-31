@@ -14,7 +14,7 @@
       </el-col>
       <el-col :span="12"> 
         <ul class="order-ul">
-          <li v-for="(item, index) in record" :key="index">
+          <li v-for="(item, index) in record" :key="index" @click="goList(item.status)">
             <div>
               <img src="@/assets/qp.png" v-if="item.value && (index==0 || index == 2 || index==3)"/>
               <p class="value">{{item.value ? item.value : 0}}</p>
@@ -101,14 +101,15 @@ export default {
         for (var i in that.orderStatus) {
           recordArr.push({
             value: data[i] || null,
-            name: that.orderStatus[i]
+            name: that.orderStatus[i],
+            status: i
           })
         }
         that.record = recordArr
-        console.log(recordArr)
         that.initCharts()
       })
     },
+
     initCharts() {
       const that = this
       this.chart = this.$echarts.init(this.$refs.chart)
@@ -159,6 +160,22 @@ export default {
         ]
       }
       this.chart.setOption(option)
+    },
+
+    goList(status) {
+      let that = this
+      let obj = {
+        network_id: that.network_id,
+        start_time: that.timeList[this.time_id].start,
+        end_time: that.timeList[this.time_id].end,
+        status: status
+      }
+      let queryStr = ''
+      for (let i in obj) {
+        queryStr += `${i}=${obj[i]}&`
+      }
+      console.log(queryStr)
+      this.$router.push('/order/list?' + queryStr)
     }
   }
 }
@@ -174,6 +191,12 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-bottom: 25px;
+    cursor: pointer;
+    &:hover{
+      .value, .name{
+        color: #409EFF !important;
+      }
+    }
     div{
       position: relative;
       min-width: 30px;

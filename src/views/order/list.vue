@@ -182,16 +182,24 @@ export default {
         cmphone: ''
       }
       that.timeRange = []
-      const status = that.$route.query.status
-      if (status) {
-        that.queryMes.status = status
+      let query = that.$route.query
+      for (let i in query) {
+        if (i) {
+          that.queryMes[i] = query[i]
+        }
       }
+      if (query.network_id) {
+        this.queryMes.network_id = parseInt(query.network_id)
+      }
+      if (query.start_time && query.end_time) {
+        that.timeRange = [query.start_time, query.end_time]
+      } 
       that.fetchData()
     },
 
     fetchData() {
       this.listLoading = true
-      if (this.timeRange.length) {
+      if (this.timeRange && this.timeRange.length) {
         this.queryMes.start_time = this.timeRange[0]
         this.queryMes.end_time = this.timeRange[1]
       } else {
