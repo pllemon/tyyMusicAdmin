@@ -41,12 +41,15 @@
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="下单用户号码" prop="phone">
+        <el-form-item label="用户手机" prop="phone">
           <el-input type="text" v-model="queryMes.phone" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="接单师傅号码" prop="cmphone">
+        <el-form-item label="师傅手机" prop="cmphone">
           <el-input type="text" v-model="queryMes.cmphone" placeholder="请输入"/>
         </el-form-item>
+        <!-- <el-form-item label="师傅编号" prop="cmsn">
+          <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
@@ -84,7 +87,7 @@
           <el-table-column label="服务网点" prop="networkname" width="120" />
           <el-table-column label="承接师傅"  width="200">
             <template slot-scope="scope">
-              <p>{{scope.row.cmname}}</p> 
+              <p>{{scope.row.cmsn}} {{scope.row.cmname}}</p> 
               <p>{{scope.row.cmphone}}</p>
             </template>
           </el-table-column>
@@ -146,7 +149,8 @@ export default {
         end_time: '',
         network_id: '',
         phone: '',
-        cmphone: ''
+        cmphone: '',
+        cmsn: ''
       },
       timeRange: [],
 
@@ -179,7 +183,8 @@ export default {
         end_time: '',
         network_id: '',
         phone: '',
-        cmphone: ''
+        cmphone: '',
+        cmsn: ''
       }
       that.timeRange = []
       let query = that.$route.query

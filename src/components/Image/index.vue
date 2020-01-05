@@ -49,7 +49,6 @@ export default {
     }
   },
   created() {
-    console.log(this.common.ip + this.src)
     if (this.small) {
       this.cWidth = this.width/2
       this.cHeight = this.height/2

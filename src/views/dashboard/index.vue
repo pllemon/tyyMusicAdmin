@@ -8,13 +8,6 @@
       </el-col>
     </el-row>
     <el-row :gutter="15">
-      <el-col :span="24">
-        <el-card class="box-card">
-          <finance-line />
-        </el-card>
-      </el-col>
-    </el-row>
-    <el-row :gutter="15">
       <el-col :span="12">
         <el-card class="box-card">
           <Offline />
@@ -23,6 +16,13 @@
       <el-col :span="12">
         <el-card class="box-card">
           <person />
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="15">
+      <el-col :span="24">
+        <el-card class="box-card">
+          <finance-line />
         </el-card>
       </el-col>
     </el-row>
