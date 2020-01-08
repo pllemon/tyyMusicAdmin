@@ -92,6 +92,7 @@
           <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.order_id)">审核</el-button>
               <el-button type="text" v-if="scope.row.status == 1" @click="common.loadComponent(vm, 2, scope.row.order_id)">审核</el-button>
               <el-button type="text" v-if="scope.row.status == 4" @click="common.loadComponent(vm, 3, scope.row.order_id)">指派</el-button>
               <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
@@ -122,12 +123,14 @@ import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
 import Examine from '@/views/order/examine'
 import Appoint from '@/views/order/appoint'
+import Update from '@/views/order/update'
 
 export default {
   components: {
     Details,
     Examine,
-    Appoint
+    Appoint,
+    Update
   },
   data() {
     return {

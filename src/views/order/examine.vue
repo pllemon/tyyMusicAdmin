@@ -11,12 +11,6 @@
         <el-form-item label="订单总价格(元)：" prop="total_price">
           <el-input v-model.number="examineForm.total_price" />
         </el-form-item>
-        <el-form-item label="定金金额(元)：" prop="earnest_price">
-          <el-input v-model.number="examineForm.earnest_price" />
-        </el-form-item>
-        <el-form-item label="师傅工资(元)：" prop="crafts_man_price">
-          <el-input v-model.number="examineForm.crafts_man_price" />
-        </el-form-item>
         <el-form-item label="报价单照片：" required>
           <gd-upload 
             width="260" 
@@ -59,8 +53,6 @@ export default {
     return {
       examineForm: {
         total_price: '',
-        earnest_price: '',
-        crafts_man_price: '',
         imglist: '',
         order_sn: '',
         user_id: '',
@@ -72,14 +64,6 @@ export default {
         total_price: [
           { required: true, message: '请输入订单总价格', trigger: 'blur' },
           { type: 'number', message: '订单总价格必须为数字值'}
-        ],
-        earnest_price: [
-          { required: true, message: '请输入定金金额', trigger: 'blur' },
-          { type: 'number', message: '定金金额必须为数字值'}
-        ],
-        crafts_man_price: [
-          { required: true, message: '请输入师傅工资', trigger: 'blur' },
-          { type: 'number', message: '师傅工资必须为数字值'}
         ]
       },
       orderInfo: {}
@@ -104,8 +88,6 @@ export default {
         this.examineForm.qxremark = ''
       } else {
         this.examineForm.total_price = ''
-        this.examineForm.earnest_price = ''
-        this.examineForm.crafts_man_price = ''
       }
       this.$refs.examineForm.clearValidate() 
     },
