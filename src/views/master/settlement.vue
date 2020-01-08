@@ -11,30 +11,30 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="申请月份" prop="month">
+        <el-form-item label="结算月份" prop="mon">
           <el-date-picker
-            v-model="queryMes.month"
+            v-model="queryMes.mon"
             type="month"
             format="yyyy-MM"
             value-format="yyyy-MM"
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="审核状态" prop="status">
+        <el-form-item label="结算状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
-              v-for="(item, index) in statusOptions"
+              v-for="(item, index) in settleStauts"
               :key="index"
               :label="item"
               :value="index"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="师傅名">
-          <el-input v-model="queryMes.user" placeholder="请输入" />
+        <el-form-item label="师傅名" prop="name">
+          <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="师傅编号">
-          <el-input v-model="queryMes.user" placeholder="请输入" />
+        <el-form-item label="师傅编号" prop="sn">
+          <el-input v-model="queryMes.sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search()">搜索</el-button>
@@ -54,26 +54,33 @@
           height="100%"
           @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
+          <el-table-column label="头像" align="center">
+            <template slot-scope="scope">
+              <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
+            </template>
+          </el-table-column>
           <el-table-column label="工号" prop="sn"/>
           <el-table-column label="姓名" prop="name"/>
-          <el-table-column label="头像" prop="name"/>
           <el-table-column label="身份证" prop="sfz" width="180"/>
           <el-table-column label="手机号" prop="phone" width="120"/>
-          <el-table-column label="结算月份" prop="enter_time" width="100"/>
-          <el-table-column label="完成订单数" prop="enter_time" width="100"/>
-          <el-table-column label="应发工资" prop="money" width="200"/>
-          <el-table-column label="结算状态" width="100">
+          <el-table-column label="结算月份" prop="time" width="100">
             <template slot-scope="scope">
-              {{ recordStatus[scope.row.status] }}
+              {{scope.row.time.slice(0, 7)}}
+            </template>
+          </el-table-column>
+          <el-table-column label="完成订单数" prop="order_num" min-width="120"/>
+          <el-table-column label="应发工资" prop="money"/>
+          <el-table-column label="结算状态">
+            <template slot-scope="scope">
+              {{ settleStauts[scope.row.status] }}
             </template>
           </el-table-column>
           <el-table-column label="结算日期" width="200" prop="pay_time" />
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
-              <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button>
+              <!-- <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
+              <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button> -->
               <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button>
             </template>
           </el-table-column>
@@ -106,9 +113,12 @@ export default {
 
       total: 0,
       queryMes: {
-        // month: '',
+        mon: '',
         page: 1,
-        limit: 10
+        limit: 10,
+        status: '',
+        name: '',
+        sn: ''
       },
       statusOptions: ['未审核', '审核通过', '已驳回'],
 
@@ -117,7 +127,7 @@ export default {
     }
   },
   created() {
-    // this.queryMes.month = this.$moment().format("YYYY-MM")
+    this.queryMes.mon = this.$moment().format("YYYY-MM")
     this.fetchData()
   },
   methods: {
@@ -129,7 +139,7 @@ export default {
       this.$refs.searchForm.resetFields()
       this.queryMes.page = 1
       this.queryMes.limit = 10
-      this.queryMes.month = this.$moment().format("YYYY-MM")
+      this.queryMes.mon = this.$moment().format("YYYY-MM")
       this.fetchData()
     },
 
@@ -138,6 +148,13 @@ export default {
     },
 
     showOrder(row) {
+      this.dialogMes = {
+        mon: row.time.split(' ')[0],
+        craftsman_id: row.craftsman_id,
+        status: 1,
+        page: 1,
+        limit: 10
+      }
       this.currentComponent = 'Orders'
     },
 
@@ -157,7 +174,7 @@ export default {
   },
   computed: {
     ...mapState({
-      recordStatus: state => state.dict.recordStatus
+      settleStauts: state => state.dict.settleStauts
     })
   }
 }

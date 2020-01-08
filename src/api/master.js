@@ -8,6 +8,14 @@ export function getList(data) {
   })
 }
 
+export function craftsmanorderlist(data) {
+  return request({
+    url: `/admin/craftsmanorderlist?page=${data.page}&limit=${data.limit}`,
+    method: 'post',
+    data
+  })
+}
+
 export function getDetails(params) {
   return request({
     url: '/admin/craftsmaninfo',
@@ -15,6 +23,7 @@ export function getDetails(params) {
     params
   })
 }
+
 
 export function craftsmanexamine(data) {
   return request({

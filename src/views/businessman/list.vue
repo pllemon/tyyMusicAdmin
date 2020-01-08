@@ -88,8 +88,8 @@
     <!-- 导出 -->
     <form ref="exportForm" action="/admin/businesslist" method="post" style="display:none">
       <input name="model" value="exportToExcel" />
-      <input v-if="this.timeRange" name="start_time" :value="this.timeRange[0]" />
-      <input v-if="this.timeRange" name="end_time" :value="this.timeRange[1]" />
+      <input v-if="this.timeRange" name="starttime" :value="this.timeRange[0]" />
+      <input v-if="this.timeRange" name="endtime" :value="this.timeRange[1]" />
       <div></div>
     </form>
   </div>
@@ -122,8 +122,8 @@ export default {
         status: '',
         page: 1,
         limit: 10,
-        start_time: '',
-        end_time: '',
+        starttime: '',
+        endtime: '',
       },
       timeRange: [],
 
@@ -138,11 +138,11 @@ export default {
     fetchData() {
       this.listLoading = true
       if (this.timeRange.length) {
-        this.queryMes.start_time = this.timeRange[0]
-        this.queryMes.end_time = this.timeRange[1]
+        this.queryMes.starttime = this.timeRange[0]
+        this.queryMes.endtime = this.timeRange[1]
       } else {
-        this.queryMes.start_time = ''
-        this.queryMes.end_time = ''
+        this.queryMes.starttime = ''
+        this.queryMes.endtime = ''
       }
       getList(this.queryMes).then(response => {
         this.list = response.data.data
