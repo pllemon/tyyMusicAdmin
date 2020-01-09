@@ -5,6 +5,7 @@
       <p class="section-title">用户列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+        <el-button size="small" icon="el-icon-upload2" round @click="changePoints(selectIds)">积分增减</el-button>
       </div>
     </div>
 
@@ -46,7 +47,9 @@
           fit
           highlight-current-row
           height="100%"
+          @selection-change="selectionChange"
         >
+          <el-table-column type="selection" width="55" />
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="用户头像" align="center">
             <template slot-scope="scope">
@@ -76,9 +79,10 @@
             </template>
           </el-table-column>
           <el-table-column label="注册时间" width="200" prop="creattime" />
-          <el-table-column label="操作" width="100" fixed="right">
+          <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">详情</el-button>
+              <el-button type="text" @click="changePoints([scope.row.user_id])">积分增减</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -95,6 +99,7 @@
 import { mapState } from 'vuex'
 import { getList } from '@/api/member'
 import Details from '@/views/member/details'
+import DispatchingPoints from '@/views/member/dispatchingPoints'
 
 export default {
   data() {
@@ -123,12 +128,22 @@ export default {
   computed: {
     ...mapState({
       identityType: state => state.dict.identityType
-    })
+    }),
+    selectIds() {
+      let idsArr = this.selectArr.map(item => {
+        return item.user_id
+      })
+      return idsArr
+    }
   },
   created() {
     this.fetchData()
   },
   methods: {
+    selectionChange(val) {
+      this.selectArr = val
+    },
+
     fetchData() {
       this.listLoading = true
       getList(this.queryMes).then(response => {
@@ -137,10 +152,19 @@ export default {
       }).finally(() => {
         this.listLoading = false
       })
+    },
+
+    changePoints(ids) {
+      console.log(ids)
+      this.dialogMes = {
+        ids: ids
+      }
+      this.currentComponent = 'DispatchingPoints'
     }
   },
   components: {
-    Details
+    Details,
+    DispatchingPoints
   }
 }
 </script>

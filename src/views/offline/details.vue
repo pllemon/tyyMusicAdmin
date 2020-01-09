@@ -51,11 +51,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="用户积分返还:">
-              {{ info.return_integral| normNumber }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="创建时间:">
               {{ info.creat_time }}
             </el-form-item>

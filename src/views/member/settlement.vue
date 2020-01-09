@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">商家提现申请</p>
+      <p class="section-title">用户提现申请</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>

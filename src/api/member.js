@@ -41,3 +41,10 @@ export function userintegrallist(data) {
   })
 }
 
+export function senuserintegral(data) {
+  return request({
+    url: '/admin/senuserintegral',
+    method: 'post',
+    data
+  })
+}

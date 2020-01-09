@@ -1,7 +1,7 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form" v-loading="loading">
-      <div class="flex-center">
+      <div class="flex">
         <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
         <el-form class="flex1" label-width="100px">
           <el-row>
@@ -26,13 +26,23 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
+              <el-form-item label="所属区域:">
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
               <el-form-item label="入行年份:">
                 {{ info.enter_time }}
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="申请时间:">
-                {{ info.create_time }}
+            <el-col :span="24">
+              <el-form-item label="身份证照:">
+                <gd-image :src="info.headerurl" width="200" height="120"/>
+                <gd-image :src="info.headerurl" width="200" height="120"/>
+                <gd-image :src="info.headerurl" width="200" height="120"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item label="擅长技能:">
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -43,6 +53,11 @@
             <el-col :span="24">
               <el-form-item label="个人简介:">
                 {{ info.desc }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请时间:">
+                {{ info.create_time }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -104,53 +119,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-.section{
-  margin-bottom: 40px;
-  .section-title{
-    margin-bottom: 15px;
-  }
-}
-.order-mes{
-  display: flex;
-  flex-wrap: wrap;
-  li{
-    width: 33.33%;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    font-weight: bold;
-    label{
-      margin-bottom: 5px;
-      display: block;
-      font-weight: normal;
-    }
-  }
-}
-
-.master-list{
-  display: flex;
-  flex-wrap: wrap;
-  li{
-    width: 32%;
-    border: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    line-height: 1.5;
-    margin-right: 2%;
-    padding: 10px;
-    box-sizing: border-box;
-    &:nth-of-type(3n){
-      margin-right: 0;
-    }
-    img{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 10px;
-      background: #f2f2f2;
-    }
-  }
-}
-</style>

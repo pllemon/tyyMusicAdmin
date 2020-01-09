@@ -69,12 +69,6 @@ export const mainAdminRoutes = [
         name: 'List',
         component: () => import('@/views/businessman/list'),
         meta: { title: '全部商家'}
-      },
-      {
-        path: 'settlement',
-        name: 'Settlement',
-        component: () => import('@/views/businessman/settlement'),
-        meta: { title: '提现申请'}
       }
     ]
   },
@@ -97,6 +91,12 @@ export const mainAdminRoutes = [
         name: 'Feedback',
         component: () => import('@/views/member/feedback'),
         meta: { title: '用户反馈' }
+      },
+      {
+        path: 'settlement',
+        name: 'Settlement',
+        component: () => import('@/views/member/settlement'),
+        meta: { title: '提现申请' }
       }
     ]
   },
