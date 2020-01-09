@@ -3,7 +3,7 @@
     
     <el-tabs tab-position="top">
       <el-tab-pane label="基本信息" style="min-height: 400px;">
-        <div class="flex-center">
+        <div class="flex">
           <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
           <el-form class="flex1" label-width="100px">
             <el-row> 
@@ -90,7 +90,8 @@ export default {
   },
   data() {
     return {
-      info: {}
+      info: {},
+      id: ''
     }
   },
   computed: {
@@ -100,10 +101,11 @@ export default {
   },
   created() {
     const that = this
+    this.id = this.dialogMes
     getDetails({
       user_id: that.dialogMes.id
     }).then(response => {
-      that.info = response.data
+      that.info = response.data.userinfo
     })
   },
   methods: {

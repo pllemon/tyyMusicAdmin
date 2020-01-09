@@ -31,6 +31,12 @@ import { mapState } from 'vuex'
 import { getList } from '@/api/member'
 
 export default {
+  props: {
+    dialogMes: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       vm: this,
@@ -41,17 +47,10 @@ export default {
 
       total: 0,
       queryMes: {
-        phone: '',
-        username: '',
-        friend_name: '',
-        is_criaftsman: '',
-        is_business: '',
+        invitation_code: '',
         page: 1,
         limit: 10
-      },
-
-      currentComponent: '',
-      dialogMes: {}
+      }
     }
   },
   computed: {

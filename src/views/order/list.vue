@@ -81,6 +81,7 @@
             </template>
           </el-table-column>
           <el-table-column label="服务需求" prop="service_demand" width="200"/>
+          <el-table-column label="是否加急" prop="" width="200"/>
           <el-table-column label="服务地址" prop="address" width="200"/>
           <el-table-column label="预约时间"  prop="appo_time" width="180" />
           <el-table-column label="用户备注" prop="remark" width="120" />

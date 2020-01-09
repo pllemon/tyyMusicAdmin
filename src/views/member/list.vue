@@ -18,10 +18,10 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="queryMes.username" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="推荐人" prop="friend_name">
-          <el-input v-model="queryMes.friend_name" placeholder="请输入" />
+        <el-form-item label="上级推荐码" prop="invitation_code">
+          <el-input v-model="queryMes.invitation_code" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="师傅状态" prop="is_criaftsman">
+        <!-- <el-form-item label="师傅状态" prop="is_criaftsman">
           <el-select v-model="queryMes.is_criaftsman" placeholder="请选择">
               <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
           </el-select>
@@ -30,7 +30,7 @@
           <el-select v-model="queryMes.is_business" placeholder="请选择">
               <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="common.search(vm)">搜索</el-button>
           <el-button @click="common.resetSearch(vm)">重置</el-button>
@@ -59,7 +59,7 @@
           <el-table-column label="用户账号" prop="phone" width="150"/>
           <el-table-column label="用户名" prop="username" width="120"/>
           <el-table-column label="推荐码" prop="invitation_code" width="120"/>
-          <el-table-column label="上级推荐人" width="120" prop="friend_name"/>
+          <el-table-column label="上级推荐人" width="120" prop="invitation_code"/>
           <el-table-column label="下级推荐数" width="120" prop="friend_sum"/>
           <el-table-column label="下单数" />
           <el-table-column label="总积分" />
@@ -114,7 +114,7 @@ export default {
       queryMes: {
         phone: '',
         username: '',
-        friend_name: '',
+        invitation_code: '',
         is_criaftsman: '',
         is_business: '',
         page: 1,
