@@ -36,9 +36,9 @@
             </el-col>
             <el-col :span="24">
               <el-form-item label="身份证照:">
-                <gd-image :src="info.headerurl" width="200" height="120"/>
-                <gd-image :src="info.headerurl" width="200" height="120"/>
-                <gd-image :src="info.headerurl" width="200" height="120"/>
+                <gd-image :src="info.caridimg" width="200" height="120"/>
+                <gd-image :src="info.caridzimg" width="200" height="120"/>
+                <gd-image :src="info.caridfimg" width="200" height="120"/>
               </el-form-item>
             </el-col>
             <el-col :span="16">

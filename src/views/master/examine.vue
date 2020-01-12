@@ -7,15 +7,21 @@
           <el-radio label="3">不通过</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="师傅编号：" prop="sn" v-show="form.status == '1'">
-        <el-input v-model="form.sn" />
-      </el-form-item>
       <el-form-item label="师傅头像：" v-show="form.status == '1'">
         <gd-upload 
           ref="upload"
           action='admin/uploadcmauthorurl'
           :file="file"  
           @success="uploadSuccess"
+        />
+      </el-form-item>
+      <el-form-item label="所属区域：" prop="areaCode" v-show="form.status == '1'">
+        <el-cascader
+          ref="areaCascader"
+          v-model="form.areaCode"
+          style="width:100%"
+          :options="options"
+          @change="changeArea"
         />
       </el-form-item>
       <el-form-item label="不通过原因：" prop="reject_reason" v-show="form.status == '3'">
@@ -36,6 +42,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { areaJson } from '@/utils/area.js'
 import { getDetails, craftsmanexamine } from '@/api/master'  
 
 export default {
@@ -47,8 +54,12 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      options: areaJson,
+
       file: {},
       form: {
+        areaCode: ['440000', '440700', '440783'],
         status: '1',
         sn: '',
         craftsman_id: '',
@@ -69,6 +80,14 @@ export default {
     })
   },
   methods: {
+    changeArea(val) {
+      const nodes = this.$refs.areaCascader.getCheckedNodes()
+      const region = nodes[0].parent.parent.label + nodes[0].parent.label + nodes[0].label
+      this.form.areaCode = val
+      this.form.region = region
+      console.log(val, region)
+    },
+
     changeStatus(val) {
       if (val == 1) {
         this.form.reject_reason = ''
