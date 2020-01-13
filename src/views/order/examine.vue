@@ -1,14 +1,14 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="审核订单" :visible="true" width="800px" :before-close="handleClose"  :close-on-click-modal="false">
+  <el-dialog :modal-append-to-body="false" :title="form.is_bj?'报价':'审核'" :visible="true" width="600px" :before-close="handleClose"  :close-on-click-modal="false">
     <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px">
-      <el-form-item label="审核结果：" required>
+      <el-form-item label="审核结果：" required v-if="!form.is_bj">
         <el-radio-group v-model="form.status" @change="changeStatus">
           <el-radio label="TG">通过</el-radio>
           <el-radio label="BH">不通过</el-radio>
         </el-radio-group>
       </el-form-item>
       <template v-if="form.status == 'TG'">
-        <template v-if="form.is_bj == 0">
+        <template v-if="!form.is_bj">
           <el-form-item label="预约时间:" prop="appo_time">
             <el-date-picker
               v-model="form.appo_time"
@@ -77,7 +77,6 @@ export default {
 
         bjimg: '',
         total_price: '',
-        is_bj: 0,
         
         appo_time: '',
         network_id: '',
@@ -98,7 +97,9 @@ export default {
 
   created() {
     const that = this
-    that.form.is_bj = that.dialogMes.type
+    if (that.dialogMes.type) {
+      that.form.is_bj = that.dialogMes.type
+    }
 
     this.common.getAllNetwork(this)
 
@@ -126,7 +127,7 @@ export default {
     },
 
     uploadSuccess(data) {
-      this.form.bjimg = data.id
+      this.form.bjimg = data.imgurl
     },
 
     handleClose() {
@@ -135,7 +136,7 @@ export default {
 
     submitExamine() {
       const that = this
-      if (that.form.status == 'TG' && !that.form.bjimg) {
+      if (!that.form.bjimg && that.form.is_bj == 1) {
         this.$message.error('请上传报价单');
         return false;
       }

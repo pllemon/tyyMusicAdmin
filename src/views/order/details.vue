@@ -7,10 +7,10 @@
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
           <template v-if="message.info.status != 10">
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付定金</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4" :timestamp="message.craftsmaninfo.choose_time">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户支付尾款并确认完成</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户确认完成</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 7" :timestamp="message.ordersshow.time">{{ message.craftsmaninfo.name }}师傅上传师傅秀</el-timeline-item>
           </template>
@@ -80,6 +80,11 @@
                   </template>
                 </el-form-item>
               </el-col>
+              <el-col :span="24">
+                <el-form-item label="后台备注:">
+                  {{ message.info.htremark || '无'}}
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-form>
           <!-- <el-divider /> -->
@@ -91,21 +96,6 @@
               <el-col :span="8">
                 <el-form-item label="订单总价格:">
                   {{ message.pay.total_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="定金金额:">
-                  {{ message.pay.earnest_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="尾款金额:">
-                  {{ message.pay.tail_price }} 元
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="师傅工资:">
-                  {{ message.pay.craftsman_price }} 元
                 </el-form-item>
               </el-col>
               <template v-if="message.craftsmaninfo">
@@ -122,7 +112,7 @@
               </template>
               <el-col :span="24">
                 <el-form-item label="报价单:">
-                  <gd-image :src="message.bjd.imgurl" />
+                  <gd-image :src="message.pay.bjimg" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="message.info.status > 3">
@@ -165,7 +155,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="message.ordersshow.title">
-                <el-form-item label="师傅秀:">
+                <el-form-item label="工匠秀:">
                   <p>{{ message.ordersshow.title }}（{{ message.ordersshow.dec }}）</p>
                   <div>
                     <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
