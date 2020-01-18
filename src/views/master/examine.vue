@@ -114,6 +114,7 @@ export default {
       that.$refs.form.validate((valid) => {
         if (valid) {
           console.log(that.form)
+          return false
           craftsmanexamine(that.form).then(response => {
             that.common.closeComponent(that)
           })
