@@ -33,6 +33,7 @@ export function craftsmanexamine(data) {
   })
 }
 
+// 申请列表
 export function craftsmansettlementlist(data) {
   return request({
     url: `/admin/craftsmansettlementlist?page=${data.page}&limit=${data.limit}`,
@@ -41,6 +42,7 @@ export function craftsmansettlementlist(data) {
   })
 }
 
+// 审核和结算
 export function craftsmansettlement(data) {
   return request({
     url: '/admin/craftsmansettlement',

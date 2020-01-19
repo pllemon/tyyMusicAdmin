@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">师傅月结工资</p>
+      <p class="section-title">薪酬申请记录</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
       </div>
@@ -11,15 +11,6 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
-        <el-form-item label="结算月份" prop="mon">
-          <el-date-picker
-            v-model="queryMes.mon"
-            type="month"
-            format="yyyy-MM"
-            value-format="yyyy-MM"
-            placeholder="选择月">
-          </el-date-picker>
-        </el-form-item>
         <el-form-item label="结算状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
@@ -60,18 +51,21 @@
               <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
             </template>
           </el-table-column>
-          <el-table-column label="工号" prop="sn"/>
-          <el-table-column label="姓名" prop="name"/>
-          <el-table-column label="身份证" prop="sfz" width="180"/>
-          <el-table-column label="手机号" prop="phone" width="120"/>
-          <el-table-column label="结算月份" prop="time" width="100">
+          <el-table-column label="工号" prop="sn" />
+          <el-table-column label="姓名" prop="name" />
+          <el-table-column label="手机号" prop="phone" />
+          <el-table-column label="订单号" prop="order_sn" />
+          <el-table-column label="订单总额">
+            
+          </el-table-column>
+          <el-table-column label="申请份额">
             <template slot-scope="scope">
-              {{scope.row.time.slice(0, 7)}}
+              {{ scope.row.number == 1 ? '80%' : '20%' }}
             </template>
           </el-table-column>
-          <el-table-column label="完成订单数" prop="order_num" min-width="120"/>
-          <el-table-column label="应发工资" prop="money"/>
-          <el-table-column label="结算状态">
+          <el-table-column label="申请金额" prop="money" />
+          <el-table-column label="申请日期" width="200" prop="time" />
+          <el-table-column label="申请状态">
             <template slot-scope="scope">
               {{ settleStauts[scope.row.status] }}
             </template>
@@ -82,6 +76,7 @@
               <!-- <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
               <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button> -->
               <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 4, scope.row.id)">审核</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -98,10 +93,12 @@
 import { mapState } from 'vuex'
 import { craftsmansettlementlist, craftsmansettlement } from '@/api/master'
 import Orders from '@/views/master/orders'
+import SettlementExamine from '@/views/master/settlementExamine'
 
 export default {
   components: {
-    Orders
+    Orders,
+    SettlementExamine
   },
   data() {
     return {
@@ -113,21 +110,18 @@ export default {
 
       total: 0,
       queryMes: {
-        mon: '',
         page: 1,
         limit: 10,
         status: '',
         name: '',
         sn: ''
       },
-      statusOptions: ['未审核', '审核通过', '已驳回'],
 
       currentComponent: '',
       dialogMes: {}
     }
   },
   created() {
-    this.queryMes.mon = this.$moment().format("YYYY-MM")
     this.fetchData()
   },
   methods: {
@@ -139,7 +133,6 @@ export default {
       this.$refs.searchForm.resetFields()
       this.queryMes.page = 1
       this.queryMes.limit = 10
-      this.queryMes.mon = this.$moment().format("YYYY-MM")
       this.fetchData()
     },
 
@@ -170,6 +163,17 @@ export default {
 
     selectionChange(val) {
       this.selectArr = val
+    },
+
+    examine() {
+      craftsmansettlement({
+        slid: '',
+        craftsman_id: '',
+        status: '',
+        shremark: ''
+      }).then(res => {
+        console.log(res)
+      })
     }
   },
   computed: {

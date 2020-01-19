@@ -34,7 +34,7 @@ function updateRecord(type, target, obj, callback) {
 }
 
 function loadComponent(target, type, id = '') {
-  let typeList = ['Details', 'Update', 'Examine', 'Appoint']
+  let typeList = ['Details', 'Update', 'Examine', 'Appoint', 'SettlementExamine']
   target.dialogMes = {
     id: id
   }
