@@ -6,7 +6,7 @@
       list-type="picture-card"
       :action="action"
       :auto-upload="autoUpload"
-      accept="image/jpg,image/png"
+      accept="image/jpg,image/jpeg,image/png"
       :show-file-list="false"
       :on-success="handleSuccess"
       :on-change="handleChange"

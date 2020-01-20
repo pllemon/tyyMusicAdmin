@@ -9,10 +9,11 @@
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.craftsmaninfo.choose_time">{{ message.craftsmaninfo.name }}师傅承接订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户确认完成</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 7" :timestamp="message.ordersshow.time">{{ message.craftsmaninfo.name }}师傅上传师傅秀</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
             <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
@@ -156,7 +157,8 @@
               </el-col>
               <el-col :span="24" v-if="message.ordersshow.title">
                 <el-form-item label="工匠秀:">
-                  <p>{{ message.ordersshow.title }}（{{ message.ordersshow.dec }}）</p>
+                  <p>{{ message.ordersshow.title }}</p>
+                  <p>{{ message.ordersshow.dec }}</p>
                   <div>
                     <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
                     <gd-image v-if="message.ordersshow.imgurl2" :src="message.ordersshow.imgurl2" />
