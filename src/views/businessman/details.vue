@@ -4,7 +4,7 @@
       <el-form label-width="100px" class="flex1" style="padding-right:30px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="店铺名:">
+            <el-form-item label="店铺名称:">
               {{ message.name }}
             </el-form-item>
           </el-col>
@@ -14,8 +14,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="店铺地址:">
+            <el-form-item label="所属区域:">
+              {{ message.region }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="详细地址:">
               {{ message.address }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="申请时间:">
+              {{ message.creattime }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -28,12 +38,7 @@
               {{ message.bhremark }}
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item label="申请时间:">
-              {{ message.creattime }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
+          <el-col :span="24" v-show="message.examine">
             <el-form-item label="审核时间:">
               {{ message.examine }}
             </el-form-item>

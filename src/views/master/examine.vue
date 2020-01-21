@@ -7,7 +7,7 @@
           <el-radio label="3">不通过</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="师傅头像：" v-show="form.status == '1'">
+      <el-form-item label="师傅头像：" prop="headerurl" v-if="form.status == '1'">
         <gd-upload 
           ref="upload"
           action='admin/uploadcmauthorurl'
@@ -15,16 +15,15 @@
           @success="uploadSuccess"
         />
       </el-form-item>
-      <el-form-item label="所属区域：" prop="areaCode" v-show="form.status == '1'">
+      <el-form-item label="所属区域：" prop="areaCode" v-if="form.status == '1'">
         <el-cascader
           ref="areaCascader"
-          v-model="form.areaCode"
+          v-model="area.code"
           style="width:100%"
           :options="options"
-          @change="changeArea"
         />
       </el-form-item>
-      <el-form-item label="不通过原因：" prop="reject_reason" v-show="form.status == '3'">
+      <el-form-item label="不通过原因：" prop="reject_reason" v-if="form.status == '3'">
         <el-input
           type="textarea"
           :autosize="{ minRows: 6 }"
@@ -59,7 +58,8 @@ export default {
 
       file: {},
       form: {
-        areaCode: ['440000', '440700', '440783'],
+        areaCode: '440000,440700,440783',
+        areaCodeName: '广东省,江门市,开平市',
         status: '1',
         sn: '',
         craftsman_id: '',
@@ -67,6 +67,10 @@ export default {
         imglist: '',
         reject_reason: '',
         headerurl: ''
+      },
+      area: {
+        code: ['440000', '440700', '440783'],
+        codeName: ['广东省', '江门市', '开平市']
       }
     }
   },
@@ -82,9 +86,9 @@ export default {
   methods: {
     changeArea(val) {
       const nodes = this.$refs.areaCascader.getCheckedNodes()
-      const region = nodes[0].parent.parent.label + nodes[0].parent.label + nodes[0].label
-      this.form.areaCode = val
-      this.form.region = region
+      const region = nodes[0].parent.parent.label + ',' + nodes[0].parent.label + ',' + nodes[0].label
+      this.form.areaCode = val.join(',')
+      this.form.areaCodeName = region
       console.log(val, region)
     },
 
