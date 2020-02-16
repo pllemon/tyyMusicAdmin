@@ -2,7 +2,7 @@
   <div class="header flex-center-between">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="flex-center-start">
-      <!-- <p class="title">多师傅后台管理系统</p> -->
+      <p class="title">多师傅管理平台</p>
     </div>
     <div class="flex-center">
       <el-dropdown @command="handleCommand">
