@@ -2,7 +2,7 @@
   <div class="header flex-center-between">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="flex-center-start">
-      <p class="title">多师傅管理平台</p>
+      <!-- <p class="title">多师傅管理平台</p> -->
     </div>
     <div class="flex-center">
       <el-dropdown @command="handleCommand">
@@ -16,11 +16,11 @@
           <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <p @click="showNews()" style="padding: 0 20px;cursor:pointer" v-show="newsLength">
+      <!-- <p @click="showNews()" style="padding: 0 20px;cursor:pointer" v-show="newsLength">
         <el-badge :value="newsLength" class="item">
           <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
         </el-badge>
-      </p>
+      </p> -->
     </div>
 
      <!-- 全局消息弹窗 -->
