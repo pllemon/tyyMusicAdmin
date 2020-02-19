@@ -66,7 +66,7 @@ export default {
             offset: 50,
             onClick: function() {
               that.closeNotify(timeStamp)
-              that.$router.push('/order/list?order_sn=' + orderSn)
+              that.$router.push('/order/list?order_sn=' + message.orderSn)
             }
           })
         } else if (res.type == 'payEarnest') {
