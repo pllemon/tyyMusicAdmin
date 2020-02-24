@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="师傅工号:" prop="sn">
-            <el-input type="text" v-model="form.sn" />
+            <el-input type="text" v-model="form.sn" disabled/>
           </el-form-item>
         </el-col>
         <el-col :span="24">

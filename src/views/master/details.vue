@@ -27,6 +27,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="所属区域:">
+                {{ info.areacodename }}
               </el-form-item>
             </el-col>
             <el-col :span="8">

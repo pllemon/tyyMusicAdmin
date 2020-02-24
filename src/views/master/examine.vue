@@ -7,7 +7,7 @@
           <el-radio label="3">不通过</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="师傅头像：" prop="headerurl" v-if="form.status == '1'">
+      <el-form-item label="师傅头像：" prop="headerurl" v-show="form.status == '1'">
         <gd-upload 
           ref="upload"
           action='admin/uploadcmauthorurl'
@@ -15,15 +15,16 @@
           @success="uploadSuccess"
         />
       </el-form-item>
-      <el-form-item label="所属区域：" prop="areaCode" v-if="form.status == '1'">
+      <el-form-item label="所属区域：" prop="areaCode" v-show="form.status == '1'">
         <el-cascader
           ref="areaCascader"
           v-model="area.code"
           style="width:100%"
           :options="options"
+          @change="changeArea"
         />
       </el-form-item>
-      <el-form-item label="不通过原因：" prop="reject_reason" v-if="form.status == '3'">
+      <el-form-item label="不通过原因：" prop="reject_reason" v-show="form.status == '3'">
         <el-input
           type="textarea"
           :autosize="{ minRows: 6 }"
@@ -89,10 +90,10 @@ export default {
       const region = nodes[0].parent.parent.label + ',' + nodes[0].parent.label + ',' + nodes[0].label
       this.form.areaCode = val.join(',')
       this.form.areaCodeName = region
-      console.log(val, region)
     },
 
     changeStatus(val) {
+      return false
       if (val == 1) {
         this.form.reject_reason = ''
       } else {
@@ -117,9 +118,28 @@ export default {
       const that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
-          console.log(that.form)
-          return false
-          craftsmanexamine(that.form).then(response => {
+          let obj = null
+          if (that.form.status == 1) {
+            obj = {
+              status: 1,
+              headerurl: that.form.headerurl,
+              areaCode: that.form.areaCode,
+              areaCodeName: that.form.areaCodeName,
+              user_id: that.form.user_id,
+              craftsman_id: that.form.craftsman_id,
+              sn: '',
+              imglist: ''
+            }
+          } else {
+            obj = {
+              sn: '',
+              user_id: that.form.user_id,
+              craftsman_id: that.form.craftsman_id,
+              status: 3,
+              reject_reason: that.form.reject_reason
+            }
+          }
+          craftsmanexamine(obj).then(response => {
             that.common.closeComponent(that)
           })
         }
