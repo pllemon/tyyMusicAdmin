@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">线上订单列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button>
+        <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button>
       </div>
     </div>
 
@@ -29,7 +29,7 @@
         <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option
-              v-for="(item, index) in orderStatus"
+              v-for="(item, index) in dict.orderStatus"
               :key="index"
               :label="item"
               :value="index">
@@ -51,14 +51,15 @@
           <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
         </el-form-item> -->
         <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
+          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button @click="timeRange=[];resetSearch()">重置</el-button>
         </el-form-item>
       </el-form>
 
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -71,17 +72,17 @@
           <el-table-column label="订单编号"  width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
-              {{orderStatus[scope.row.status]}}
+              {{dict.orderStatus[scope.row.status]}}
             </template>
           </el-table-column>
-          <el-table-column label="下单客户" width="200">
+          <el-table-column label="下单客户" width="150">
             <template slot-scope="scope">
               <p>{{scope.row.username}}</p> 
               <p>{{scope.row.phone}}</p>
             </template>
           </el-table-column>
           <el-table-column label="服务需求" prop="service_demand" width="200"/>
-          <el-table-column label="是否加急" prop="" width="200"/>
+          <el-table-column label="是否加急" prop="" width="100"/>
           <el-table-column label="服务地址" prop="address" width="200"/>
           <el-table-column label="预约时间"  prop="appo_time" width="180" />
           <el-table-column label="用户备注" prop="remark" width="120" />
@@ -95,10 +96,10 @@
           <el-table-column label="创建时间" prop="create_time" width="180" />
           <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.order_id)">详情</el-button>
-              <el-button type="text" v-if="scope.row.status == 1 && !scope.row.appo_time" @click="examineOrder(0, scope.row.order_id)">审核</el-button>
-              <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="examineOrder(1, scope.row.order_id)">报价</el-button>
-              <el-button type="text" v-if="scope.row.status == 4" @click="common.loadComponent(vm, 3, scope.row.order_id)">指派</el-button>
+              <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 1 && !scope.row.appo_time" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">审核</el-button>
+              <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button>
+              <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
               <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
             </template>
           </el-table-column>
@@ -121,14 +122,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
+import ListMixin from '@/mixin/list'
 import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
 import Examine from '@/views/order/examine'
 import Appoint from '@/views/order/appoint'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Details,
     Examine,
@@ -136,12 +137,6 @@ export default {
   },
   data() {
     return {
-      vm: this,
-
-      list: [],
-      listLoading: true,
-
-      total: 0,
       queryMes: {
         page: 1,
         limit: 10,
@@ -156,10 +151,12 @@ export default {
       },
       timeRange: [],
 
-      currentComponent: '',
-      dialogMes: {},
-
-      networkList: []
+      networkList: [],
+      
+      api: {
+        getList,
+        release
+      }
     }
   },
   watch: {
@@ -174,15 +171,6 @@ export default {
     })
   },
   methods: {
-    // 审核及报价
-    examineOrder(type, id) {
-      this.dialogMes = {
-        type,
-        id
-      }
-      this.currentComponent = 'Examine'
-    },
-
     againFetch() {
       let that = this
       that.queryMes =  {
@@ -213,8 +201,7 @@ export default {
       that.fetchData()
     },
 
-    fetchData() {
-      this.listLoading = true
+    beforeFetch() {
       if (this.timeRange && this.timeRange.length) {
         this.queryMes.start_time = this.timeRange[0]
         this.queryMes.end_time = this.timeRange[1]
@@ -225,12 +212,6 @@ export default {
       if (this.userInfo.network_id) {
         this.queryMes.network_id = this.userInfo.network_id
       }
-      getList(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
     },
 
     // 发布订单
@@ -238,7 +219,7 @@ export default {
       this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {
         type: 'warning'
       }).then(() => {
-        release({
+        this.api.release({
           order_id: id
         }).then(response => {
           this.common.notify()
@@ -246,12 +227,6 @@ export default {
         })
       })
     },
-  },
-  computed: {
-    ...mapState({
-      orderStatus: state => state.dict.orderStatus,
-    }),
-    ...mapGetters(['userInfo'])
   }
 }
 </script>

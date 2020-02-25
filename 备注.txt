@@ -217,4 +217,6 @@ computed: {
 师傅资料详情，商家资料详情（小程序）
 
 
-2020/01/12
+2020/02/25
+小程序 
+headerurl: 默认头像路径错误 public/uploads/user/headerimg/default.png
