@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">商家列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button>
+        <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button>
       </div>
     </div>
 
@@ -34,18 +34,19 @@
         </el-form-item>  
         <el-form-item label="状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option v-for="(item, index) in recordStatus" :key="index" :label="item" :value="index" />
+            <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
+          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button @click="timeRange=[];resetSearch()">重置</el-button>
         </el-form-item>
       </el-form>
 
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -62,20 +63,20 @@
           </el-table-column>
           <el-table-column label="店铺名" prop="name" width="120" />
           <el-table-column label="联系方式" prop="phone" width="120" />
-          <el-table-column label="店铺地址" prop="address" />
-          <el-table-column label="状态" width="120">
+          <el-table-column label="店铺地址" prop="address" min-width="160" />
+          <el-table-column label="状态" min-width="120">
             <template slot-scope="scope">
-              {{ recordStatus[scope.row.status] }}
+              {{ dict.recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="申请时间" width="200" prop="creattime" />
-          <el-table-column label="审核时间" width="200" prop="examine" />
+          <el-table-column label="申请时间" min-width="160" prop="creattime" />
+          <el-table-column label="审核时间" min-width="160" prop="examine" />
           <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
-              <el-button type="text" v-if="scope.row.status == 2" @click="common.loadComponent(vm, 2, scope.row.id)">审核</el-button>
-              <el-button type="text" v-if="scope.row.status == 4" @click="updateRecord(scope.row.id, 1)">启用</el-button>
-              <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 4)">禁用</el-button></template>
+              <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
+              <el-button type="text" v-if="scope.row.status == 2" @click="loadComponent('Examine', scope.row.id)">审核</el-button>
+              <el-button type="text" v-if="scope.row.status == 4" @click="updateStatus({busines_id:scope.row.id, status:1})">启用</el-button>
+              <el-button type="text" v-if="scope.row.status == 1" @click="updateStatus({busines_id:scope.row.id, status:4})">禁用</el-button></template>
           </el-table-column>
         </el-table>
       </div>
@@ -96,47 +97,68 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import ListMixin from '@/mixin/list'
 import { getList, savebusinessstatus } from '@/api/businessman'
 import Details from '@/views/businessman/details'
 import Examine from '@/views/businessman/examine'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Details,
     Examine
   },
   data() {
     return {
-      vm: this,
-
-      list: null,
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
+        page: 1,
+        limit: 10,
         name: '',
         phone: '',
         address: '',
         status: '',
-        page: 1,
-        limit: 10,
         starttime: '',
         endtime: '',
       },
       timeRange: [],
 
-      currentComponent: '',
-      dialogMes: {}
+      api: {
+        getList,
+        enable: savebusinessstatus
+      }
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.againFetch()
     }
   },
   created() {
-    this.fetchData()
+    this.againFetch()
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
+    againFetch() {
+      const that = this
+      that.timeRange = []
+      that.queryMes= {
+        page: 1,
+        limit: 10,
+        name: '',
+        phone: '',
+        address: '',
+        status: '',
+        starttime: '',
+        endtime: '',
+      }
+      let query = that.$route.query
+      for (let i in query) {
+        if (i) {
+          that.queryMes[i] = query[i]
+        }
+      }
+      that.fetchData()
+    },
+    beforeFetch() {
       if (this.timeRange.length) {
         this.queryMes.starttime = this.timeRange[0]
         this.queryMes.endtime = this.timeRange[1]
@@ -144,26 +166,7 @@ export default {
         this.queryMes.starttime = ''
         this.queryMes.endtime = ''
       }
-      getList(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
-    },
-
-    updateRecord(id, type) {
-      let ctype = type == 4 ? 2 : 1;
-      this.common.updateRecord(ctype, this, {
-        busines_id: id,
-        status: type
-      }, savebusinessstatus)
     }
-  },
-  computed: {
-    ...mapState({
-      recordStatus: state => state.dict. recordStatus
-    })
   }
 }
 </script>
