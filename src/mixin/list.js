@@ -68,12 +68,16 @@ export default {
 
         // 加载组件
         loadComponent(name, data) {
-            if (typeof data == 'string' || typeof data == 'number') {
-                this.dialogMes = {
-                    id: data
+            if (data) {
+                if (typeof data == 'string' || typeof data == 'number') {
+                    this.dialogMes = {
+                        id: data
+                    }
+                } else {
+                    this.dialogMes = data
                 }
             } else {
-                this.dialogMes = data
+                this.dialogMes = null
             }
             this.currentComponent = name
         },

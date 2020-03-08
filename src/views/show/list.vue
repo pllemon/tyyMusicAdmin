@@ -26,8 +26,8 @@
           <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button type="primary" @click="search">搜索</el-button>
+          <el-button @click="resetSearch">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -45,18 +45,20 @@
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="标题" prop="title" />
           <el-table-column label="描述" prop="dec" />
-          <el-table-column label="记录来源">
+          <el-table-column label="记录来源" width="120">
             <template slot-scope="scope">
               {{ originType[scope.row.type ]}}
             </template>
           </el-table-column>
-          <el-table-column label="相关师傅" prop="crafts_man_name"/>
+          <el-table-column label="相关师傅" prop="crafts_man_name" width="120" />
           <el-table-column label="订单编号" prop="order_sn"/>
           <el-table-column label="创建时间" width="180" prop="time" />
-          <el-table-column label="操作" width="150" fixed="right">
+          <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
-              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
+              <el-button type="text" @click="loadComponent('Update', scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1 ,is_show:1})">启用</el-button>
+              <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1, is_show:2})">禁用</el-button>
               <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
             </template>
           </el-table-column>
@@ -71,12 +73,14 @@
 </template>
 
 <script>
+import ListMixin from '@/mixin/list'
 import { mapState } from 'vuex'
 import { getList, updateRecordStatus } from '@/api/show'
 import Details from '@/views/show/details'
 import Update from '@/views/show/update'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Details,
     Update
@@ -101,7 +105,11 @@ export default {
       },
 
       currentComponent: '',
-      dialogMes: {}
+      dialogMes: {},
+
+      api: {
+        enable: updateRecordStatus
+      }
     }
   },
   created() {
