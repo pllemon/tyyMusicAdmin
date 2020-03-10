@@ -34,6 +34,7 @@
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -53,7 +54,8 @@
           <el-table-column label="相关师傅" prop="crafts_man_name" width="120" />
           <el-table-column label="订单编号" prop="order_sn"/>
           <el-table-column label="创建时间" width="180" prop="time" />
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="状态" width="180" prop="status" />
+          <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
               <el-button type="text" @click="loadComponent('Update', scope.row.id)">编辑</el-button>

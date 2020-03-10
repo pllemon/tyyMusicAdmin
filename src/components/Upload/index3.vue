@@ -5,7 +5,7 @@
       ref="upload"
       multiple
       list-type="picture-card"
-      accept="image/jpg,image/png"
+      accept="jpg,jpeg,png"
       :action="action"
       :file-list="fileList"
       :auto-upload="false"

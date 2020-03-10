@@ -11,21 +11,21 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="queryMes.name" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="工号" prop="sn">
+          <el-input v-model="queryMes.sn" placeholder="请输入" />
+        </el-form-item>
         <el-form-item label="结算状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
-              v-for="(item, index) in settleStauts"
+              v-for="(item, index) in dict.settleStauts"
               :key="index"
               :label="item"
               :value="index"
             />
           </el-select>
-        </el-form-item>
-        <el-form-item label="师傅名" prop="name">
-          <el-input v-model="queryMes.name" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="师傅编号" prop="sn">
-          <el-input v-model="queryMes.sn" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search()">搜索</el-button>
@@ -36,6 +36,7 @@
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -43,7 +44,6 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="头像" align="center">
@@ -53,8 +53,12 @@
           </el-table-column>
           <el-table-column label="工号" prop="sn" />
           <el-table-column label="姓名" prop="name" />
-          <el-table-column label="手机号" prop="phone" />
-          <el-table-column label="订单号" prop="order_sn" />
+          <el-table-column label="手机号" prop="phone" min-width="120" />
+          <el-table-column label="订单号" min-width="160">
+            <template slot-scope="scope">
+              <span class="link" @click="loadComponent('OrderDetails', scope.row.order_id)">{{scope.row.order_sn}}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="订单总额">
             
           </el-table-column>
@@ -64,19 +68,19 @@
             </template>
           </el-table-column>
           <el-table-column label="申请金额" prop="money" />
-          <el-table-column label="申请日期" width="200" prop="time" />
+          <el-table-column label="申请日期" min-width="200" prop="time" />
           <el-table-column label="申请状态">
             <template slot-scope="scope">
-              {{ settleStauts[scope.row.status] }}
+              {{ dict.settleStauts[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="结算日期" width="200" prop="pay_time" />
+          <el-table-column label="结算日期" min-width="200" prop="pay_time" />
           <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
               <!-- <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
               <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button> -->
-              <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button>
-              <el-button type="text" @click="common.loadComponent(vm, 4, scope.row.id)">审核</el-button>
+              <!-- <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button> -->
+              <el-button type="text" @click="loadComponent('SettlementExamine', scope.row.id)">审核</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -90,79 +94,35 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import ListMixin from '@/mixin/list'
 import { craftsmansettlementlist, craftsmansettlement } from '@/api/master'
-import Orders from '@/views/master/orders'
+import OrderDetails from '@/views/order/details'
 import SettlementExamine from '@/views/master/settlementExamine'
 
 export default {
+  mixins: [ListMixin],
   components: {
-    Orders,
+    OrderDetails,
     SettlementExamine
   },
   data() {
     return {
-      vm: this,
-
-      list: null,
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
-        page: 1,
-        limit: 10,
         status: '',
         name: '',
         sn: ''
       },
-
-      currentComponent: '',
-      dialogMes: {}
+      api: {
+        getList: craftsmansettlementlist
+      }
     }
   },
   created() {
     this.fetchData()
   },
   methods: {
-    search() {
-      this.queryMes.page = 1
-      this.fetchData()
-    },
-    resetSearch() {
-      this.$refs.searchForm.resetFields()
-      this.queryMes.page = 1
-      this.queryMes.limit = 10
-      this.fetchData()
-    },
-
     surePay(id, status) {
       
-    },
-
-    showOrder(row) {
-      this.dialogMes = {
-        mon: row.time.split(' ')[0],
-        craftsman_id: row.craftsman_id,
-        status: 1,
-        page: 1,
-        limit: 10
-      }
-      this.currentComponent = 'Orders'
-    },
-
-    fetchData() {
-      this.listLoading = true
-      craftsmansettlementlist(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
     },
 
     examine() {
@@ -174,12 +134,11 @@ export default {
       }).then(res => {
         console.log(res)
       })
+    },
+
+    showOrder(id) {
+      
     }
-  },
-  computed: {
-    ...mapState({
-      settleStauts: state => state.dict.settleStauts
-    })
   }
 }
 </script>

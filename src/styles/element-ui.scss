@@ -97,3 +97,8 @@
   color: #606266;
   background: #fff;
 }
+
+.el-dialog__body{
+  max-height: calc(70vh - 65px);
+  overflow: auto;
+}
