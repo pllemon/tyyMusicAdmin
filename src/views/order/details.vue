@@ -27,7 +27,10 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="订单编号:">
-                  {{ message.info.order_sn }}
+                  <p class="flex-center-start">
+                    <svg-icon v-if="message.info.urgent == 1" icon-class="urgent" />
+                    <span style="margin-left:5px">{{ message.info.order_sn }}</span>
+                  </p>
                 </el-form-item>
               </el-col>
               <el-col :span="8">

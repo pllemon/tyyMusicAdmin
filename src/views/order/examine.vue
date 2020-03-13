@@ -19,17 +19,17 @@
             />
           </el-form-item>
           <el-form-item label="服务网点:" prop="network_id">
-            <el-select v-model="form.network_id" placeholder="请选择">
+            <el-select v-model="form.network_id" placeholder="请选择" filterable clearable>
               <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
           <el-form-item label="后台备注:">
-            <el-input v-model="form.htremark" type="textarea" :rows="4" />
+            <el-input v-model="form.htremark" type="textarea" :rows="4" clearable />
           </el-form-item>
         </template>
         <template v-else>
           <el-form-item label="订单总价格(元)：" prop="total_price">
-            <el-input v-model.number="form.total_price" />
+            <el-input v-model.number="form.total_price" clearable />
           </el-form-item>
           <el-form-item label="报价单照片：" required>
             <gd-upload 
@@ -43,7 +43,7 @@
       </template>
       <template v-if="form.status == 'BH'">
         <el-form-item label="不通过原因：">
-          <el-input v-model="form.qxremark" type="textarea" :rows="4" />
+          <el-input v-model="form.qxremark" type="textarea" :rows="4" clearable />
         </el-form-item>
       </template>
     </el-form>

@@ -2,17 +2,24 @@
   <div id="app">
     <router-view />
     <audio ref="audio" muted controls id="audio" src="http://downsc.chinaz.net/Files/DownLoad/sound1/201706/8855.wav" style="position:fixed;top:0;left:0;display:none"/>
+    <!-- 弹窗 -->
+    <component :is="currentComponent" :dialogMes="dialogMes"/>
   </div>
 </template>
 
 <script>
 import { workbind } from '@/api/user'
+import OrderDetails from '@/views/order/details'
 export default {
   name: 'App',
+  components: {
+    OrderDetails
+  },
   data() {
     return {
       websocket: null,
-      notifications: {}
+      currentComponent: '',
+      dialogMes: {}
     }
   },
   created(){
@@ -55,7 +62,7 @@ export default {
 
       } else {
         console.log(res)
-        const timeStamp = new Date().getTime()
+        // const timeStamp = new Date().getTime()
         let notify = null
         const message = JSON.parse(res.message)
         if (res.type == 'makeOrder') {
@@ -64,9 +71,12 @@ export default {
             message: `用户 ${message.name}（${message.phone}）下了个新订单，赶紧接单吧！`,
             duration: 0,
             offset: 50,
+            iconClass: 'el-icon-s-claim',
+            customClass: 'websocket-notify',
             onClick: function() {
-              that.closeNotify(timeStamp)
-              that.$router.push('/order/list?order_sn=' + message.orderSn)
+              notify.close()
+              that.dialogMes = {id: message.order_id}
+              that.currentComponent = 'OrderDetails'
             }
           })
         } else if (res.type == 'payEarnest') {
@@ -75,20 +85,12 @@ export default {
             message: `订单编号 ${message.orderSn} ，用户已支付定金，赶紧为TA发布订单吧！`,
             duration: 0,
             offset: 50,
+            iconClass: 'el-icon-s-finance',
+            customClass: 'websocket-notify',
             onClick: function() {
-              that.closeNotify(timeStamp)
-              that.$router.push('/order/list?order_sn=' + orderSn)
-            }
-          })
-        } else if (res.type == 'payTail') {
-          notify = this.$notify({
-            title: '用户已支付尾款',
-            message: `订单编号 ${message.orderSn} ，用户已支付尾款，订单已完成！`,
-            duration: 0,
-            offset: 50,
-            onClick: function() {
-              that.closeNotify(timeStamp)
-              that.$router.push('/order/list?order_sn=' + orderSn)
+              notify.close()
+              that.dialogMes = {id: message.order_id}
+              that.currentComponent = 'OrderDetails'
             }
           })
         } else if (res.type == 'newMaster') {
@@ -97,8 +99,10 @@ export default {
             message: `用户 ${message.name}（${message.phone}）申请成为师傅，赶紧处理吧！`,
             duration: 0,
             offset: 50,
+            iconClass: 'el-icon-user-solid',
+            customClass: 'websocket-notify',
             onClick: function() {
-              that.closeNotify(timeStamp)
+              notify.close()
             }
           })
         } else if (res.type == 'newBusiness') {
@@ -107,8 +111,10 @@ export default {
             message: `用户 ${message.name}（${message.phone}）申请成为商家，赶紧处理吧！`,
             duration: 0,
             offset: 50,
+            iconClass: 'el-icon-s-custom',
+            customClass: 'websocket-notify',
             onClick: function() {
-              that.closeNotify(timeStamp)
+              notify.close()
             }
           })
         } else {
@@ -119,8 +125,8 @@ export default {
             offset: 50
           })
         }
-        this.notifications[timeStamp] = notify;
-        this.$store.commit('news/ADD_NEWS', res)
+        // this.notifications[timeStamp] = notify;
+        // this.$store.commit('news/ADD_NEWS', res)
 
         this.$refs.audio.play()
       }
@@ -140,3 +146,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.websocket-notify{
+  .el-icon-s-custom,
+  .el-icon-user-solid{
+    color: #409EFF;
+  }
+  .el-icon-s-finance{
+    color: #E6A23C;
+  }
+  .el-icon-s-claim{
+    color: #67C23A;
+  }
+}
+</style>

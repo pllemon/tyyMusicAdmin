@@ -50,6 +50,12 @@
         <!-- <el-form-item label="师傅编号" prop="cmsn">
           <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
         </el-form-item> -->
+        <el-form-item label="是否加急" prop="urgent">
+          <el-select v-model="queryMes.urgent" placeholder="请选择" clearable>
+            <el-option label="是" value="1" />
+            <el-option label="否" value="0" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search()">搜索</el-button>
           <el-button @click="timeRange=[];resetSearch()">重置</el-button>
@@ -69,7 +75,7 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="订单编号"  width="160" prop="order_sn" />
+          <el-table-column label="订单编号"  width="220" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
               {{dict.orderStatus[scope.row.status]}}
@@ -82,7 +88,11 @@
             </template>
           </el-table-column>
           <el-table-column label="服务需求" prop="service_demand" width="200"/>
-          <el-table-column label="是否加急" prop="" width="100"/>
+          <el-table-column label="是否加急" prop="urgent" width="100" align="center">
+            <template slot-scope="scope">
+              <svg-icon v-if="scope.row.urgent == 1" icon-class="urgent" title="加急" />
+            </template>
+          </el-table-column>
           <el-table-column label="服务地址" prop="address" width="200"/>
           <el-table-column label="预约时间"  prop="appo_time" width="180" />
           <el-table-column label="用户备注" prop="remark" width="120" />
@@ -147,7 +157,8 @@ export default {
         network_id: '',
         phone: '',
         cmphone: '',
-        cmsn: ''
+        cmsn: '',
+        urgent: ''
       },
       timeRange: [],
 
@@ -183,7 +194,8 @@ export default {
         network_id: '',
         phone: '',
         cmphone: '',
-        cmsn: ''
+        cmsn: '',
+        urgent: ''
       }
       that.timeRange = []
       let query = that.$route.query

@@ -8,6 +8,7 @@
       :auto-upload="autoUpload"
       accept="image/jpg,image/jpeg,image/png"
       :show-file-list="false"
+      :before-upload="beforeUpload"
       :on-success="handleSuccess"
       :on-change="handleChange"
     >
@@ -59,6 +60,13 @@ export default {
   methods: {
     clearImg() {
       this.imageUrl = ''
+    },
+
+    beforeUpload(file) {
+      if (file.size > 514000) {
+        this.$message.error('图片不能超过500kb，请重新选择')
+        return false
+      }
     },
 
     handleChange(file, fileList) {
