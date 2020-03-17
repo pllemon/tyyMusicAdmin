@@ -17,11 +17,13 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="下单用户:">
+              <gd-image :src="info.headerurl" headUrl width="40" height="40"/>
               {{ info.user_name }} {{ info.user_phone }}
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="服务商家:">
+              <gd-image :src="info.shopimg" width="80" height="40"/>
               {{ info.business_name }} {{ info.business_phone }} ( {{ info.business_address }} )
             </el-form-item>
           </el-col>

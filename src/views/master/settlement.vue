@@ -2,9 +2,9 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">薪酬申请记录</p>
+      <p class="section-title">薪酬申请</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
+        <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
       </div>
     </div>
 
@@ -21,6 +21,16 @@
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
               v-for="(item, index) in dict.settleStauts"
+              :key="index"
+              :label="item"
+              :value="index"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="申请份额" prop="number">
+          <el-select v-model="queryMes.number" placeholder="请选择">
+            <el-option
+              v-for="(item, index) in dict.settlePercent"
               :key="index"
               :label="item"
               :value="index"
@@ -64,23 +74,21 @@
           </el-table-column>
           <el-table-column label="申请份额">
             <template slot-scope="scope">
-              {{ scope.row.number == 1 ? '80%' : '20%' }}
+              {{ dict.settlePercent[scope.row.number] }}
             </template>
           </el-table-column>
           <el-table-column label="申请金额" prop="money" />
-          <el-table-column label="申请日期" min-width="200" prop="time" />
+          <el-table-column label="申请时间" min-width="200" prop="time" />
           <el-table-column label="申请状态">
             <template slot-scope="scope">
               {{ dict.settleStauts[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="结算日期" min-width="200" prop="pay_time" />
+          <el-table-column label="结算时间" min-width="200" prop="pay_time" />
           <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
-              <!-- <el-button type="text" @click="surePay(scope.row.id, 0)">标记为已处理</el-button>
-              <el-button type="text" @click="surePay(scope.row.id, 1)">标记为未处理</el-button> -->
-              <!-- <el-button type="text" @click="showOrder(scope.row)">相关订单</el-button> -->
-              <el-button type="text" @click="loadComponent('SettlementExamine', scope.row.id)">审核</el-button>
+              <el-button type="text" v-if="scope.row.status == 2" @click="surePay(scope.row.id, 1)">发放</el-button>
+              <el-button type="text" v-if="scope.row.status == 0" @click="loadComponent('SettlementExamine', scope.row)">审核</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -110,7 +118,8 @@ export default {
       queryMes: {
         status: '',
         name: '',
-        sn: ''
+        sn: '',
+        number: ''
       },
       api: {
         getList: craftsmansettlementlist
@@ -134,10 +143,6 @@ export default {
       }).then(res => {
         console.log(res)
       })
-    },
-
-    showOrder(id) {
-      
     }
   }
 }

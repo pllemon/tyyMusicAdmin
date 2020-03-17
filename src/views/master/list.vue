@@ -172,7 +172,7 @@ export default {
   },
   computed: {
     ...mapState({
-      recordStatus: state => state.dict. recordStatus
+      recordStatus: state => state.dict.recordStatus
     })
   }
 }
