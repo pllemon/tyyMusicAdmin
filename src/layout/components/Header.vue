@@ -2,7 +2,7 @@
   <div class="header flex-center-between">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="flex-center-start">
-      <!-- <p class="title">多师傅管理平台</p> -->
+      <Menu />
     </div>
     <div class="flex-center">
       <el-dropdown @command="handleCommand">
@@ -95,16 +95,19 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Menu from '@/components/Menu'
 import { worksend } from '@/api/user'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Menu
+
   },
   data() {
     return {
-      showNewsDialog: false
+      showNewsDialog: false,
     }
   },
   computed: {
