@@ -2,7 +2,7 @@
   <div class="app-container list-layout" v-loading="loading">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">关于我们</p>
+      <p class="section-title">企业文化</p>
       <div class="action">
         <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
       </div>

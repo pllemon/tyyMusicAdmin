@@ -10,7 +10,7 @@
 
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
         <el-form-item label="账号名" prop="username">
           <el-input v-model="queryMes.username" clearable/>
         </el-form-item>

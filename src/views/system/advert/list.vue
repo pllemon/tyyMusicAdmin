@@ -10,10 +10,15 @@
 
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
         <el-form-item label="链接类型" prop="type">
           <el-select v-model="queryMes.type" placeholder="请选择">
             <el-option v-for="(item, index) in linkType" :key="index" :label="item" :value="index" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="链接位置" prop="position">
+          <el-select v-model="queryMes.position" placeholder="请选择">
+            <el-option v-for="(item, index) in linkPos" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="is_show">
@@ -42,6 +47,11 @@
           <el-table-column label="展示图片" width="180">
             <template slot-scope="scope">
               <gd-image width="160" height="90" :src="scope.row.imgurl"/>
+            </template>
+          </el-table-column>
+          <el-table-column label="展示位置">
+            <template slot-scope="scope">
+              {{ linkPos[scope.row.position] }}
             </template>
           </el-table-column>
           <el-table-column label="链接类型">
@@ -96,7 +106,8 @@ export default {
         type: '',
         is_show: '',
         page: 1,
-        limit: 10
+        limit: 10,
+        position: ''
       },
 
       currentComponent: '',
@@ -109,7 +120,8 @@ export default {
   computed: {
     ...mapState({
       linkType: state => state.dict.linkType,
-      showType: state => state.dict.showType
+      showType: state => state.dict.showType,
+      linkPos: state => state.dict.linkPos
     })
   },
   methods: {

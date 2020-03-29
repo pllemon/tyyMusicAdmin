@@ -12,6 +12,11 @@
           @change="changeFile"
         />
       </el-form-item>
+      <el-form-item label="展示位置" prop="type">
+        <el-radio-group v-model="form.position">
+          <el-radio v-for="(item,index) in linkPos" :key="index" :label="index">{{ item }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="链接类型" prop="type">
         <el-radio-group v-model="form.type">
           <el-radio v-for="(item,index) in linkType" :key="index" :label="index">{{ item }}</el-radio>
@@ -59,7 +64,8 @@ export default {
       form: {
         type: '0',
         url: '',
-        orders: ''
+        orders: '',
+        position: '1'
       },
       rules: {
         type: [{ required: true, message: '请选择链接类型', trigger: 'change' }],
@@ -130,7 +136,8 @@ export default {
   
   computed: {
     ...mapState({
-      linkType: state => state.dict.linkType
+      linkType: state => state.dict.linkType,
+      linkPos: state => state.dict.linkPos
     })
   }
 }

@@ -10,7 +10,7 @@
 
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="small" class="search-form" ref="searchForm">
+      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
         <el-form-item label="下单时间">
            <el-date-picker
             v-model="timeRange"

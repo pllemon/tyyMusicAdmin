@@ -67,6 +67,11 @@ const menuData = [
         path: '/businessman/list',
         query: ''
       },
+      {
+        title: '案例广场',
+        path: '/show/list',
+        query: ''
+      },
     ]
   },
   {
@@ -78,7 +83,7 @@ const menuData = [
         query: ''
       },
       {
-        title: '关于我们',
+        title: '企业文化',
         path: '/system/about',
         query: ''
       },

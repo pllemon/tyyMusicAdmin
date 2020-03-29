@@ -168,7 +168,7 @@ export const mainAdminRoutes = [
         path: 'about',
         name: 'About',
         component: () => import('@/views/system/about'),
-        meta: { title: '关于我们' }
+        meta: { title: '企业文化' }
       },
       {
         path: 'concat',
@@ -261,7 +261,7 @@ export const testAdminRoutes = [
         path: 'about',
         name: 'About',
         component: () => import('@/views/system/about'),
-        meta: { title: '关于我们' }
+        meta: { title: '企业文化' }
       },
       {
         path: 'concat',

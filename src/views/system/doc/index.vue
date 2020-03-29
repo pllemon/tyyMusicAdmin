@@ -32,7 +32,7 @@ export default {
       content: '',
       id: '',
       types: {
-        'about': '关于我们',
+        'about': '企业文化',
         'lxwm': '联系我们',
         'sfxy': '师傅协议',
         'sjxy': '商家协议',
