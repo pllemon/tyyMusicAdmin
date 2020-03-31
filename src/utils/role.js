@@ -171,6 +171,12 @@ export const mainAdminRoutes = [
         meta: { title: '企业文化' }
       },
       {
+        path: 'notice',
+        name: 'Notice',
+        component: () => import('@/views/system/notice/list'),
+        meta: { title: '平台通知' }
+      },
+      {
         path: 'concat',
         name: 'Concat',
         component: () => import('@/views/system/concat'),

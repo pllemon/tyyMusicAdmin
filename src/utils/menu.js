@@ -44,7 +44,7 @@ const menuData = [
       },
       {
         title: '平台通知',
-        path: '/order/list',
+        path: '/system/notice',
         query: ''
       },
     ]

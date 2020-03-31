@@ -56,8 +56,9 @@ export default {
   color: #fff;
 }
 .el-menu--horizontal>.el-submenu.is-active .el-submenu__title{
-  border-color: blue;
-  color: blue;
+  border-bottom: 2px solid #81efff;
+  color: #81efff;
+  font-weight: bold;
 }
 .el-menu--horizontal>.el-submenu .el-submenu__title{
   height: 40px;

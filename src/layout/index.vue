@@ -1,7 +1,8 @@
 <template>
   <div :class="classObj" class="app-wrapper flex-column">
     <Header />
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <Search />
+    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
     <div class="flex1">
       <!-- <sidebar class="sidebar-container" /> -->
       <div class="main-container">
@@ -14,6 +15,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain, Header } from './components'
+import Search from '@/components/Search'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -22,7 +24,8 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
-    Header
+    Header,
+    Search
   },
   mixins: [ResizeMixin],
   computed: {

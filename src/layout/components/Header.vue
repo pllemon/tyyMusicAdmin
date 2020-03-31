@@ -172,7 +172,7 @@ export default {
 <style lang="scss" scoped>
 .header{
   height: 60px;
-  background: #409EFF;
+  background: #4279de;
   color: #fff;
   flex-shrink: 0;
   padding: 0 20px;
