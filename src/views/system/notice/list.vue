@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">广告列表</p>
+      <p class="section-title">平台通知</p>
       <div class="action">
          <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
       </div>
@@ -44,28 +44,16 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="展示图片" width="180">
-            <template slot-scope="scope">
-              <gd-image width="160" height="90" :src="scope.row.imgurl"/>
-            </template>
-          </el-table-column>
-          <el-table-column label="展示位置">
+          <el-table-column label="消息标题">
             <template slot-scope="scope">
               {{ linkPos[scope.row.position] }}
             </template>
           </el-table-column>
-          <el-table-column label="链接类型">
+          <el-table-column label="创建时间">
             <template slot-scope="scope">
               {{ linkType[scope.row.type] }}
             </template>
           </el-table-column>
-          <el-table-column label="链接url" prop="url"/>
-          <el-table-column label="状态">
-            <template slot-scope="scope">
-              {{ showType[scope.row.is_show] }}
-            </template>
-          </el-table-column>
-          <el-table-column label="排序" prop="orders"/>
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
@@ -88,8 +76,11 @@
 import { mapState } from 'vuex'
 import { getList, updatebannerstatus } from '@/api/advert'
 import Update from '@/views/system/advert/update'
+import { getdoc } from '@/api/setting'
+import ListMixin from '@/mixin/list'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Update
   },
@@ -97,43 +88,20 @@ export default {
     return {
       vm: this,
 
-      list: null,
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
-        type: '',
-        is_show: '',
-        page: 1,
-        limit: 10,
-        position: ''
+        type: 'xttz', 
+        model: 'list'
       },
+      api: {
+        getList: getdoc
+      }
 
-      currentComponent: '',
-      dialogMes: {}
     }
   },
   created() {
     this.fetchData()
   },
-  computed: {
-    ...mapState({
-      linkType: state => state.dict.linkType,
-      showType: state => state.dict.showType,
-      linkPos: state => state.dict.linkPos
-    })
-  },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-        this.listLoading = false
-      })
-    },
-
     updateRecord(id, type) {
       this.common.updateRecord(type, this, {
         banner_id: id,

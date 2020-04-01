@@ -2,18 +2,29 @@
   <div class="app-container list-layout" v-loading="loading">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">企业文化</p>
+      <p class="section-title">平台通知</p>
       <div class="action">
         <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
       </div>
     </div>
 
-    <div class="table-content" style="overflow: auto">
-      <tinymce 
-        v-model="content" 
-        :toolbar="[]"
-        :height="400" 
-      />
+    <div class="table-content">
+      <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px" v-loading="loading">
+        <el-row>
+          <el-col :span="16">
+            <el-form-item label="通知标题:" prop="sn">
+              <el-input type="text" v-model="form.sn" disabled/>
+            </el-form-item>
+            <el-form-item label="通知内容:" prop="sn">
+              <tinymce v-model="content" :toolbar="[]" :height="400" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="通知用户:" prop="sn">
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </div>
 </template>
@@ -27,6 +38,7 @@ export default {
   },
   data() {
     return {
+      form: {},
       loading: true,
       model: 'add',
       content: '',
@@ -34,7 +46,7 @@ export default {
     }
   },
   created() {
-    getdoc({type: 'about'}).then(response => {
+    getdoc({type: 'xttz', model: 'list'}).then(response => {
       const { data } = response
       if (data && data.id) {
         this.content = data.dec
@@ -56,7 +68,7 @@ export default {
         model: this.model,
         dec: this.content,
         id: this.id,
-        type: 'about',
+        type: 'xttz',
         is_show: 1
       }).then(response => {
         this.common.notify()
