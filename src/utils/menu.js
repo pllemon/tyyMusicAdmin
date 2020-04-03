@@ -4,38 +4,32 @@ const menuData = [
     children: [
       {
         title: '新下单分配',
-        path: '/order/list',
-        query: ''
+        path: '/order/list?status=1'
       },
       {
         title: '过时未跟单',
-        path: '/order/list',
-        query: ''
+        path: '/order/list?status=12'
       },
       {
         title: '无法成交单',
-        path: '/order/list',
-        query: ''
+        path: '/order/list?status=10'
       },
       {
         title: '已付款单',
-        path: '/order/list',
-        query: ''
+        path: '/order/list?status=3'
       },
       {
         title: '审批抢单',
-        path: '/order/list',
+        path: '/order/list?status=4',
         query: ''
       },
       {
         title: '完工申款单',
-        path: '/order/list',
-        query: ''
+        path: '/order/list'
       },
       {
         title: '申请尾款单',
-        path: '/order/list',
-        query: ''
+        path: '/order/list'
       },
       {
         title: '用户客服',

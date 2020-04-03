@@ -173,6 +173,12 @@ export default {
   watch: {
     '$route'(to, from) {
       this.againFetch()
+    },
+    globalSearch: {
+      handler(val) {
+        this.againFetch()
+      },
+      deep: true
     }
   },
   created() {
@@ -200,7 +206,7 @@ export default {
       that.timeRange = []
       let query = that.$route.query
       for (let i in query) {
-        if (i) {
+        if (that.queryMes.hasOwnProperty(i)) {
           that.queryMes[i] = query[i]
         }
       }
@@ -210,6 +216,7 @@ export default {
       if (query.start_time && query.end_time) {
         that.timeRange = [query.start_time, query.end_time]
       } 
+      this.queryMes.network_id = this.globalSearch.network_id
       that.fetchData()
     },
 

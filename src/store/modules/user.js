@@ -3,10 +3,12 @@ import { getDetails } from '@/api/account'
 import { getToken, setToken, removeToken, setLoginStorage, removeLoginStorage, setAccountId, getAccountId, removeAccountId } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
+let globalSearch = sessionStorage.getItem('globalSearch')
 const state = {
   token: getToken(),
   roles: null,
-  userInfo: null
+  userInfo: null,
+  globalSearch: globalSearch ? JSON.parse(globalSearch) : null
 }
 
 const mutations = {
@@ -18,6 +20,10 @@ const mutations = {
   },
   SET_USERINFO: (state, info) => {
     state.userInfo = info
+  },
+  SET_SEARCH: (state, data) => {
+    sessionStorage.setItem('globalSearch', JSON.stringify(data))
+    state.globalSearch = data
   }
 }
 
@@ -90,7 +96,7 @@ const actions = {
       removeAccountId()
       resolve()
     })
-  }
+  },
 }
 
 export default {

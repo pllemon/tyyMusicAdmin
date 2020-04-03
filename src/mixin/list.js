@@ -97,6 +97,6 @@ export default {
     },
     computed: {
         ...mapState(['dict']),
-        ...mapGetters(['userInfo'])
+        ...mapGetters(['userInfo', 'globalSearch'])
     }
 }

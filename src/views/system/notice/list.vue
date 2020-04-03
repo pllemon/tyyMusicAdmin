@@ -4,37 +4,15 @@
     <div class="table-header">
       <p class="section-title">平台通知</p>
       <div class="action">
-         <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
+         <el-button size="small" icon="el-icon-plus" round @click="update">添加</el-button>
       </div>
     </div>
 
     <div class="table-content">
-      <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="链接类型" prop="type">
-          <el-select v-model="queryMes.type" placeholder="请选择">
-            <el-option v-for="(item, index) in linkType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="链接位置" prop="position">
-          <el-select v-model="queryMes.position" placeholder="请选择">
-            <el-option v-for="(item, index) in linkPos" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="状态" prop="is_show">
-          <el-select v-model="queryMes.is_show" placeholder="请选择">
-            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
-        </el-form-item>
-      </el-form>
-
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -44,22 +22,11 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="消息标题">
-            <template slot-scope="scope">
-              {{ linkPos[scope.row.position] }}
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间">
-            <template slot-scope="scope">
-              {{ linkType[scope.row.type] }}
-            </template>
-          </el-table-column>
+          <el-table-column label="消息标题" prop="title" />
+          <el-table-column label="创建时间" prop="time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
-              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
-              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateRecord(scope.row.id, 2)">禁用</el-button>
-              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
+              <el-button type="text" @click="update(scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -74,9 +41,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList, updatebannerstatus } from '@/api/advert'
-import Update from '@/views/system/advert/update'
-import { getdoc } from '@/api/setting'
+import { getList } from '@/api/notice'
+import Update from '@/views/system/notice/update'
 import ListMixin from '@/mixin/list'
 
 export default {
@@ -93,7 +59,7 @@ export default {
         model: 'list'
       },
       api: {
-        getList: getdoc
+        getList
       }
 
     }
@@ -102,11 +68,8 @@ export default {
     this.fetchData()
   },
   methods: {
-    updateRecord(id, type) {
-      this.common.updateRecord(type, this, {
-        banner_id: id,
-        is_show: type
-      }, updatebannerstatus)
+    update(id) {
+      this.$router.push('/system/notice/update?id=' + id)
     }
   }
 }
