@@ -2,9 +2,9 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">工程秀列表</p>
+      <p class="section-title">案例广场</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
+        <!-- <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button> -->
       </div>
     </div>
 
@@ -14,15 +14,15 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="queryMes.title" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="记录来源" prop="type">
+        <!-- <el-form-item label="记录来源" prop="type">
           <el-select v-model="queryMes.type" placeholder="请选择">
               <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="相关订单" prop="order_sn">
+        </el-form-item> -->
+        <el-form-item label="订单编号" prop="order_sn">
           <el-input v-model="queryMes.order_sn" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="相关师傅" prop="name">
+        <el-form-item label="施工师傅" prop="name">
           <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
@@ -44,24 +44,25 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="标题" prop="title" />
-          <el-table-column label="描述" prop="dec" />
-          <el-table-column label="记录来源" width="120">
+          <!-- <el-table-column label="标题" prop="title" /> -->
+          <!-- <el-table-column label="描述" prop="dec" /> -->
+          <!-- <el-table-column label="记录来源" width="120">
             <template slot-scope="scope">
               {{ originType[scope.row.type ]}}
             </template>
-          </el-table-column>
-          <el-table-column label="相关师傅" prop="crafts_man_name" width="120" />
-          <el-table-column label="订单编号" prop="order_sn"/>
-          <el-table-column label="创建时间" width="180" prop="time" />
+          </el-table-column> -->
+          <el-table-column label="施工师傅" prop="crafts_man_name" />
+          <el-table-column label="订单编号" min-width="200" prop="order_sn"/>
+          <el-table-column label="开始时间" min-width="180" prop="time" />
+          <el-table-column label="结束时间" min-width="180" prop="time" />
           <el-table-column label="状态" width="180" prop="status" />
-          <el-table-column label="操作" width="150" fixed="right">
+          <el-table-column label="操作" width="180" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
-              <el-button type="text" @click="loadComponent('Update', scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
+              <!-- <el-button type="text" @click="loadComponent('Update', scope.row.id)">编辑</el-button> -->
               <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1 ,is_show:1})">启用</el-button>
               <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1, is_show:2})">禁用</el-button>
-              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
+              <!-- <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -78,7 +79,7 @@
 import ListMixin from '@/mixin/list'
 import { mapState } from 'vuex'
 import { getList, updateRecordStatus } from '@/api/show'
-import Details from '@/views/show/details'
+import Details from '@/views/order/details'
 import Update from '@/views/show/update'
 
 export default {

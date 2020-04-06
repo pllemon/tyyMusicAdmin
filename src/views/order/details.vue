@@ -5,18 +5,21 @@
         <p class="section-title small">订单时间线</p>
         <el-timeline style="margin-top:30px">
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
-          <template v-if="message.info.status != 10">
+          <template v-if="message.info.status != 10 && message.info.status != 12">
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4 && message.craftsmaninfo" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 4 && message.ordersshow.secctime" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户确认完成</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
             <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
+          </template>
+          <template v-if="message.info.status == 12">
+            <el-timeline-item :timestamp="message.comment.time">订单过期未处理</el-timeline-item>
           </template>
         </el-timeline>
       </div>

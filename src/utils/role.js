@@ -174,13 +174,13 @@ export const mainAdminRoutes = [
         path: 'notice',
         name: 'Notice',
         component: () => import('@/views/system/notice/list'),
-        meta: { title: '平台通知' }
+        meta: { title: '系统通知' }
       },
       {
         path: 'notice/update',
         name: 'NoticeUpdate',
         component: () => import('@/views/system/notice/update'),
-        meta: { title: '平台通知详情' }
+        meta: { title: '系统通知详情' }
       },
       {
         path: 'concat',

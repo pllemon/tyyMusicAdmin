@@ -21,11 +21,12 @@
         />
       </el-select>
     </el-form-item>
-    <el-form-item prop="areaCode" placeholder="区域">
+    <el-form-item prop="areaCode" >
       <el-cascader
         ref="areaCascader"
         v-model="form.areaCode"
         :options="options"
+        placeholder="区域"
       />
     </el-form-item>
     <el-form-item>

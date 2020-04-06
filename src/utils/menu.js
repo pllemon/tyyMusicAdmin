@@ -20,8 +20,7 @@ const menuData = [
       },
       {
         title: '审批抢单',
-        path: '/order/list?status=4',
-        query: ''
+        path: '/order/list?status=4'
       },
       {
         title: '完工申款单',
@@ -37,9 +36,8 @@ const menuData = [
         query: ''
       },
       {
-        title: '平台通知',
-        path: '/system/notice',
-        query: ''
+        title: '系统通知',
+        path: '/system/notice/list'
       },
     ]
   },
@@ -48,24 +46,54 @@ const menuData = [
     children: [
       {
         title: '用户列表',
-        path: '/member/list',
-        query: ''
+        path: '/member/list'
       },
       {
         title: '师傅列表',
-        path: '/master/list',
-        query: ''
+        path: '/master/list'
       },
       {
         title: '店主列表',
-        path: '/businessman/list',
-        query: ''
+        path: '/businessman/list'
       },
       {
         title: '案例广场',
-        path: '/show/list',
-        query: ''
+        path: '/show/list'
       },
+    ]
+  },
+  {
+    title: '实体店财务',
+    children: [
+      {
+        title: '交易订单',
+        path: '/offline/list'
+      },
+    ]
+  },
+  {
+    title: '维修财务',
+    children: [
+      {
+        title: '已付款的单',
+        path: '/order/list?status=3'
+      },
+      {
+        title: '完工申款单',
+        path: '/order/list?status=3'
+      },
+      {
+        title: '已付完工申款单', 
+        path: '/order/list?status=3'
+      },
+      {
+        title: '申请尾款单',
+        path: '/order/list?status=3'
+      },
+      {
+        title: '已付申请尾款单',
+        path: '/order/list?status=3'
+      }
     ]
   },
   {
@@ -73,43 +101,35 @@ const menuData = [
     children: [
       {
         title: '广告管理',
-        path: '/system/advert',
-        query: ''
+        path: '/system/advert'
       },
       {
         title: '企业文化',
-        path: '/system/about',
-        query: ''
+        path: '/system/about'
       },
       {
         title: '联系我们',
-        path: '/system/concat',
-        query: ''
+        path: '/system/concat'
       },
       {
         title: '用户协议',
-        path: '/system/userAgreement',
-        query: ''
+        path: '/system/userAgreement'
       },
       {
         title: '师傅协议',
-        path: '/system/masterAgreement',
-        query: ''
+        path: '/system/masterAgreement'
       },
       {
         title: '商家协议',
-        path: '/system/businessAgreement',
-        query: ''
+        path: '/system/businessAgreement'
       },
       {
         title: '网点设置',
-        path: '/setting/network',
-        query: ''
+        path: '/setting/network'
       },
       {
         title: '账号管理',
-        path: '/setting/account',
-        query: ''
+        path: '/setting/account'
       },
     ]
   },

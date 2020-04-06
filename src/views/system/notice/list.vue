@@ -2,9 +2,9 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">平台通知</p>
+      <p class="section-title">系统通知</p>
       <div class="action">
-         <el-button size="small" icon="el-icon-plus" round @click="update">添加</el-button>
+         <el-button size="small" icon="el-icon-plus" round @click="update()">添加</el-button>
       </div>
     </div>
 
@@ -68,7 +68,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    update(id) {
+    update(id = '') {
       this.$router.push('/system/notice/update?id=' + id)
     }
   }

@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">平台通知</p>
+      <p class="section-title">系统通知</p>
       <div class="action">
         <el-button size="small" type="primary" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
         <el-button size="small" icon="el-icon-back" round @click="back()">返回</el-button>

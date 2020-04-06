@@ -4,11 +4,22 @@ import { getToken, setToken, removeToken, setLoginStorage, removeLoginStorage, s
 import { resetRouter } from '@/router'
 
 let globalSearch = sessionStorage.getItem('globalSearch')
+if (globalSearch) {
+  globalSearch = JSON.parse(globalSearch)
+} else {
+  globalSearch = {
+    year: '',
+    month: '',
+    network_id: '',
+    areaCode: []
+  }
+}
+
 const state = {
   token: getToken(),
   roles: null,
   userInfo: null,
-  globalSearch: globalSearch ? JSON.parse(globalSearch) : null
+  globalSearch: globalSearch
 }
 
 const mutations = {
