@@ -29,7 +29,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/offline/list'),
-        meta: { title: '线下订单', icon: 'exchange' }
+        meta: { title: '线下订单', icon: 'exchange', menu: '3-1' }
       }
     ]
   },
@@ -45,13 +45,13 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/master/list'),
-        meta: { title: '全部师傅'}
+        meta: { title: '全部师傅', menu: '2-2'}
       },
       {
         path: 'settlement',
         name: 'Settlement',
         component: () => import('@/views/master/settlement'),
-        meta: { title: '薪酬申请'}
+        meta: { title: '薪酬申请', menu: '2-2'}
       }
     ]
   },
@@ -68,7 +68,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/businessman/list'),
-        meta: { title: '全部商家'}
+        meta: { title: '全部商家', menu: '2-3'}
       }
     ]
   },
@@ -84,19 +84,19 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/member/list'),
-        meta: { title: '全部用户'}
+        meta: { title: '全部用户', menu: '2-1'}
       },
       {
         path: 'feedback',
         name: 'Feedback',
         component: () => import('@/views/member/feedback'),
-        meta: { title: '用户反馈' }
+        meta: { title: '用户反馈', menu: '2-5' }
       },
       {
         path: 'settlement',
         name: 'Settlement',
         component: () => import('@/views/member/settlement'),
-        meta: { title: '提现申请' }
+        meta: { title: '提现申请', menu: 2 }
       }
     ]
   },
@@ -140,13 +140,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/show/list',
     name: 'Show',
-    meta: { title: '工程秀管理', icon: 'certificate_fil' },
+    meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-4' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/show/list'),
-        meta: { title: '工程秀管理', icon: 'certificate_fil' }
+        meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-4' }
       }
     ]
   },
@@ -162,49 +162,49 @@ export const mainAdminRoutes = [
         path: 'advert',
         name: 'Advert',
         component: () => import('@/views/system/advert/list'),
-        meta: { title: '首页广告' }
+        meta: { title: '广告管理', menu: '5-1' }
       },
       {
         path: 'about',
         name: 'About',
         component: () => import('@/views/system/about'),
-        meta: { title: '企业文化' }
+        meta: { title: '企业文化', menu: '5-2' }
       },
       {
         path: 'notice',
         name: 'Notice',
         component: () => import('@/views/system/notice/list'),
-        meta: { title: '系统通知' }
+        meta: { title: '系统通知', menu: '1-8' }
       },
       {
         path: 'notice/update',
         name: 'NoticeUpdate',
         component: () => import('@/views/system/notice/update'),
-        meta: { title: '系统通知详情' }
+        meta: { title: '系统通知详情', menu: '1-8' }
       },
       {
         path: 'concat',
         name: 'Concat',
         component: () => import('@/views/system/concat'),
-        meta: { title: '联系我们' }
+        meta: { title: '联系我们', menu: '5-3' }
       },
       {
         path: 'userAgreement',
         name: 'userAgreement',
         component: () => import('@/views/system/userAgreement'),
-        meta: { title: '用户协议' }
+        meta: { title: '用户协议', menu: '5-4' }
       },
       {
         path: 'masterAgreement',
         name: 'masterAgreement',
         component: () => import('@/views/system/masterAgreement'),
-        meta: { title: '师傅协议' }
+        meta: { title: '师傅协议', menu: '5-5' }
       },
       {
         path: 'businessAgreement',
         name: 'businessAgreement',
         component: () => import('@/views/system/businessAgreement'),
-        meta: { title: '商家协议' }
+        meta: { title: '商家协议', menu: '5-6' }
       }
     ]
   },
@@ -220,13 +220,13 @@ export const mainAdminRoutes = [
         path: 'network',
         name: 'Network',
         component: () => import('@/views/setting/network/list'),
-        meta: { title: '网点设置' }
+        meta: { title: '网点设置', menu: '5-7' }
       },
       {
         path: 'account',
         name: 'Account',
         component: () => import('@/views/setting/account/list'),
-        meta: { title: '账号管理' }
+        meta: { title: '账号管理', menu: '5-8' }
       }
     ]
   },

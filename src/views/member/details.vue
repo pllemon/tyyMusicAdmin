@@ -65,7 +65,7 @@
         <integral-list :id="dialogMes.id" />
       </el-tab-pane>
       <el-tab-pane label="推荐记录">
-        <recommend-list :id="dialogMes.id" />
+        <recommend-list v-if="!loading" :invitation_code="info.invitation_code" />
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       info: {},
       id: ''
     }
@@ -106,6 +107,7 @@ export default {
       user_id: that.dialogMes.id
     }).then(response => {
       that.info = response.data.userinfo
+      that.loading = false
     })
   },
   methods: {

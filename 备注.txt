@@ -228,3 +228,31 @@ headerurl: 默认头像路径错误 public/uploads/user/headerimg/default.png
 后台管理系统
 websocket推送回来的内容都添加个id
 /admin/orderlist 列表返回是否加急，搜索条件加是否加急，详情返回是否加急
+
+
+
+
+
+
+
+2020/04/07
+/admin/orderlist 加搜索条件 ok
+1. 师傅提取工资的情况(未申请，申请第一次，已支付第一次，申请第二次，已支付第二次)
+2. 地区（省、市、区编号）
+
+/admin/craftsmanlist 加搜索条件 ok
+1. 地区（省、市、区编号）
+
+/admin/businesslist 加搜索条件 ok
+1. 地区（省、市、区编号）
+
+/admin/showlist 加搜索条件
+1. 地区（省、市、区编号）
+
+/admin/orderinfo 返回自动取消订单时间
+
+订单状态
+* status = 1 //待审核 2 待支付定金 ，3待派单 4 报名中 5施工中 6待付尾款 7待评价(状态已经删除) 8已完成 9支付定金但未施工，强行结束订单 10 订单审核不通过 11取消订单 12超时订单 13待报价
+
+
+小程序取消订单取消不了

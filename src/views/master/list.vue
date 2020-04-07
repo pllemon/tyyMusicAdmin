@@ -31,7 +31,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option v-for="(item, index) in recordStatus" :key="index" :label="item" :value="index" />
+            <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -69,7 +69,7 @@
           <el-table-column label="申请时间" width="200" prop="create_time" />
           <el-table-column label="状态" width="100">
             <template slot-scope="scope">
-              {{ recordStatus[scope.row.status] }}
+              {{ dict.recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
           <el-table-column label="审核时间" width="200" prop="examine_time" />
@@ -102,6 +102,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getList, savecraftsmanstatus } from '@/api/master'
 import Details from '@/views/master/details'
 import Examine from '@/views/master/examine'
@@ -129,7 +130,10 @@ export default {
         end_time: '',
         name: '',
         sn: '',
-        status: ''
+        status: '',
+        district: '',
+        city: '',
+        province: '',
       },
       timeRange: [],
 
@@ -138,10 +142,21 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.fetchData(1)
+  },
+  watch: {
+    globalSearch: {
+      handler(val) {
+        this.fetchData(1)
+      },
+      deep: true
+    }
   },
   methods: {
-    fetchData() {
+    fetchData(type) {
+      if (type == 1) {
+        this.queryMes.page = 1
+      }
       this.listLoading = true
       if (this.timeRange.length) {
         this.queryMes.start_time = this.timeRange[0]
@@ -150,6 +165,11 @@ export default {
         this.queryMes.start_time = ''
         this.queryMes.end_time = ''
       }
+      
+      this.queryMes.district = this.globalSearch.district
+      this.queryMes.city = this.globalSearch.city
+      this.queryMes.province = this.globalSearch.province
+
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
@@ -171,9 +191,8 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      recordStatus: state => state.dict.recordStatus
-    })
+      ...mapState(['dict']),
+      ...mapGetters(['userInfo', 'globalSearch'])
   }
 }
 </script>

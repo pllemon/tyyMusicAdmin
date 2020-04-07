@@ -31,6 +31,13 @@ const state = {
     10: '已取消',
     12: '过期未处理'
   },
+  cashoutStatus: {
+    0: '未结算',
+    1: '已经结算了第一次',
+    2: '已经结算了两次',
+    3: '申请第一次提现中',
+    4: '申请第二次',
+  },
   offlineStatus: {
     waitconfirm: '待商家确认',
     success: '已完成',

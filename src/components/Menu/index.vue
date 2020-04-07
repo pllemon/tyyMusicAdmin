@@ -1,8 +1,10 @@
 <template>
-  <el-menu :default-active="activeIndex" mode="horizontal" router>
-    <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.title" router>
+  <el-menu :default-active="activeIndex" mode="horizontal">
+    <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.id">
       <template slot="title">{{item.title}}</template> 
-      <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.path">{{item2.title}}</el-menu-item>
+      <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.id">
+        <router-link class="menu-link" :to="item2.path">{{item2.title}}</router-link>
+      </el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
@@ -18,6 +20,20 @@ export default {
       menuData
     }
   },
+  created() {
+    this.setActive(this.$route)
+  },
+  methods: {
+    setActive(route) {
+      const menu = route.meta.menu || route.query.menu
+      this.activeIndex = menu
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.setActive(to)
+    }
+  }
 }
 </script>
 
@@ -72,5 +88,14 @@ export default {
 }
 .el-menu--popup{
   background: #fff;
+}
+
+.menu-link{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.el-menu-item.is-active{
+  color: #409EFF !important;
 }
 </style>

@@ -26,7 +26,9 @@
         ref="areaCascader"
         v-model="form.areaCode"
         :options="options"
+        :props="{ checkStrictly: true }"
         placeholder="区域"
+        clearable
       />
     </el-form-item>
     <el-form-item>
@@ -47,7 +49,10 @@ export default {
         year: '',
         month: '',
         network_id: '',
-        areaCode: []
+        areaCode: [],
+        district: '',
+        city: '',
+        province: '',
       },
       networkList: [],
       months: [],
@@ -78,6 +83,10 @@ export default {
         }
         val.startTime = startTime
         val.endTime =endTime
+
+        val.province = val.areaCode[0]
+        val.city = val.areaCode[1]
+        val.district = val.areaCode[2]
         this.$store.commit('user/SET_SEARCH', val)
       },
       deep: true

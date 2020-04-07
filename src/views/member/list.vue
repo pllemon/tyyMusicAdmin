@@ -5,7 +5,7 @@
       <p class="section-title">用户列表</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button>
-        <el-button size="small" icon="el-icon-upload2" round @click="changePoints(selectIds)">积分增减</el-button>
+        <el-button size="small" icon="el-icon-discount" round @click="changePoints(selectIds)">积分增减</el-button>
       </div>
     </div>
 

@@ -96,7 +96,7 @@
           </el-form>
           <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status != 10">
+        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status != 10 && message.info.status != 12">
           <p class="section-title small">报价&报名</p>
           <el-form label-width="100px">
             <el-row>
@@ -144,10 +144,16 @@
           </el-form>
           <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form" v-if="message.info.status > 6 && message.info.status != 10">
-          <p class="section-title small">用户评价&师傅秀</p>
+        <div class="section  detail-form" v-if="message.info.status > 6 && message.info.status != 10 && message.info.status != 12">
+          <p class="section-title small">施工情况&用户评价</p>
           <el-form label-width="100px">
             <el-row>
+              <el-col :span="24" v-if="message.ordersshow.title">
+                <el-form-item label="施工情况:">
+                  <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
+                  <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
+                </el-form-item>
+              </el-col>
               <el-col :span="24" v-if="message.comment.id">
                 <el-form-item label="用户评价:">
                   <div class="flex-center-start">
@@ -158,18 +164,6 @@
                       score-template="{value}">
                     </el-rate>
                     <p>{{ message.comment.comment }}</p>
-                  </div>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24" v-if="message.ordersshow.title">
-                <el-form-item label="工匠秀:">
-                  <p>{{ message.ordersshow.title }}</p>
-                  <p>{{ message.ordersshow.dec }}</p>
-                  <div>
-                    <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
-                    <gd-image v-if="message.ordersshow.imgurl2" :src="message.ordersshow.imgurl2" />
-                    <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
-                    <gd-image v-if="message.ordersshow.imgurl4" :src="message.ordersshow.imgurl4" />
                   </div>
                 </el-form-item>
               </el-col>

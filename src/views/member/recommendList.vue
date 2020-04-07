@@ -32,9 +32,9 @@ import { getList } from '@/api/member'
 
 export default {
   props: {
-    dialogMes: {
-      type: Object,
-      default: () => {}
+    invitation_code: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -59,6 +59,7 @@ export default {
     })
   },
   created() {
+    this.queryMes.invitation_code = this.invitation_code
     this.fetchData()
   },
   methods: {

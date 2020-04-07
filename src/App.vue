@@ -81,8 +81,8 @@ export default {
           })
         } else if (res.type == 'payEarnest') {
           notify = this.$notify({
-            title: '用户已支付定金',
-            message: `订单编号 ${message.orderSn} ，用户已支付定金，赶紧为TA发布订单吧！`,
+            title: '用户已支付',
+            message: `订单编号 ${message.orderSn} ，用户已支付，赶紧为TA发布订单吧！`,
             duration: 0,
             offset: 50,
             iconClass: 'el-icon-s-finance',
@@ -118,12 +118,13 @@ export default {
             }
           })
         } else {
-          this.$notify({
-            title: '收到一条信息',
-            message: res.message,
-            duration: 5000,
-            offset: 50
-          })
+          console.log(res.message)
+          // this.$notify({
+          //   title: '收到一条信息',
+          //   message: res.message,
+          //   duration: 5000,
+          //   offset: 50
+          // })
         }
         // this.notifications[timeStamp] = notify;
         // this.$store.commit('news/ADD_NEWS', res)

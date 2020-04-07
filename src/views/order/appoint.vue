@@ -1,21 +1,39 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="指派师傅" :visible="true" width="1000px" :before-close="handleClose" :close-on-click-modal="false">
-    <div v-loading="loading">
+    <div>
       <div class="flex-center" style="height: 200px;" v-if="craftsmanlist.length == 0">
         还没有师傅进行报名哦～
       </div>
       <div v-else>
         <p style="margin-bottom: 10px">请选择一个师傅，该订单将派发给该师傅负责</p>
-        <ul class="master-list">
-          <li v-for="(item, index) in craftsmanlist" :key="index">
-            <gd-image :src="item.headerurl" headUrl width="40" height="40"/>
-            <div class="flex1" style="margin-left: 10px">
-              <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
-              <p><i class="el-icon-phone-outline" /> {{ item.phone }}</p>
-            </div>
-            <el-button type="primary" size="mini" @click="choose(item.id)">选择</el-button>
-          </li>
-        </ul>
+        <el-table
+          ref="table"
+          v-loading="loading"
+          :data="craftsmanlist"
+          element-loading-text="Loading"
+          border
+          fit
+          highlight-current-row
+          height="400px"
+        >
+          <el-table-column label="序号" type="index" width="50" fixed/>
+          <el-table-column label="姓名">
+            <template slot-scope="scope">
+              <p class="flex-center-start">
+                <gd-image :src="scope.row.headerurl" headUrl width="40" height="40" style="margin-right:10px"/>
+                <span>{{scope.row.name}}</span>
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column label="工号" prop="sn" />
+          <el-table-column label="手机号" prop="phone" />
+          <el-table-column label="报名时间" prop="time" />
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="text" @click="choose(scope.row.id)">选择</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
     </div>
   </el-dialog>

@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">线上订单列表</p>
+      <p class="section-title">{{title}}</p>
       <div class="action">
         <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button>
       </div>
@@ -30,6 +30,16 @@
           <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option
               v-for="(item, index) in dict.orderStatus"
+              :key="index"
+              :label="item"
+              :value="index">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="薪酬状态" prop="cashout_status">
+          <el-select v-model="queryMes.cashout_status" placeholder="请选择" clearable>
+            <el-option
+              v-for="(item, index) in dict.cashoutStatus"
               :key="index"
               :label="item"
               :value="index">
@@ -107,10 +117,12 @@
           <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
-              <el-button type="text" v-if="scope.row.status == 1 && !scope.row.appo_time" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">审核</el-button>
-              <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button>
-              <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
-              <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
+              <template v-if="section == 1">
+                <el-button type="text" v-if="scope.row.status == 1 && !scope.row.appo_time" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">审核</el-button>
+                <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button>
+                <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
+                <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
+              </template>
             </template>
           </el-table-column>
         </el-table>
@@ -137,6 +149,7 @@ import { getList, release } from '@/api/order'
 import Details from '@/views/order/details'
 import Examine from '@/views/order/examine'
 import Appoint from '@/views/order/appoint'
+import { menuData } from '@/utils/menu'
 
 export default {
   mixins: [ListMixin],
@@ -158,7 +171,11 @@ export default {
         phone: '',
         cmphone: '',
         cmsn: '',
-        urgent: ''
+        urgent: '',
+        district: '',
+        city: '',
+        province: '',
+        cashout_status: ''
       },
       timeRange: [],
 
@@ -167,7 +184,10 @@ export default {
       api: {
         getList,
         release
-      }
+      },
+
+      title: '',
+      section: '', // 来自模块
     }
   },
   watch: {
@@ -190,6 +210,19 @@ export default {
   methods: {
     againFetch() {
       let that = this
+
+      const menu = that.$route.query.menu
+      let menuObj = null
+      menuData.forEach(item => {
+        item.children.forEach(item2 => {
+          if (item2.id == menu) {
+            menuObj = item2
+            return false
+          }
+        })
+      })
+      this.title = menuObj.title
+
       that.queryMes =  {
         page: 1,
         limit: 10,
@@ -201,7 +234,11 @@ export default {
         phone: '',
         cmphone: '',
         cmsn: '',
-        urgent: ''
+        urgent: '',
+        district: '',
+        city: '',
+        province: '',
+        cashout_status: ''
       }
       that.timeRange = []
       let query = that.$route.query
@@ -210,24 +247,24 @@ export default {
           that.queryMes[i] = query[i]
         }
       }
-      if (query.network_id) {
-        this.queryMes.network_id = parseInt(query.network_id)
-      }
-      if (query.start_time && query.end_time) {
-        that.timeRange = [query.start_time, query.end_time]
-      } 
+      this.queryMes.start_time = this.globalSearch.startTime
+      this.queryMes.end_time = this.globalSearch.endTime
       this.queryMes.network_id = this.globalSearch.network_id
+      this.queryMes.district = this.globalSearch.district
+      this.queryMes.city = this.globalSearch.city
+      this.queryMes.province = this.globalSearch.province
+      this.section = this.$route.query.section
       that.fetchData()
     },
 
     beforeFetch() {
-      if (this.timeRange && this.timeRange.length) {
-        this.queryMes.start_time = this.timeRange[0]
-        this.queryMes.end_time = this.timeRange[1]
-      } else {
-        this.queryMes.start_time = ''
-        this.queryMes.end_time = ''
-      }
+      // if (this.timeRange && this.timeRange.length) {
+      //   this.queryMes.start_time = this.timeRange[0]
+      //   this.queryMes.end_time = this.timeRange[1]
+      // } else {
+      //   this.queryMes.start_time = ''
+      //   this.queryMes.end_time = ''
+      // }
       if (this.userInfo.network_id) {
         this.queryMes.network_id = this.userInfo.network_id
       }

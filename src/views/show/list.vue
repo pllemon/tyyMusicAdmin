@@ -104,7 +104,10 @@ export default {
         crafts_man_name: '',
         name: '',
         page: 1,
-        limit: 10
+        limit: 10,
+        district: '',
+        city: '',
+        province: '',
       },
 
       currentComponent: '',
@@ -116,11 +119,25 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.fetchData(1)
+  },
+  watch: {
+    globalSearch: {
+      handler(val) {
+        this.fetchData(1)
+      },
+      deep: true
+    }
   },
   methods: {
-    fetchData() {
+    fetchData(type) {
+      if (type == 1) {
+        this.queryMes.page = 1
+      }
       this.listLoading = true
+      this.queryMes.district = this.globalSearch.district
+      this.queryMes.city = this.globalSearch.city
+      this.queryMes.province = this.globalSearch.province
       getList(this.queryMes).then(response => {
         this.list = response.data.data
         this.total = response.data.total
