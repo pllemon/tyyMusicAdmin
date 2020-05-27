@@ -19,7 +19,7 @@ const menuData = [
         path: '/order/list?status=10&menu=1-3&section=1'
       },
       {
-        id: '1-9',
+        id: '1-12',
         title: '未付款单',
         path: '/order/list?status=2&menu=1-9&section=1'
       },
@@ -58,6 +58,11 @@ const menuData = [
         title: '系统通知',
         path: '/system/notice'
       },
+      {
+        id: '1-9',
+        title: '用户反馈',
+        path: '/member/feedback'
+      },
     ]
   },
   {
@@ -83,11 +88,6 @@ const menuData = [
         id: '2-4',
         title: '案例广场',
         path: '/show/list'
-      },
-      {
-        id: '2-5',
-        title: '用户反馈',
-        path: '/member/feedback'
       },
     ]
   },
