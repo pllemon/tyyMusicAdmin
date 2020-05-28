@@ -51,18 +51,18 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="用户头像" align="center">
+          <el-table-column label="用户头像" align="center" width="100">
             <template slot-scope="scope">
               <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
             </template>
           </el-table-column>
-          <el-table-column label="用户账号" prop="phone" width="150"/>
-          <el-table-column label="用户名" prop="username" width="120"/>
-          <el-table-column label="推荐码" prop="invitation_code" width="120"/>
-          <el-table-column label="上级推荐人" width="120" prop="invitation_code"/>
-          <el-table-column label="下级推荐数" width="120" prop="friend_sum"/>
-          <el-table-column label="下单数" />
-          <el-table-column label="总积分" />
+          <el-table-column label="用户账号" prop="phone" />
+          <el-table-column label="用户名" prop="username"/>
+          <el-table-column label="下级推荐码" prop="invitation_code"/>
+          <!-- <el-table-column label="上级推荐人" width="120" prop="invitation_code"/> -->
+          <el-table-column label="下级推荐数" prop="friend_sum"/>
+          <!-- <el-table-column label="下单数" /> -->
+          <!-- <el-table-column label="总积分" /> -->
           <el-table-column label="账号状态">
             <template slot-scope="scope">
               {{ identityType[scope.row.status] }}

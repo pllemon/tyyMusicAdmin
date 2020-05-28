@@ -55,7 +55,7 @@ const menuData = [
       },
       {
         id: '1-8',
-        title: '系统通知',
+        title: '系统公告',
         path: '/system/notice'
       },
       {

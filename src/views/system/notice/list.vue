@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">系统通知</p>
+      <p class="section-title">系统公告</p>
       <div class="action">
          <el-button size="small" icon="el-icon-plus" round @click="update()">添加</el-button>
       </div>

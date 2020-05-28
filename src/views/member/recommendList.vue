@@ -11,14 +11,14 @@
         height="360px"
       >
         <el-table-column label="序号" type="index" width="50" fixed/>
-        <el-table-column label="用户头像" align="center">
+        <el-table-column label="用户头像" align="center" width="100">
           <template slot-scope="scope">
             <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
           </template>
         </el-table-column>
         <el-table-column label="用户账号" prop="phone"/>
         <el-table-column label="用户名" prop="username"/>
-        <el-table-column label="上级推荐人" prop="friend_name"/>
+        <!-- <el-table-column label="上级推荐人" prop="friend_name"/> -->
         <el-table-column label="注册时间" prop="creattime" />
       </el-table>
     </div>                            

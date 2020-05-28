@@ -1,10 +1,7 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="指派师傅" :visible="true" width="1000px" :before-close="handleClose" :close-on-click-modal="false">
     <div>
-      <div class="flex-center" style="height: 200px;" v-if="craftsmanlist.length == 0">
-        还没有师傅进行报名哦～
-      </div>
-      <div v-else>
+      
         <p style="margin-bottom: 10px">请选择一个师傅，该订单将派发给该师傅负责</p>
         <el-table
           ref="table"
@@ -34,7 +31,6 @@
             </template>
           </el-table-column>
         </el-table>
-      </div>
     </div>
   </el-dialog>
 </template>
