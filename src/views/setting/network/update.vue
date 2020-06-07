@@ -13,12 +13,12 @@
           @change="changeArea"
         />
       </el-form-item>
-      <el-form-item label="负责人：" prop="author">
+      <!-- <el-form-item label="负责人：" prop="author">
         <el-input v-model="form.author" />
       </el-form-item>
       <el-form-item label="联系电话：" prop="phone">
         <el-input v-model="form.phone" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="网点地址：" prop="address">
         <el-input v-model="form.address" />
       </el-form-item>

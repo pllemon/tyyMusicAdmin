@@ -27,6 +27,15 @@ export function orderexamine(data) {
   })
 }
 
+// 订单审核2
+export function orderexamine2(data) {
+  return request({
+    url: '/admin/ordertonetwork',
+    method: 'post',
+    data
+  })
+}
+
 // 发布订单
 export function release(data){
   return request({

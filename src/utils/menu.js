@@ -16,7 +16,7 @@ const menuData = [
       {
         id: '1-3',
         title: '无法成交单',
-        path: '/order/list?status=10&menu=1-3&section=1'
+        path: '/order/list?status=11&menu=1-3&section=1'
       },
       {
         id: '1-12',
@@ -80,8 +80,13 @@ const menuData = [
         path: '/master/list'
       },
       {
+        id: '2-5',
+        title: '店长列表',
+        path: '/shopowner/list'
+      },
+      {
         id: '2-3',
-        title: '店主列表',
+        title: '商家列表',
         path: '/businessman/list'
       },
       {
@@ -169,7 +174,7 @@ const menuData = [
       },
       {
         id: '5-7',
-        title: '网点设置',
+        title: '网点列表',
         path: '/setting/network'
       },
       {

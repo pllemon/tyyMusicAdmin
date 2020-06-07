@@ -52,16 +52,30 @@
             </template>
           </el-table-column> -->
           <el-table-column label="施工师傅" prop="crafts_man_name" />
-          <el-table-column label="订单编号" min-width="200" prop="order_sn"/>
+          <el-table-column label="施工前" min-width="140">
+            <template slot-scope="scope">
+              <gd-image width="120" height="90" :src="scope.row.imgurl1"/>
+            </template>
+          </el-table-column>
+          <el-table-column label="施工后" min-width="140">
+            <template slot-scope="scope">
+              <gd-image width="120" height="90" :src="scope.row.imgurl3"/>
+            </template>
+          </el-table-column>
           <el-table-column label="开始时间" min-width="180" prop="time" />
           <el-table-column label="结束时间" min-width="180" prop="time" />
-          <el-table-column label="状态" width="180" prop="status" />
+          <el-table-column label="订单编号" min-width="200" prop="order_sn"/>
+          <el-table-column label="状态" width="180" align="center">
+            <template slot-scope="scope">
+              <span>{{scope.row.is_show == 1 ? '启用':'禁用'}}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="180" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
               <!-- <el-button type="text" @click="loadComponent('Update', scope.row.id)">编辑</el-button> -->
-              <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1 ,is_show:1})">启用</el-button>
-              <el-button type="text" @click="updateStatus({show_id:scope.row.id, status:1, is_show:2})">禁用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 2" @click="updateStatus({show_id:scope.row.id, status:1 ,is_show:1})">启用</el-button>
+              <el-button type="text" v-if="scope.row.is_show == 1" @click="updateStatus({show_id:scope.row.id, status:1, is_show:2})">禁用</el-button>
               <!-- <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button> -->
             </template>
           </el-table-column>

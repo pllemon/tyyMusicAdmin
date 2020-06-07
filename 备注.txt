@@ -271,3 +271,16 @@ websocket推送回来的内容都添加个id
 
 /admin/userinfo
 返回用户积分数、上级推荐码
+
+
+
+
+
+1. /bannerlist 参数position 无效
+2. 我的下级列表（返回下级名字、号码、头像、注册时间）
+3. 
+
+
+
+1. /ordershowlist 返回师傅工号、订单评分、订单省区（例广东江门）
+2. /admin/showlist?page=1&limit=10 报错 "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cn.crafts_man_sn' in 'field list'"

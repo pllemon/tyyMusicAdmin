@@ -56,6 +56,22 @@ export const mainAdminRoutes = [
     ]
   },
 
+  {
+    path: '/shopowner',
+    component: Layout,
+    redirect: '/shopowner/list',
+    name: 'Shopowner',
+    meta: { title: '店长管理', icon: 'namecard' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/shopowner/list'),
+        meta: { title: '全部师傅', menu: '2-5'}
+      }
+    ]
+  },
+
 
   {
     path: '/businessman',

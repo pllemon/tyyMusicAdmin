@@ -43,12 +43,12 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="网点名称" prop="name" width="150" />
-          <el-table-column label="所属区域" prop="region" width="200" />
-          <el-table-column label="负责人" prop="author" />
-          <el-table-column label="联系电话"  prop="phone" width="150" />
-          <el-table-column label="网点地址" prop="address" width="200" />
-          <el-table-column label="网点描述" prop="desc" width="200" />
+          <el-table-column label="网点名称" prop="name" />
+          <el-table-column label="所属区域" prop="region" />
+          <!-- <el-table-column label="负责人" prop="author" />
+          <el-table-column label="联系电话"  prop="phone" width="150" /> -->
+          <el-table-column label="网点地址" prop="address" />
+          <el-table-column label="网点描述" prop="desc" />
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ showType[scope.row.is_show] }}

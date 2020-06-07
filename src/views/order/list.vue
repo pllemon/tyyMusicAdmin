@@ -11,7 +11,7 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="预约时间">
+        <!-- <el-form-item label="预约时间">
            <el-date-picker
             v-model="timeRange"
             type="datetimerange"
@@ -22,11 +22,11 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             :picker-options="common.timePickerOptions()">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="订单编号" prop="order_sn">
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="订单状态" prop="status">
+        <!-- <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option
               v-for="(item, index) in dict.orderStatus"
@@ -45,7 +45,7 @@
               :value="index">
             </el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
@@ -118,8 +118,8 @@
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
               <template v-if="section == 1">
-                <el-button type="text" v-if="scope.row.status == 1 && !scope.row.appo_time" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">审核</el-button>
-                <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button>
+                <el-button type="text" v-if="scope.row.status == 1 && !scope.row.network_id" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">分配</el-button>
+                <!-- <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button> -->
                 <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
                 <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
               </template>

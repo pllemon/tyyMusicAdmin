@@ -47,11 +47,11 @@
               {{ info.pay_money| normNumber }}
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <el-form-item label="积分抵扣平台费:">
               {{ info.use_integral| normNumber }}
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="8">
             <el-form-item label="创建时间:">
               {{ info.creat_time }}
@@ -59,7 +59,7 @@
           </el-col>
           <el-col :span="8" v-if="info.status == 1 && info.pay_status == 1">
             <el-form-item label="完成时间:">
-              {{ info.creat_time }}
+              {{ info.pay_time }}
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if="info.status == 2">

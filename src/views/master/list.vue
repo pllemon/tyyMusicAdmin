@@ -11,7 +11,7 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="申请时间">
+        <!-- <el-form-item label="申请时间">
            <el-date-picker
             v-model="timeRange"
             type="datetimerange"
@@ -22,7 +22,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             :picker-options="common.timePickerOptions()">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="师傅名" prop="name">
           <el-input v-model="queryMes.name" placeholder="请输入" />
         </el-form-item>

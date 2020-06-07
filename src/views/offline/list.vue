@@ -101,7 +101,8 @@
             </template>
           </el-table-column>
           <el-table-column label="创建时间" width="180" prop="creat_time" />
-          <el-table-column label="完成时间" width="180" prop="" />
+          <el-table-column label="完成时间" width="180" prop="pay_time" />
+          <el-table-column label="取消时间" width="180" prop="cancel_time" />
           <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>

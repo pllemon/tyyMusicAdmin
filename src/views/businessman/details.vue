@@ -53,20 +53,20 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="营业执照:">
-              <gd-image :src="message.goodsimg"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="产品图片:">
+            <el-form-item label="宣传图片:">
               <gd-image :src="message.businessimg"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="营业执照:">
+              <gd-image :src="message.goodsimg"/>
+            </el-form-item>
+          </el-col>
+          <!-- <el-col :span="12">
             <el-form-item label="分享图片:">
               <gd-image :src="message.sharewximg"/>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-form>
     </div>
