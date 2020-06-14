@@ -12,7 +12,7 @@
           <el-input
             type="text"
             placeholder="请输入"
-            v-model="examineForm.money"
+            v-model="examineForm.joininprice"
           />
         </el-form-item>
       </template>
@@ -51,7 +51,7 @@ export default {
         busines_id: '',
         status: '1',
         bhremark: '',
-        money: ''
+        joininprice: ''
       }
     }
   },
