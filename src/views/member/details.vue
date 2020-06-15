@@ -1,6 +1,5 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
-    
     <el-tabs tab-position="top">
       <el-tab-pane label="基本信息" style="min-height: 400px;">
         <div class="flex">
