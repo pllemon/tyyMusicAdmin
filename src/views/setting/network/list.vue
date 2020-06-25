@@ -17,9 +17,6 @@
         <el-form-item label="所属区域" prop="region">
           <el-input v-model="queryMes.region" />
         </el-form-item>
-        <el-form-item label="负责人" prop="author">
-          <el-input v-model="queryMes.author" />
-        </el-form-item>
         <el-form-item label="状态" prop="is_show">
           <el-select v-model="queryMes.is_show" placeholder="请选择">
             <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
@@ -45,8 +42,6 @@
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="网点名称" prop="name" />
           <el-table-column label="所属区域" prop="region" />
-          <!-- <el-table-column label="负责人" prop="author" />
-          <el-table-column label="联系电话"  prop="phone" width="150" /> -->
           <el-table-column label="网点地址" prop="address" />
           <el-table-column label="网点描述" prop="desc" />
           <el-table-column label="状态">

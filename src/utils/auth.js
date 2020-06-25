@@ -25,8 +25,8 @@ export function removeAccountId() {
 }
 
 export function getLoginStorage() {
-  const username = localStorage.getItem('dsfUser') || 'dsfadmin'
-  const password = localStorage.getItem('dsfPwd') || '1234567'
+  const username = localStorage.getItem('dsfUser') || ''
+  const password = localStorage.getItem('dsfPwd') || ''
   let remember = false
   if (username) {
     remember = true

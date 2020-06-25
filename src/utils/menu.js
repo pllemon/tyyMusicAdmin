@@ -5,61 +5,66 @@ const menuData = [
     children: [
       {
         id: '1-1',
-        title: '新下单分配',
+        title: '新订单分配',
         path: '/order/list?status=1&menu=1-1&section=1'
       },
       {
-        id: '1-2',
-        title: '过时未跟单',
-        path: '/order/list?status=12&menu=1-2&section=1'
-      },
-      {
-        id: '1-3',
-        title: '无法成交单',
-        path: '/order/list?status=11&menu=1-3&section=1'
-      },
-      {
         id: '1-12',
-        title: '未付款单',
-        path: '/order/list?status=2&menu=1-9&section=1'
-      },
-      {
-        id: '1-4',
-        title: '已付款单',
-        path: '/order/list?status=3&menu=1-4&section=1'
-      },
-      {
-        id: '1-5',
-        title: '审批抢单',
-        path: '/order/list?status=4&menu=1-5&section=1'
-      },
-      {
-        id: '1-10',
-        title: '正在施工单',
-        path: '/order/list?status=5&menu=1-10&section=1'
+        title: '过时未跟单',
+        path: '/order/list?status=12&menu=1-12&section=1'
       },
       {
         id: '1-11',
-        title: '完工单',
-        path: '/order/list?status=8&menu=1-11&section=1'
+        title: '客户取消单',
+        path: '/order/list?status=11&menu=1-11&section=1'
+      },
+      {
+        id: '1-2',
+        title: '待支付单',
+        path: '/order/list?status=2&menu=1-2&section=1'
+      },
+      {
+        id: '1-3',
+        title: '待发布单',
+        path: '/order/list?status=3&menu=1-3&section=1'
+      },
+      {
+        id: '1-4',
+        title: '审批抢单',
+        path: '/order/list?status=4&menu=1-4&section=1'
+      },
+      {
+        id: '1-5',
+        title: '正在施工单',
+        path: '/order/list?status=5&menu=1-5&section=1'
       },
       {
         id: '1-6',
-        title: '完工申款单',
-        path: '/order/list?status=8&cashout_status=3&menu=1-6&section=1'
+        title: '待客户验收单',
+        path: '/order/list?status=6&menu=1-6&section=1'
       },
       {
         id: '1-7',
-        title: '申请尾款单',
-        path: '/order/list?status=8&cashout_status=4&menu=1-7&section=1'
+        title: '待店长验收单',
+        path: '/order/list?status=7&menu=1-7&section=1'
       },
       {
         id: '1-8',
+        title: '完工申款单',
+        path: '/order/list?status=8&cashout_status=3&menu=1-8&section=1'
+      },
+      {
+        id: '1-9',
+        title: '申请尾款单',
+        path: '/order/list?status=8&cashout_status=4&menu=1-9&section=1'
+      },
+      {
+        id: '1-20',
         title: '系统公告',
         path: '/system/notice'
       },
       {
-        id: '1-9',
+        id: '1-21',
         title: '用户反馈',
         path: '/member/feedback'
       },
@@ -80,17 +85,17 @@ const menuData = [
         path: '/master/list'
       },
       {
-        id: '2-5',
+        id: '2-3',
         title: '店长列表',
         path: '/shopowner/list'
       },
       {
-        id: '2-3',
+        id: '2-4',
         title: '商家列表',
         path: '/businessman/list'
       },
       {
-        id: '2-4',
+        id: '2-5',
         title: '案例广场',
         path: '/show/list'
       },

@@ -9,7 +9,6 @@ import getPageTitle from '@/utils/get-page-title'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // 不会重定向的白名单
-const defineView = ['/login'] // 没有头部的普通页面
 
 router.beforeEach(async(to, from, next) => {
   // 开始切换页面进度条
@@ -27,7 +26,6 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      // determine whether the user has obtained his permission roles through getInfo
       const hasRoles = store.getters.roles
       if (hasRoles) {
         next()
@@ -52,7 +50,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     // 没有token
-
     if (whiteList.indexOf(to.path) !== -1) {
       // 白名单下继续跳转
       next()

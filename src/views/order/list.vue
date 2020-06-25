@@ -26,7 +26,7 @@
         <el-form-item label="订单编号" prop="order_sn">
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
-        <!-- <el-form-item label="订单状态" prop="status">
+        <el-form-item label="订单状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择" clearable>
             <el-option
               v-for="(item, index) in dict.orderStatus"
@@ -45,7 +45,7 @@
               :value="index">
             </el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
           <el-select v-model="queryMes.network_id">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
@@ -255,19 +255,6 @@ export default {
       this.queryMes.province = this.globalSearch.province
       this.section = this.$route.query.section
       that.fetchData()
-    },
-
-    beforeFetch() {
-      // if (this.timeRange && this.timeRange.length) {
-      //   this.queryMes.start_time = this.timeRange[0]
-      //   this.queryMes.end_time = this.timeRange[1]
-      // } else {
-      //   this.queryMes.start_time = ''
-      //   this.queryMes.end_time = ''
-      // }
-      if (this.userInfo.network_id) {
-        this.queryMes.network_id = this.userInfo.network_id
-      }
     },
 
     // 发布订单

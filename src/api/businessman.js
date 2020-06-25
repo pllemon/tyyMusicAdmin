@@ -39,3 +39,12 @@ export function savebusinessstatus(data) {
     data
   })
 }
+
+
+export function businessgoodslist(params) {
+  return request({
+    url: '/admin/businessgoodslist',
+    method: 'get',
+    params
+  })
+}

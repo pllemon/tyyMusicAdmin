@@ -64,19 +64,21 @@
           <el-table-column label="店铺名" prop="name" width="120" />
           <el-table-column label="联系方式" prop="phone" width="120" />
           <el-table-column label="店铺地址" prop="address" min-width="160" />
+          <el-table-column label="加盟费用" prop="" min-width="100" />
+          <el-table-column label="商品数量" prop="" min-width="100" />
           <el-table-column label="状态" min-width="120">
             <template slot-scope="scope">
               {{ dict.recordStatus[scope.row.status] }}
             </template>
           </el-table-column>
           <el-table-column label="申请时间" min-width="160" prop="creattime" />
-          <el-table-column label="审核时间" min-width="160" prop="examine" />
-          <el-table-column label="操作" width="150" fixed="right">
+          <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="loadComponent('Examine', scope.row.id)">审核</el-button>
               <el-button type="text" v-if="scope.row.status == 4" @click="updateStatus({busines_id:scope.row.id, status:1})">启用</el-button>
-              <el-button type="text" v-if="scope.row.status == 1" @click="updateStatus({busines_id:scope.row.id, status:4})">禁用</el-button></template>
+              <el-button type="text" v-if="scope.row.status == 1" @click="updateStatus({busines_id:scope.row.id, status:4})">禁用</el-button>
+            </template>
           </el-table-column>
         </el-table>
       </div>
