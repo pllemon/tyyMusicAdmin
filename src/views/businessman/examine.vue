@@ -1,6 +1,6 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="审核商家" :visible="true" width="800px" :before-close="handleClose" :close-on-click-modal="false">
-    <el-form ref="examineForm" :model="examineForm" label-width="140px" style="margin-right: 50px">
+    <el-form ref="examineForm" :rules="rules" :model="examineForm" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="examineForm.status" @change="changeStatus">
           <el-radio label="1">通过</el-radio>
@@ -8,12 +8,8 @@
         </el-radio-group>
       </el-form-item>
       <template v-if="examineForm.status == '1'">
-        <el-form-item label="加盟金额：">
-          <el-input
-            type="text"
-            placeholder="请输入"
-            v-model="examineForm.joininprice"
-          />
+        <el-form-item label="加盟金额：" prop="joininprice">
+          <el-input-number v-model="examineForm.joininprice" :precision="2" :step="1"></el-input-number>
         </el-form-item>
       </template>
       <template v-if="examineForm.status == '3'">
@@ -51,7 +47,10 @@ export default {
         busines_id: '',
         status: '1',
         bhremark: '',
-        joininprice: ''
+        joininprice: 0
+      },
+      rules: {
+        joininprice: [{ required: true, message: '请输入加盟金额', trigger: 'change' }],
       }
     }
   },
