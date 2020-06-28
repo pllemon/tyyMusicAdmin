@@ -17,20 +17,20 @@
             <el-input v-model="form.phone" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="24">
+        <!-- <el-col :span="24">
           <el-form-item label="账号角色" prop="role">
             <el-select v-model="form.role" @change="changeRole" clearable>
               <el-option v-for="(item, index) in roleType" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
-        </el-col>
-        <el-col :span="24" v-if="form.role == 2">
+        </el-col> -->
+        <!-- <el-col :span="24" v-if="form.role == 2">
           <el-form-item label="所属网点" prop="network_id" clearable>
             <el-select v-model="form.network_id">
               <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :span="24">
           <el-form-item label="账号备注">
             <el-input v-model="form.remark" type="textarea" :rows="2" clearable />
@@ -65,12 +65,13 @@ export default {
         username: [{ required: true, message: '请输入账号名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-        network_id: [{ required: true, message: '请选择所属网点', trigger: 'change' }],
-        role: [{ required: true, message: '请选择账号角色', trigger: 'change' }],
+        // network_id: [{ required: true, message: '请选择所属网点', trigger: 'change' }],
+        // role: [{ required: true, message: '请选择账号角色', trigger: 'change' }],
       },
       form: {
-        network_id: '',
-        remark: ''
+        network_id: 0,
+        remark: '',
+        role: 1
       },
       networkList: []
     }

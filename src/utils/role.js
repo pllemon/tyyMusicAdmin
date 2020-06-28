@@ -51,7 +51,7 @@ export const mainAdminRoutes = [
         path: 'settlement',
         name: 'Settlement',
         component: () => import('@/views/master/settlement'),
-        meta: { title: '薪酬申请', menu: '2-2'}
+        meta: { title: '师傅申款记录', menu: '4-1'}
       }
     ]
   },

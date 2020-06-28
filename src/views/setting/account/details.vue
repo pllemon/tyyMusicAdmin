@@ -17,11 +17,11 @@
             <el-input v-model="form.name" />
           </el-form-item>
         </el-col>
-        <el-col span="24">
+        <!-- <el-col span="24">
           <el-form-item label="账号角色">
             <el-input v-model="form.name" />
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col span="24">
           <el-form-item label="启用状态" prop="enable">
             <el-radio-group v-model="form.enable">

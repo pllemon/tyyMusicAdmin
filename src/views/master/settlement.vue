@@ -2,7 +2,7 @@
   <div class="app-container list-layout">
     <!-- 表头 -->
     <div class="table-header">
-      <p class="section-title">薪酬申请</p>
+      <p class="section-title">师傅申款记录</p>
       <div class="action">
         <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
       </div>
@@ -56,7 +56,7 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="头像" align="center">
+          <el-table-column label="师傅头像" align="center">
             <template slot-scope="scope">
               <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
             </template>

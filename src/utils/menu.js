@@ -50,13 +50,28 @@ const menuData = [
       },
       {
         id: '1-8',
-        title: '完工申款单',
-        path: '/order/list?status=8&cashout_status=3&menu=1-8&section=1'
+        title: '已验收单',
+        path: '/order/list?status=8&menu=1-8&section=1'
       },
       {
-        id: '1-9',
+        id: '1-30',
+        title: '完工申款单',
+        path: '/order/list?status=8&cashout_status=3&menu=1-30&section=1'
+      },
+      {
+        id: '1-31',
+        title: '已结算完工申款单', 
+        path: '/order/list?status=8&cashout_status=1&menu=1-31&section=1'
+      },
+      {
+        id: '1-32',
         title: '申请尾款单',
-        path: '/order/list?status=8&cashout_status=4&menu=1-9&section=1'
+        path: '/order/list?status=8&cashout_status=4&menu=1-32&section=1'
+      },
+      {
+        id: '1-33',
+        title: '已结算尾款单',
+        path: '/order/list?status=8&cashout_status=2&menu=1-33&section=1'
       },
       {
         id: '1-20',
@@ -118,28 +133,8 @@ const menuData = [
     children: [
       {
         id: '4-1',
-        title: '已付款的单',
-        path: '/order/list?status=3&menu=4-1&section=4'
-      },
-      {
-        id: '4-2',
-        title: '完工申款单',
-        path: '/order/list?status=8&cashout_status=3&menu=4-2&section=4'
-      },
-      {
-        id: '4-3',
-        title: '已付完工申款单', 
-        path: '/order/list?status=8&cashout_status=1&menu=4-3&section=4'
-      },
-      {
-        id: '4-4',
-        title: '申请尾款单',
-        path: '/order/list?status=8&cashout_status=4&menu=4-4&section=4'
-      },
-      {
-        id: '4-5',
-        title: '已付申请尾款单',
-        path: '/order/list?status=8&cashout_status=2&menu=4-5&section=4'
+        title: '师傅申款记录',
+        path: '/master/settlement'
       }
     ]
   },

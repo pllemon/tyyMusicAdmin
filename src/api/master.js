@@ -42,6 +42,15 @@ export function craftsmansettlementlist(data) {
   })
 }
 
+// 申请详情
+export function craftsmansettlementinfo(data) {
+  return request({
+    url: `/admin/craftsmansettlementinfo`,
+    method: 'post',
+    data
+  })
+}
+
 // 审核和结算
 export function craftsmansettlement(data) {
   return request({

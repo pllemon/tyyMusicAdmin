@@ -3,8 +3,8 @@
     <el-form ref="form" :model="form" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="form.status">
-          <el-radio label="2">通过</el-radio>
-          <el-radio label="3">不通过</el-radio>
+          <el-radio label="2">已发放</el-radio>
+          <el-radio label="3">驳回</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="备注：" prop="shremark">
@@ -25,7 +25,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { craftsmansettlement } from '@/api/master'  
+import { craftsmansettlement, craftsmansettlementinfo } from '@/api/master'  
 
 export default {
   props: {
