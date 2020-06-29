@@ -48,3 +48,12 @@ export function businessgoodslist(params) {
     params
   })
 }
+
+// 设置和获取单个商品价格
+export function upgoodsprice(data) {
+  return request({
+    url: '/admin/upgoodsprice',
+    method: 'post',
+    data
+  })
+}

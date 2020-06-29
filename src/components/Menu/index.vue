@@ -1,5 +1,8 @@
 <template>
   <el-menu :default-active="activeIndex" mode="horizontal">
+    <el-menu-item index="0">
+      <router-link class="menu-link" to="/">数据概述</router-link>
+    </el-menu-item>
     <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.id">
       <template slot="title">{{item.title}}</template> 
       <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.id">
@@ -68,15 +71,22 @@ export default {
   background: none;
 }
 .el-menu--horizontal>.el-submenu:focus .el-submenu__title, 
-.el-menu--horizontal>.el-submenu:hover .el-submenu__title{
+.el-menu--horizontal>.el-submenu:hover .el-submenu__title,
+.el-menu--horizontal>.el-menu-item a, 
+.el-menu--horizontal>.el-menu-item a:hover{
   color: #fff;
 }
-.el-menu--horizontal>.el-submenu.is-active .el-submenu__title{
+.el-menu--horizontal>.el-submenu.is-active .el-submenu__title,
+.el-menu--horizontal>.el-menu-item.is-active{
   border-bottom: 2px solid #81efff;
   color: #81efff;
   font-weight: bold;
 }
-.el-menu--horizontal>.el-submenu .el-submenu__title{
+.el-menu--horizontal>.el-menu-item.is-active a{
+  color: #81efff;
+}
+.el-menu--horizontal>.el-submenu .el-submenu__title,
+.el-menu--horizontal>.el-menu-item{
   height: 40px;
   line-height: 40px;
   padding: 0;

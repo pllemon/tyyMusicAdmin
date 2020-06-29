@@ -12,7 +12,7 @@
     <div class="table-content">
       <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px" v-loading="loading">
         <el-row>
-          <el-col :span="16">
+          <el-col :span="24">
             <el-form-item label="通知标题:" prop="title">
               <el-input type="text" v-model="form.title"/>
             </el-form-item>
@@ -20,10 +20,10 @@
               <tinymce v-model="form.dec" :toolbar="[]" :height="400" />
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <el-form-item label="通知用户:" prop="group">
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-form>
     </div>

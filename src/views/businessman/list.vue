@@ -4,7 +4,8 @@
     <div class="table-header">
       <p class="section-title">商家列表</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button>
+        <!-- <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
+        <el-button size="small" icon="el-icon-money" round  @click="loadComponent('GoodPrice')">设置商品价格</el-button>
       </div>
     </div>
 
@@ -103,12 +104,14 @@ import ListMixin from '@/mixin/list'
 import { getList, savebusinessstatus } from '@/api/businessman'
 import Details from '@/views/businessman/details'
 import Examine from '@/views/businessman/examine'
+import GoodPrice from '@/views/businessman/goodPrice'
 
 export default {
   mixins: [ListMixin],
   components: {
     Details,
-    Examine
+    Examine,
+    GoodPrice
   },
   data() {
     return {

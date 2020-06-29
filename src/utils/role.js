@@ -100,13 +100,13 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/member/list'),
-        meta: { title: '全部用户', menu: '2-1'}
+        meta: { title: '用户列表', menu: '2-1'}
       },
       {
         path: 'feedback',
         name: 'Feedback',
         component: () => import('@/views/member/feedback'),
-        meta: { title: '用户反馈', menu: '2-5' }
+        meta: { title: '用户反馈', menu: '1-21' }
       },
       {
         path: 'settlement',
@@ -190,13 +190,13 @@ export const mainAdminRoutes = [
         path: 'notice',
         name: 'Notice',
         component: () => import('@/views/system/notice/list'),
-        meta: { title: '系统公告', menu: '1-8' }
+        meta: { title: '系统公告', menu: '1-20' }
       },
       {
         path: 'notice/update',
         name: 'NoticeUpdate',
         component: () => import('@/views/system/notice/update'),
-        meta: { title: '系统公告详情', menu: '1-8' }
+        meta: { title: '系统公告详情', menu: '1-20' }
       },
       {
         path: 'concat',

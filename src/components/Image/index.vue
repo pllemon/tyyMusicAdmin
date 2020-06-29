@@ -6,6 +6,9 @@
     :class="{'headUrl': headUrl}"
     fit="cover"
   >
+    <div slot="placeholder" class="el-image_loading flex-center">
+      <i class="el-icon-loading"></i>
+    </div>
     <div slot="error" class="el-image__error">
       <span v-if="!src && !headUrl">无图片</span>
       <img v-if="!src && headUrl" src="@/assets/image/plac.png" style="width:100%"/>

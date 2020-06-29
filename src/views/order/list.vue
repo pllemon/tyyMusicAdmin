@@ -4,7 +4,7 @@
     <div class="table-header">
       <p class="section-title">{{title}}</p>
       <div class="action">
-        <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button>
+        <!-- <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
       </div>
     </div>
 

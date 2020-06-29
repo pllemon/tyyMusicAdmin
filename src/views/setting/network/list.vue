@@ -14,9 +14,6 @@
         <el-form-item label="网点名称" prop="name">
           <el-input v-model="queryMes.name" />
         </el-form-item>
-        <el-form-item label="所属区域" prop="region">
-          <el-input v-model="queryMes.region" />
-        </el-form-item>
         <el-form-item label="状态" prop="is_show">
           <el-select v-model="queryMes.is_show" placeholder="请选择">
             <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
