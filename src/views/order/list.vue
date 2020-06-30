@@ -1,76 +1,73 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">{{title}}</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <!-- <el-form-item label="预约时间">
-           <el-date-picker
-            v-model="timeRange"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            :picker-options="common.timePickerOptions()">
-          </el-date-picker>
-        </el-form-item> -->
-        <el-form-item label="订单编号" prop="order_sn">
-          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="订单状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择" clearable>
-            <el-option
-              v-for="(item, index) in dict.orderStatus"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="薪酬状态" prop="cashout_status">
-          <el-select v-model="queryMes.cashout_status" placeholder="请选择" clearable>
-            <el-option
-              v-for="(item, index) in dict.cashoutStatus"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
-          <el-select v-model="queryMes.network_id">
-            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="用户手机" prop="phone">
-          <el-input type="text" v-model="queryMes.phone" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="师傅手机" prop="cmphone">
-          <el-input type="text" v-model="queryMes.cmphone" placeholder="请输入"/>
-        </el-form-item>
-        <!-- <el-form-item label="师傅编号" prop="cmsn">
-          <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
-        </el-form-item> -->
-        <el-form-item label="是否加急" prop="urgent">
-          <el-select v-model="queryMes.urgent" placeholder="请选择" clearable>
-            <el-option label="是" value="1" />
-            <el-option label="否" value="0" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="search()">搜索</el-button>
-          <el-button @click="timeRange=[];resetSearch()">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="search-form">
+        <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
+          <!-- <el-form-item label="预约时间">
+            <el-date-picker
+              v-model="timeRange"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :picker-options="common.timePickerOptions()">
+            </el-date-picker>
+          </el-form-item> -->
+          <el-form-item label="订单编号" prop="order_sn">
+            <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
+          </el-form-item>
+          <!-- <el-form-item label="订单状态" prop="status">
+            <el-select v-model="queryMes.status" placeholder="请选择" clearable>
+              <el-option
+                v-for="(item, index) in dict.orderStatus"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item> -->
+          <el-form-item label="师傅佣金状态" prop="cashout_status" v-show="queryMes.status == 8">
+            <el-select v-model="queryMes.cashout_status" placeholder="请选择" clearable>
+              <el-option
+                v-for="(item, index) in dict.cashoutStatus"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
+            <el-select v-model="queryMes.network_id">
+              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item> -->
+          <el-form-item label="用户手机" prop="phone">
+            <el-input type="text" v-model="queryMes.phone" placeholder="请输入"/>
+          </el-form-item>
+          <el-form-item label="师傅手机" prop="cmphone">
+            <el-input type="text" v-model="queryMes.cmphone" placeholder="请输入"/>
+          </el-form-item>
+          <!-- <el-form-item label="师傅编号" prop="cmsn">
+            <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
+          </el-form-item> -->
+          <el-form-item label="是否加急" prop="urgent">
+            <el-select v-model="queryMes.urgent" placeholder="请选择" clearable>
+              <el-option label="是" value="1" />
+              <el-option label="否" value="0" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="search()">搜索</el-button>
+            <el-button @click="timeRange=[];resetSearch()">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="other-action">
+          <!-- <el-button size="mini" type="primary" plain icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
+        </div>
+      </div>
 
       <!-- 表格&分页 -->
       <div class="table-section">
@@ -85,7 +82,11 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="订单编号"  width="220" prop="order_sn" />
+          <el-table-column label="订单编号"  width="220" prop="order_sn">
+            <template slot-scope="scope">
+              {{scope.row.order_sn}}
+            </template>
+          </el-table-column>
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
               {{dict.orderStatus[scope.row.status]}}
@@ -162,7 +163,7 @@ export default {
     return {
       queryMes: {
         page: 1,
-        limit: 10,
+        limit: 20,
         status: '',
         order_sn: '',
         start_time: '',
@@ -186,19 +187,7 @@ export default {
         release
       },
 
-      title: '',
-      section: '', // 来自模块
-    }
-  },
-  watch: {
-    '$route'(to, from) {
-      this.againFetch()
-    },
-    globalSearch: {
-      handler(val) {
-        this.againFetch()
-      },
-      deep: true
+      section: '', // 来自菜单模块
     }
   },
   created() {
@@ -211,21 +200,9 @@ export default {
     againFetch() {
       let that = this
 
-      const menu = that.$route.query.menu
-      let menuObj = null
-      menuData.forEach(item => {
-        item.children.forEach(item2 => {
-          if (item2.id == menu) {
-            menuObj = item2
-            return false
-          }
-        })
-      })
-      this.title = menuObj.title
-
       that.queryMes =  {
         page: 1,
-        limit: 10,
+        limit: 20,
         status: '',
         order_sn: '',
         start_time: '',

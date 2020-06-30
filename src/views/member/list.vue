@@ -1,41 +1,37 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">用户列表</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
-        <el-button size="small" icon="el-icon-discount" round @click="changePoints(selectIds)">积分增减</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
-      <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="用户账号" prop="phone">
-          <el-input v-model="queryMes.phone" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="queryMes.username" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="上级推荐码" prop="invitation_code">
-          <el-input v-model="queryMes.invitation_code" placeholder="请输入" />
-        </el-form-item>
-        <!-- <el-form-item label="师傅状态" prop="is_criaftsman">
-          <el-select v-model="queryMes.is_criaftsman" placeholder="请选择">
-              <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商家状态" prop="is_business">
-          <el-select v-model="queryMes.is_business" placeholder="请选择">
-              <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item> -->
-        <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="search-form">
+        <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
+          <el-form-item label="用户账号" prop="phone">
+            <el-input v-model="queryMes.phone" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="queryMes.username" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="上级推荐码" prop="invitation_code">
+            <el-input v-model="queryMes.invitation_code" placeholder="请输入" />
+          </el-form-item>
+          <!-- <el-form-item label="师傅状态" prop="is_criaftsman">
+            <el-select v-model="queryMes.is_criaftsman" placeholder="请选择">
+                <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商家状态" prop="is_business">
+            <el-select v-model="queryMes.is_business" placeholder="请选择">
+                <el-option v-for="(item, index) in identityType" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item> -->
+          <el-form-item>
+            <el-button type="primary" @click="common.search(vm)">搜索</el-button>
+            <el-button @click="common.resetSearch(vm)">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="other-action">
+          <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
+          <el-button size="mini" type="primary" plain icon="el-icon-discount" round @click="changePoints(selectIds)">积分增减</el-button>
+        </div>
+      </div>
 
       <!-- 表格&分页 -->
       <div class="table-section">
@@ -118,7 +114,7 @@ export default {
         is_criaftsman: '',
         is_business: '',
         page: 1,
-        limit: 10
+        limit: 20
       },
 
       currentComponent: '',

@@ -9,12 +9,27 @@ export default {
             list: [],
             queryMes: {
                 page: 1,
-                limit: 10
+                limit: 20
             },
             total: 0,
 
             currentComponent: '',
             dialogMes: {}
+        }
+    },
+    watch: {
+        '$route'(to, from) {
+            if (this.againFetch) {
+                this.againFetch()
+            }
+        },
+        globalSearch: {
+            handler(val) {
+                if (this.againFetch) {
+                    this.againFetch()
+                }
+            },
+            deep: true
         }
     },
     methods: {

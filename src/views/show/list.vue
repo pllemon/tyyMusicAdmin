@@ -1,13 +1,5 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">案例广场</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
@@ -118,7 +110,7 @@ export default {
         crafts_man_name: '',
         name: '',
         page: 1,
-        limit: 10,
+        limit: 20,
         district: '',
         city: '',
         province: '',

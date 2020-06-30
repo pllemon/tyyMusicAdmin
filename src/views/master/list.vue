@@ -1,44 +1,40 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">师傅列表</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
-      <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <!-- <el-form-item label="申请时间">
-           <el-date-picker
-            v-model="timeRange"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            :picker-options="common.timePickerOptions()">
-          </el-date-picker>
-        </el-form-item> -->
-        <el-form-item label="师傅名" prop="name">
-          <el-input v-model="queryMes.name" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="师傅编号"  prop="sn">
-          <el-input v-model="queryMes.sn" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="search-form">
+        <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
+          <!-- <el-form-item label="申请时间">
+            <el-date-picker
+              v-model="timeRange"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :picker-options="common.timePickerOptions()">
+            </el-date-picker>
+          </el-form-item> -->
+          <el-form-item label="师傅名" prop="name">
+            <el-input v-model="queryMes.name" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="师傅编号"  prop="sn">
+            <el-input v-model="queryMes.sn" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="状态" prop="status">
+            <el-select v-model="queryMes.status" placeholder="请选择">
+              <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="common.search(vm)">搜索</el-button>
+            <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="other-action">
+          <!-- <el-button size="mini" type="primary" plain icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button> -->
+        </div>
+      </div>
 
       <!-- 表格&分页 -->
       <div class="table-section">
@@ -125,7 +121,7 @@ export default {
       total: 0,
       queryMes: {
         page: 1,
-        limit: 10,
+        limit: 20,
         start_time: '',
         end_time: '',
         name: '',

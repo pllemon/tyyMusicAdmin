@@ -67,7 +67,7 @@ function getAllNetwork(target, callback) {
     author: '',
     is_show: '',
     page: 1,
-    limit: 1000
+    limit: 2000
   }).then(response => {
     target.networkList = response.data.data
     if (callback) {
@@ -117,6 +117,22 @@ function exportExcel(target) {
   $(target.$refs.exportForm).submit()
 }
 
+
+// 对象深拷贝
+function deepCopy(obj) {
+  var result = Array.isArray(obj) ? [] : {}
+  for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          if (typeof obj[key] === 'object' && obj[key] !== null) {
+              result[key] = deepCopy(obj[key])
+          } else {
+              result[key] = obj[key]
+          }
+      }
+  }
+  return result
+}
+
 export default {
   ip: 'http://47.106.100.144/',
   search, // 搜索表单
@@ -127,5 +143,6 @@ export default {
   notify, // 提示
   getAllNetwork, // 获取全部网点
   timePickerOptions, // 快捷时间选项,
-  exportExcel: exportExcel // 导出excel
+  exportExcel, // 导出excel,
+  deepCopy
 }

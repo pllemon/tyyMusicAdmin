@@ -1,15 +1,13 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">系统公告</p>
-      <div class="action">
-        <el-button size="small" type="primary" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
-        <el-button size="small" icon="el-icon-back" round @click="back()">返回</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
+      <div class="search-form" style="margin-bottom:10px">
+        <el-form></el-form>
+        <div class="other-action">
+          <el-button size="mini" type="primary" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
+          <el-button size="mini" icon="el-icon-back" round @click="back()">返回</el-button>
+        </div>
+      </div>
       <el-form ref="form" :model="form" :rules="rules" label-width="140px" style="margin-right: 50px" v-loading="loading">
         <el-row>
           <el-col :span="24">

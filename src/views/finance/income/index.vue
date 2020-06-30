@@ -1,23 +1,8 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">收入记录</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="记录月份">
-          <el-date-picker
-            v-model="value2"
-            type="month"
-            placeholder="请选择">
-          </el-date-picker>
-        </el-form-item>
         <el-form-item label="流水号" prop="order_sn">
           <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
         </el-form-item>
@@ -26,20 +11,16 @@
             <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
-        <el-form-item label="所属网点" prop="network_id">
-          <el-select v-model="queryMes.network_id">
-            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
-          </el-select>
-        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
+          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button @click="resetSearch()">重置</el-button>
         </el-form-item>
       </el-form>
 
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -47,17 +28,23 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <el-table-column type="selection" width="55" fixed />
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="流水号"  width="160" prop="order_sn" />
-          <el-table-column label="金额" prop="service_demand"/> 
-          <el-table-column label="类型" prop="service_demand" width="200"/> 
-          <el-table-column label="记录时间" width="180" prop="appo_time" />
-          <el-table-column label="相关用户/商家" prop="service_demand" width="200"/>
-          <el-table-column label="订单编号" prop="remark" width="120" />
-          <el-table-column label="所属网点" prop="remark" />
+          <el-table-column label="流水号"  min-width="140" prop="tran_id" />
+          <el-table-column label="金额" prop="money"/>  
+          <el-table-column label="收入类型" min-width="120">
+            <template slot-scope="scope">
+              {{dict.incomeType[scope.row.logtype]}}
+            </template>
+          </el-table-column>
+          <el-table-column label="记录时间" min-width="140" prop="creat_time" />
+          <el-table-column label="相关用户/商家" min-width="120">
+            <template slot-scope="scope">
+              {{scope.row.usertpyename}}
+            </template>
+          </el-table-column>
+          <el-table-column label="订单编号" prop="order_sn" min-width="120" />
+          <el-table-column label="所属网点" prop="network_id" />
         </el-table>
       </div>
       <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -69,22 +56,17 @@
 </template>
 
 <script>
+import ListMixin from '@/mixin/list'
 import { mapState } from 'vuex'
 import { transactionlog } from '@/api/finance'
 
 export default {
+  mixins: [ListMixin],
   data() {
     return {
-      vm: this,
-
-      list: [],
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
         page: 1,
-        limit: 10,
+        limit: 20,
         status: '',
         order_sn: ''
       },
@@ -93,7 +75,9 @@ export default {
       currentComponent: '',
       dialogMes: {},
 
-      networkList: []
+      api: {
+        getList: transactionlog
+      }
     }
   },
   created() {
@@ -101,21 +85,6 @@ export default {
     this.common.getAllNetwork(this, function(){
       that.fetchData()
     })
-  },
-  methods: {
-    fetchData() {
-      this.listLoading = true
-      transactionlog(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
-    },
   },
   computed: {
     ...mapState({

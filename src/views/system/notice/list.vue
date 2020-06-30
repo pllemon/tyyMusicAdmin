@@ -1,14 +1,13 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">系统公告</p>
-      <div class="action">
-         <el-button size="small" icon="el-icon-plus" round @click="update()">添加</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
+      <div class="search-form">
+        <el-form></el-form>
+        <div class="other-action">
+          <el-button size="mini" type="primary" plain icon="el-icon-plus" round  @click="update()">添加</el-button>
+        </div>
+      </div>
+
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table

@@ -4,6 +4,11 @@ const menuData = [
     title: '客户服务',
     children: [
       {
+        id: '1-0',
+        title: '所有订单',
+        path: '/order/list?menu=1-0&section=1'
+      },
+      {
         id: '1-1',
         title: '新订单分配',
         path: '/order/list?status=1&menu=1-1&section=1'
@@ -53,26 +58,26 @@ const menuData = [
         title: '已验收单',
         path: '/order/list?status=8&menu=1-8&section=1'
       },
-      {
-        id: '1-30',
-        title: '完工申款单',
-        path: '/order/list?status=8&cashout_status=3&menu=1-30&section=1'
-      },
-      {
-        id: '1-31',
-        title: '已结算完工申款单', 
-        path: '/order/list?status=8&cashout_status=1&menu=1-31&section=1'
-      },
-      {
-        id: '1-32',
-        title: '申请尾款单',
-        path: '/order/list?status=8&cashout_status=4&menu=1-32&section=1'
-      },
-      {
-        id: '1-33',
-        title: '已结算尾款单',
-        path: '/order/list?status=8&cashout_status=2&menu=1-33&section=1'
-      },
+      // {
+      //   id: '1-30',
+      //   title: '完工申款单',
+      //   path: '/order/list?status=8&cashout_status=3&menu=1-30&section=1'
+      // },
+      // {
+      //   id: '1-31',
+      //   title: '已结算完工申款单', 
+      //   path: '/order/list?status=8&cashout_status=1&menu=1-31&section=1'
+      // },
+      // {
+      //   id: '1-32',
+      //   title: '申请尾款单',
+      //   path: '/order/list?status=8&cashout_status=4&menu=1-32&section=1'
+      // },
+      // {
+      //   id: '1-33',
+      //   title: '已结算尾款单',
+      //   path: '/order/list?status=8&cashout_status=2&menu=1-33&section=1'
+      // },
       {
         id: '1-20',
         title: '系统公告',
@@ -135,6 +140,16 @@ const menuData = [
         id: '4-1',
         title: '师傅申款记录',
         path: '/master/settlement'
+      },
+      {
+        id: '4-2',
+        title: '收入流水',
+        path: '/finance/income'
+      },
+      {
+        id: '4-3',
+        title: '支出记录',
+        path: '/finance/expend'
       }
     ]
   },

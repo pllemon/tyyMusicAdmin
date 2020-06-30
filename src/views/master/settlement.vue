@@ -1,13 +1,5 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">师傅申款记录</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">

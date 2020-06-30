@@ -47,7 +47,7 @@ export default {
       queryMes: {
         business_id: '',
         page: 1,
-        limit: 10
+        limit: 20
       }
     }
   },

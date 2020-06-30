@@ -67,7 +67,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/shopowner/list'),
-        meta: { title: '全部师傅', menu: '2-5'}
+        meta: { title: '全部店长', menu: '2-3'}
       }
     ]
   },
@@ -84,7 +84,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/businessman/list'),
-        meta: { title: '全部商家', menu: '2-3'}
+        meta: { title: '全部商家', menu: '2-4'}
       }
     ]
   },
@@ -128,19 +128,19 @@ export const mainAdminRoutes = [
         path: 'income',
         name: 'Income',
         component: () => import('@/views/finance/income'),
-        meta: { title: '收入记录'}
+        meta: { title: '收入流水', menu: '4-2'}
       },
       {
         path: 'expend',
         name: 'Expend',
         component: () => import('@/views/finance/expend'),
-        meta: { title: '支出记录' }
+        meta: { title: '支出记录', menu: '4-3' }
       },
       {
         path: 'pointsIncome',
         name: 'PointsIncome',
         component: () => import('@/views/finance/pointsIncome'),
-        meta: { title: '积分收入记录' }
+        meta: { title: '积分收入流水' }
       },
       {
         path: 'pointsExpend',
@@ -156,13 +156,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/show/list',
     name: 'Show',
-    meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-4' },
+    meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-5' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/show/list'),
-        meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-4' }
+        meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-5' }
       }
     ]
   },

@@ -14,7 +14,7 @@ export default {
             
             query: {
                 page: 1,
-                limit: 10
+                limit: 20
             },
             list: [],
             total: 0,

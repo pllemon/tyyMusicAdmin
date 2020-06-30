@@ -1,10 +1,5 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">用户反馈</p>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
@@ -60,7 +55,7 @@ export default {
       queryMes: {
         phone: '',
         page: 1,
-        limit: 10
+        limit: 20
       },
 
       currentComponent: '',

@@ -1,15 +1,13 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">店长列表</p>
-      <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 表格&分页 -->
+      <div class="search-form">
+        <el-form></el-form>
+        <div class="other-action">
+          <el-button size="mini" type="primary" plain icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
+        </div>
+      </div>
       <div class="table-section">
         <el-table
           v-loading="listLoading"
@@ -68,7 +66,7 @@ export default {
       total: 0,
       queryMes: {
         page: 1,
-        limit: 10
+        limit: 20
       },
 
       currentComponent: '',

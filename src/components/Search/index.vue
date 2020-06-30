@@ -9,10 +9,11 @@
         placeholder="年份" 
         format="yyyy年"
         value-format="yyyy"
+        style="width:100px"
       />
     </el-form-item>
     <el-form-item>
-      <el-select v-if="form.year" v-model="form.month" placeholder="月份" clearable>
+      <el-select v-if="form.year" style="width:100px" v-model="form.month" placeholder="月份" clearable>
         <el-option
           v-for="item in months"
           :key="item"
@@ -29,10 +30,11 @@
         :props="{ checkStrictly: true }"
         placeholder="区域"
         clearable
+        style="width:200px"
       />
     </el-form-item>
     <el-form-item>
-      <el-select v-model="form.network_id" placeholder="网点" clearable>
+      <el-select v-model="form.network_id" style="width:200px" placeholder="网点" clearable>
         <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
       </el-select>
     </el-form-item>
@@ -102,7 +104,6 @@ export default {
 
 <style lang="scss">
 .common-search{
-  padding: 8px;
   display: flex;
   justify-content: center;
   .el-form-item{

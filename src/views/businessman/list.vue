@@ -1,48 +1,34 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">商家列表</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
-        <el-button size="small" icon="el-icon-money" round  @click="loadComponent('GoodPrice')">设置商品价格</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <!-- <el-form-item label="申请时间">
-           <el-date-picker
-            v-model="timeRange"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            :picker-options="common.timePickerOptions()">
-          </el-date-picker>
-        </el-form-item> -->
-        <el-form-item label="店铺名" prop="name">
-          <el-input v-model="queryMes.name" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="联系方式" prop="phone">
-          <el-input v-model="queryMes.phone" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="店铺地址" prop="address">
-          <el-input v-model="queryMes.address" placeholder="请输入" />
-        </el-form-item>  
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
-            <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="search()">搜索</el-button>
-          <el-button @click="timeRange=[];resetSearch()">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="search-form">
+        <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
+          <el-form-item label="店铺名" prop="name">
+            <el-input v-model="queryMes.name" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="联系方式" prop="phone">
+            <el-input v-model="queryMes.phone" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="店铺地址" prop="address">
+            <el-input v-model="queryMes.address" placeholder="请输入" />
+          </el-form-item>  
+          <el-form-item label="状态" prop="status">
+            <el-select v-model="queryMes.status" placeholder="请选择">
+              <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="search()">搜索</el-button>
+            <el-button @click="timeRange=[];resetSearch()">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="other-action">
+          <!-- <el-button size="mini" type="primary" plain icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
+          <el-button size="mini" type="primary" plain icon="el-icon-money" round  @click="loadComponent('GoodPrice')">设置商品价格</el-button>
+        </div>
+      </div>
+      
 
       <!-- 表格&分页 -->
       <div class="table-section">
@@ -117,7 +103,7 @@ export default {
     return {
       queryMes: {
         page: 1,
-        limit: 10,
+        limit: 20,
         name: '',
         phone: '',
         address: '',
@@ -156,7 +142,7 @@ export default {
       that.timeRange = []
       that.queryMes= {
         page: 1,
-        limit: 10,
+        limit: 20,
         name: '',
         phone: '',
         address: '',

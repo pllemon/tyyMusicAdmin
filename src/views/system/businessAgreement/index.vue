@@ -1,14 +1,12 @@
 <template>
   <div class="app-container list-layout" v-loading="loading">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">商家协议</p>
-      <div class="action">
-        <el-button size="small" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
-      </div>
-    </div>
-
     <div class="table-content" style="overflow: auto">
+      <div class="search-form">
+        <el-form></el-form>
+        <div class="other-action">
+          <el-button size="mini" icon="el-icon-document-checked" round @click="saveForm()">保存</el-button>
+        </div>
+      </div>
       <tinymce 
         v-model="content" 
         :toolbar="[]"

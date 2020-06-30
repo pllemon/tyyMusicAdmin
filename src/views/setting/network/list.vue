@@ -1,29 +1,26 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">网点管理</p>
-      <div class="action">
-        <el-button size="small" icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
-      <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="网点名称" prop="name">
-          <el-input v-model="queryMes.name" />
-        </el-form-item>
-        <el-form-item label="状态" prop="is_show">
-          <el-select v-model="queryMes.is_show" placeholder="请选择">
-            <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-          <el-button @click="common.resetSearch(vm)">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="search-form">
+        <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
+          <el-form-item label="网点名称" prop="name">
+            <el-input v-model="queryMes.name" />
+          </el-form-item>
+          <el-form-item label="状态" prop="is_show">
+            <el-select v-model="queryMes.is_show" placeholder="请选择">
+              <el-option v-for="(item, index) in showType" :key="index" :label="item" :value="index" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="common.search(vm)">搜索</el-button>
+            <el-button @click="common.resetSearch(vm)">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="other-action">
+          <el-button size="mini" type="primary" plain icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
+        </div>
+      </div>
 
       <!-- 表格&分页 -->
       <div class="table-section">
@@ -88,7 +85,7 @@ export default {
         author: '',
         is_show: '',
         page: 1,
-        limit: 10
+        limit: 20
       },
 
       currentComponent: '',

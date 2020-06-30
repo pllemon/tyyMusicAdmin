@@ -1,13 +1,5 @@
 <template>
   <div class="app-container list-layout">
-    <!-- 表头 -->
-    <div class="table-header">
-      <p class="section-title">积分支出记录</p>
-      <div class="action">
-        <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
-      </div>
-    </div>
-
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
@@ -82,7 +74,7 @@ export default {
       total: 0,
       queryMes: {
         page: 1,
-        limit: 10,
+        limit: 20,
         status: '',
         order_sn: ''
       },
