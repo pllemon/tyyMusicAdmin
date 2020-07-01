@@ -48,3 +48,21 @@ export function senuserintegral(data) {
     data
   })
 }
+
+// 用户受益列表
+export function userprofit(data) {
+  return request({
+    url: '/admin/userprofit',
+    method: 'post',
+    data
+  })
+}
+
+// 用户申请提现列表
+export function userwithdrawallist(data) {
+  return request({
+    url: '/admin/userwithdrawallist',
+    method: 'post',
+    data
+  })
+}

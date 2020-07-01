@@ -110,11 +110,6 @@ const menuData = [
         path: '/shopowner/list'
       },
       {
-        id: '2-4',
-        title: '商家列表',
-        path: '/businessman/list'
-      },
-      {
         id: '2-5',
         title: '案例广场',
         path: '/show/list'
@@ -123,8 +118,13 @@ const menuData = [
   },
   {
     id: '3',
-    title: '实体店财务',
+    title: '商家管理',
     children: [
+      {
+        id: '3-2',
+        title: '商家列表',
+        path: '/businessman/list'
+      },
       {
         id: '3-1',
         title: '交易订单',
@@ -138,8 +138,18 @@ const menuData = [
     children: [
       {
         id: '4-1',
-        title: '师傅申款记录',
-        path: '/master/settlement'
+        title: '师傅一期申款记录',
+        path: '/master/settlement?number=1&menu=4-1'
+      },
+      {
+        id: '4-4',
+        title: '师傅二期申款记录',
+        path: '/master/settlement?number=2&menu=4-4'
+      },
+      {
+        id: '4-5',
+        title: '用户申款记录',
+        path: '/member/settlement'
       },
       {
         id: '4-2',

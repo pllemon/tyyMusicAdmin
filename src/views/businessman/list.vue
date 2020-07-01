@@ -122,48 +122,10 @@ export default {
       }
     }
   },
-  watch: {
-    '$route'(to, from) {
-      this.againFetch()
-    },
-    globalSearch: {
-      handler(val) {
-        this.againFetch()
-      },
-      deep: true
-    }
-  },
   created() {
     this.againFetch()
   },
   methods: {
-    againFetch() {
-      const that = this
-      that.timeRange = []
-      that.queryMes= {
-        page: 1,
-        limit: 20,
-        name: '',
-        phone: '',
-        address: '',
-        status: '',
-        starttime: '',
-        endtime: '',
-        district: '',
-        city: '',
-        province: '',
-      }
-      // let query = that.$route.query
-      // for (let i in query) {
-      //   if (i) {
-      //     that.queryMes[i] = query[i]
-      //   }
-      // }
-      this.queryMes.district = this.globalSearch.district
-      this.queryMes.city = this.globalSearch.city
-      this.queryMes.province = this.globalSearch.province
-      that.fetchData()
-    },
     beforeFetch() {
       if (this.timeRange.length) {
         this.queryMes.starttime = this.timeRange[0]

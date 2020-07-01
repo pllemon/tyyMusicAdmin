@@ -4,18 +4,6 @@
       <!-- 搜索 -->
       <div class="search-form">
         <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
-          <el-form-item label="下单时间">
-            <el-date-picker
-              v-model="timeRange"
-              type="datetimerange"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              format="yyyy-MM-dd HH:mm:ss"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              :picker-options="common.timePickerOptions()">
-            </el-date-picker>
-          </el-form-item>
           <el-form-item label="订单编号" prop="order_sn">
             <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入" />
           </el-form-item>
@@ -36,18 +24,19 @@
             <el-input type="text" v-model="queryMes.business_name" placeholder="请输入" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-            <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
+            <el-button type="primary" @click="search()">搜索</el-button>
+            <el-button @click="resetSearch()">重置</el-button>
           </el-form-item>
         </el-form>
         <div class="other-action">
-          <!-- <el-button size="small" icon="el-icon-upload2" round  @click="common.exportExcel(vm)">批量导出</el-button> -->
+          <!-- <el-button size="small" icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
         </div>
       </div>
 
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -102,7 +91,7 @@
           <el-table-column label="取消时间" width="180" prop="cancel_time" />
           <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.id)">详情</el-button>
+              <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -116,8 +105,8 @@
      <!-- 导出 -->
     <form ref="exportForm" action="/admin/businessorderlist" method="post" style="display:none">
       <input name="model" value="exportToExcel" />
-      <input v-if="this.timeRange" name="start_time" :value="this.timeRange[0]" />
-      <input v-if="this.timeRange" name="end_time" :value="this.timeRange[1]" />
+      <input v-if="this.queryMes.start_time" name="start_time" :value="this.queryMes.start_time" />
+      <input v-if="this.queryMes.end_time" name="end_time" :value="this.queryMes.end_time" />
       <div></div>
     </form>
   </div>
@@ -127,20 +116,15 @@
 import { mapState } from 'vuex'
 import { getList } from '@/api/offline'
 import Details from '@/views/offline/details'
+import ListMixin from '@/mixin/list'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Details
   },
   data() {
     return {
-      vm: this,
-
-      list: [],
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
         page: 1,
         limit: 20,
@@ -151,32 +135,17 @@ export default {
         start_time: '',
         end_time: ''
       },
-      timeRange: [],
+
+      api: {
+        getList
+      },
 
       currentComponent: '',
       dialogMes: {}
     }
   },
   created() {
-    this.fetchData()
-  },
-  methods: {
-    fetchData() {
-      this.listLoading = true
-      if (this.timeRange && this.timeRange.length) {
-        this.queryMes.start_time = this.timeRange[0]
-        this.queryMes.end_time = this.timeRange[1]
-      } else {
-        this.queryMes.start_time = ''
-        this.queryMes.end_time = ''
-      }
-      getList(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
-    }
+    this.againFetch()
   },
   computed: {
     ...mapState({

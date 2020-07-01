@@ -3,11 +3,11 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="流水号" prop="order_sn">
-          <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
+        <el-form-item label="流水号" prop="tran_id">
+          <el-input type="text" v-model="queryMes.tran_id" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="收入类型" prop="status">
-          <el-select v-model="queryMes.status" placeholder="请选择">
+        <el-form-item label="收入类型" prop="logtype">
+          <el-select v-model="queryMes.logtype" placeholder="请选择">
             <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
@@ -37,7 +37,7 @@
               {{dict.incomeType[scope.row.logtype]}}
             </template>
           </el-table-column>
-          <el-table-column label="记录时间" min-width="140" prop="creat_time" />
+          <el-table-column label="记录时间" min-width="140" prop="createtime" />
           <el-table-column label="相关用户/商家" min-width="120">
             <template slot-scope="scope">
               {{scope.row.usertpyename}}
@@ -67,8 +67,8 @@ export default {
       queryMes: {
         page: 1,
         limit: 20,
-        status: '',
-        order_sn: ''
+        logtype: '',
+        tran_id: ''
       },
       timeRange: [],
 

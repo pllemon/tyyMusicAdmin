@@ -84,7 +84,7 @@ export const mainAdminRoutes = [
         path: 'list',
         name: 'List',
         component: () => import('@/views/businessman/list'),
-        meta: { title: '全部商家', menu: '2-4'}
+        meta: { title: '全部商家', menu: '3-2'}
       }
     ]
   },
@@ -112,7 +112,7 @@ export const mainAdminRoutes = [
         path: 'settlement',
         name: 'Settlement',
         component: () => import('@/views/member/settlement'),
-        meta: { title: '提现申请', menu: 2 }
+        meta: { title: '提现申请', menu: '4-5' }
       }
     ]
   },

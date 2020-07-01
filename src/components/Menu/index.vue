@@ -28,13 +28,16 @@ export default {
   },
   methods: {
     setActive(route) {
-      const menu = route.meta.menu || route.query.menu
+      const menu =  route.query.menu || route.meta.menu
       this.activeIndex = menu
     }
   },
   watch: {
-    '$route'(to, from) {
-      this.setActive(to)
+    '$route': {
+      handler(to, from) {
+        this.setActive(to)
+      },
+      immediate: true
     }
   }
 }

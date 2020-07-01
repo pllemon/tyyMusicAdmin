@@ -14,25 +14,45 @@ export default {
             total: 0,
 
             currentComponent: '',
-            dialogMes: {}
+            dialogMes: {},
         }
     },
     watch: {
-        '$route'(to, from) {
-            if (this.againFetch) {
-                this.againFetch()
-            }
+        '$route'(){
+            this.againFetch()
         },
         globalSearch: {
             handler(val) {
-                if (this.againFetch) {
-                    this.againFetch()
-                }
+                this.againFetch()
             },
             deep: true
         }
     },
     methods: {
+        againFetch() {
+            let queryMes = this.common.deepCopy(this.queryMes)
+            let query = this.$route.query
+            for (let i in queryMes) {
+                if (query.hasOwnProperty(i)) {
+                    queryMes[i] = query[i]
+                } else {
+                    queryMes[i] = ''
+                }
+            }
+            queryMes.page = 1
+            queryMes.limit = 20
+
+            queryMes.start_time = this.globalSearch.startTime
+            queryMes.end_time = this.globalSearch.endTime
+            queryMes.network_id = this.globalSearch.network_id
+            queryMes.district = this.globalSearch.district
+            queryMes.city = this.globalSearch.city
+            queryMes.province = this.globalSearch.province
+            
+            this.queryMes = queryMes
+            this.fetchData()
+        },
+        
         // 获取列表
         fetchData() {
             if (this.beforeFetch) {

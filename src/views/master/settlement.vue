@@ -19,7 +19,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请份额" prop="number">
+        <!-- <el-form-item label="申请份额" prop="number">
           <el-select v-model="queryMes.number" placeholder="请选择">
             <el-option
               v-for="(item, index) in dict.settlePercent"
@@ -28,7 +28,7 @@
               :value="index"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="search()">搜索</el-button>
           <el-button @click="resetSearch()">重置</el-button>
@@ -59,14 +59,6 @@
           <el-table-column label="订单号" min-width="160">
             <template slot-scope="scope">
               <span class="link" @click="loadComponent('OrderDetails', scope.row.order_id)">{{scope.row.order_sn}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="订单总额">
-            
-          </el-table-column>
-          <el-table-column label="申请份额">
-            <template slot-scope="scope">
-              {{ dict.settlePercent[scope.row.number] }}
             </template>
           </el-table-column>
           <el-table-column label="申请金额" prop="money" />
@@ -108,6 +100,8 @@ export default {
   data() {
     return {
       queryMes: {
+        page: 1,
+        limit: 20,
         status: '',
         name: '',
         sn: '',
@@ -119,7 +113,7 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.againFetch()
   },
   methods: {
     surePay(id, status) {

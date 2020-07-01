@@ -31,31 +31,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="总消费金额:">
-              {{ info.money | normNumber }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="用户积分抵扣:">
-              {{ info.integral | normNumber }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="线下支付金额:">
-              {{ (info.money - info.integral) | normNumber }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="平台费:">
-              {{ info.pay_money| normNumber }}
-            </el-form-item>
-          </el-col>
-          <!-- <el-col :span="24">
-            <el-form-item label="积分抵扣平台费:">
-              {{ info.use_integral| normNumber }}
-            </el-form-item>
-          </el-col> -->
-          <el-col :span="24">
             <el-form-item label="创建时间:">
               {{ info.creat_time }}
             </el-form-item>
@@ -76,14 +51,19 @@
         <p class="section-title small">商品清单</p>
         <ul>
           <li v-for="(item,index) in info.goodslst" :key="index">
-            <gd-image :src="item.goods_image" class="goods-image"/>
+            <gd-image :src="item.goods_image" class="goods-image" width="50" height="50"/>
             <div>
               <p class="goods-name">{{item.goods_name}}</p>
-              <p>单价：￥{{item.price}}，数量：{{item.goods_number}}</p>
+              <p>￥{{item.price}} × {{item.goods_number}}</p>
             </div>
           </li>
         </ul>
-        <p>合计：￥，使用积分抵扣：，线下需支付：￥，</p>
+        <div class="goods-mes">
+          <p>订单商品金额合计：￥{{ info.money | normNumber }}</p>
+          <p>使用积分抵扣费用：￥{{ info.integral | normNumber }}</p>
+          <p>用户需支付订单费：￥{{ (info.money - info.integral) | normNumber }}</p>
+          <p>商家需支付平台费：￥{{ info.pay_money| normNumber }}</p>
+        </div>
       </div>
     </div>
   </el-dialog>
@@ -134,17 +114,27 @@ export default {
   display: flex;
 }
 .goods-list{
-  width: 40%;
+  width: 50%;
   border-left: 1px solid #eee;
-  padding-left: 10px;
-  margin-left: 10px;
-  li {
-    display: flex;
-    .goods-image{
-      width: 100px;
-      height: 100px;
+  padding-left: 20px;
+  margin-left: 20px;
+  ul{
+    li {
+      display: flex;
+      align-items: center;
+      .goods-image{
+        margin-right: 10px;
+      }
+      .goods-name{
+        margin-bottom: 10px;
+      }
     }
+    margin-bottom: 20px;
+  }
+  .goods-mes p{
+    margin-bottom: 20px;
   }
 }
+
 
 </style>

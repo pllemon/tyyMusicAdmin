@@ -4,18 +4,6 @@
       <!-- 搜索 -->
       <div class="search-form">
         <el-form :inline="true" :model="queryMes" size="mini" ref="searchForm">
-          <!-- <el-form-item label="预约时间">
-            <el-date-picker
-              v-model="timeRange"
-              type="datetimerange"
-              range-separator="至"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              format="yyyy-MM-dd HH:mm:ss"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              :picker-options="common.timePickerOptions()">
-            </el-date-picker>
-          </el-form-item> -->
           <el-form-item label="订单编号" prop="order_sn">
             <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
           </el-form-item>
@@ -61,7 +49,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="search()">搜索</el-button>
-            <el-button @click="timeRange=[];resetSearch()">重置</el-button>
+            <el-button @click="resetSearch()">重置</el-button>
           </el-form-item>
         </el-form>
         <div class="other-action">
@@ -118,12 +106,10 @@
           <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.order_id)">详情</el-button>
-              <template v-if="section == 1">
-                <el-button type="text" v-if="scope.row.status == 1 && !scope.row.network_id" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">分配</el-button>
-                <!-- <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button> -->
-                <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
-                <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
-              </template>
+              <el-button type="text" v-if="scope.row.status == 1 && !scope.row.network_id" @click="loadComponent('Examine', {type:0, id:scope.row.order_id})">分配</el-button>
+              <!-- <el-button type="text" v-if="scope.row.status == 1 && scope.row.appo_time" @click="loadComponent('Examine', {type:1, id:scope.row.order_id})">报价</el-button> -->
+              <el-button type="text" v-if="scope.row.status == 4" @click="loadComponent('Appoint', scope.row.order_id)">指派</el-button>
+              <el-button type="text" v-if="scope.row.status == 3" @click="release(scope.row.order_id)">发布</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -137,8 +123,8 @@
     <!-- 导出 -->
     <form ref="exportForm" action="/admin/orderlist" method="post" style="display:none">
       <input name="model" value="exportToExcel" />
-      <input v-if="this.timeRange" name="start_time" :value="this.timeRange[0]" />
-      <input v-if="this.timeRange" name="end_time" :value="this.timeRange[1]" />
+      <input v-if="this.queryMes.start_time" name="start_time" :value="this.queryMes.start_time" />
+      <input v-if="this.queryMes.end_time" name="end_time" :value="this.queryMes.end_time" />
       <div></div>
     </form>
   </div>
@@ -178,7 +164,6 @@ export default {
         province: '',
         cashout_status: ''
       },
-      timeRange: [],
 
       networkList: [],
       
@@ -186,54 +171,12 @@ export default {
         getList,
         release
       },
-
-      section: '', // 来自菜单模块
     }
   },
   created() {
-    const that = this
-    this.common.getAllNetwork(this, function(){
-      that.againFetch()
-    })
+    this.againFetch()
   },
   methods: {
-    againFetch() {
-      let that = this
-
-      that.queryMes =  {
-        page: 1,
-        limit: 20,
-        status: '',
-        order_sn: '',
-        start_time: '',
-        end_time: '',
-        network_id: '',
-        phone: '',
-        cmphone: '',
-        cmsn: '',
-        urgent: '',
-        district: '',
-        city: '',
-        province: '',
-        cashout_status: ''
-      }
-      that.timeRange = []
-      let query = that.$route.query
-      for (let i in query) {
-        if (that.queryMes.hasOwnProperty(i)) {
-          that.queryMes[i] = query[i]
-        }
-      }
-      this.queryMes.start_time = this.globalSearch.startTime
-      this.queryMes.end_time = this.globalSearch.endTime
-      this.queryMes.network_id = this.globalSearch.network_id
-      this.queryMes.district = this.globalSearch.district
-      this.queryMes.city = this.globalSearch.city
-      this.queryMes.province = this.globalSearch.province
-      this.section = this.$route.query.section
-      that.fetchData()
-    },
-
     // 发布订单
     release(id) {
       this.$confirm('确定发布该订单？发布后该订单将显示在抢单中心，师傅可以进行报名。', '提示', {

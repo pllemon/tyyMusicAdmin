@@ -60,6 +60,9 @@
           </el-form>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="佣金记录">
+        <profit-list :id="dialogMes.id" />
+      </el-tab-pane>
       <el-tab-pane label="积分记录">
         <integral-list :id="dialogMes.id" />
       </el-tab-pane>
@@ -74,6 +77,7 @@
 import { mapState } from 'vuex'
 import { getDetails } from '@/api/member'
 import IntegralList from '@/views/member/integralList'
+import ProfitList from '@/views/member/profitList'
 import RecommendList from '@/views/member/recommendList' 
 
 export default {
@@ -85,7 +89,8 @@ export default {
   },
   components: {
     IntegralList,
-    RecommendList
+    RecommendList,
+    ProfitList
   },
   data() {
     return {
