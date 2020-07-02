@@ -6,14 +6,15 @@
         <el-timeline style="margin-top:30px">
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
           <template v-if="message.info.status != 10 && message.info.status != 12">
-            <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">后台审核通过</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.earnest_pay_time">用户支付</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">店长审核通过</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4 && message.craftsmaninfo" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4 && message.ordersshow.secctime" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户确认完成</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.comment.time">用户评价</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.pay.tail_pay_time">店长验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 6 && message.comment.time" :timestamp="message.comment.time">用户评价</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
             <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
@@ -44,7 +45,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="承接网点:">
-                  {{ message.info.networkname }}
+                  {{ message.info.networkname || '无'}}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -59,7 +60,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="预约时间:">
-                  {{ message.info.appo_time }}
+                  {{ message.info.appo_time || '无'}}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -87,7 +88,7 @@
                   </template>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="24" v-if="message.info.networkname">
                 <el-form-item label="后台备注:">
                   {{ message.info.htremark || '无'}}
                 </el-form-item>
@@ -101,10 +102,22 @@
           <el-form label-width="100px">
             <el-row>
               <el-col :span="8">
-                <el-form-item label="订单总价格:">
+                <el-form-item label="订单金额:">
                   {{ message.pay.total_price }} 元
                 </el-form-item>
               </el-col>
+              <el-col :span="8">
+                <el-form-item label="师傅佣金:">
+                  {{ message.pay.craftsman_price }} 元
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="审核人:">
+                  
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
               <template v-if="message.craftsmaninfo">
                 <el-col :span="8">
                   <el-form-item label="承接师傅:">
@@ -148,7 +161,7 @@
           <p class="section-title small">施工情况&用户评价</p>
           <el-form label-width="100px">
             <el-row>
-              <el-col :span="24" v-if="message.ordersshow.title">
+              <el-col :span="24" v-if="message.ordersshow">
                 <el-form-item label="施工情况:">
                   <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
                   <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
