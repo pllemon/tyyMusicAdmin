@@ -7,3 +7,11 @@ export function transactionlog(data) {
     data
   })
 }
+
+export function expendituretransaction(data) {
+  return request({
+    url: `/admin/expendituretransaction?page=${data.page}&limit=${data.limit}`,
+    method: 'post',
+    data
+  })
+}

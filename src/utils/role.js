@@ -134,7 +134,7 @@ export const mainAdminRoutes = [
         path: 'expend',
         name: 'Expend',
         component: () => import('@/views/finance/expend'),
-        meta: { title: '支出记录', menu: '4-3' }
+        meta: { title: '支出流水', menu: '4-3' }
       },
       {
         path: 'pointsIncome',
@@ -146,7 +146,7 @@ export const mainAdminRoutes = [
         path: 'pointsExpend',
         name: 'PointsExpend',
         component: () => import('@/views/finance/pointsExpend'),
-        meta: { title: '积分支出记录' }
+        meta: { title: '积分支出流水' }
       }
     ]
   },

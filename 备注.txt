@@ -155,7 +155,7 @@ computed: {
     订单总价格 total_price
     定金金额 earnest_price
     尾款金额 tail_price
-    师傅工资 craftsman_price
+    订单佣金 craftsman_price
     承接师傅 craftsmaninfo.name , craftsmaninfo.phone
     报价单
     用户评价

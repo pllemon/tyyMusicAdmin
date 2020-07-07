@@ -158,7 +158,7 @@ const menuData = [
       },
       {
         id: '4-3',
-        title: '支出记录',
+        title: '支出流水',
         path: '/finance/expend'
       }
     ]
