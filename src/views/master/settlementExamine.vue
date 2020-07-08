@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="form.status">
-          <el-radio label="2">已发放</el-radio>
+          <el-radio label="1">已发放</el-radio>
           <el-radio label="3">驳回</el-radio>
         </el-radio-group>
       </el-form-item>
@@ -27,6 +27,7 @@
 import { mapState } from 'vuex'
 import { craftsmansettlement, craftsmansettlementinfo } from '@/api/master'  
 
+/* status 1已经结算2审核通过0未审核3驳回 */
 export default {
   props: {
     dialogMes: {
@@ -41,7 +42,7 @@ export default {
       form: {
         craftsman_id: '',
         slid: '',
-        status: '2',
+        status: '1',
         shremark: ''
       }
     }

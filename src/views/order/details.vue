@@ -12,8 +12,8 @@
             <el-timeline-item v-if="message.info.status > 4 && message.craftsmaninfo" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4 && message.ordersshow.secctime" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.pay.tail_pay_time">用户验收</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.pay.tail_pay_time">店长验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.info.user_confirm_time">用户验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.info.success_time">店长验收</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6 && message.comment.time" :timestamp="message.comment.time">用户评价</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
@@ -135,11 +135,11 @@
                   <gd-image :src="message.pay.bjimg" />
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="message.info.status > 3">
+              <el-col :span="24" v-if="message.info.status > 3 && message.info.status <= 8">
                 <el-form-item label="报名情况:">
-                  <template v-if="craftsmanlist.length">
+                  <template v-if="message.craftsmanlist.length">
                     <ul class="master-list">
-                      <li v-for="(item, index) in craftsmanlist" :key="index">
+                      <li v-for="(item, index) in message.craftsmanlist" :key="index">
                         <gd-image :src="item.headerurl" headUrl width="40" height="40" style="margin-top:0"/>
                         <div class="flex1" style="margin-left: 10px">
                           <p style="font-weight: bold">{{ item.name }} {{ item.sn }}</p>
@@ -190,7 +190,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getDetails, ordercraftsmanlist } from '@/api/order'
+import { getDetails } from '@/api/order'
 
 export default {
   props: {
@@ -202,13 +202,11 @@ export default {
   data() {
     return {
       loading: true,
-      craftsmanlist: [],
       message: {
         info: {},
         comment: {},
         bjd: {},
         craftsmaninfo: null,
-        craftsmanlist: [],
         ordersshow: {},
         pay: {},
         userimglist: []
@@ -233,12 +231,6 @@ export default {
         }
       }
     })
-
-    ordercraftsmanlist({
-      order_id: that.dialogMes.id
-    }).then(response => {
-      that.craftsmanlist = response.data
-    })
   },
 
   methods: {
@@ -262,7 +254,7 @@ export default {
   flex-wrap: wrap;
   li{
     width: 32%;
-    border: 1px solid #ddd;
+    border: 1px solid #eee;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
