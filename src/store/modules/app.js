@@ -6,7 +6,7 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop'
-}
+} 
 
 const mutations = {
   TOGGLE_SIDEBAR: state => {
