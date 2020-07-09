@@ -5,7 +5,7 @@
         <p class="section-title small">订单时间线</p>
         <el-timeline style="margin-top:30px">
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
-          <template v-if="message.info.status != 10 && message.info.status != 12">
+          <template v-if="message.info.status != 10 && message.info.status != 11 && message.info.status != 12">
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">店长审核通过</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
@@ -18,6 +18,9 @@
           </template>
           <template v-if="message.info.status == 10">
             <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
+          </template>
+          <template v-if="message.info.status == 11">
+            <el-timeline-item :timestamp="message.info.cancel_time">用户取消</el-timeline-item>
           </template>
           <template v-if="message.info.status == 12">
             <el-timeline-item :timestamp="message.comment.time">订单过期未处理</el-timeline-item>
@@ -113,7 +116,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="审核人:">
-                  
+                  {{message.info.networkusername}}（{{message.info.network_auth}}）
                 </el-form-item>
               </el-col>
             </el-row>
