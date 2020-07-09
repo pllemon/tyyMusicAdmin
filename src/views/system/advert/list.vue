@@ -55,7 +55,11 @@
               {{ linkType[scope.row.type] }}
             </template>
           </el-table-column>
-          <el-table-column label="链接url" prop="url"/>
+          <el-table-column label="链接url">
+            <template slot-scope="scope">
+              {{ scope.row.url || '无' }}
+            </template>
+          </el-table-column>
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ showType[scope.row.is_show] }}

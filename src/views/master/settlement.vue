@@ -48,27 +48,37 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="师傅头像" align="center">
+          <el-table-column label="申请人" min-width="200">
             <template slot-scope="scope">
-              <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
+              <div class="flex-center-start">
+                <gd-image :src="scope.row.headerurl" headUrl width="40" height="40"/>
+                <div style="margin-left:5px">
+                  <p>{{scope.row.name}}（{{scope.row.sn}}）</p>
+                  <p>{{scope.row.phone}}</p>
+                </div>
+              </div>
             </template>
           </el-table-column>
-          <el-table-column label="工号" prop="sn" />
-          <el-table-column label="姓名" prop="name" />
-          <el-table-column label="手机号" prop="phone" min-width="120" />
-          <el-table-column label="订单号" min-width="160">
+          <el-table-column label="收款信息" min-width="200">
+            <template slot-scope="scope">
+              <p>{{scope.row.pay_username}}（{{scope.row.pay_type == 2?'银行卡':'支付宝'}}）</p>
+              <p>{{scope.row.pay_name}}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="相关订单" min-width="160">
             <template slot-scope="scope">
               <span class="link" @click="loadComponent('OrderDetails', scope.row.order_id)">{{scope.row.order_sn}}</span>
             </template>
           </el-table-column>
           <el-table-column label="申请金额" prop="money" />
-          <el-table-column label="申请时间" min-width="200" prop="time" />
-          <el-table-column label="申请状态">
+          <el-table-column label="申请时间" min-width="160" prop="time" />
+          <el-table-column label="申请状态" min-width="100">
             <template slot-scope="scope">
               {{ dict.settleStauts[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="结算时间" min-width="200" prop="pay_time" />
+          <el-table-column label="审核时间" min-width="160" prop="time" />
+          <el-table-column label="审核备注" min-width="100" prop="shremark" />
           <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" v-if="scope.row.status == 2" @click="surePay(scope.row.id, 1)">发放</el-button>
