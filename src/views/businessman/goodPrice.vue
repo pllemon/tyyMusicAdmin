@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       form: {
-        value: ''
+        value: 10
       },
       oldPrice: '',
       loading: true,

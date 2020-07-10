@@ -49,8 +49,8 @@
           <el-table-column label="订单编号" width="160" prop="order_sn" />
           <el-table-column label="订单状态" width="120">
             <template slot-scope="scope">
-              <span v-if="scope.row.status == 1 && scope.row.pay_status == 0">待商家确认</span>
-              <span v-if="scope.row.status == 1 && scope.row.pay_status == 1">已完成</span>
+              <span v-if="scope.row.status == 1 && scope.row.pay_status == 0">待商家接单</span>
+              <span v-if="scope.row.status == 1 && scope.row.pay_status == 1">商家已接单</span>
               <span v-if="scope.row.status == 2">已取消</span>
             </template>
           </el-table-column>
@@ -65,13 +65,13 @@
               <p>{{ scope.row.business_address }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="总消费金额" prop="money" width="120" />
-          <el-table-column label="用户积分抵扣" prop="integral" width="120">
+          <el-table-column label="订单金额" prop="money" width="120" />
+          <el-table-column label="积分抵扣" prop="integral" width="120">
             <template slot-scope="scope">
               {{ scope.row.integral | normNumber }}
             </template>
           </el-table-column>
-          <el-table-column label="线下支付金额" width="120">
+          <el-table-column label="实付款" width="120">
             <template slot-scope="scope">
               {{ (scope.row.money - scope.row.integral) | normNumber }}
             </template>
@@ -81,13 +81,9 @@
               {{ scope.row.pay_money | normNumber }}
             </template>
           </el-table-column>
-          <el-table-column label="积分抵扣平台费" prop="use_integral" width="120">
-            <template slot-scope="scope">
-              {{ scope.row.use_integral | normNumber }}
-            </template>
           </el-table-column>
           <el-table-column label="创建时间" width="180" prop="creat_time" />
-          <el-table-column label="完成时间" width="180" prop="pay_time" />
+          <el-table-column label="接单时间" width="180" prop="pay_time" />
           <el-table-column label="取消时间" width="180" prop="cancel_time" />
           <el-table-column label="操作" width="100" fixed="right">
             <template slot-scope="scope">

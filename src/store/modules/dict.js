@@ -40,8 +40,8 @@ const state = {
     4: '二期审核中',
   },
   offlineStatus: {
-    waitconfirm: '待商家确认',
-    success: '已完成',
+    waitconfirm: '待商家接单',
+    success: '商家已接单',
     cancel: '已取消'
   },
   linkType: {

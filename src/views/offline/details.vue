@@ -10,8 +10,8 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="订单状态:">
-              <span v-if="info.status == 1 && info.pay_status == 0">待商家确认</span>
-              <span v-if="info.status == 1 && info.pay_status == 1">已完成</span>
+              <span v-if="info.status == 1 && info.pay_status == 0">待商家接单</span>
+              <span v-if="info.status == 1 && info.pay_status == 1">商家已接单</span>
               <span v-if="info.status == 2">已取消</span>
             </el-form-item>
           </el-col>
@@ -36,7 +36,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="info.status == 1 && info.pay_status == 1">
-            <el-form-item label="完成时间:">
+            <el-form-item label="接单时间:">
               {{ info.pay_time }}
             </el-form-item>
           </el-col>
@@ -59,10 +59,10 @@
           </li>
         </ul>
         <div class="goods-mes">
-          <p>订单商品金额合计：￥{{ info.money | normNumber }}</p>
-          <p>使用积分抵扣费用：￥{{ info.integral | normNumber }}</p>
-          <p>用户需支付订单费：￥{{ (info.money - info.integral) | normNumber }}</p>
-          <p>商家需支付平台费：￥{{ info.pay_money| normNumber }}</p>
+          <p>合计：￥{{ info.money | normNumber }}</p>
+          <p>积分抵扣：￥{{ info.integral | normNumber }}</p>
+          <p>实付款：￥{{ (info.money - info.integral) | normNumber }}</p>
+          <p>平台费：￥{{ info.pay_money| normNumber }}</p>
         </div>
       </div>
     </div>
@@ -126,7 +126,8 @@ export default {
         margin-right: 10px;
       }
       .goods-name{
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
       }
     }
     margin-bottom: 20px;
