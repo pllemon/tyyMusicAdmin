@@ -49,7 +49,7 @@ export default {
       console.log("WebSocket连接发生错误")
       setTimeout(() => {
         this.initWebSocket()
-      }, 2000)
+      }, 1000)
     },
     websocketonmessage(e){ //数据接收
       const that = this
@@ -66,71 +66,68 @@ export default {
         let notify = null
         const message = JSON.parse(res.message)
         if (res.type == 'makeOrder') {
-          notify = this.$notify({
+          that.showNotify({
             title: '新订单',
             message: `用户 ${message.name}（${message.phone}）下了个新订单，赶紧接单吧！`,
-            duration: 0,
-            offset: 50,
-            iconClass: 'el-icon-s-claim',
-            customClass: 'websocket-notify',
-            onClick: function() {
-              notify.close()
+            icon: 'el-icon-s-claim',
+            callback() {
               that.dialogMes = {id: message.order_id}
               that.currentComponent = 'OrderDetails'
             }
           })
         } else if (res.type == 'payEarnest') {
-          notify = this.$notify({
+          that.showNotify({
             title: '用户已支付',
             message: `订单编号 ${message.orderSn} ，用户已支付，赶紧为TA发布订单吧！`,
-            duration: 0,
-            offset: 50,
-            iconClass: 'el-icon-s-finance',
-            customClass: 'websocket-notify',
-            onClick: function() {
-              notify.close()
+            icon: 'el-icon-s-finance',
+            callback() {
               that.dialogMes = {id: message.order_id}
               that.currentComponent = 'OrderDetails'
             }
           })
         } else if (res.type == 'newMaster') {
-          notify = this.$notify({
+          that.showNotify({
             title: '师傅申请',
             message: `用户 ${message.name}（${message.phone}）申请成为师傅，赶紧处理吧！`,
-            duration: 0,
-            offset: 50,
-            iconClass: 'el-icon-user-solid',
-            customClass: 'websocket-notify',
-            onClick: function() {
-              notify.close()
-            }
+            icon: 'el-icon-user-solid',
+            url: ''
           })
         } else if (res.type == 'newBusiness') {
-          notify = this.$notify({
+          that.showNotify({
             title: '商家申请',
             message: `用户 ${message.name}（${message.phone}）申请成为商家，赶紧处理吧！`,
-            duration: 0,
-            offset: 50,
-            iconClass: 'el-icon-s-custom',
-            customClass: 'websocket-notify',
-            onClick: function() {
-              notify.close()
-            }
+            icon: 'el-icon-s-custom',
+            url: ''
           })
         } else {
           console.log(res.message)
-          // this.$notify({
-          //   title: '收到一条信息',
-          //   message: res.message,
-          //   duration: 5000,
-          //   offset: 50
-          // })
         }
         // this.notifications[timeStamp] = notify;
         // this.$store.commit('news/ADD_NEWS', res)
 
-        this.$refs.audio.play()
+        that.$refs.audio.play()
       }
+    },
+
+    showNotify(obj) {
+      let that = this
+      let notify = that.$notify({
+        title: obj.title || '通知',
+        message: obj.message || '',
+        duration: 0,
+        offset: 50,
+        iconClass: obj.icon || 'el-icon-warning-outline',
+        customClass: 'websocket-notify',
+        onClick: function() {
+          notify.close()
+          if (obj.url) {
+            that.$route.push(obj.url)
+          }
+          if (obj.callback) {
+            obj.callback()
+          }
+        }
+      })
     },
 
     closeNotify(timeStamp) {
