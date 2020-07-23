@@ -15,7 +15,7 @@
           </el-form-item>  
           <el-form-item label="状态" prop="status">
             <el-select v-model="queryMes.status" placeholder="请选择">
-              <el-option v-for="(item, index) in dict.recordStatus" :key="index" :label="item" :value="index" />
+              <el-option v-for="(item, index) in dict.businessStatus" :key="index" :label="item" :value="index" />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -51,11 +51,11 @@
           <el-table-column label="店铺名" prop="name" width="120" />
           <el-table-column label="联系方式" prop="phone" width="120" />
           <el-table-column label="店铺地址" prop="address" min-width="160" />
-          <el-table-column label="加盟费用" prop="" min-width="100" />
+          <el-table-column label="加盟费用" min-width="100" prop="joininprice" />
           <el-table-column label="商品数量" prop="" min-width="100" />
           <el-table-column label="状态" min-width="120">
             <template slot-scope="scope">
-              {{ dict.recordStatus[scope.row.status] }}
+              {{ dict.businessStatus[scope.row.status] }}
             </template>
           </el-table-column>
           <el-table-column label="申请时间" min-width="160" prop="creattime" />

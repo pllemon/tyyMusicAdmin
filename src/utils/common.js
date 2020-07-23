@@ -134,7 +134,7 @@ function deepCopy(obj) {
 }
 
 export default {
-  ip: 'http://47.106.100.144/',
+  ip: 'https://www.dsfjjwx.com/',
   search, // 搜索表单
   resetSearch, // 重置搜索表单
   updateRecord, // 更新状态

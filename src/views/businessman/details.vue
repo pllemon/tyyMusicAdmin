@@ -32,7 +32,7 @@
               </el-col>
               <el-col :span="24">
                 <el-form-item label="店铺状态:">
-                  {{ recordStatus[message.status]}}
+                  {{ businessStatus[message.status]}}
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-show="message.bhremark">
@@ -121,7 +121,7 @@ export default {
   computed: {
     ...mapState({
       changeType: state => state.dict.changeType,
-      recordStatus: state => state.dict.recordStatus
+      businessStatus: state => state.dict.businessStatus
     })
   }
 }

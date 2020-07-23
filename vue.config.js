@@ -39,7 +39,7 @@ module.exports = {
     },
     proxy: {
       '/admin': {
-        target: 'http://47.106.100.144/',
+        target: 'https://www.dsfjjwx.com/',
         changeOrigin: true
       }
     }

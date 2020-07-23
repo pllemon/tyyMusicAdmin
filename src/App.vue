@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     initWebSocket(){
-      this.websocket = new WebSocket('ws://47.106.100.144:2346')
+      this.websocket = new WebSocket('ws://120.25.25.90:2346')
       this.websocket.onopen = this.websocketonopen
       this.websocket.onerror = this.websocketonerror
       this.websocket.onmessage = this.websocketonmessage
