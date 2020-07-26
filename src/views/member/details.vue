@@ -33,7 +33,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="下级推荐数:">
-                  {{ info.friend_sum }}
+                  {{ info.friendnum }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -52,7 +52,12 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="总积分:">
+                <el-form-item label="当前佣金:">
+                  {{ info.money }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="当前积分:">
                   {{ info.creattime }}
                 </el-form-item>
               </el-col>

@@ -18,8 +18,12 @@
         </el-table-column>
         <el-table-column label="商品名称" prop="goods_name"/>
         <el-table-column label="价格" prop="price"/>
-        <el-table-column label="加入费用" prop=""/>
-        <el-table-column label="状态" prop=""/>
+        <el-table-column label="加入费用" prop="uploadprice"/>
+        <el-table-column label="状态">
+          <template slot-scope="scope">
+            {{ goodsStatus[scope.row.status] }}
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -67,6 +71,11 @@ export default {
         this.listLoading = false
       })
     }
-  }
+  },
+  computed: {
+    ...mapState({
+      goodsStatus: state => state.dict.goodsStatus
+    })
+  },
 }
 </script>

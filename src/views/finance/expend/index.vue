@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item label="收入类型" prop="logtype">
           <el-select v-model="queryMes.logtype" placeholder="请选择">
-            <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
+            <el-option v-for="(item, index) in expendType" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -32,9 +32,9 @@
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="流水号"  min-width="140" prop="tran_id" />
           <el-table-column label="金额" prop="money"/>  
-          <el-table-column label="收入类型" min-width="120">
+          <el-table-column label="支出类型" min-width="120">
             <template slot-scope="scope">
-              {{dict.incomeType[scope.row.logtype]}}
+              {{dict.expendType[scope.row.logtype]}}
             </template>
           </el-table-column>
           <el-table-column label="记录时间" min-width="140" prop="createtime" />
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState({
-      incomeType: state => state.dict.incomeType
+      expendType: state => state.dict.expendType
     })
   }
 }

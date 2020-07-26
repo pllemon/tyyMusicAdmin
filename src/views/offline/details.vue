@@ -32,7 +32,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="创建时间:">
-              {{ info.creat_time }}
+              {{ info.create_time }}
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="info.status == 1 && info.pay_status == 1">

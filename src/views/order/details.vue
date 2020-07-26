@@ -10,10 +10,10 @@
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 4 && message.craftsmaninfo" :timestamp="message.craftsmaninfo.choose_time">师傅承接订单</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 4 && message.ordersshow.secctime" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.info.user_confirm_time">用户验收</el-timeline-item>
-            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.info.success_time">店长验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5" :timestamp="message.ordersshow.time">师傅开始施工</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 5 && message.ordersshow.secctime" :timestamp="message.ordersshow.secctime">师傅结束施工</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 6" :timestamp="message.info.user_confirm_time">用户验收</el-timeline-item>
+            <el-timeline-item v-if="message.info.status > 7" :timestamp="message.info.success_time">店长验收</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6 && message.comment.time" :timestamp="message.comment.time">用户评价</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
@@ -100,7 +100,7 @@
           </el-form>
           <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status != 10 && message.info.status != 12">
+        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status <= 8">
           <p class="section-title small">报价&报名</p>
           <el-form label-width="100px">
             <el-row>
@@ -160,18 +160,23 @@
           </el-form>
           <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form" v-if="message.info.status > 6 && message.info.status != 10 && message.info.status != 12">
+        <div class="section  detail-form" v-if="message.info.status > 5 && message.info.status <= 8">
           <p class="section-title small">施工情况&用户评价</p>
           <el-form label-width="100px">
             <el-row>
+              <el-col :span="24" v-if="message.ordersshow">
+                <el-form-item label="施工时间:">
+                  <span>{{message.ordersshow.time}} 至 {{message.ordersshow.secctime}}</span>
+                </el-form-item>
+              </el-col>
               <el-col :span="24" v-if="message.ordersshow">
                 <el-form-item label="施工情况:">
                   <gd-image v-if="message.ordersshow.imgurl1" :src="message.ordersshow.imgurl1" />
                   <gd-image v-if="message.ordersshow.imgurl3" :src="message.ordersshow.imgurl3" />
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="message.comment.id">
-                <el-form-item label="用户评价:">
+              <el-col :span="24" v-if="message.comment && message.comment.id">
+                <el-form-item label="用户评价:" >
                   <div class="flex-center-start">
                     <el-rate
                       v-model="message.comment.stars"

@@ -55,7 +55,7 @@
             </template>
           </el-table-column>
           <el-table-column label="开始时间" min-width="180" prop="time" />
-          <el-table-column label="结束时间" min-width="180" prop="time" />
+          <el-table-column label="结束时间" min-width="180" prop="secctime" />
           <el-table-column label="订单编号" min-width="200" prop="order_sn"/>
           <el-table-column label="状态" width="180" align="center">
             <template slot-scope="scope">

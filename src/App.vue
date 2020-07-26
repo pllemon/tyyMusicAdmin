@@ -75,6 +75,7 @@ export default {
               that.currentComponent = 'OrderDetails'
             }
           })
+          this.$refs.audio.play()
         } else if (res.type == 'payEarnest') {
           that.showNotify({
             title: '用户已支付',
@@ -92,6 +93,7 @@ export default {
             icon: 'el-icon-user-solid',
             url: ''
           })
+          this.$refs.audio.play()
         } else if (res.type == 'newBusiness') {
           that.showNotify({
             title: '商家申请',
@@ -99,6 +101,7 @@ export default {
             icon: 'el-icon-s-custom',
             url: ''
           })
+          this.$refs.audio.play()
         } else {
           console.log(res.message)
         }
