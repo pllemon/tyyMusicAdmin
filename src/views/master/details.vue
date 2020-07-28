@@ -2,7 +2,7 @@
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <div class="section detail-form" v-loading="loading">
       <div class="flex">
-        <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
+        <gd-image :src="info.headerurl" headUrl width="80" height="80" style="margin-left:20px"/>
         <el-form class="flex1" label-width="100px">
           <el-row>
             <el-col :span="8">
@@ -40,10 +40,6 @@
                 <gd-image :src="info.caridimg" width="200" height="120"/>
                 <gd-image :src="info.caridzimg" width="200" height="120"/>
                 <gd-image :src="info.caridfimg" width="200" height="120"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="16">
-              <el-form-item label="擅长技能:">
               </el-form-item>
             </el-col>
             <el-col :span="24">

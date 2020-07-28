@@ -17,13 +17,13 @@
             <el-timeline-item v-if="message.info.status > 6 && message.comment.time" :timestamp="message.comment.time">用户评价</el-timeline-item>
           </template>
           <template v-if="message.info.status == 10">
-            <el-timeline-item :timestamp="message.info.examine_time">后台审核不通过</el-timeline-item>
+            <el-timeline-item :timestamp="message.info.examine_time">订单不成交</el-timeline-item>
           </template>
           <template v-if="message.info.status == 11">
-            <el-timeline-item :timestamp="message.info.cancel_time">用户取消</el-timeline-item>
+            <el-timeline-item :timestamp="message.info.cancel_time">用户取消订单</el-timeline-item>
           </template>
           <template v-if="message.info.status == 12">
-            <el-timeline-item :timestamp="message.comment.time">订单过期未处理</el-timeline-item>
+            <el-timeline-item :timestamp="message.info.cancel_time">超时未跟单</el-timeline-item>
           </template>
         </el-timeline>
       </div>
@@ -91,32 +91,34 @@
                   </template>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="message.info.networkname">
-                <el-form-item label="后台备注:">
-                  {{ message.info.htremark || '无'}}
-                </el-form-item>
-              </el-col>
             </el-row>
           </el-form>
           <!-- <el-divider /> -->
         </div>
-        <div class="section  detail-form" v-if="message.info.status > 1 && message.info.status <= 8">
+        <div class="section  detail-form" v-if="(message.info.status > 1 && message.info.status <= 8) || message.info.status == 10">
           <p class="section-title small">报价&报名</p>
           <el-form label-width="100px">
             <el-row>
-              <el-col :span="8">
+              <el-col :span="8" v-show="message.pay.total_price > 0">
                 <el-form-item label="订单金额:">
                   {{ message.pay.total_price }} 元
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" v-show="message.pay.craftsman_price > 0">
                 <el-form-item label="师傅佣金:">
                   {{ message.pay.craftsman_price }} 元
                 </el-form-item>
               </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="8">
                 <el-form-item label="审核人:">
                   {{message.info.networkusername}}（{{message.info.network_auth}}）
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="审核备注:">
+                  {{ message.info.htremark || '无'}}
                 </el-form-item>
               </el-col>
             </el-row>
