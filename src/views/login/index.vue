@@ -1,9 +1,11 @@
 <template>
   <div class="login-container">
+    <img src='../../assets/image/logo.png' class="logo"/>
+
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <!-- <h3 class="title">多师傅管理平台</h3> -->
+        <h3 class="title">多师傅连锁管理平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -41,7 +43,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
     </el-form>
   </div>
 </template>
@@ -116,7 +118,7 @@ export default {
 
 $bg:#283443;
 $light_gray:#fff;
-$cursor: #fff;
+$cursor: #353535;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -137,7 +139,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: #353535;
       height: 47px;
       caret-color: $cursor;
 
@@ -150,9 +152,12 @@ $cursor: #fff;
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    // background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+    border-bottom: 1px solid #999;
+    border-radius: 0;
+    margin-bottom: 20px;
   }
 }
 </style>
@@ -165,16 +170,24 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: #fff;
   overflow: hidden;
+  background: url('../../assets/image/bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    padding: 50px;
+    overflow: auto;
+    background: #fff;
+    box-shadow: 0 4px 12px 0 rgba(255, 0, 0, 0.2);
+    border-radius: 10px;
   }
 
   .tips {
@@ -201,11 +214,13 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
-      color: $light_gray;
+      font-size: 28px;
+      color: #161515;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      margin-bottom: 50px;
+      margin-top: 20px;
     }
   }
 
@@ -218,5 +233,21 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+}
+
+.logo{
+  position: fixed;
+  top: 0px;
+  right: 10px;
+  width: 80px;
+}
+
+.el-button{
+  margin-top: 50px;
+  border-radius: 30px;
+  font-size: 20px;
+  background: -webkit-linear-gradient(left,#fa6354, #f23c39);
+  height: 50px;
+  border: none;
 }
 </style>

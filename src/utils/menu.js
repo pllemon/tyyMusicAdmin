@@ -2,6 +2,7 @@ const menuData = [
   {
     id: '1',
     title: '客户服务',
+    icon: 'el-icon-document',
     children: [
       {
         id: '1-0',
@@ -93,6 +94,7 @@ const menuData = [
   {
     id: '2',
     title: '人事管理',
+    icon: 'el-icon-user',
     children: [
       {
         id: '2-1',
@@ -119,6 +121,7 @@ const menuData = [
   {
     id: '3',
     title: '商家管理',
+    icon: 'el-icon-shopping-bag-1',
     children: [
       {
         id: '3-2',
@@ -135,6 +138,7 @@ const menuData = [
   {
     id: '4',
     title: '维修财务',
+    icon: 'el-icon-money',
     children: [
       {
         id: '4-1',
@@ -166,6 +170,7 @@ const menuData = [
   {
     id: '5',
     title: '系统设置',
+    icon: 'el-icon-setting',
     children: [
       {
         id: '5-1',

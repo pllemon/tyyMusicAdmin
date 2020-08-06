@@ -1,10 +1,10 @@
 <template>
   <el-menu :default-active="activeIndex" mode="horizontal">
     <el-menu-item index="0">
-      <router-link class="menu-link" to="/">数据概述</router-link>
+      <router-link class="menu-link" to="/"><i class="el-icon-data-analysis"></i>数据概述</router-link>
     </el-menu-item>
     <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.id">
-      <template slot="title">{{item.title}}</template> 
+      <template slot="title"><i :class="item.icon"></i>{{item.title}}</template> 
       <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.id">
         <router-link class="menu-link" :to="item2.path">{{item2.title}}</router-link>
       </el-menu-item>
@@ -46,16 +46,28 @@ export default {
 <style lang="scss">
 .el-menu{
   background: none;
+  .el-menu-item i{
+    color: #fff;
+    position: relative;
+    top: -2px;
+  }
   .el-submenu{
     &:hover{
       .el-submenu__title{
         color: #fff;
         padding: 0;
+        i {
+          color: #fff;
+        }
       }
     }
     .el-submenu__title{
       color: #fff;
-      
+      i{
+        color: #fff;
+        position: relative;
+        top: -2px;
+      } 
     }
   }
 }
@@ -84,6 +96,9 @@ export default {
   border-bottom: 2px solid #81efff;
   color: #81efff;
   font-weight: bold;
+  i{
+    color: #81efff;
+  }
 }
 .el-menu--horizontal>.el-menu-item.is-active a{
   color: #81efff;
