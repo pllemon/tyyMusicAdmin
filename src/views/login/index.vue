@@ -1,9 +1,7 @@
 <template>
   <div class="login-container">
-    <img src='../../assets/image/logo.png' class="logo"/>
-
+    <img src='../../assets/image/bg2.png'/>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
       <div class="title-container">
         <h3 class="title">多师傅连锁管理平台</h3>
       </div>
@@ -172,22 +170,22 @@ $light_gray:#eee;
   width: 100%;
   background-color: #fff;
   overflow: hidden;
-  background: url('../../assets/image/bg.jpg');
   background-size: cover;
   background-position: center center;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: -webkit-linear-gradient(45deg, #4279de, #1396fa);
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 420px;
     max-width: 100%;
     padding: 50px;
     overflow: auto;
     background: #fff;
-    box-shadow: 0 4px 12px 0 rgba(255, 0, 0, 0.2);
     border-radius: 10px;
+    margin-left: 50px;
   }
 
   .tips {
@@ -246,7 +244,7 @@ $light_gray:#eee;
   margin-top: 50px;
   border-radius: 30px;
   font-size: 20px;
-  background: -webkit-linear-gradient(left,#fa6354, #f23c39);
+  background: -webkit-linear-gradient(right, #4279de, #1396fa);
   height: 50px;
   border: none;
 }
