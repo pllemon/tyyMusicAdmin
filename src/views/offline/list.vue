@@ -59,7 +59,7 @@
               <p>{{ scope.row.user_name }} {{ scope.row.user_phone }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="服务商家" width="220">
+          <el-table-column label="服务商家" min-width="220">
             <template slot-scope="scope">
               <p>{{ scope.row.business_name }} {{ scope.row.business_phone }}</p>
               <p>{{ scope.row.business_address }}</p>

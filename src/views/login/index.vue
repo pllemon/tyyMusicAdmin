@@ -185,7 +185,7 @@ $light_gray:#eee;
     overflow: auto;
     background: #fff;
     border-radius: 10px;
-    margin-left: 50px;
+    margin-left: 140px;
   }
 
   .tips {

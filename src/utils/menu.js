@@ -107,6 +107,11 @@ const menuData = [
         path: '/master/list'
       },
       {
+        id: '5-7',
+        title: '网点列表',
+        path: '/setting/network'
+      },
+      {
         id: '2-3',
         title: '店长列表',
         path: '/shopowner/list'
@@ -201,11 +206,6 @@ const menuData = [
         id: '5-6',
         title: '商家协议',
         path: '/system/businessAgreement'
-      },
-      {
-        id: '5-7',
-        title: '网点列表',
-        path: '/setting/network'
       },
       {
         id: '5-8',
