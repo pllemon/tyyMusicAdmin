@@ -29,7 +29,7 @@
         </el-form>
         <div class="other-action">
           <!-- <el-button size="small" icon="el-icon-upload2" round>批量导出</el-button> -->
-          <el-button size="mini" type="primary" plain icon="el-icon-discount" round @click="changePoints(selectIds)">积分增减</el-button>
+          <el-button size="mini" type="primary" plain icon="el-icon-discount" round @click="changePoints(1, selectIds)">积分增减</el-button>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 0, scope.row.user_id)">详情</el-button>
-              <el-button type="text" @click="changePoints([scope.row.user_id])">积分增减</el-button>
+              <el-button type="text" @click="changePoints(2, [scope.row.user_id])">积分增减</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -150,7 +150,11 @@ export default {
       })
     },
 
-    changePoints(ids) {
+    changePoints(type, ids) {
+      if (type == 1 && ids.length == 0) {
+        this.$message.error('请至少选择一名用户')
+        return false
+      }
       console.log(ids)
       this.dialogMes = {
         ids: ids

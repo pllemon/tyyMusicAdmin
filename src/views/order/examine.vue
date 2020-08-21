@@ -8,8 +8,8 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取 消</el-button>
-      <el-button type="primary" @click="submitExamine">确 定</el-button>
+      <el-button :disabled="loading" @click="handleClose">取 消</el-button>
+      <el-button type="primary" :loading="loading" @click="submitExamine">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       form: {
         order_sn: '',
         user_id: '',
@@ -64,8 +65,11 @@ export default {
       const that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
+          this.loading = true
           orderexamine2(that.form).then(response => {
             that.common.closeComponent(that)
+          }).finally(() => {
+            this.loading = false
           })
         }
       })
