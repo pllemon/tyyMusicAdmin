@@ -46,15 +46,13 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed />
-          <el-table-column label="订单编号" width="160" prop="order_sn" />
-          <el-table-column label="订单状态" width="120">
+          <el-table-column label="订单编号" min-width="160" prop="order_sn" />
+          <el-table-column label="订单状态" min-width="120">
             <template slot-scope="scope">
-              <span v-if="scope.row.status == 1 && scope.row.pay_status == 0">待商家接单</span>
-              <span v-if="scope.row.status == 1 && scope.row.pay_status == 1">商家已接单</span>
-              <span v-if="scope.row.status == 2">已取消</span>
+              <span>{{offlineStatus[scope.row.status]}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="下单用户" width="200">
+          <el-table-column label="下单用户" min-width="200">
             <template slot-scope="scope">
               <p>{{ scope.row.user_name }} {{ scope.row.user_phone }}</p>
             </template>

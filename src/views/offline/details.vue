@@ -10,9 +10,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="订单状态:">
-              <span v-if="info.status == 1 && info.pay_status == 0">待商家接单</span>
-              <span v-if="info.status == 1 && info.pay_status == 1">商家已接单</span>
-              <span v-if="info.status == 2">已取消</span>
+              <span>{{offlineStatus[info.status]}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="24">
