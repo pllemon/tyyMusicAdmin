@@ -11,9 +11,10 @@
         height="360px"
       >
         <el-table-column label="序号" type="index" width="50" fixed/>
-        <el-table-column label="积分数" prop="integral"/>
+        <el-table-column label="佣金金额" prop="money"/>
+        <el-table-column label="下级用户" prop=""/>
+        <el-table-column label="服务项目" prop="service_demand"/>
         <el-table-column label="记录时间" prop="time"/>
-        <el-table-column label="记录说明" prop="remark"/>
       </el-table>
     </div>
     <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
@@ -60,8 +61,8 @@ export default {
     fetchData() {
       this.listLoading = true
       userprofit(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
+        this.list = response.data.list.data
+        this.total = response.data.list.total
       }).finally(() => {
         this.listLoading = false
       })

@@ -77,11 +77,14 @@ export default {
       this.$confirm('确定选择该师傅?', '提示', {
         type: 'warning'
       }).then(() => {
+        this.loading = true
         choosecraftsman({
           order_id: this.dialogMes.id,
           craftsman_id: id
         }).then(response => {
           this.common.closeComponent(this)
+        }).finally(() => {
+          this.loading = false
         })
       }).catch(() => {})
     }

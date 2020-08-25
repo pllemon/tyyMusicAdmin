@@ -39,7 +39,7 @@
           <div class="news-mes">
             <p class="news-title">叮叮叮~来新订单啦~</p>
             <p class="news-dec" v-for="(item,index) in newList.makeOrder" :key="index">
-              用户 {{item.name}}（{{item.phone}}）下了个新订单，赶紧接单吧！
+              用户 {{item.name}}（{{item.phone}}）下了个新订单，请及时处理！
             </p>
           </div>
         </li>

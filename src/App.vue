@@ -68,7 +68,7 @@ export default {
         if (res.type == 'makeOrder') {
           that.showNotify({
             title: '新订单',
-            message: `用户 ${message.name}（${message.phone}）下了个新订单，赶紧接单吧！`,
+            message: `用户 ${message.name}（${message.phone}）下了个新订单，请及时处理！`,
             icon: 'el-icon-s-claim',
             callback() {
               that.dialogMes = {id: message.order_id}
@@ -79,7 +79,7 @@ export default {
         } else if (res.type == 'payEarnest') {
           that.showNotify({
             title: '用户已支付',
-            message: `订单编号 ${message.orderSn} ，用户已支付，赶紧为TA发布订单吧！`,
+            message: `订单编号 ${message.orderSn} ，用户已支付，请及时处理！`,
             icon: 'el-icon-s-finance',
             callback() {
               that.dialogMes = {id: message.order_id}
@@ -89,7 +89,7 @@ export default {
         } else if (res.type == 'newMaster') {
           that.showNotify({
             title: '师傅申请',
-            message: `用户 ${message.name}（${message.phone}）申请成为师傅，赶紧处理吧！`,
+            message: `用户 ${message.name}（${message.phone}）申请成为师傅，请及时处理！`,
             icon: 'el-icon-user-solid',
             url: ''
           })
@@ -97,7 +97,7 @@ export default {
         } else if (res.type == 'newBusiness') {
           that.showNotify({
             title: '商家申请',
-            message: `用户 ${message.name}（${message.phone}）申请成为商家，赶紧处理吧！`,
+            message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
             icon: 'el-icon-s-custom',
             url: ''
           })

@@ -7,6 +7,9 @@
           <el-radio label="3">驳回</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="流水号：">
+        <el-input placeholder="请输入" v-model="form.lsh" />
+      </el-form-item>
       <el-form-item label="备注：" prop="shremark">
         <el-input
           type="textarea"
@@ -43,7 +46,8 @@ export default {
         craftsman_id: '',
         slid: '',
         status: '1',
-        shremark: ''
+        shremark: '',
+        lsh: ''
       }
     }
   },
