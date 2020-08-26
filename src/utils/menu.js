@@ -134,6 +134,11 @@ const menuData = [
         path: '/businessman/list'
       },
       {
+        id: '3-3',
+        title: '商品列表',
+        path: '/businessman/goods'
+      },
+      {
         id: '3-1',
         title: '交易订单',
         path: '/offline/list'

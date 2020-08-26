@@ -1,7 +1,7 @@
 <template>
   <el-dialog :modal-append-to-body="false" title="商家详情" :visible="true" width="1000px" :before-close="handleClose">
-    <el-tabs tab-position="top">
-      <el-tab-pane label="基本信息">
+    <!-- <el-tabs tab-position="top"> -->
+      <!-- <el-tab-pane label="基本信息"> -->
         <div class="section detail-form flex" v-loading="loading">
           <el-form label-width="100px" class="flex1" style="padding-right:30px">
             <el-row>
@@ -72,11 +72,11 @@
             </el-row>
           </el-form>
         </div>
-      </el-tab-pane>
+      <!-- </el-tab-pane>
       <el-tab-pane label="优惠商品">
         <goods-list :id="dialogMes.id" />
-      </el-tab-pane>
-    </el-tabs>
+      </el-tab-pane> -->
+    <!-- </el-tabs> -->
   </el-dialog>
 </template>
 

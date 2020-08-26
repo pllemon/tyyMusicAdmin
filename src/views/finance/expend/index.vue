@@ -30,7 +30,7 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="流水号"  min-width="140" prop="tran_id" />
+          <el-table-column label="流水号"  min-width="140" prop="pay_order_sn" />
           <el-table-column label="金额" prop="money"/>  
           <el-table-column label="支出类型" min-width="120">
             <template slot-scope="scope">

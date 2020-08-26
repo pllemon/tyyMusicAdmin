@@ -1,6 +1,13 @@
 <template>
   <div class="dashboard">
-    <el-row :gutter="15">
+    <ul class="part-number">
+      <li v-for="(item,index) in [1,2,3,4,5,6,7,8]" :key="index">
+        <p class="number">99</p>
+        <p>待分配网点</p>
+      </li>
+    </ul>
+
+    <!-- <el-row :gutter="15">
       <el-col :span="24">
         <el-card class="box-card">
           <order />
@@ -25,7 +32,7 @@
           <finance-line />
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -73,12 +80,31 @@ export default {
   display: block;
   background: #f2f2f2;
   box-sizing: border-box;
-  padding: 30px;
+  padding: 10px;
   .el-card{
     box-shadow: none;
   }
 }
 .el-row{
   margin-bottom: 15px;
+}
+
+
+
+.part-number{
+  display: flex;
+  background: #fff;
+  border-radius: 10px;
+  color: #353535;
+  li{
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    .number{
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+  }
 }
 </style>

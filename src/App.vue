@@ -33,7 +33,7 @@ export default {
     })
   },
   destroyed: function() {
-    this.websocketclose()
+    // this.websocketclose()
   },
   methods: {
     initWebSocket(){
@@ -61,7 +61,9 @@ export default {
       } else if (res.type == 'ping') {
 
       } else {
+        console.log('--------新消息!!!!--------------------')
         console.log(res)
+        console.log('----------------------------')
         // const timeStamp = new Date().getTime()
         let notify = null
         const message = JSON.parse(res.message)
@@ -75,7 +77,7 @@ export default {
               that.currentComponent = 'OrderDetails'
             }
           })
-          this.$refs.audio.play()
+          that.$refs.audio.play()
         } else if (res.type == 'payEarnest') {
           that.showNotify({
             title: '用户已支付',
@@ -86,29 +88,42 @@ export default {
               that.currentComponent = 'OrderDetails'
             }
           })
+          that.$refs.audio.play()
         } else if (res.type == 'newMaster') {
           that.showNotify({
             title: '师傅申请',
             message: `用户 ${message.name}（${message.phone}）申请成为师傅，请及时处理！`,
-            icon: 'el-icon-user-solid',
-            url: ''
+            icon: 'el-icon-user-solid'
           })
-          this.$refs.audio.play()
+          that.$refs.audio.play()
         } else if (res.type == 'newBusiness') {
           that.showNotify({
             title: '商家申请',
             message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
-            icon: 'el-icon-s-custom',
-            url: ''
+            icon: 'el-icon-s-custom'
           })
-          this.$refs.audio.play()
+          that.$refs.audio.play()
+        } else if (res.type == 'crafSetTlement') {
+          that.showNotify({
+            title: '师傅佣金申请提现',
+            message: `${message.name}申请提现${message.money}元，请及时处理！`,
+            icon: 'el-icon-s-custom'
+          })
+          that.$refs.audio.play()
+        }  else if (res.type == 'userSetTlement') {
+          that.showNotify({
+            title: '用户佣金申请提现',
+            message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
+            icon: 'el-icon-s-custom'
+          })
+          that.$refs.audio.play()
         } else {
           console.log(res.message)
         }
         // this.notifications[timeStamp] = notify;
         // this.$store.commit('news/ADD_NEWS', res)
 
-        that.$refs.audio.play()
+        // that.$refs.audio.play()
       }
     },
 

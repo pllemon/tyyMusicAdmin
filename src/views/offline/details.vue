@@ -33,7 +33,7 @@
               {{ info.create_time }}
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="info.status == 1 && info.pay_status == 1">
+          <el-col :span="24" v-if="info.pay_status == 1">
             <el-form-item label="接单时间:">
               {{ info.pay_time }}
             </el-form-item>
@@ -47,7 +47,7 @@
       </el-form>
       <div class="goods-list">
         <p class="section-title small">商品清单</p>
-        <ul>
+        <ul v-if="info.type == 1">
           <li v-for="(item,index) in info.goodslst" :key="index">
             <gd-image :src="item.goods_image" class="goods-image" width="50" height="50"/>
             <div>
@@ -56,7 +56,14 @@
             </div>
           </li>
         </ul>
-        <div class="goods-mes">
+        <div v-if="info.type == 2" class="goods-single">
+          <div class="goods-image">
+            <img src="@/assets/image/bag.png" />
+          </div>
+          <p>{{info.goods_need_remark}}</p>
+        </div>
+        <div class="goods-mes" v-if="info.money > 0">
+          <p v-if="info.type==2">报价说明：{{info.offer_remark}}</p>
           <p>合计：￥{{ info.money | normNumber }}</p>
           <p>积分抵扣：￥{{ info.integral | normNumber }}</p>
           <p>实付款：￥{{ (info.money - info.integral) | normNumber }}</p>
@@ -132,6 +139,25 @@ export default {
   }
   .goods-mes p{
     margin-bottom: 20px;
+  }
+  .goods-single{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    .goods-image{
+      width: 50px;
+      height: 50px;
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-right: 10px;
+      img{
+        width: 40px;
+      }
+    }
   }
 }
 

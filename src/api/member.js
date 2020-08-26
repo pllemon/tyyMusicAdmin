@@ -58,6 +58,15 @@ export function userprofit(data) {
   })
 }
 
+// 用户提现审核
+export function examinewithdrawa(data) {
+  return request({
+    url: '/admin/examinewithdrawa',
+    method: 'post',
+    data
+  })
+}
+
 // 用户申请提现列表
 export function userwithdrawallist(data) {
   return request({

@@ -25,7 +25,7 @@
         </el-form>
         <div class="other-action">
           <!-- <el-button size="mini" type="primary" plain icon="el-icon-upload2" round  @click="exportExcel()">批量导出</el-button> -->
-          <el-button size="mini" type="primary" plain icon="el-icon-money" round  @click="loadComponent('GoodPrice')">设置商品价格</el-button>
+          <!-- <el-button size="mini" type="primary" plain icon="el-icon-money" round  @click="loadComponent('GoodPrice')">设置商品价格</el-button> -->
         </div>
       </div>
       

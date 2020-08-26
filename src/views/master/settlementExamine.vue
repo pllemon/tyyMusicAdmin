@@ -8,7 +8,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="流水号：">
-        <el-input placeholder="请输入" v-model="form.lsh" />
+        <el-input placeholder="请输入" v-model="form.pay_order_sn" />
       </el-form-item>
       <el-form-item label="备注：" prop="shremark">
         <el-input
@@ -20,8 +20,8 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="handleClose">取 消</el-button>
-      <el-button type="primary" @click="submitExamine">确 定</el-button>
+      <el-button :disabled="loading" @click="handleClose">取 消</el-button>
+      <el-button type="primary" @click="submitExamine" :loading="loading">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -40,14 +40,14 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
 
       form: {
         craftsman_id: '',
         slid: '',
         status: '1',
         shremark: '',
-        lsh: ''
+        pay_order_sn: ''
       }
     }
   },
@@ -64,8 +64,11 @@ export default {
       const that = this
       that.$refs.form.validate((valid) => {
         if (valid) {
+          that.loading = true
           craftsmansettlement(that.form).then(response => {
             that.common.closeComponent(that)
+          }).finally(() => {
+            that.loading = false
           })
         }
       })

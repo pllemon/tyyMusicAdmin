@@ -59,18 +59,18 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column label="相关订单" min-width="160">
+            <template slot-scope="scope">
+              <span class="link" @click="loadComponent('OrderDetails', scope.row.order_id)">{{scope.row.order_sn}}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="收款信息" min-width="200">
             <template slot-scope="scope">
               <p>{{scope.row.pay_username}}（{{scope.row.pay_type == 2?'银行卡':'支付宝'}}）</p>
               <p>{{scope.row.pay_name}}</p>
             </template>
           </el-table-column>
-          <el-table-column label="相关订单" min-width="160">
-            <template slot-scope="scope">
-              <span class="link" @click="loadComponent('OrderDetails', scope.row.order_id)">{{scope.row.order_sn}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="申请金额" prop="money" />
+          <el-table-column label="申请金额" prop="money" min-width="140"/>
           <el-table-column label="申请时间" min-width="160" prop="time" />
           <el-table-column label="申请状态" min-width="100">
             <template slot-scope="scope">

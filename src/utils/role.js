@@ -85,6 +85,12 @@ export const mainAdminRoutes = [
         name: 'List',
         component: () => import('@/views/businessman/list'),
         meta: { title: '全部商家', menu: '3-2'}
+      },
+      {
+        path: 'goods',
+        name: 'Goods',
+        component: () => import('@/views/businessman/goodsList'),
+        meta: { title: '全部商品', menu: '3-3'}
       }
     ]
   },
