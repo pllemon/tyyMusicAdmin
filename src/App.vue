@@ -105,16 +105,16 @@ export default {
           that.$refs.audio.play()
         } else if (res.type == 'crafSetTlement') {
           that.showNotify({
-            title: '师傅佣金申请提现',
+            title: '师傅申请提现佣金',
             message: `${message.name}申请提现${message.money}元，请及时处理！`,
-            icon: 'el-icon-s-custom'
+            icon: 'el-icon-s-finance'
           })
           that.$refs.audio.play()
         }  else if (res.type == 'userSetTlement') {
           that.showNotify({
-            title: '用户佣金申请提现',
-            message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
-            icon: 'el-icon-s-custom'
+            title: '用户申请提现收益',
+            message: `${message.name}申请提现${message.money}元，请及时处理！`,
+            icon: 'el-icon-s-finance'
           })
           that.$refs.audio.play()
         } else {
