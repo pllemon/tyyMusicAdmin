@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="师傅工号:" prop="sn">
-            <el-input type="text" v-model="form.sn" disabled/>
+            <el-input type="text" v-model="form.sn"/>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -38,6 +38,17 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
+          <el-form-item label="所属区域：" prop="areaCode">
+            <el-cascader
+              ref="areaCascader"
+              v-model="area.code"
+              style="width:100%"
+              :options="options"
+              @change="changeArea"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="24">
           <el-form-item label="联系地址:" prop="address">
             <el-input type="text" v-model="form.address" />
           </el-form-item>
@@ -49,7 +60,7 @@
         </el-col>
       </el-row>
     </el-form>
-    <span slot="footer" class="dialog-footer">
+    <span slot="footer" class="dialog-footer" v-show="!loading">
       <el-button @click="handleClose">取消</el-button>
       <el-button type="primary" @click="submitForm">确定</el-button>
     </span>
@@ -58,6 +69,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { areaJson } from '@/utils/area.js'
 import { getDetails, savecraftsmaninfo } from '@/api/master'
 
 export default {
@@ -69,9 +81,13 @@ export default {
   },
   data() {
     return {
+      options: areaJson,
       file: {},
       loading: true,
-      form: {},
+      form: {
+        name: '',
+        sn: '',
+      },
       rules: {
         sn: [{ required: true, message: '请填写师傅工号', trigger: 'blur' }],
         name: [{ required: true, message: '请填写师傅姓名', trigger: 'blur' }],
@@ -79,6 +95,10 @@ export default {
         phone: [{ required: true, message: '请填写联系手机', trigger: 'blur' }],
         enter_time: [{ required: true, message: '请填写入行年份', trigger: 'blur' }],
         address: [{ required: true, message: '请填写联系地址', trigger: 'blur' }]
+      },
+      area: {
+        code: [],
+        codeName: []
       }
     }
   },
@@ -99,12 +119,20 @@ export default {
       } else {
         that.$set(that.file, 'url', require('@/assets/image/plac.png'))
       }
+      that.area.code = data.info.areacode.split(',')
       that.form = data.info
     }).finally(() => {
       that.loading = false
     })
   },
   methods: {
+    changeArea(val) {
+      const nodes = this.$refs.areaCascader.getCheckedNodes()
+      const region = nodes[0].parent.parent.label + ',' + nodes[0].parent.label + ',' + nodes[0].label
+      this.form.areacode = val.join(',')
+      this.form.areacodename = region
+    },
+
     uploadSuccess(data) {
       this.form.headerurl = data
     },

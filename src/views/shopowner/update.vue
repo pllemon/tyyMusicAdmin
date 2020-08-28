@@ -3,7 +3,7 @@
     <el-form ref="form" :rules="rules" :model="form" label-width="80px" v-loading="loading">
       <el-row>
         <el-col :span="24">
-          <el-form-item label="编号" prop="sn">
+          <el-form-item label="工号" prop="sn">
             <el-input v-model="form.sn" clearable />
           </el-form-item>
         </el-col>

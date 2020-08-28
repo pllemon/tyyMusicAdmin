@@ -2,7 +2,7 @@
   <el-dialog :modal-append-to-body="false" title="详情" :visible="true" width="1100px" :before-close="handleClose">
     <el-tabs tab-position="top">
       <el-tab-pane label="基本信息" style="min-height: 400px;">
-        <div class="flex">
+        <div class="flex" v-loading="loading">
           <gd-image :src="info.headerurl" headUrl width="80" height="80"/>
           <el-form class="flex1" label-width="100px">
             <el-row> 
@@ -22,13 +22,13 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="推荐码:">
-                  {{ info.invitation_code }}
+                <el-form-item label="上级推荐人:">
+                  {{ first_friend ? first_friend.username : '无' }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="上级推荐人:">
-                  {{ info.friend_name }}
+                <el-form-item label="下级推荐码:">
+                  {{ info.invitation_code }}
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -101,6 +101,7 @@ export default {
     return {
       loading: true,
       info: {},
+      first_friend: {},
       id: ''
     }
   },
@@ -116,6 +117,7 @@ export default {
       user_id: that.dialogMes.id
     }).then(response => {
       that.info = response.data.userinfo
+      that.first_friend = response.data.first_friend
       that.loading = false
     })
   },

@@ -9,7 +9,7 @@
         <el-form-item label="工号" prop="sn">
           <el-input v-model="queryMes.sn" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="结算状态" prop="status">
+        <el-form-item label="申请状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
               v-for="(item, index) in dict.settleStauts"

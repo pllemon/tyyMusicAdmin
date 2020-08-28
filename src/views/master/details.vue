@@ -26,13 +26,13 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="所属区域:">
-                {{ info.areacodename }}
+              <el-form-item label="入行年份:">
+                {{ info.enter_time }}
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="入行年份:">
-                {{ info.enter_time }}
+              <el-form-item label="所属区域:">
+                {{ info.areacodename }}
               </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -63,9 +63,9 @@
               </el-form-item>
             </el-col>
             <el-col :span="16">
-              <el-form-item label="审核结果:">
+              <el-form-item label="账号状态:">
                 {{ recordStatus[info.status] }}
-                <span v-show="info.reject_reason">（{{ info.reject_reason }}）</span>
+                <span v-show="info.status == 3 && info.reject_reason">（{{ info.reject_reason }}）</span>
               </el-form-item>
             </el-col>
           </el-row>

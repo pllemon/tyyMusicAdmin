@@ -19,7 +19,7 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="编号" prop="sn" />
+          <el-table-column label="工号" prop="sn" />
           <el-table-column label="姓名" prop="name" />
           <el-table-column label="联系电话" prop="phone" />
           <el-table-column label="角色" >
@@ -51,7 +51,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getList, updateStatus } from '@/api/shopowner'
+import { getList, updateRecord } from '@/api/shopowner'
 import Update from '@/views/shopowner/update'
 
 export default {
@@ -94,9 +94,9 @@ export default {
 
     updateRecord(id, type) {
       this.common.updateRecord(type, this, {
-        admin_id: id,
-        status: type
-      }, updateStatus)
+        id: id,
+        is_show: type
+      }, updateRecord)
     }
   },
   components: {

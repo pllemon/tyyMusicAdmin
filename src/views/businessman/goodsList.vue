@@ -50,11 +50,14 @@
               {{ goodsStatus[scope.row.status] }}
             </template>
           </el-table-column>
-          <el-table-column label="商品描述" prop="desc"/>
+          <!-- <el-table-column label="商品描述" prop="desc"/> -->
           <el-table-column label="创建时间" prop="time" min-width="120"/>
         </el-table>
       </div>
       <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />
+
+      <!-- 弹窗 -->
+      <component :is="currentComponent" :dialogMes="dialogMes"/>
     </div>
   </div>
 </template>
@@ -63,9 +66,13 @@
 import { mapState } from 'vuex'
 import ListMixin from '@/mixin/list'
 import { businessgoodslist } from '@/api/businessman'
+import GoodPrice from '@/views/businessman/goodPrice'
 
 export default {
   mixins: [ListMixin],
+  components: {
+    GoodPrice
+  },
   data() {
     return {
       queryMes: {

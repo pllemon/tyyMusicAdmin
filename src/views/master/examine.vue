@@ -15,6 +15,9 @@
           @success="uploadSuccess"
         />
       </el-form-item>
+      <el-form-item label="师傅工号：" prop="sn"  v-show="form.status == '1'">
+        <el-input type="text" v-model="form.sn" />
+      </el-form-item>
       <el-form-item label="所属区域：" prop="areaCode" v-show="form.status == '1'">
         <el-cascader
           ref="areaCascader"
@@ -67,7 +70,8 @@ export default {
         user_id: '',
         imglist: '',
         reject_reason: '',
-        headerurl: ''
+        headerurl: '',
+        sn: ''
       },
       area: {
         code: ['440000', '440700', '440783'],
@@ -127,7 +131,7 @@ export default {
               areaCodeName: that.form.areaCodeName,
               user_id: that.form.user_id,
               craftsman_id: that.form.craftsman_id,
-              sn: '',
+              sn: that.form.sn,
               imglist: ''
             }
           } else {

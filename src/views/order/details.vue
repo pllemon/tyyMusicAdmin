@@ -5,7 +5,19 @@
         <p class="section-title small">订单时间线</p>
         <el-timeline style="margin-top:30px">
           <el-timeline-item :timestamp="message.info.create_time">用户发布需求</el-timeline-item>
-          <template v-if="message.info.status != 10 && message.info.status != 11 && message.info.status != 12">
+          <template v-if="message.info.status == 10">
+            <el-timeline-item :timestamp="message.info.examine_time">订单不成交</el-timeline-item>
+          </template>
+          <template v-else-if="message.info.status == 11">
+            <el-timeline-item :timestamp="message.info.cancel_time">用户取消订单</el-timeline-item>
+          </template>
+          <template v-else-if="message.info.status == 12">
+            <el-timeline-item :timestamp="message.info.cancel_time">超时未付款</el-timeline-item>
+          </template>
+          <template v-else-if="message.info.status == 14">
+            <el-timeline-item :timestamp="message.info.cancel_time">超时未审核</el-timeline-item>
+          </template>
+          <template v-else>
             <el-timeline-item v-if="message.info.status > 1" :timestamp="message.info.examine_time">店长审核通过</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 2" :timestamp="message.pay.pay_time">用户支付</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 3" :timestamp="message.info.release_time">后台发布订单</el-timeline-item>
@@ -15,15 +27,6 @@
             <el-timeline-item v-if="message.info.status > 6" :timestamp="message.info.user_confirm_time">用户验收</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 7" :timestamp="message.info.success_time">店长验收</el-timeline-item>
             <el-timeline-item v-if="message.info.status > 6 && message.comment.time" :timestamp="message.comment.time">用户评价</el-timeline-item>
-          </template>
-          <template v-if="message.info.status == 10">
-            <el-timeline-item :timestamp="message.info.examine_time">订单不成交</el-timeline-item>
-          </template>
-          <template v-if="message.info.status == 11">
-            <el-timeline-item :timestamp="message.info.cancel_time">用户取消订单</el-timeline-item>
-          </template>
-          <template v-if="message.info.status == 12">
-            <el-timeline-item :timestamp="message.info.cancel_time">超时未跟单</el-timeline-item>
           </template>
         </el-timeline>
       </div>

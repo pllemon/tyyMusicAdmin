@@ -38,7 +38,7 @@
           <el-form-item label="师傅手机" prop="cmphone">
             <el-input type="text" v-model="queryMes.cmphone" placeholder="请输入"/>
           </el-form-item>
-          <!-- <el-form-item label="师傅编号" prop="cmsn">
+          <!-- <el-form-item label="师傅工号" prop="cmsn">
             <el-input type="text" v-model="queryMes.cmsn" placeholder="请输入"/>
           </el-form-item> -->
           <el-form-item label="是否加急" prop="urgent">

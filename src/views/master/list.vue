@@ -15,10 +15,10 @@
               :picker-options="common.timePickerOptions()">
             </el-date-picker>
           </el-form-item> -->
-          <el-form-item label="师傅名" prop="name">
+          <el-form-item label="师傅姓名" prop="name">
             <el-input v-model="queryMes.name" placeholder="请输入" />
           </el-form-item>
-          <el-form-item label="师傅编号"  prop="sn">
+          <el-form-item label="师傅工号"  prop="sn">
             <el-input v-model="queryMes.sn" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="状态" prop="status">
@@ -57,8 +57,8 @@
           </el-table-column>
           <el-table-column label="工号" prop="sn" min-width="150"/>
           <el-table-column label="姓名" prop="name"/>
-          <el-table-column label="身份证" prop="sfz" width="180"/>
-          <el-table-column label="手机号" prop="phone" width="120"/>
+          <el-table-column label="身份证" prop="sfz" min-width="180"/>
+          <el-table-column label="手机号" prop="phone" min-width="120"/>
           <el-table-column label="入行年份" prop="enter_time" width="100"/>
           <el-table-column label="联系地址" prop="address" width="200"/>
           <el-table-column label="个人简介" prop="desc" min-width="150"/>
