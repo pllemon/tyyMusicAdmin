@@ -58,7 +58,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="当前积分:">
-                  {{ info.creattime }}
+                  {{ sumintegral }}
                 </el-form-item>
               </el-col>
             </el-row>
@@ -102,7 +102,8 @@ export default {
       loading: true,
       info: {},
       first_friend: {},
-      id: ''
+      id: '',
+      sumintegral: 0
     }
   },
   computed: {
@@ -118,6 +119,7 @@ export default {
     }).then(response => {
       that.info = response.data.userinfo
       that.first_friend = response.data.first_friend
+      that.sumintegral = response.data.sumintegral
       that.loading = false
     })
   },

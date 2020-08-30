@@ -188,6 +188,11 @@ const menuData = [
     icon: 'el-icon-setting',
     children: [
       {
+        id: '5-9',
+        title: '类目管理',
+        path: '/setting/account'
+      },
+      {
         id: '5-1',
         title: '广告管理',
         path: '/system/advert'

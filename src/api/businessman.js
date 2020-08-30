@@ -44,7 +44,7 @@ export function savebusinessstatus(data) {
 export function businessgoodslist(params) {
   return request({
     url: '/admin/businessgoodslist',
-    method: 'get',
+    method: 'post',
     params
   })
 }

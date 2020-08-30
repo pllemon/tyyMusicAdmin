@@ -1,8 +1,8 @@
 <template>
   <el-menu :default-active="activeIndex" mode="horizontal">
-    <el-menu-item index="0">
+    <!-- <el-menu-item index="0">
       <router-link class="menu-link" to="/"><i class="el-icon-data-analysis"></i>数据概述</router-link>
-    </el-menu-item>
+    </el-menu-item> -->
     <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.id">
       <template slot="title"><i :class="item.icon"></i>{{item.title}}</template> 
       <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.id">

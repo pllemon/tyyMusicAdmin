@@ -1,7 +1,7 @@
 <template>
   <div class="header flex-center-between">
     <!-- <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
-    <div style="font-size:22px;font-weight:500">管理平台</div>
+    <div style="font-size:22px;font-weight:500">多师傅管理平台</div>
     <div class="flex-center-start">
       <Menu />
     </div>

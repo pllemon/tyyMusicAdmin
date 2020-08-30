@@ -52,7 +52,7 @@
           <el-table-column label="联系方式" prop="phone" width="120" />
           <el-table-column label="店铺地址" prop="address" min-width="160" />
           <el-table-column label="加盟费用" min-width="100" prop="joininprice" />
-          <el-table-column label="商品数量" prop="" min-width="100" />
+          <!-- <el-table-column label="商品数量" prop="goodsnumber" min-width="100" /> -->
           <el-table-column label="状态" min-width="120">
             <template slot-scope="scope">
               {{ dict.businessStatus[scope.row.status] }}

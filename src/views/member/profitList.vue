@@ -12,7 +12,7 @@
       >
         <el-table-column label="序号" type="index" width="50" fixed/>
         <el-table-column label="佣金金额" prop="money"/>
-        <el-table-column label="下级用户" prop=""/>
+        <el-table-column label="下级用户" prop="xjusername"/>
         <el-table-column label="服务项目" prop="service_demand"/>
         <el-table-column label="记录时间" prop="time"/>
       </el-table>

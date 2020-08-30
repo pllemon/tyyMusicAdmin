@@ -4,8 +4,8 @@
       <!-- 搜索 -->
       <div class="search-form">
         <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-          <el-form-item label="店铺名" prop="name">
-            <el-input v-model="queryMes.name" placeholder="请输入" />
+          <el-form-item label="店铺名" prop="businessname">
+            <el-input v-model="queryMes.businessname" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="状态" prop="status">
             <el-select v-model="queryMes.status" placeholder="请选择">
@@ -44,7 +44,7 @@
           <el-table-column label="商品名称" prop="goods_name"/>
           <el-table-column label="价格" prop="price"/>
           <el-table-column label="加入费用" prop="uploadprice"/>
-          <el-table-column label="店铺名" prop=""/>
+          <el-table-column label="店铺名" prop="businessname"/>
           <el-table-column label="状态">
             <template slot-scope="scope">
               {{ goodsStatus[scope.row.status] }}

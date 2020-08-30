@@ -28,7 +28,7 @@
           </el-form-item>
         </el-form>
         <div class="other-action">
-          <el-button size="mini" type="primary" plain icon="el-icon-plus" round @click="common.loadComponent(vm, 1)">添加</el-button>
+          <el-button size="mini" type="primary" plain icon="el-icon-plus" round @click="common.loadComponent(vm, 1)" v-if="userInfo.username == 'dsf'">添加</el-button>
         </div>
       </div>
 
@@ -65,10 +65,10 @@
           <el-table-column label="创建时间" prop="create_time" />
           <el-table-column label="操作" width="200" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>
-              <el-button type="text" v-if="scope.row.status == 2" @click="updateRecord(scope.row.id, 1)">启用</el-button>
-              <el-button type="text" v-if="scope.row.status == 1" @click="updateRecord(scope.row.id, 2)">禁用</el-button>
-              <el-button type="text" @click="updateRecord(scope.row.id, 3)">删除</el-button>
+              <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)"  v-if="userInfo.username == 'dsf' && scope.row.username != 'dsf'">编辑</el-button>
+              <el-button type="text" v-if="scope.row.status == 2 && userInfo.username == 'dsf' && scope.row.username != 'dsf'" @click="updateRecord(scope.row.id, 1)">启用</el-button>
+              <el-button type="text" v-if="scope.row.status == 1 && userInfo.username == 'dsf' && scope.row.username != 'dsf'" @click="updateRecord(scope.row.id, 2)">禁用</el-button>
+              <el-button type="text" @click="updateRecord(scope.row.id, 3)"  v-if="userInfo.username == 'dsf' && scope.row.username != 'dsf'">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -141,7 +141,8 @@ export default {
   computed: {
     ...mapState({
       roleType: state => state.dict.roleType,
-      showType: state => state.dict.showType
+      showType: state => state.dict.showType,
+      userInfo: state => state.user.userInfo
     }),
     networkArr() {
       let networkObj = {}
