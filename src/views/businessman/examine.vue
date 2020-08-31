@@ -8,6 +8,13 @@
         </el-radio-group>
       </el-form-item>
       <template v-if="examineForm.status == '1'">
+        <el-form-item label="关联网点：" prop="network_id">
+          <el-select v-model="examineForm.network_id" placeholder="请选择" filterable clearable>
+            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+      </template>
+      <template v-if="examineForm.status == '1'">
         <el-form-item label="加盟金额：" prop="joininprice">
           <el-input-number v-model="examineForm.joininprice" :precision="2" :step="1"></el-input-number>
         </el-form-item>
@@ -47,12 +54,18 @@ export default {
         busines_id: '',
         status: '1',
         bhremark: '',
-        joininprice: 0
+        joininprice: 0,
+        network_id: ''
       },
       rules: {
         joininprice: [{ required: true, message: '请输入加盟金额', trigger: 'change' }],
-      }
+      },
+      networkList: []
     }
+  },
+
+  created() {
+    this.common.getAllNetwork(this)
   },
 
   methods: {

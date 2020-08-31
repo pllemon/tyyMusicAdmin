@@ -91,6 +91,7 @@ export default {
       }).then(response => {
         const { data } = response
         data.type = data.type.toString()
+        data.position = data.position.toString()
         data.banner_id = data.id
         this.file.url = this.common.ip + data.imgurl
         this.form = data

@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '多师傅管理平台',
+  title: '管理平台',
 
   /**
    * @type {boolean} true | false
