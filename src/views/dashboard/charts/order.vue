@@ -1,7 +1,7 @@
 <template>
   <div class="chart-content">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="24">
         <div ref="chart" style="width:100%;height:300px" />
         <div class="charts-select">
           <el-select v-model="network_id" placeholder="请选择" size="mini" style="width:150px" @change="getChartData()">
@@ -12,7 +12,7 @@
           </el-select>
         </div>
       </el-col>
-      <el-col :span="12"> 
+      <!-- <el-col :span="12"> 
         <ul class="order-ul">
           <li v-for="(item, index) in record" :key="index" @click="goList(item.status)">
             <div>
@@ -22,7 +22,7 @@
             <p class="name">{{item.name}}</p>
           </li>
         </ul>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
@@ -115,8 +115,15 @@ export default {
       this.chart = this.$echarts.init(this.$refs.chart)
       const option = {
         color: color,
+        legend: {
+          type: 'scroll',
+          orient: 'vertical',
+          right: 100,
+          top: 70,
+          bottom: 20
+        },
         title: [{
-          text: '线上订单统计',
+          text: '统计',
           subtext: '不同状态的数量统计',
           x: 'left'
         },

@@ -143,16 +143,16 @@ export const mainAdminRoutes = [
         meta: { title: '支出流水', menu: '4-3' }
       },
       {
-        path: 'pointsIncome',
-        name: 'PointsIncome',
-        component: () => import('@/views/finance/pointsIncome'),
-        meta: { title: '积分收入流水' }
+        path: 'networkMonthlyStatistics',
+        name: 'NetworkMonthlyStatistics',
+        component: () => import('@/views/finance/networkMonthlyStatistics'),
+        meta: { title: '网点月统计' }
       },
       {
-        path: 'pointsExpend',
-        name: 'PointsExpend',
-        component: () => import('@/views/finance/pointsExpend'),
-        meta: { title: '积分支出流水' }
+        path: 'masterMonthlyStatistics',
+        name: 'masterMonthlyStatistics',
+        component: () => import('@/views/finance/masterMonthlyStatistics'),
+        meta: { title: '师傅月统计' }
       }
     ]
   },

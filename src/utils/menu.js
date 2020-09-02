@@ -179,6 +179,16 @@ const menuData = [
         id: '4-3',
         title: '支出流水',
         path: '/finance/expend'
+      },
+      {
+        id: '4-6',
+        title: '网点月统计',
+        path: '/finance/networkMonthlyStatistics'
+      },
+      {
+        id: '4-7',
+        title: '师傅月统计',
+        path: '/finance/masterMonthlyStatistics'
       }
     ]
   },
