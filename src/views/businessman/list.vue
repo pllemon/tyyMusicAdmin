@@ -7,6 +7,11 @@
           <el-form-item label="店铺名" prop="name">
             <el-input v-model="queryMes.name" placeholder="请输入" />
           </el-form-item>
+          <el-form-item label="服务网点" prop="network_id" v-if="!userInfo.network_id">
+            <el-select v-model="queryMes.network_id">
+              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
           <el-form-item label="联系方式" prop="phone">
             <el-input v-model="queryMes.phone" placeholder="请输入" />
           </el-form-item>
@@ -20,7 +25,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="search()">搜索</el-button>
-            <el-button @click="timeRange=[];resetSearch()">重置</el-button>
+            <el-button @click="resetSearch()">重置</el-button>
           </el-form-item>
         </el-form>
         <div class="other-action">
@@ -80,8 +85,8 @@
     <!-- 导出 -->
     <form ref="exportForm" action="/admin/businesslist" method="post" style="display:none">
       <input name="model" value="exportToExcel" />
-      <input v-if="this.timeRange" name="starttime" :value="this.timeRange[0]" />
-      <input v-if="this.timeRange" name="endtime" :value="this.timeRange[1]" />
+      <input v-if="this.queryMes.start_time" name="start_time" :value="this.queryMes.start_time" />
+      <input v-if="this.queryMes.end_time" name="end_time" :value="this.queryMes.end_time" />
       <div></div>
     </form>
   </div>
@@ -110,13 +115,12 @@ export default {
         phone: '',
         address: '',
         status: '',
-        starttime: '',
-        endtime: '',
         district: '',
         city: '',
         province: '',
+        network_id: ''
       },
-      timeRange: [],
+      networkList: [],
 
       api: {
         getList,
@@ -125,18 +129,8 @@ export default {
     }
   },
   created() {
+    this.common.getAllNetwork(this)
     this.againFetch()
-  },
-  methods: {
-    beforeFetch() {
-      if (this.timeRange.length) {
-        this.queryMes.starttime = this.timeRange[0]
-        this.queryMes.endtime = this.timeRange[1]
-      } else {
-        this.queryMes.starttime = ''
-        this.queryMes.endtime = ''
-      }
-    }
   }
 }
 </script>

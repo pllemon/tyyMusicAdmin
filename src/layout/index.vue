@@ -3,7 +3,7 @@
     <Header />
     <div class="sub-header">
       <p class="sub-title">{{title}}</p>
-      <Search />
+      <!-- <Search /> -->
     </div>
     <div class="flex1">
       <transition name="fade-transform" mode="out-in">
@@ -59,7 +59,7 @@ export default {
 }
 .sub-header{
   background: #fff;
-  padding: 0 8px;
+  padding: 0 25px;
   height: 45px;
   align-items: center;
   display: flex;

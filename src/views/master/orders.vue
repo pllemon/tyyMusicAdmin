@@ -46,8 +46,7 @@ export default {
       listLoading: true,
 
       total: 0,
-      queryMes: {},
-      timeRange: []
+      queryMes: {}
     }
   },
   created() {

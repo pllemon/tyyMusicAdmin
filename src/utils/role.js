@@ -146,13 +146,13 @@ export const mainAdminRoutes = [
         path: 'networkMonthlyStatistics',
         name: 'NetworkMonthlyStatistics',
         component: () => import('@/views/finance/networkMonthlyStatistics'),
-        meta: { title: '网点月统计' }
+        meta: { title: '网点月统计', menu: '4-6' }
       },
       {
         path: 'masterMonthlyStatistics',
         name: 'masterMonthlyStatistics',
         component: () => import('@/views/finance/masterMonthlyStatistics'),
-        meta: { title: '师傅月统计' }
+        meta: { title: '师傅月统计', menu: '4-7' }
       }
     ]
   },

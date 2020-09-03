@@ -103,13 +103,23 @@
           <el-form label-width="100px">
             <el-row>
               <el-col :span="8" v-show="message.pay.total_price > 0">
-                <el-form-item label="订单金额:">
-                  {{ message.pay.total_price }} 元
+                <el-form-item label="订单报价:">
+                  <span class="bold">{{ (message.pay.total_price - message.pay.add_money) | normNumber }} 元</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8" v-show="message.pay.total_price > 0">
+                <el-form-item label="增项费用:">
+                  <span class="bold">{{ message.pay.add_money || 0}} 元</span>
                 </el-form-item>
               </el-col>
               <el-col :span="8" v-show="message.pay.craftsman_price > 0">
-                <el-form-item label="师傅佣金:">
-                  {{ message.pay.craftsman_price }} 元
+                <el-form-item label="施工报价:">
+                  <span class="bold">{{ message.pay.craftsman_price }} 元</span>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24" v-show="message.pay.add_remark">
+                <el-form-item label="增项说明:">
+                  {{ message.pay.add_remark }}
                 </el-form-item>
               </el-col>
             </el-row>
@@ -138,9 +148,16 @@
                   </el-form-item>
                 </el-col>
               </template>
-              <el-col :span="24">
+            </el-row>
+            <el-row>
+              <el-col :span="8">
                 <el-form-item label="报价单:">
                   <gd-image :src="message.pay.bjimg" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="施工单:">
+                  <gd-image :src="message.pay.add_bjimg" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="message.info.status > 3 && message.info.status <= 8">

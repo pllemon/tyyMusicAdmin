@@ -175,7 +175,7 @@ export default {
   background: #4279de;
   color: #fff;
   flex-shrink: 0;
-  padding: 0 20px;
+  padding: 0 25px;
   .title{
     font-size: 28px;
     margin-right: 10px;

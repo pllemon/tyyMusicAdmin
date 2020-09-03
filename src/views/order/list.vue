@@ -7,6 +7,11 @@
           <el-form-item label="订单编号" prop="order_sn">
             <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
           </el-form-item>
+          <el-form-item label="服务网点" prop="network_id" v-if="!userInfo.network_id">
+            <el-select v-model="queryMes.network_id">
+              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
           <!-- <el-form-item label="订单状态" prop="status">
             <el-select v-model="queryMes.status" placeholder="请选择" clearable>
               <el-option
@@ -17,7 +22,7 @@
               </el-option>
             </el-select>
           </el-form-item> -->
-          <el-form-item label="师傅佣金状态" prop="cashout_status" v-show="queryMes.status == 8">
+          <!-- <el-form-item label="师傅佣金状态" prop="cashout_status" v-show="queryMes.status == 8">
             <el-select v-model="queryMes.cashout_status" placeholder="请选择" clearable>
               <el-option
                 v-for="(item, index) in dict.cashoutStatus"
@@ -25,11 +30,6 @@
                 :label="item"
                 :value="index">
               </el-option>
-            </el-select>
-          </el-form-item>
-          <!-- <el-form-item label="所属网点" prop="network_id" v-if="!userInfo.network_id">
-            <el-select v-model="queryMes.network_id">
-              <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item> -->
           <el-form-item label="用户手机" prop="phone">
@@ -174,6 +174,7 @@ export default {
     }
   },
   created() {
+    this.common.getAllNetwork(this)
     this.againFetch()
   },
   methods: {
