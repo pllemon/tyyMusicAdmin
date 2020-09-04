@@ -15,3 +15,12 @@ export function expendituretransaction(data) {
     data
   })
 }
+
+
+export function networktj(data) {
+  return request({
+    url: '/admin/networktj',
+    method: 'post',
+    data
+  })
+}

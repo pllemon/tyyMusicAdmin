@@ -63,8 +63,12 @@ export default {
             }
             this.listLoading = true
             this.api.getList(this.queryMes).then(({ data }) => {
-                this.list = data.data
-                this.total = data.total
+                if (this.fetchCallback) {
+                    this.fetchCallback(data)
+                } else {
+                    this.list = data.data
+                    this.total = data.total
+                }
                 this.$nextTick(() => {
                     this.$refs.table.bodyWrapper.scrollTop = 0
                 })

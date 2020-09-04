@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :modal-append-to-body="false" title="审核佣金" :visible="true" width="600px" :before-close="handleClose" :close-on-click-modal="false">
+  <el-dialog :modal-append-to-body="false" title="审核" :visible="true" width="600px" :before-close="handleClose" :close-on-click-modal="false">
     <el-form ref="form" :model="form" label-width="140px" style="margin-right: 50px">
       <el-form-item label="审核结果：" required>
         <el-radio-group v-model="form.status">

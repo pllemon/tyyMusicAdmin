@@ -105,14 +105,14 @@ export default {
           that.$refs.audio.play()
         } else if (res.type == 'crafSetTlement') {
           that.showNotify({
-            title: '师傅申请提现佣金',
+            title: '师傅申请提现',
             message: `${message.name}申请提现${message.money}元，请及时处理！`,
             icon: 'el-icon-s-finance'
           })
           that.$refs.audio.play()
         }  else if (res.type == 'userSetTlement') {
           that.showNotify({
-            title: '用户申请提现收益',
+            title: '用户申请提现',
             message: `${message.name}申请提现${message.money}元，请及时处理！`,
             icon: 'el-icon-s-finance'
           })

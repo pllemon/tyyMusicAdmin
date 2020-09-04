@@ -74,21 +74,21 @@ const menuData = [
       //   title: '完工申款单',
       //   path: '/order/list?status=8&cashout_status=3&menu=1-30&section=1'
       // },
-      {
-        id: '1-31',
-        title: '一期完成单', 
-        path: '/order/list?status=8&cashout_status=1&menu=1-31&section=1'
-      },
+      // {
+      //   id: '1-31',
+      //   title: '一期完成单', 
+      //   path: '/order/list?status=8&cashout_status=1&menu=1-31&section=1'
+      // },
       // {
       //   id: '1-32',
       //   title: '申请尾款单',
       //   path: '/order/list?status=8&cashout_status=4&menu=1-32&section=1'
       // },
-      {
-        id: '1-33',
-        title: '二期完成单',
-        path: '/order/list?status=8&cashout_status=2&menu=1-33&section=1'
-      },
+      // {
+      //   id: '1-33',
+      //   title: '二期完成单',
+      //   path: '/order/list?status=8&cashout_status=2&menu=1-33&section=1'
+      // },
       {
         id: '1-20',
         title: '系统公告',
