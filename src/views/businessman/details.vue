@@ -11,6 +11,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
+                <el-form-item label="关联网点:">
+                  {{ message.network_name }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
                 <el-form-item label="联系方式:">
                   {{ message.phone }}
                 </el-form-item>

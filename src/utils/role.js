@@ -150,7 +150,7 @@ export const mainAdminRoutes = [
       },
       {
         path: 'masterMonthlyStatistics',
-        name: 'masterMonthlyStatistics',
+        name: 'MasterMonthlyStatistics',
         component: () => import('@/views/finance/masterMonthlyStatistics'),
         meta: { title: '师傅月统计', menu: '4-7' }
       }
@@ -180,6 +180,12 @@ export const mainAdminRoutes = [
     name: 'System',
     meta: { title: '小程序设置', icon: 'setting' },
     children: [
+      {
+        path: 'category',
+        name: 'Category',
+        component: () => import('@/views/system/category/list'),
+        meta: { title: '类目管理', menu: '5-9' }
+      },
       {
         path: 'advert',
         name: 'Advert',

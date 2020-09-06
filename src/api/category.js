@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: `/admin/bannerlist?page=${data.page}&limit=${data.limit}`,
+    url: `/admin/servertypelist?page=${data.page}&limit=${data.limit}`,
     method: 'post',
     data
   })
@@ -17,9 +17,9 @@ export function getDetails(params) {
 }
 
 export function updateRecord(data, type) {
-  let url = '/admin/addbanner'
+  let url = '/admin/addservertype'
   if (type == 2) {
-    url = '/admin/updatebannerinfo'
+    url = '/admin/saveservertype'
   }
   return request({
     url: url,
@@ -28,9 +28,11 @@ export function updateRecord(data, type) {
   })
 }
 
-export function updatebannerstatus(data) {
+
+
+export function updateServertype(data) {
   return request({
-    url: '/admin/updatebannerstatus',
+    url: '/admin/saveservertype',
     method: 'post',
     data
   })

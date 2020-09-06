@@ -157,7 +157,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="施工单:">
-                  <gd-image :src="message.pay.add_bjimg" />
+                  <gd-image :src="message.info.success_img" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="message.info.status > 3 && message.info.status <= 8">

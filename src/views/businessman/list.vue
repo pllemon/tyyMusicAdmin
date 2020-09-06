@@ -4,13 +4,13 @@
       <!-- 搜索 -->
       <div class="search-form">
         <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-          <el-form-item label="店铺名" prop="name">
-            <el-input v-model="queryMes.name" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="服务网点" prop="network_id" v-if="!userInfo.network_id">
+          <el-form-item label="关联网点" prop="network_id" v-if="!userInfo.network_id">
             <el-select v-model="queryMes.network_id">
               <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
+          </el-form-item>
+          <el-form-item label="店铺名" prop="name">
+            <el-input v-model="queryMes.name" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="联系方式" prop="phone">
             <el-input v-model="queryMes.phone" placeholder="请输入" />
@@ -56,17 +56,16 @@
           <el-table-column label="店铺名" prop="name" width="120" />
           <el-table-column label="联系方式" prop="phone" width="120" />
           <el-table-column label="店铺地址" prop="address" min-width="160" />
-          <el-table-column label="宣传链接" prop=""/>
           <el-table-column label="加盟费用" min-width="100" prop="joininprice" />
-          <el-table-column label="关联网点" prop=""/>
-          <el-table-column label="商品数量" prop="" min-width="100" />
+          <el-table-column label="关联网点" min-width="120" prop="network_name"/>
+          <el-table-column label="商品数量" prop="goodsnumber" min-width="100" />
           <el-table-column label="状态" min-width="120">
             <template slot-scope="scope">
               {{ dict.businessStatus[scope.row.status] }}
             </template>
           </el-table-column>
           <el-table-column label="申请时间" min-width="160" prop="creattime" />
-          <el-table-column label="操作" width="200" fixed="right">
+          <el-table-column label="操作" width="160" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="loadComponent('Details', scope.row.id)">详情</el-button>
               <el-button type="text" v-if="scope.row.status == 2" @click="loadComponent('Examine', scope.row.id)">审核</el-button>
