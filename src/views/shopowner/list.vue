@@ -32,7 +32,7 @@
               {{scope.row.network_name}}
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" width="200" prop="time" />
+          <!-- <el-table-column label="创建时间" width="200" prop="time" /> -->
           <el-table-column label="操作" width="150" fixed="right">
             <template slot-scope="scope">
               <el-button type="text" @click="common.loadComponent(vm, 1, scope.row.id)">编辑</el-button>

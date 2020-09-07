@@ -3,13 +3,13 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="统计方式" prop="type">
+        <!-- <el-form-item label="统计方式" prop="type">
           <el-select v-model="queryMes.type" placeholder="请选择" @change="changeType">
             <el-option label="单个网点" value="0" />
             <el-option label="单个月份" value="1" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="月份" prop="time" v-if="queryMes.type == 1">
+        </el-form-item> -->
+        <!-- <el-form-item label="月份" prop="time" v-if="queryMes.type == 1">
           <el-date-picker 
             v-model="queryMes.time" 
             type="month" 
@@ -17,7 +17,7 @@
             value-format="yyyy-MM-01" 
             @change="search()"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="网点" prop="network_id" v-if="!userInfo.network_id && queryMes.type == 0">
           <el-select v-model="queryMes.network_id"  @change="search()">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />

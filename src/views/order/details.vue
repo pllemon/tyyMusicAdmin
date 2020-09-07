@@ -130,6 +130,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
+                <el-form-item label="审核结果:">
+                  {{ message.pay.total_price > 0 ? '成单' : '不成单'}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
                 <el-form-item label="审核备注:">
                   {{ message.info.htremark || '无'}}
                 </el-form-item>
@@ -155,7 +160,7 @@
                   <gd-image :src="message.pay.bjimg" />
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" v-if="message.info.success_img">
                 <el-form-item label="施工单:">
                   <gd-image :src="message.info.success_img" />
                 </el-form-item>

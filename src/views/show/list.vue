@@ -3,9 +3,9 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="标题" prop="title">
+        <!-- <el-form-item label="标题" prop="title">
           <el-input v-model="queryMes.title" placeholder="请输入" />
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="记录来源" prop="type">
           <el-select v-model="queryMes.type" placeholder="请选择">
               <el-option v-for="(item, index) in originType" :key="index" :label="item" :value="index" />

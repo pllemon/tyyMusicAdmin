@@ -43,8 +43,8 @@
               {{scope.row.usertpyename}}
             </template>
           </el-table-column>
-          <el-table-column label="订单编号" prop="order_sn" min-width="120" />
-          <el-table-column label="所属网点" prop="network_id" />
+          <!-- <el-table-column label="订单编号" prop="order_sn" min-width="120" /> -->
+          <!-- <el-table-column label="所属网点" prop="network_name" /> -->
         </el-table>
       </div>
       <gd-pagination :total="total" :current-page="queryMes.page" :page-size="queryMes.limit" />

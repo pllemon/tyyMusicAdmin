@@ -9,6 +9,9 @@
         <el-form-item label="工号" prop="sn">
           <el-input v-model="queryMes.sn" placeholder="请输入" />
         </el-form-item>
+        <el-form-item label="收款账号" prop="pay_name">
+          <el-input v-model="queryMes.pay_name" placeholder="请输入" />
+        </el-form-item>
         <el-form-item label="申请状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
             <el-option
@@ -114,7 +117,7 @@ export default {
         limit: 20,
         status: '',
         name: '',
-        sn: '',
+        pay_name: '',
         number: ''
       },
       api: {

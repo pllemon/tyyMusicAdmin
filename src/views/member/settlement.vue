@@ -3,11 +3,14 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="queryMes.name" placeholder="请输入" />
-        </el-form-item>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="queryMes.phone" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="收款人" prop="pay_username">
+          <el-input v-model="queryMes.pay_username" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="收款账号" prop="pay_name">
+          <el-input v-model="queryMes.pay_name" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="申请状态" prop="status">
           <el-select v-model="queryMes.status" placeholder="请选择">
@@ -95,9 +98,9 @@ export default {
     return {
       queryMes: {
         status: '',
-        name: '',
-        sn: '',
-        number: ''
+        pay_username: '',
+        phone: '',
+        pay_name: ''
       },
       api: {
         getList: userwithdrawallist

@@ -190,11 +190,11 @@ const menuData = [
         title: '网点月统计',
         path: '/finance/networkMonthlyStatistics'
       },
-      {
-        id: '4-7',
-        title: '师傅月统计',
-        path: '/finance/masterMonthlyStatistics'
-      }
+      // {
+      //   id: '4-7',
+      //   title: '师傅月统计',
+      //   path: '/finance/masterMonthlyStatistics'
+      // }
     ]
   },
   {
