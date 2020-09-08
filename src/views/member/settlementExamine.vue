@@ -7,9 +7,9 @@
           <el-radio label="3">驳回</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="流水号：">
+      <!-- <el-form-item label="流水号：">
         <el-input placeholder="请输入" v-model="form.pay_order_sn" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="备注：" prop="shremark">
         <el-input
           type="textarea"

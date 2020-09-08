@@ -3,9 +3,9 @@
     <div class="table-content">
       <!-- 搜索 -->
       <el-form :inline="true" :model="queryMes" size="mini" class="search-form" ref="searchForm">
-        <el-form-item label="流水号" prop="tran_id">
+        <!-- <el-form-item label="流水号" prop="tran_id">
           <el-input type="text" v-model="queryMes.tran_id" placeholder="请输入"/>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="收入类型" prop="logtype">
           <el-select v-model="queryMes.logtype" placeholder="请选择">
             <el-option v-for="(item, index) in expendType" :key="index" :label="item" :value="index" />
@@ -30,8 +30,8 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="流水号"  min-width="140" prop="pay_order_sn" />
-          <el-table-column label="金额" prop="money"/>  
+          <!-- <el-table-column label="流水号"  min-width="140" prop="pay_order_sn" /> -->
+          <el-table-column label="支出金额" prop="money"/>  
           <el-table-column label="支出类型" min-width="120">
             <template slot-scope="scope">
               {{dict.expendType[scope.row.logtype]}}

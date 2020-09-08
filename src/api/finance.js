@@ -24,3 +24,11 @@ export function networktj(data) {
     data
   })
 }
+
+export function craftsmantj(data) {
+  return request({
+    url: '/admin/craftsmantj',
+    method: 'post',
+    data
+  })
+}

@@ -41,11 +41,11 @@ export function savebusinessstatus(data) {
 }
 
 
-export function businessgoodslist(params) {
+export function businessgoodslist(data) {
   return request({
     url: '/admin/businessgoodslist',
     method: 'post',
-    params
+    data
   })
 }
 
