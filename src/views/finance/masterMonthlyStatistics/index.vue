@@ -18,13 +18,13 @@
             @change="search()"
           />
         </el-form-item> -->
-        <el-form-item label="网点" prop="network_id" v-if="!userInfo.network_id && queryMes.type == 0">
-          <el-select v-model="queryMes.network_id"  @change="search()">
-            <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
+        <el-form-item label="师傅" prop="craftsman_id">
+          <el-select filterable v-model="queryMes.craftsman_id" :loading="sloading" placeholder="输入师傅名字进行搜索" @change="search()">
+            <el-option v-for="(item, index) in masterList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button type="primary" @click="search()">刷新</el-button>
           <!-- <el-button @click="resetSearch()">重置</el-button> -->
         </el-form-item>
       </el-form>
@@ -42,9 +42,7 @@
           height="100%"
         >
           <el-table-column label="序号" type="index" width="50" fixed/>
-          <el-table-column label="月份" prop="time" min-width="200"/> 
-          <el-table-column label="不成交单" min-width="180" prop="bcdnum" />
-          <el-table-column label="已成交单" min-width="180" prop="cdnum" />
+          <el-table-column label="月份" prop="time" min-width="200"/>
           <el-table-column label="一期完成单" min-width="180" prop="yqnum" />
           <el-table-column label="二期完成单" min-width="180" prop="eqnum" />
         </el-table>
@@ -60,6 +58,7 @@
 <script>
 import ListMixin from '@/mixin/list'
 import { craftsmantj } from '@/api/finance'
+import { getList } from '@/api/master'
 
 export default {
   mixins: [ListMixin],
@@ -68,23 +67,31 @@ export default {
       queryMes: {
         page: 1,
         limit: 20,
-        craftsman_id: '1',
+        craftsman_id: '',
       },
       networkList: [],
       listLoading: false,
       api: {
         getList: craftsmantj
       },
+
+      masterList: []
     }
   },
   created() {
     let that = this
-    this.common.getAllNetwork(this, function() {
-      // that.queryMes.network_id = that.networkList[0].id
-      that.fetchData()
-    })
+    that.getMasterList()
   },
   methods: {
+    getMasterList() {
+        getList({
+          page: 1,
+          limit: 2000
+        }).then(res => {
+          this.masterList = res.data.data
+        })
+    },
+
     changeType(e) {
       if (e == 1) {
         this.queryMes.network_id = ''

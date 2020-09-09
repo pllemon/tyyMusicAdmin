@@ -19,12 +19,12 @@
           />
         </el-form-item> -->
         <el-form-item label="网点" prop="network_id" v-if="!userInfo.network_id && queryMes.type == 0">
-          <el-select v-model="queryMes.network_id"  @change="search()">
+          <el-select filterable v-model="queryMes.network_id" placeholder="输入网点名称进行搜索" @change="search()">
             <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button type="primary" @click="search()">刷新</el-button>
           <!-- <el-button @click="resetSearch()">重置</el-button> -->
         </el-form-item>
       </el-form>
@@ -82,8 +82,8 @@ export default {
   created() {
     let that = this
     this.common.getAllNetwork(this, function() {
-      that.queryMes.network_id = that.networkList[0].id
-      that.fetchData()
+      // that.queryMes.network_id = that.networkList[0].id
+      // that.fetchData()
     })
   },
   methods: {

@@ -7,11 +7,11 @@
           <el-form-item label="店铺名" prop="businessname">
             <el-input v-model="queryMes.businessname" placeholder="请输入" />
           </el-form-item>
-          <el-form-item label="状态" prop="status">
+          <!-- <el-form-item label="状态" prop="status">
             <el-select v-model="queryMes.status" placeholder="请选择">
               <el-option v-for="(item, index) in goodsStatus" :key="index" :label="item" :value="index" />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
             <el-button type="primary" @click="search()">搜索</el-button>
             <el-button @click="timeRange=[];resetSearch()">重置</el-button>
@@ -77,7 +77,9 @@ export default {
     return {
       queryMes: {
         page: 1,
-        limit: 20
+        limit: 20,
+        status: '',
+        businessname:''
       },
 
       api: {
