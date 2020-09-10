@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <img src='../../assets/image/bg2.png'/>
+    <img class="ch" src='../../assets/image/bg2.png'/>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="title-container">
         <h3 class="title">多师傅管理平台</h3>
@@ -175,16 +175,19 @@ $light_gray:#eee;
   align-items: center;
   justify-content: center;
   background: -webkit-linear-gradient(45deg, #4279de, #1396fa);
-
+  .ch{
+    max-width: 50%;
+  }
   .login-form {
     position: relative;
     width: 420px;
-    max-width: 100%;
+    max-width: 90%;
     padding: 50px;
     overflow: auto;
     background: #fff;
     border-radius: 10px;
-    margin-left: 140px;
+    margin-left: 8%;
+    flex-shrink: 0;
   }
 
   .tips {
@@ -246,5 +249,39 @@ $light_gray:#eee;
   background: -webkit-linear-gradient(right, #4279de, #1396fa);
   height: 50px;
   border: none;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .login-container{
+    flex-direction: column;
+    .ch{
+      max-width: 400px;
+      width: 100%;
+    }
+    .login-form{
+      margin-left: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .login-container{
+    .ch{
+      max-width: 300px;
+    }
+    .login-form{
+      margin-bottom: 20px;
+      padding: 30px;
+    }
+    .el-button{
+      margin-top: 30px;
+    }
+    .title-container {
+      .title{
+        margin-bottom: 30px;
+      }
+    }
+  }
 }
 </style>
