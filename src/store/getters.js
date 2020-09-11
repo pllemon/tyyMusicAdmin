@@ -6,6 +6,7 @@ const getters = {
   userInfo: state => state.user.userInfo,
   globalSearch: state => state.user.globalSearch,
   permission_routes: state => state.permission.routes,
-  newList: state => state.news.list
+  newList: state => state.news.list,
+  isRing: state => state.news.isRing,
 }
 export default getters

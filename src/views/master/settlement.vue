@@ -84,7 +84,6 @@
           <el-table-column label="审核备注" min-width="100" prop="shremark" />
           <el-table-column label="操作" width="120" fixed="right">
             <template slot-scope="scope">
-              <el-button type="text" v-if="scope.row.status == 2" @click="surePay(scope.row.id, 1)">发放</el-button>
               <el-button type="text" v-if="scope.row.status == 0" @click="loadComponent('SettlementExamine', scope.row)">审核</el-button>
             </template>
           </el-table-column>
@@ -129,10 +128,6 @@ export default {
     this.againFetch()
   },
   methods: {
-    surePay(id, status) {
-      
-    },
-
     examine() {
       craftsmansettlement({
         slid: '',

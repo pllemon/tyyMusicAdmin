@@ -4,7 +4,10 @@
       <router-link class="menu-link" to="/"><i class="el-icon-data-analysis"></i>数据概述</router-link>
     </el-menu-item> -->
     <el-submenu v-for="(item, index) in menuData" :key="index" :index="item.id">
-      <template slot="title"><i :class="item.icon"></i>{{item.title}}</template> 
+      <template slot="title">
+        <i class="submenu-icon" :class="item.icon"></i>
+        <span class="submenu-title">{{item.title}}</span>
+      </template> 
       <el-menu-item v-for="(item2, index2) in item.children" :key="index2" :index="item2.id">
         <router-link class="menu-link" :to="item2.path">{{item2.title}}</router-link>
       </el-menu-item>

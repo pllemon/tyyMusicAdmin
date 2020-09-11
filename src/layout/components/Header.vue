@@ -1,7 +1,7 @@
 <template>
   <div class="header flex-center-between">
     <!-- <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
-    <div style="font-size:22px;font-weight:500">多师傅管理平台</div>
+    <div class="system-title" style="font-size:22px;font-weight:500">多师傅管理平台</div>
     <div class="flex-center-start">
       <Menu />
     </div>
@@ -17,11 +17,11 @@
           <el-dropdown-item command="2">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <!-- <p @click="showNews()" style="padding: 0 20px;cursor:pointer" v-show="newsLength">
+      <p @click="showNews()" style="padding: 0 20px;cursor:pointer" v-show="newsLength">
         <el-badge :value="newsLength" class="item">
           <i class="el-icon-bell animated swing infinite" style="font-size:18px;display:block;position:relative;top:-1px" />
         </el-badge>
-      </p> -->
+      </p>
     </div>
 
      <!-- 全局消息弹窗 -->
@@ -34,56 +34,67 @@
       <ul class="news-list">
         <li @click="goOrder('makeOrder', 1)" class="flex" v-if="newList.makeOrder && newList.makeOrder.length">
           <el-badge :value="newList.makeOrder.length" class="item">
-            <svg-icon icon-class="affiliations_li" />
+            <i class="task-icon el-icon-s-claim" />
           </el-badge>
           <div class="news-mes">
-            <p class="news-title">叮叮叮~来新订单啦~</p>
+            <p class="news-title">新订单</p>
             <p class="news-dec" v-for="(item,index) in newList.makeOrder" :key="index">
-              用户 {{item.name}}（{{item.phone}}）下了个新订单，请及时处理！
+              <span class="time">{{item.addTime}}</span> 用户 {{item.name}}（{{item.phone}}）下了个新订单，请及时处理！
             </p>
           </div>
         </li>
         <li @click="goOrder('payEarnest', 3)" class="flex" v-if="newList.payEarnest && newList.payEarnest.length">
           <el-badge :value="newList.payEarnest.length" class="item">
-            <svg-icon icon-class="coinpurse_line" />
+            <i class="task-icon el-icon-s-finance" />
           </el-badge>
           <div class="news-mes">
-            <p class="news-title">用户已支付定金~</p>
+            <p class="news-title">用户已支付</p>
             <p class="news-dec" v-for="(item,index) in newList.payEarnest" :key="index">
-              订单编号 {{item.orderSn}} ，用户已支付定金，赶紧为TA发布订单吧！
-            </p>
-          </div>
-        </li>
-        <li @click="goOrder('payTail', 8)" class="flex" v-if="newList.payTail && newList.payTail.length">
-          <el-badge :value="newList.payTail.length" class="item">
-            <svg-icon icon-class="attestation" />
-          </el-badge>
-          <div class="news-mes">
-            <p class="news-title">用户已支付尾款~</p>
-            <p class="news-dec" v-for="(item,index) in newList.payTail" :key="index">
-              订单编号 {{item.orderSn}} ，用户已支付尾款，订单已完成！
+              <span class="time">{{item.addTime}}</span> 订单编号 {{item.orderSn}}，用户已支付，请及时处理！,
             </p>
           </div>
         </li>
         <li @click="goMaster()" class="flex" v-if="newList.newMaster && newList.newMaster.length">
           <el-badge :value="newList.newMaster.length" class="item">
-            <svg-icon icon-class="namecard" />
+            <i class="task-icon el-icon-user-solid" />
           </el-badge>
           <div class="news-mes">
-            <p class="news-title">有新师傅申请加入啦~</p>
+            <p class="news-title">师傅申请</p>
             <p class="news-dec" v-for="(item,index) in newList.newMaster" :key="index">
-              用户 {{item.name}}（{{item.phone}}）申请成为师傅，赶紧处理吧！
+              <span class="time">{{item.addTime}}</span> 用户 {{item.name}}（{{item.phone}}）申请成为师傅，请及时处理！
             </p>
           </div>
         </li>
         <li @click="goBusinessman()" class="flex" v-if="newList.newBusiness && newList.newBusiness.length">
           <el-badge :value="newList.newBusiness.length" class="item">
-            <svg-icon icon-class="boss" />
+            <i class="task-icon el-icon-s-custom" />
           </el-badge>
           <div class="news-mes">
-            <p class="news-title">有新商家申请入驻啦~</p>
+            <p class="news-title">商家申请</p>
             <p class="news-dec" v-for="(item,index) in newList.newBusiness" :key="index">
-              用户 {{item.name}}（{{item.phone}}）申请成为商家，赶紧处理吧！
+              <span class="time">{{item.addTime}}</span> 用户 {{item.name}}（{{item.phone}}）申请成为商家，请及时处理！
+            </p>
+          </div>
+        </li>
+        <li @click="goMasterApply()" class="flex" v-if="newList.crafSetTlement && newList.crafSetTlement.length">
+          <el-badge :value="newList.crafSetTlement.length" class="item">
+            <i class="task-icon el-icon-s-finance" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">师傅申请提现</p>
+            <p class="news-dec" v-for="(item,index) in newList.crafSetTlement" :key="index">
+              <span class="time">{{item.addTime}}</span> {{item.name}}申请提现{{item.money}}元，请及时处理！
+            </p>
+          </div>
+        </li>
+        <li @click="goMemberApply()" class="flex" v-if="newList.userSetTlement && newList.userSetTlement.length">
+          <el-badge :value="newList.userSetTlement.length" class="item">
+            <i class="task-icon el-icon-s-finance" />
+          </el-badge>
+          <div class="news-mes">
+            <p class="news-title">用户申请提现</p>
+            <p class="news-dec" v-for="(item,index) in newList.userSetTlement" :key="index">
+              <span class="time">{{item.addTime}}</span> {{item.name}}申请提现{{item.money}}元，请及时处理！
             </p>
           </div>
         </li>
@@ -125,21 +136,38 @@ export default {
       return newsSum
     }
   },
+  create() {
+    console.log(this.newList)
+  },
   methods: {
     goOrder(type, status) {
       this.$store.commit('news/REMOVE_NEWS', type)
       this.showNewsDialog = false
-      this.$router.push('/order/list?status=' + status)
+      if (status == 1) {
+        this.$router.push('/order/list?status=1&menu=1-1&section=1&currTime' + new Date().getTime())
+      } else if (status == 3) {
+        this.$router.push('/order/list?status=3&menu=1-3&section=1&currTime' + new Date().getTime())
+      }
     },
     goMaster() {
       this.$store.commit('news/REMOVE_NEWS', 'newMaster')
       this.showNewsDialog = false
-      this.$router.push('/master/list?status=1')
+      this.$router.push('/master/list?currTime' + new Date().getTime())
     },
-    goBusinessman(type) {
+    goBusinessman() {
       this.$store.commit('news/REMOVE_NEWS', 'newBusiness')
       this.showNewsDialog = false
-      this.$router.push('/businessman/list?status=1')
+      this.$router.push('/businessman/list?currTime' + new Date().getTime())
+    },
+    goMasterApply() {
+      this.$store.commit('news/REMOVE_NEWS', 'crafSetTlement')
+      this.showNewsDialog = false
+      this.$router.push('/master/settlement?number=1&menu=4-1&currTime' + new Date().getTime())
+    },
+    goMemberApply() {
+      this.$store.commit('news/REMOVE_NEWS', 'userSetTlement')
+      this.showNewsDialog = false
+      this.$router.push('/member/settlement?currTime' + new Date().getTime())
     },
 
     showNews() {
@@ -193,6 +221,20 @@ export default {
   font-size: 14px !important;
 }
 
+
+.task-icon {
+  font-size: 22px;
+  &.el-icon-s-custom,
+  &.el-icon-user-solid{
+    color: #409EFF;
+  }
+  &.el-icon-s-finance{
+    color: #E6A23C;
+  }
+  &.el-icon-s-claim{
+    color: #67C23A;
+  }
+}
 .news-list{
   li{
     border: 1px solid #dcdcdc;
@@ -214,12 +256,17 @@ export default {
         margin-bottom: 5px;
         margin-top: 1px;
         color: #333;
+        font-weight: bold;
+      }
+      .time{
+        color: #333;
       }
       .news-dec{
         font-size: 12px;
-        color: #888;
+        color: #666;
       }
     }
   }
 }
+
 </style>

@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import common from './utils/common.js'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -19,6 +20,9 @@ router.beforeEach(async(to, from, next) => {
 
   // 是否登录
   const hasToken = getToken()
+  if (hasToken && !store.state.news.hasSocket) {
+    common.initSocket()
+  }
 
   if (hasToken) {
     if (to.path === '/login') {

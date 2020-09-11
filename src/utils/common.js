@@ -2,15 +2,17 @@
  * 页面共用js
  */
 import moment from 'moment'
-import router from './router'
 import { Notification } from 'element-ui';
 import { MessageBox } from 'element-ui';
 import { getNetworkList } from '@/api/network'
 import { getToken } from '@/utils/auth'
 import { workbind } from '@/api/user'
+import store from '@/store'
 
 // 全局websocket
 function initSocket() {
+  console.log('执行websocket函数')
+  store.commit('news/setSocket', true)
   let socket = new WebSocket('ws://120.25.25.90:2346')
   socket.onopen = function() { console.log('WebSocket连接成功') }
   socket.onerror = function() { console.log('WebSocket连接失败') }
@@ -33,7 +35,7 @@ function initSocket() {
           message: `用户 ${message.name}（${message.phone}）下了个新订单，请及时处理！`,
           icon: 'el-icon-s-claim'
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       } else if (res.type == 'payEarnest') {
         showNotify({
           title: '用户已支付',
@@ -44,35 +46,35 @@ function initSocket() {
             that.currentComponent = 'OrderDetails'
           }
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       } else if (res.type == 'newMaster') {
         showNotify({
           title: '师傅申请',
           message: `用户 ${message.name}（${message.phone}）申请成为师傅，请及时处理！`,
           icon: 'el-icon-user-solid'
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       } else if (res.type == 'newBusiness') {
         showNotify({
           title: '商家申请',
           message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
           icon: 'el-icon-s-custom'
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       } else if (res.type == 'crafSetTlement') {
         showNotify({
           title: '师傅申请提现',
           message: `${message.name}申请提现${message.money}元，请及时处理！`,
           icon: 'el-icon-s-finance'
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       }  else if (res.type == 'userSetTlement') {
         showNotify({
           title: '用户申请提现',
           message: `${message.name}申请提现${message.money}元，请及时处理！`,
           icon: 'el-icon-s-finance'
         })
-        that.$refs.audio.play()
+        store.commit('news/ADD_NEWS', res)
       } else {
         console.log(res.message)
       }
@@ -80,7 +82,7 @@ function initSocket() {
   }
   socket.onclose = function(event) {
     console.log('webSocket断开连接,2s后重连....')
-    console.log(event);
+    console.log(event)
     setTimeout(() => {
       if (getToken()) {
          initSocket()
@@ -90,22 +92,13 @@ function initSocket() {
 }
 
 function showNotify(obj) {
-  let notify = Notification({
+  Notification({
     title: obj.title || '通知',
     message: obj.message || '',
-    duration: 0,
     offset: 50,
+    duration: 2000,
     iconClass: obj.icon || 'el-icon-warning-outline',
-    customClass: 'websocket-notify',
-    onClick: function() {
-      notify.close()
-      if (obj.url) {
-        router.push(obj.url)
-      }
-      if (obj.callback) {
-        obj.callback()
-      }
-    }
+    customClass: 'websocket-notify'
   })
 }
 
