@@ -80,12 +80,12 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="用户备注:">
+                <el-form-item label="维修详述:">
                   {{ message.info.remark || '无'}}
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="订单图片:">
+                <el-form-item label="现场图片:">
                   <template v-if="message.userimglist.length">
                     <gd-image v-for="(item, index) in message.userimglist" :key="index" :src="item" />
                   </template>
@@ -161,7 +161,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8" v-if="message.info.success_img">
-                <el-form-item label="施工单:">
+                <el-form-item label="结算单:">
                   <gd-image :src="message.info.success_img" />
                 </el-form-item>
               </el-col>

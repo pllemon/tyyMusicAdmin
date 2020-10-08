@@ -162,13 +162,13 @@ export const mainAdminRoutes = [
     component: Layout,
     redirect: '/show/list',
     name: 'Show',
-    meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-5' },
+    meta: { title: '施工广场', icon: 'certificate_fil', menu: '2-5' },
     children: [
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/show/list'),
-        meta: { title: '案例广场', icon: 'certificate_fil', menu: '2-5' }
+        meta: { title: '施工广场', icon: 'certificate_fil', menu: '2-5' }
       }
     ]
   },
@@ -193,6 +193,12 @@ export const mainAdminRoutes = [
         meta: { title: '广告管理', menu: '5-1' }
       },
       {
+        path: 'regulations',
+        name: 'Regulations',
+        component: () => import('@/views/system/regulations'),
+        meta: { title: '用户须知', menu: '5-11' }
+      },
+      {
         path: 'about',
         name: 'About',
         component: () => import('@/views/system/about'),
@@ -214,7 +220,7 @@ export const mainAdminRoutes = [
         path: 'concat',
         name: 'Concat',
         component: () => import('@/views/system/concat'),
-        meta: { title: '联系我们', menu: '5-3' }
+        meta: { title: '使用说明', menu: '5-3' }
       },
       {
         path: 'userAgreement',
@@ -307,7 +313,7 @@ export const testAdminRoutes = [
         path: 'concat',
         name: 'Concat',
         component: () => import('@/views/system/concat'),
-        meta: { title: '联系我们' }
+        meta: { title: '使用说明' }
       },
       {
         path: 'userAgreement',

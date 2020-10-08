@@ -94,7 +94,7 @@
           </el-table-column>
           <el-table-column label="服务地址" prop="address" width="200"/>
           <el-table-column label="预约时间"  prop="appo_time" width="180" />
-          <el-table-column label="用户备注" prop="remark" width="120" />
+          <el-table-column label="维修详述" prop="remark" width="120" />
           <el-table-column label="服务网点" prop="networkname" width="120" />
           <el-table-column label="承接师傅"  width="200">
             <template slot-scope="scope">

@@ -151,7 +151,7 @@ computed: {
     下单时间 create_time
     服务地址 address
     用户备注 remark
-    订单图片 userimglist
+    现场图片 userimglist
     订单总价格 total_price
     定金金额 earnest_price
     尾款金额 tail_price

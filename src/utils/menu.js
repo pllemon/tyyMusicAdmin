@@ -128,7 +128,7 @@ const menuData = [
       },
       {
         id: '2-5',
-        title: '案例广场',
+        title: '施工广场',
         path: '/show/list'
       },
     ]
@@ -218,8 +218,13 @@ const menuData = [
         path: '/system/about'
       },
       {
+        id: '5-11',
+        title: '用户须知',
+        path: '/system/regulations'
+      },
+      {
         id: '5-3',
-        title: '联系我们',
+        title: '使用说明',
         path: '/system/concat'
       },
       {

@@ -56,7 +56,7 @@ const state = {
   },
   linkPos: {
     1: '首页',
-    2: '案例广场页',
+    2: '施工广场页',
     3: '实体店页'
   },
   businessStatus: { // 商家状态
