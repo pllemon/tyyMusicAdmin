@@ -5,6 +5,104 @@ import moment from 'moment'
 import { Notification } from 'element-ui';
 import { MessageBox } from 'element-ui';
 import { getNetworkList } from '@/api/network'
+import { getToken } from '@/utils/auth'
+import { workbind } from '@/api/user'
+import store from '@/store'
+
+// 全局websocket
+function initSocket() {
+  console.log('执行websocket函数')
+  store.commit('news/setSocket', true)
+  let socket = new WebSocket('ws://120.25.25.90:2346')
+  socket.onopen = function() { console.log('WebSocket连接成功') }
+  socket.onerror = function() { console.log('WebSocket连接失败') }
+  socket.onmessage = function(e) {
+    const res = JSON.parse(e.data)
+    if (res.type == 'init') {
+      workbind({
+        client_id: res.client_id
+      }).then(() => {}).catch(() => {})
+    } else if (res.type == 'ping') {
+
+    } else {
+      console.log('--------新消息!!!!--------------------')
+      console.log(res)
+      console.log('----------------------------')
+      const message = JSON.parse(res.message)
+      if (res.type == 'makeOrder') {
+        showNotify({
+          title: '新订单',
+          message: `用户 ${message.name}（${message.phone}）下了个新订单，请及时处理！`,
+          icon: 'el-icon-s-claim'
+        })
+        store.commit('news/ADD_NEWS', res)
+      } else if (res.type == 'payEarnest') {
+        showNotify({
+          title: '用户已支付',
+          message: `订单编号 ${message.orderSn} ，用户已支付，请及时处理！`,
+          icon: 'el-icon-s-finance',
+          callback() {
+            that.dialogMes = {id: message.order_id}
+            that.currentComponent = 'OrderDetails'
+          }
+        })
+        store.commit('news/ADD_NEWS', res)
+      } else if (res.type == 'newMaster') {
+        showNotify({
+          title: '师傅申请',
+          message: `用户 ${message.name}（${message.phone}）申请成为师傅，请及时处理！`,
+          icon: 'el-icon-user-solid'
+        })
+        store.commit('news/ADD_NEWS', res)
+      } else if (res.type == 'newBusiness') {
+        showNotify({
+          title: '商家申请',
+          message: `用户 ${message.name}（${message.phone}）申请成为商家，请及时处理！`,
+          icon: 'el-icon-s-custom'
+        })
+        store.commit('news/ADD_NEWS', res)
+      } else if (res.type == 'crafSetTlement') {
+        showNotify({
+          title: '师傅申请提现',
+          message: `${message.name}申请提现${message.money}元，请及时处理！`,
+          icon: 'el-icon-s-finance'
+        })
+        store.commit('news/ADD_NEWS', res)
+      }  else if (res.type == 'userSetTlement') {
+        showNotify({
+          title: '用户申请提现',
+          message: `${message.name}申请提现${message.money}元，请及时处理！`,
+          icon: 'el-icon-s-finance'
+        })
+        store.commit('news/ADD_NEWS', res)
+      } else {
+        console.log(res.message)
+      }
+    }
+  }
+  socket.onclose = function(event) {
+    console.log('webSocket断开连接,2s后重连....')
+    console.log(event)
+    setTimeout(() => {
+      if (getToken()) {
+         initSocket()
+      }
+    }, 2000)
+  }
+}
+
+function showNotify(obj) {
+  Notification({
+    title: obj.title || '通知',
+    message: obj.message || '',
+    offset: 50,
+    duration: 2000,
+    iconClass: obj.icon || 'el-icon-warning-outline',
+    customClass: 'websocket-notify'
+  })
+}
+
+// -----------------------------------------------------
 
 function search(target) {
   target.queryMes.page = 1
@@ -144,5 +242,6 @@ export default {
   getAllNetwork, // 获取全部网点
   timePickerOptions, // 快捷时间选项,
   exportExcel, // 导出excel,
-  deepCopy
+  deepCopy,
+  initSocket
 }

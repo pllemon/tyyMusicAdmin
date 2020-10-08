@@ -27,8 +27,8 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="common.search(vm)">搜索</el-button>
-            <el-button @click="timeRange=[];common.resetSearch(vm)">重置</el-button>
+            <el-button type="primary" @click="search()">搜索</el-button>
+            <el-button @click="resetSearch()">重置</el-button>
           </el-form-item>
         </el-form>
         <div class="other-action">
@@ -39,6 +39,7 @@
       <!-- 表格&分页 -->
       <div class="table-section">
         <el-table
+          ref="table"
           v-loading="listLoading"
           :data="list"
           element-loading-text="Loading"
@@ -46,9 +47,7 @@
           fit
           highlight-current-row
           height="100%"
-          @selection-change="selectionChange"
         >
-          <!-- <el-table-column type="selection" width="55" fixed /> -->
           <el-table-column label="序号" type="index" width="50" fixed/>
           <el-table-column label="师傅头像" align="center">
             <template slot-scope="scope">
@@ -97,14 +96,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
+import ListMixin from '@/mixin/list'
 import { getList, savecraftsmanstatus } from '@/api/master'
 import Details from '@/views/master/details'
 import Examine from '@/views/master/examine'
 import Update from '@/views/master/update'
 
 export default {
+  mixins: [ListMixin],
   components: {
     Details,
     Examine,
@@ -114,11 +113,6 @@ export default {
     return {
       vm: this,
 
-      list: null,
-      listLoading: true,
-      selectArr: [],
-
-      total: 0,
       queryMes: {
         page: 1,
         limit: 20,
@@ -133,51 +127,15 @@ export default {
       },
       timeRange: [],
 
-      currentComponent: '',
-      dialogMes: {}
+      api: {
+        getList
+      }
     }
   },
   created() {
-    this.fetchData(1)
-  },
-  watch: {
-    globalSearch: {
-      handler(val) {
-        this.fetchData(1)
-      },
-      deep: true
-    }
+    this.againFetch()
   },
   methods: {
-    fetchData(type) {
-      if (type == 1) {
-        this.queryMes.page = 1
-      }
-      this.listLoading = true
-      if (this.timeRange.length) {
-        this.queryMes.start_time = this.timeRange[0]
-        this.queryMes.end_time = this.timeRange[1]
-      } else {
-        this.queryMes.start_time = ''
-        this.queryMes.end_time = ''
-      }
-      
-      this.queryMes.district = this.globalSearch.district
-      this.queryMes.city = this.globalSearch.city
-      this.queryMes.province = this.globalSearch.province
-
-      getList(this.queryMes).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-      }).finally(() => {
-        this.listLoading = false
-      })
-    },
-
-    selectionChange(val) {
-      this.selectArr = val
-    },
-
     updateRecord(id, type) {
       let ctype = type == 4 ? 2 : 1;
       this.common.updateRecord(ctype, this, {
@@ -185,10 +143,6 @@ export default {
         status: type
       }, savecraftsmanstatus)
     }
-  },
-  computed: {
-      ...mapState(['dict']),
-      ...mapGetters(['userInfo', 'globalSearch'])
   }
 }
 </script>

@@ -120,3 +120,31 @@
     }
   }
 }
+
+
+
+@media screen and (max-width: 800px) {
+  .system-title{
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .submenu-title{
+    display: none;
+  }
+  .submenu-icon{
+    margin-right: 0;
+  }
+  .el-menu{
+    .el-submenu__title{
+      margin: 0 10px !important;
+    }
+  }
+  .search-form{
+    .el-form{
+      display: none;
+    }
+  }
+}
