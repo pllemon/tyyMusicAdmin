@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item label="收入类型" prop="logtype">
           <el-select v-model="queryMes.logtype" placeholder="请选择">
-            <el-option v-for="(item, index) in incomeType" :key="index" :label="item" :value="index" />
+            <el-option v-for="(item, index) in incomeType1" :key="index" :label="item" :value="index" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -34,7 +34,7 @@
           <el-table-column label="金额" prop="money"/>  
           <el-table-column label="收入类型" min-width="120">
             <template slot-scope="scope">
-              {{dict.incomeType[scope.row.logtype]}}
+              {{dict.incomeType1[scope.row.logtype]}}
             </template>
           </el-table-column>
           <el-table-column label="记录时间" min-width="140" prop="createtime" />
@@ -67,6 +67,7 @@ export default {
       queryMes: {
         page: 1,
         limit: 20,
+        type: 1,
         logtype: '',
         tran_id: ''
       },
@@ -88,7 +89,7 @@ export default {
   },
   computed: {
     ...mapState({
-      incomeType: state => state.dict.incomeType
+      incomeType1: state => state.dict.incomeType1
     })
   }
 }

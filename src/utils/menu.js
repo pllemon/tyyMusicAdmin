@@ -177,12 +177,17 @@ const menuData = [
       },
       {
         id: '4-2',
-        title: '收入流水',
+        title: '商家收入流水',
         path: '/finance/income'
       },
       {
+        id: '4-21',
+        title: '维修收入流水',
+        path: '/finance/income2'
+      },
+      {
         id: '4-3',
-        title: '支出流水',
+        title: '维修支出流水',
         path: '/finance/expend'
       },
       {

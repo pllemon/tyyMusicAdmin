@@ -7,11 +7,11 @@
           <el-form-item label="订单编号" prop="order_sn">
             <el-input type="text" v-model="queryMes.order_sn" placeholder="请输入"/>
           </el-form-item>
-          <el-form-item label="服务网点" prop="network_id" v-if="!userInfo.network_id">
+          <!-- <el-form-item label="服务网点" prop="network_id" v-if="!userInfo.network_id">
             <el-select v-model="queryMes.network_id">
               <el-option v-for="(item, index) in networkList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item label="订单状态" prop="status">
             <el-select v-model="queryMes.status" placeholder="请选择" clearable>
               <el-option

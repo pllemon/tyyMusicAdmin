@@ -3,7 +3,7 @@
     <Header />
     <div class="sub-header">
       <p class="sub-title">{{title}}</p>
-      <!-- <Search /> -->
+      <Search />
     </div>
     <div class="flex1">
       <transition name="fade-transform" mode="out-in">

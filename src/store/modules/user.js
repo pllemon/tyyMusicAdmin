@@ -33,6 +33,9 @@ const mutations = {
     state.userInfo = info
   },
   SET_SEARCH: (state, data) => {
+    console.log('-------------全局搜索------------------')
+    console.log(data)
+    console.log('---------------------------------------')
     sessionStorage.setItem('globalSearch', JSON.stringify(data))
     state.globalSearch = data
   }

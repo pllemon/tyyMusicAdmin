@@ -159,7 +159,11 @@ function notify() {
 }
 
 function getAllNetwork(target, callback) {
+  let globalSearch = store.getters.globalSearch
   getNetworkList({
+    province: globalSearch.province,
+    city: globalSearch.city,
+    district: globalSearch.district,
     name: '',
     region: '',
     author: '',

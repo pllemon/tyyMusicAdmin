@@ -3,24 +3,38 @@
     <el-form-item label="筛选:">
     </el-form-item>
     <el-form-item>
+      <el-select 
+        v-model="form.timeType" 
+        placeholder="选择时间"
+        style="width:120px"
+        clearable
+      >
+        <el-option
+          v-for="item in timeTypeOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-form-item>
+    <el-form-item v-if="form.timeType == 1">
       <el-date-picker 
         v-model="form.year" 
         type="year" 
-        placeholder="年份" 
+        placeholder="选择年份" 
         format="yyyy年"
         value-format="yyyy"
-        style="width:100px"
+        style="width:120px"
       />
     </el-form-item>
-    <el-form-item>
-      <el-select v-if="form.year" style="width:100px" v-model="form.month" placeholder="月份" clearable>
-        <el-option
-          v-for="item in months"
-          :key="item"
-          :label="item + '月'"
-          :value="item"
-        />
-      </el-select>
+    <el-form-item v-if="form.timeType == 2">
+      <el-date-picker
+        v-model="form.month"
+        type="month"
+        style="width:120px"
+        value-format="yyyy-MM"
+        placeholder="选择月份"
+      />
     </el-form-item>
     <el-form-item prop="areaCode" >
       <el-cascader
@@ -55,17 +69,25 @@ export default {
         district: '',
         city: '',
         province: '',
+        timeType: '',
       },
       networkList: [],
-      months: [],
       options: areaJson,
+
+      timeTypeOptions: [{
+        value: 3,
+        label: '近期'
+      }, {
+        value: 1,
+        label: '某年'
+      }, {
+        value: 2,
+        label: '某月'
+      }]
     }
   },
   created() {
     this.common.getAllNetwork(this)
-    for (var i = 1 ; i < 13; i++) {
-      this.months.push(i.toString().padStart(2, '0'))
-    }
     this.form = this.globalSearch
   },
   watch: {
@@ -73,16 +95,18 @@ export default {
       handler(val) {
         let startTime = ''
         let endTime = ''
-        if (!val.year) {
-          val.month = ''
-        }
-        if (val.year && !val.month) {
+        if (val.timeType == 3) {
+          startTime = this.$moment().subtract('days', 45).format('YYYY-MM-DD 00:00:00');
+          endTime = this.$moment().format('YYYY-MM-DD 23:59:59')
+          this.year = ''
+          this.month = ''
+        } else if (val.timeType == 1 && val.year) {
           startTime = this.$moment(val.year, 'YYYY').startOf('year').format("YYYY-MM-DD HH:mm:ss")
           endTime = this.$moment(val.year, 'YYYY').endOf('year').format("YYYY-MM-DD HH:mm:ss")
-        } else if (val.year && val.month) {
-          startTime = this.$moment(val.year + '-' + val.month, 'YYYY-MM').startOf('month').format("YYYY-MM-DD HH:mm:ss")
-          endTime = this.$moment(val.year + '-' + val.month, 'YYYY-MM').endOf('month').format("YYYY-MM-DD HH:mm:ss")
-        }
+        } else if (val.timeType == 2 && val.month) {
+          startTime = this.$moment(val.month, 'YYYY-MM').startOf('month').format("YYYY-MM-DD HH:mm:ss")
+          endTime = this.$moment(val.month, 'YYYY-MM').endOf('month').format("YYYY-MM-DD HH:mm:ss")
+        } 
         val.startTime = startTime
         val.endTime =endTime
 

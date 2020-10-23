@@ -137,6 +137,12 @@ export const mainAdminRoutes = [
         meta: { title: '收入流水', menu: '4-2'}
       },
       {
+        path: 'income2',
+        name: 'Income2',
+        component: () => import('@/views/finance/income/index2'),
+        meta: { title: '收入流水', menu: '4-21'}
+      },
+      {
         path: 'expend',
         name: 'Expend',
         component: () => import('@/views/finance/expend'),
