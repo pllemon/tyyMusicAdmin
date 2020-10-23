@@ -153,7 +153,7 @@ function notify() {
   Notification({
     title: '提示',
     type: 'success',
-    message: '操作成功',
+    message: '操作成功', 
     duration: 1000
   })
 }
