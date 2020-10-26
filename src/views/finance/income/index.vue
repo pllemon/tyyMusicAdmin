@@ -83,9 +83,9 @@ export default {
   },
   created() {
     const that = this
-    this.common.getAllNetwork(this, function(){
+    // this.common.getAllNetwork(this, function(){
       that.fetchData()
-    })
+    // })
   },
   computed: {
     ...mapState({

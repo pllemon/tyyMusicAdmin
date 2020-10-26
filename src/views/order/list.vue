@@ -174,7 +174,7 @@ export default {
     }
   },
   created() {
-    this.common.getAllNetwork(this)
+    // this.common.getAllNetwork(this)
     this.againFetch()
   },
   methods: {
