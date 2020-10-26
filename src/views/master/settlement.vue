@@ -74,6 +74,11 @@
             </template>
           </el-table-column>
           <el-table-column label="申请金额" prop="money" min-width="140"/>
+          <el-table-column label="收据图片" prop="shouju_img" min-width="140" v-if="queryMes.number == 2">
+            <template slot-scope="scope">
+              <gd-image width="120" height="90" :src="scope.row.shouju_img"/>
+            </template>
+          </el-table-column>
           <el-table-column label="申请时间" min-width="160" prop="time" />
           <el-table-column label="申请状态" min-width="100">
             <template slot-scope="scope">

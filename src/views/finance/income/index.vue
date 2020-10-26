@@ -67,7 +67,7 @@ export default {
       queryMes: {
         page: 1,
         limit: 20,
-        type: 1,
+        incometype: 1,
         logtype: '',
         tran_id: ''
       },

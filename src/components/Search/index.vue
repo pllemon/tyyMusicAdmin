@@ -45,6 +45,7 @@
         placeholder="区域"
         clearable
         style="width:200px"
+        @change="changeArea"
       />
     </el-form-item>
     <el-form-item>
@@ -116,6 +117,14 @@ export default {
         this.$store.commit('user/SET_SEARCH', val)
       },
       deep: true
+    }
+  },
+  methods: {
+    changeArea() {
+      this.form.network_id = ''
+      setTimeout(() => {
+        this.common.getAllNetwork(this)
+      })
     }
   },
   computed: {
